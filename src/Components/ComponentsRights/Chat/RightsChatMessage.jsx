@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import MessagePhoto from "./ChatMessage/MessagePhoto";
 import MessageContent from "./ChatMessage/MessageContent";
 
-const RightsChatMessage = () => {
+const RightsChatMessage = ({messageInfo}) => {
 
 
     useEffect(() => {
@@ -24,8 +24,8 @@ const RightsChatMessage = () => {
 
     return (
         <div className="chatting__item">
-            <MessagePhoto />
-            <MessageContent />
+            <MessagePhoto messageInfo={messageInfo} />
+            <MessageContent messageInfo={messageInfo} />
         </div>
     );
 };

@@ -279,23 +279,23 @@ document.querySelectorAll('.balance__cost button').forEach(function (btn) {
 
 
 
-document.querySelectorAll('.input-pincode input').forEach(elem => {
-
-  // var patternMask = IMask(elem, {
-  //   mask: '**** - **** - ****'
-  // });
-
-  elem.addEventListener('keyup', function () {
-    
-    if( this.value.length <= 17 ){
-      this.closest('form').querySelector('button').setAttribute('disabled', 'disabled')
-      return;
-    }
-    this.closest('form').querySelector('button').removeAttribute('disabled')
-    
-  })
-
-})
+// document.querySelectorAll('.input-pincode input').forEach(elem => {
+//
+//   var patternMask = IMask(elem, {
+//     mask: '**** - **** - ****'
+//   });
+//
+//   elem.addEventListener('keyup', function () {
+//
+//     if( this.value.length <= 17 ){
+//       this.closest('form').querySelector('button').setAttribute('disabled', 'disabled')
+//       return;
+//     }
+//     this.closest('form').querySelector('button').removeAttribute('disabled')
+//
+//   })
+//
+// })
 
 
 
@@ -589,16 +589,14 @@ if(document.querySelector('.postamat__cart')){
 //   })
 // })
 
-document.querySelectorAll('.section-right__airdrop .airdrop__move ul li').forEach(function (btn) {
-
-  if( document.querySelector('.section-map__map') ) {
-    moveSleepers(btn)
-  }
-
-})
-
-
-
+// document.querySelectorAll('.section-right__airdrop .airdrop__move ul li').forEach(function (btn) {
+//
+//   if( document.querySelector('.section-map__map') ) {
+//     moveSleepers(btn)
+//   }
+//
+// })
+//
 // function moveSleepers(sleeper) {
 //
 //   let currentDroppable = null;
@@ -680,7 +678,7 @@ document.querySelectorAll('.section-right__airdrop .airdrop__move ul li').forEac
 //
 //   })
 // }
-//
+
 // let pointXOfScale = 0
 // let pointYOfScale = 0
 // if(document.querySelector('.section-map__map')){
@@ -1248,12 +1246,12 @@ if(document.querySelector('.postamat__cart_full')){
 
 
 
-if( document.querySelector('.resources__button') ) {
-  document.querySelector('.resources__button').onclick = function () {
-    document.querySelector('.section-right__rules').classList.toggle('section-right__rules_active')
-    this.classList.toggle('resources__button_active')
-  }
-}
+// if( document.querySelector('.resources__button') ) {
+//   document.querySelector('.resources__button').onclick = function () {
+//     document.querySelector('.section-right__rules').classList.toggle('section-right__rules_active')
+//     this.classList.toggle('resources__button_active')
+//   }
+// }
 
 document.querySelectorAll('.smiles__switches button').forEach(function (sw) {
 

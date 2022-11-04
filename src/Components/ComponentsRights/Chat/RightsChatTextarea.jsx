@@ -1,23 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const RightsChatTextarea = () => {
+const RightsChatTextarea = ({setMessages}) => {
 
-    let smilesOpen = function() {
+    const [textMessage, setTextMessage] = useState('')
+
+    let smilesOpen = function () {
         document.querySelector('.section-right__smiles').classList.toggle('section-right__smiles_active')
+    }
+    let sendMessage = function (e) {
+        e.preventDefault();
+
+
+        let timeNow = new Date();
+        let newMessage = {
+            id: timeNow.getTime(),
+            date: {
+                hour: (timeNow.getHours() < 10) ? '0' + timeNow.getHours() : timeNow.getHours(),
+                min: (timeNow.getMinutes() < 10) ? '0' + timeNow.getMinutes() : timeNow.getMinutes(),
+            },
+            user: {
+                image: 'images/user.jpeg',
+                name: 'Михоелъ'
+            },
+            text: textMessage
+        }
+
+        if (textMessage.trim()) {
+            setMessages(oldMessages => [...oldMessages, newMessage]);
+
+            let chatBlock = document.querySelector('.section-right__chatting')
+            chatBlock.scrollTop = chatBlock.scrollHeight
+
+        }
+        setTextMessage('')
+    }
+
+    let inputMessage = function (e) {
+        setTextMessage(e.target.value)
     }
 
     return (
-        <form className="section-right__bottom" action="#">
+        <form
+            className="section-right__bottom"
+            action="#"
+            onSubmit={sendMessage}
+        >
             <label className="textarea">
-                <input placeholder="Сообщение" maxLength="150"/>
+                <input
+                    placeholder="Сообщение"
+                    maxLength="150"
+                    onChange={inputMessage}
+                    value={textMessage}
+                />
                 <span className="maxl">0/150</span>
             </label>
-            <button
+            <div
                 className="smiles"
                 onClick={smilesOpen}
             >
                 <img src="images/smile-1.png" alt="Smile"/>
-            </button>
+            </div>
             <button className="send">
                 <img src="images/send-message.svg" alt="Ico"/>
             </button>

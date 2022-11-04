@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import MessageTop from "./MessageTop";
 import MessageText from "./MessageText";
 import MessageDropdown from "./MessageDropdown";
 
-const MessageContent = () => {
+const MessageContent = ({messageInfo}) => {
+
+    const [openDropdown, setOpenDropdown] = useState(false)
+
     return (
         <div className="item__inner">
-            <MessageTop />
-            <MessageText />
-            <MessageDropdown />
+            <MessageTop messageInfo={messageInfo} setOpenDropdown={setOpenDropdown} />
+            <MessageText messageInfo={messageInfo} />
+            <MessageDropdown openDropdown={openDropdown} />
         </div>
     );
 };

@@ -4,7 +4,7 @@ import Balance from "../Components/ComponentsMainPage/Balance";
 import Stats from "../Components/ComponentsMainPage/Stats";
 import Table from "../Components/ComponentsMainPage/Table";
 
-const MainPage = ({dataInfo}) => {
+const MainPage = ({dataInfo, tradeLink, setTradeLink}) => {
 
     let newcomer = false;
 
@@ -16,7 +16,10 @@ const MainPage = ({dataInfo}) => {
         <section className="section-blocks">
             <div className={newcomerClass}>
 
-                <TopGamer />
+                <TopGamer
+                    tradeLink={tradeLink}
+                    setTradeLink={setTradeLink}
+                />
                 <Balance dataInfo={dataInfo} />
                 <Stats title={"Аирдроп"} stats={true} />
                 <Stats title={"Схватка"} stats={false} />

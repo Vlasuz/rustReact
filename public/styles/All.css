@@ -3754,6 +3754,7 @@ section {
     padding: 30px 16px;
     max-height: 464px;
     overflow: auto;
+    z-index: 2;
     -webkit-transition: all .3s ease;
     -o-transition: all .3s ease;
     transition: all .3s ease;
@@ -3788,6 +3789,7 @@ section {
 .section-right__cart,
 .section-right__cart-bought {
     position: absolute;
+    overflow: auto;
     top: 74px;
     left: 10px;
     width: calc(100% - 20px);
@@ -4143,7 +4145,8 @@ section {
 }
 .section-right__players {
     overflow: auto;
-    height: calc(100vh - 370px);
+    /*height: calc(100vh - 370px);*/
+    height: calc(100vh - 510px);
     margin-top: 14px;
     background: #202232;
     border-radius: 10px;
@@ -4638,16 +4641,15 @@ section {
 }
 .section-right__chatting {
     border-radius: 10px 0 10px 10px;
-    padding: 10px;
     height: 100%;
     padding: 10px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
+    /*display: -webkit-box;*/
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
+    /*-webkit-box-orient: vertical;*/
+    /*-webkit-box-direction: normal;*/
+    /*-ms-flex-direction: column;*/
+    /*flex-direction: column;*/
     overflow: auto;
     padding-top: 100px
 }
@@ -4711,7 +4713,8 @@ section {
     color: #fc6c6c
 }
 .section-right__chatting .item__inner {
-    position: relative
+    position: relative;
+    width: 100%;
 }
 .section-right__chatting .item__top {
     display: -webkit-box;
@@ -4804,7 +4807,10 @@ section {
     border-radius: 8px
 }
 .section-right__chatting .chatting__block {
-    height: 100%
+    position: relative;
+    z-index: 1;
+    padding-bottom: 100px;
+    margin-bottom: -100px;
 }
 .section-right__chatting .chatting__item {
     display: -webkit-box;
@@ -4814,6 +4820,9 @@ section {
     -ms-flex-align: start;
     align-items: flex-start;
     margin-bottom: 14px
+}
+.section-right__chatting .chatting__item:last-child {
+    margin-bottom: 0;
 }
 .section-right__chatting .chatting__item:last-child .item__dropdown {
     top: auto;
@@ -5427,7 +5436,7 @@ section {
     color: #92c145
 }
 .section-map__map {
-    position: relative
+    position: relative;
 }
 .section-map__map .map-img {
     width: 100%;
@@ -5562,10 +5571,7 @@ section {
     width: 400px;
     height: 4px;
     position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+    top: 200px;
     left: -60px;
     z-index: 999;
     display: -webkit-box;
@@ -9382,6 +9388,16 @@ section {
 
 .popup-entry-coins a{
     padding: 0;
+}
+
+
+.circle{
+    width: 100px;
+    height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background: #fff;
 }
 
 /*NEW STYLE*/

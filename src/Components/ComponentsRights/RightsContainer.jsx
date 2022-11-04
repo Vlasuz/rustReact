@@ -2,7 +2,7 @@ import React from 'react';
 import RightsTop from "./RightsTop";
 import RightsSwitcher from "./RightsSwitcher";
 
-const RightsContainer = ({onCoinsChange, onCoins, dataItems, switcherRights, onSwitcherRightsChange}) => {
+const RightsContainer = ({onCoinsChange, onCoins, dataItems, switcherRights, onSwitcherRightsChange, timer}) => {
 
 
 
@@ -17,6 +17,8 @@ const RightsContainer = ({onCoinsChange, onCoins, dataItems, switcherRights, onS
                 dataItems={dataItems}
                 switcherRights={switcherRights}
                 onSwitcherRightsChange={onSwitcherRightsChange}
+
+                timer={timer}
             />
         </section>
     );

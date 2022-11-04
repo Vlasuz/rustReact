@@ -10,16 +10,22 @@ import AllPopups from "./Components/Popups/AllPopups";
 import FightPageRunning from "./pages/FightPageRunning";
 import FightPageFinish from "./pages/FightPageFinish";
 import HistoryPage from "./pages/HistoryPage";
-
-// import 'https://unpkg.com/imask';
+import PolicyPage from "./pages/PolicyPage";
+import ClothesShopPage from "./pages/ClothesShopPage";
+import Timer from "./Components/Timer";
 
 function App() {
 
     const [coins, setCoins] = useState(0);
     const [switcherRights, setSwitcherRights] = useState('pr')
-
-    const [arrayForHit, setArrayForHit] = useState([])
-
+    const [tradeLink, setTradeLink] = useState('')
+    const [arrayForHit, setArrayForHit] = useState([]);
+    const [seconds, setSeconds] = useState(0)
+    const [milliseconds, setMilliseconds] = useState(0)
+    const timer = {
+        seconds: seconds,
+        milliseconds: milliseconds
+    }
 
     const dataItems = [
         {
@@ -54,6 +60,7 @@ function App() {
 
     return (
         <BrowserRouter>
+            <Timer setSeconds={setSeconds} setMilliseconds={setMilliseconds} />
             <Header
                 dataInfo={dataInfo}
             />
@@ -69,6 +76,8 @@ function App() {
                         element={
                             <MainPage
                                 dataInfo={dataInfo}
+                                tradeLink={tradeLink}
+                                setTradeLink={setTradeLink}
                             />
                         }
                     />
@@ -87,6 +96,7 @@ function App() {
                             <FightPage
                                 mainCoins={coins}
                                 onSetCoins={setCoins}
+                                dataInfo={dataInfo}
                             />
                         }
                     />
@@ -111,6 +121,16 @@ function App() {
                     />
 
                     <Route path="/history" element={<HistoryPage/>}/>
+                    <Route path="/policy" element={<PolicyPage/>}/>
+
+                    <Route
+                        path="/clothes-shop"
+                        element={
+                            <ClothesShopPage
+                                dataInfo={dataInfo}
+                            />
+                        }
+                    />
                 </Routes>
 
                 <RightsContainer
@@ -118,6 +138,8 @@ function App() {
                     onCoins={coins}
                     dataItems={dataItems}
                     switcherRights={switcherRights}
+
+                    timer={timer}
                 />
             </main>
 

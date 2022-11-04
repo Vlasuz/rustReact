@@ -1,11 +1,11 @@
 import React from 'react';
-import PopupEntryCoins from "../Popups/PopupEntryCoins";
+import PopupEntryCoins from "../../Popups/PopupEntryCoins";
 import FightItemUser from "./FightItemUser";
 import FightItemClothes from "./FightItemClothes";
 import FightItemButton from "./FightItemButton";
 import FightItemStatus from "./FightItemStatus";
 import FightItemType from "./FightItemType";
-import PopupEntryClothes from "../Popups/PopupEntryClothes";
+import PopupEntryClothes from "../../Popups/PopupEntryClothes";
 
 const FightItem = (props) => {
 

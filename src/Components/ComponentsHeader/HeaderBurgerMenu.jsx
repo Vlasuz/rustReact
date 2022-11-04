@@ -8,7 +8,6 @@ const HeaderBurgerMenu = () => {
     }
 
     let closeWindow = function () {
-        console.log('asd')
         window.close()
     }
 

@@ -23,6 +23,7 @@ const RightsAirdropSleepers = ({setNumSwitch, onCoins, onCoinsChange, setSleeper
         while (sleeper <= 9) {
             sleepers.push(
                 <li
+                    key={sleeper}
                     onClick={chooseSleepers}
                 >
                     <button>

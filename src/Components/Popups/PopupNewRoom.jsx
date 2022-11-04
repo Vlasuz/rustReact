@@ -1,6 +1,7 @@
 import React from 'react';
 import PopupCloseCross from "./PopupCloseCross";
 import PopupCloseBackground from "./PopupCloseBackground";
+import {Link} from "react-router-dom";
 
 const PopupNewRoom = ({dataInfo}) => {
 
@@ -91,7 +92,7 @@ const PopupNewRoom = ({dataInfo}) => {
                                     </div>
                                 </div>
                             </div>
-                            <button disabled>Создать игру</button>
+                            <Link to={'/fight-running'}>Создать игру</Link>
                         </form>
                     </div>
                     <div className="popup__content-item popup__content-item-clothes">
