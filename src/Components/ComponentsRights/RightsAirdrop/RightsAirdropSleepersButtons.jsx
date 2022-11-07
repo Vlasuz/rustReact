@@ -27,9 +27,39 @@ const RightsAirdropSleepersButtons = ({setNumSwitch}) => {
         }
     }
 
+
+    const randomMove = () => {
+
+        document.querySelectorAll('.airdrop__move ul li').forEach((item, itemNum) => {
+
+            let maxX = document.querySelector('.section-map__map').clientWidth - 20
+            let maxY = document.querySelector('.section-map__map').clientHeight - 20
+
+            let randomX = Math.floor(Math.random() * (maxX - 0) + 0 );
+            let randomY = Math.floor(Math.random() * (maxY - 0) + 0 );
+
+            item.classList.add('sleepers__item_moved');
+
+            item.style.left = randomX + 'px';
+            item.style.top = randomY + 'px';
+            item.style.position = 'absolute';
+            item.style.zIndex = '1000';
+            item.style.display = 'flex';
+
+            document.querySelector('.section-map__map').append(item)
+
+        })
+
+    }
+
+
+
     return (
         <div className="move__buttons">
-            <button className="move__random">
+            <button
+                className="move__random"
+                onClick={() => randomMove()}
+            >
                 <span>случайно</span>
                 <img src="images/random.svg" alt="Random"/>
             </button>

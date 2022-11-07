@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {Link, Navigate} from "react-router-dom";
 
 const Timer = ({setSeconds, setMilliseconds}) => {
 
@@ -12,16 +11,24 @@ const Timer = ({setSeconds, setMilliseconds}) => {
     //     setMilliseconds(Math.floor((time / 10) % 100));
     // }
 
-    useEffect(() => {
-        // const interval = setInterval(() => getTime(deadline), 1)
+    // useEffect(() => {
+    //     const interval = setInterval(() => getTime(deadline), 1)
+    //
+    //     return () => clearInterval(interval)
+    // }, [])
 
-        // return () => clearInterval(interval)
-    }, [])
+
 
 
     return (
         <div className="timer">
-
+            {/*<div className="min">*/}
+            {/*    <span></span>*/}
+            {/*</div>*/}
+            {/*<div className="sec">*/}
+            {/*    <small className="dot">.</small>*/}
+            {/*    <span>10</span>*/}
+            {/*</div>*/}
         </div>
     );
 };

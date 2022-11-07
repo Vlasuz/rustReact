@@ -1,27 +1,47 @@
 import React, {useEffect, useState} from 'react';
 import PopupCloseBackground from "../../PopupCloseBackground";
 
-const PopupAddCoinsByCodeFail = ({isFailCode}) => {
+const PopupAddCoinsByCodeFail = ({isFailCode, setIsFailCode}) => {
 
     let openPopup = function (nextPopup) {
-        if(document.querySelector('.popup_active')){
+        if (document.querySelector('.popup_active')) {
             document.querySelector('.popup_active').classList.remove('popup_active')
         }
         document.querySelector('.' + nextPopup).classList.add('popup_active')
     }
 
+
+    // const [time, setTime] = useState(5)
+    //
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         setTime(last => last - 1)
+    //     }, 1000)
+    //     return () => clearInterval(interval)
+    // })
+    //
+    // let endFunc = function () {
+    //     setTime(5)
+    //     openPopup('popup-add-coins-pin-code')
+    // }
+
     const [time, setTime] = useState(5)
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTime(last => last - 1)
-        }, 1000)
-        return () => clearInterval(interval)
-    })
+    if (isFailCode) {
+        setIsFailCode(false)
 
-    let endFunc = function () {
-        setTime(5)
-        // openPopup('popup-add-coins-pin-code')
+        let timer = setInterval(() => {
+            setTime(prev => prev - 1)
+
+            setTimeout(() => {
+                setTime(5)
+                clearInterval(timer)
+            }, 5000)
+        }, 1000)
+
+        setTimeout(() => {
+            openPopup('popup-add-coins-pin-code')
+        }, 5000)
     }
 
     return (
@@ -33,9 +53,7 @@ const PopupAddCoinsByCodeFail = ({isFailCode}) => {
                     <br/>следущая попытка через:</p>
                 <div className="code-fail">
                     <div className="code-fail__timer">
-                        {
-                            time >= 0 ? time : endFunc()
-                        }
+                        {time}
                     </div>
                 </div>
             </div>

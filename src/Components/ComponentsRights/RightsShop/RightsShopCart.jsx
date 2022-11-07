@@ -18,9 +18,10 @@ const RightsShopCart = ({isOpenCart, setIsOpenCart, listToCart, setListToCart}) 
             <h2>Корзина</h2>
             <div className="cart__list">
                 {
-                    listToCart.map(item =>
+                    listToCart.map((item, itemNum) =>
                         <RightsShopCartItem
-                            key={item.id}
+                            idItem={itemNum}
+                            key={item.listItems.id}
                             setListToCart={setListToCart}
                             listToCart={listToCart}
                             listItems={item.listItems}

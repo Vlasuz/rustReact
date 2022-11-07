@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import PopupCloseBackground from "../PopupCloseBackground";
 import PopupCloseCross from "../PopupCloseCross";
+import PopupAddCoinsBySkinsList from "./PopupAddCoinsBySkins/PopupAddCoinsBySkinsList";
 
 const PopupAddCoinsBySkins = () => {
 
@@ -22,7 +23,11 @@ const PopupAddCoinsBySkins = () => {
                     action="#"
                     onSubmit={e => e.preventDefault()}
                 >
-                    <input type="radio" checked name="filter" id="filterPrice"/>
+                    <input
+                        type="radio"
+                        name="filter"
+                        id="filterPrice"
+                    />
                     <label className="filter__item filter__price" htmlFor="filterPrice">
                         <span>По цене</span>
                         <input type="checkbox" name="upDown"/>
@@ -36,250 +41,7 @@ const PopupAddCoinsBySkins = () => {
                         <img src="images/filter.svg" alt="filter"/>
                     </label>
                 </form>
-                <div className="skins__inner">
-                    <div className="skins__block">
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                        <div className="skins__item">
-                            <div className="clothes__cool clothes__cool_green">
-
-                            </div>
-                            <div className="item__check">
-                                <img src="images/green-check-sq.svg" alt="Photo"/>
-                            </div>
-                            <div className="item__photo">
-                                <img src="images/skin.png" alt="Photo"/>
-                            </div>
-                            <div className="item__price">
-                                <img src="images/header__coins.svg" alt="Photo" />
-                                <span>3000</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <PopupAddCoinsBySkinsList />
                 <hr />
                 <div className="skins__price">
                     <p>Зачисление на баланс:</p>

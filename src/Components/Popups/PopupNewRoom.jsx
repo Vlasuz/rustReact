@@ -1,9 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PopupCloseCross from "./PopupCloseCross";
 import PopupCloseBackground from "./PopupCloseBackground";
 import {Link} from "react-router-dom";
 
 const PopupNewRoom = ({dataInfo}) => {
+
+    function createGame(e) {
+        e.preventDefault();
+        document.querySelector('.link-to-page').click()
+    }
+
+    const sumListItems = function () {
+        let sum = 0
+        if(document.querySelector('.popup-new-room__zone li')) {
+            document.querySelectorAll('.popup-new-room__zone li').forEach((item) => {
+                sum += +item.querySelector('.item__price span').innerText
+            })
+
+            document.querySelector('.popup__content-item-clothes button').removeAttribute('disabled')
+        } else {
+            sum = 0;
+            document.querySelector('.popup__content-item-clothes button').setAttribute('disabled', 'disabled')
+        }
+        document.querySelector('.inputs__item_skins span').innerHTML = sum;
+    }
 
     let switcherLi = function (e) {
 
@@ -33,16 +53,155 @@ const PopupNewRoom = ({dataInfo}) => {
         }
 
     }
-
-
-
     let changeInput = function (e) {
 
-        if (e.target.value != '' && e.target.value > 0 && e.target.value <= dataInfo.coins ) {
+        if (e.target.value != '' && e.target.value > 0 && e.target.value <= dataInfo.coins) {
             e.target.closest('form').querySelector('button').removeAttribute('disabled')
         } else {
             e.target.closest('form').querySelector('button').setAttribute('disabled', 'disabled')
         }
+    }
+
+    function checkListLi(container) {
+
+        if (container.querySelectorAll('.popup-new-room__zone ul li').length > 0 && container.querySelector('.popup-new-room__zone p')) {
+            container.querySelector('.popup-new-room__zone p').style.display = 'none';
+        } else {
+            container.querySelector('.popup-new-room__zone p').style.display = 'block';
+        }
+
+    }
+    function itemZoneDelete(container) {
+
+        container.querySelectorAll('.popup-new-room__zone .li__delete').forEach((del) => {
+
+            del.onclick = function () {
+                this.closest('.popup').querySelector('.popup-new-room__list').append(this.closest('li'))
+                sumListItems()
+                checkListLi(container)
+            }
+
+        })
+
+    }
+    const itemMove = function (event) {
+
+        let postItem = event.target.closest('.popup-new-room__item')
+        let currentDroppable = null;
+
+        let shiftX = event.clientX - postItem.getBoundingClientRect().left;
+        let shiftY = event.clientY - postItem.getBoundingClientRect().top;
+
+
+        function onMouseMove(event) {
+
+            document.querySelector('body').append(postItem)
+
+            postItem.style.position = 'absolute';
+            postItem.style.zIndex = 999;
+
+            moveAt(event.clientX, event.clientY)
+
+            postItem.style.display = 'none';
+            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+            postItem.style.display = 'flex';
+
+            if (!elemBelow) return;
+
+            let droppableBelow = elemBelow.closest('.popup-new-room__zone')
+
+
+            function movedNotInZone() {
+
+                document.onmouseup = function (e) {
+
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.onmouseup = null;
+
+                    postItem.style.position = 'relative';
+                    postItem.style.left = 'auto';
+                    postItem.style.top = 'auto';
+
+                    document.querySelector('.popup-new-room__list').append(postItem)
+
+                    sumListItems()
+
+                    checkListLi(e.target.closest('.popup'))
+
+                }
+
+            }
+
+
+            if (!currentDroppable) movedNotInZone()
+
+            if (currentDroppable != droppableBelow) {
+
+                if (currentDroppable) {
+                    document.querySelector('.popup-new-room__zone').style.background = 'transparent';
+                }
+
+                currentDroppable = droppableBelow;
+
+                if (currentDroppable) {
+                    droppableBelow.style.background = '#26293b';
+                    document.onmouseup = function (e) {
+
+
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.onmouseup = null;
+
+                        postItem.style.position = 'relative';
+                        postItem.style.left = 'auto';
+                        postItem.style.top = 'auto';
+
+                        droppableBelow.querySelector('ul').append(postItem)
+
+                        sumListItems()
+
+                        checkListLi(e.target.closest('.popup'))
+
+                    }
+                }
+
+            }
+
+        }
+
+        function moveAt(pageX, pageY) {
+
+            let coodX = pageX - shiftX;
+            let coodY = pageY - shiftY;
+
+            postItem.style.left = coodX + 'px';
+            postItem.style.top = coodY + 'px';
+
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        document.onmouseup = function (e) {
+
+            document.removeEventListener('mousemove', onMouseMove);
+            document.onmouseup = null;
+
+            if (!e.target.closest('.li__delete')) {
+
+                e.target.closest('.popup').querySelector('.popup-new-room__zone ul').append(postItem)
+                sumListItems()
+                checkListLi(e.target.closest('.popup'))
+
+            }
+
+            itemZoneDelete(e.target.closest('.popup'))
+
+        }
+
+        postItem.ondragstart = function () {
+            return false;
+        };
+
+
     }
 
 
@@ -69,7 +228,10 @@ const PopupNewRoom = ({dataInfo}) => {
                         </ul>
                     </div>
                     <div className="popup__content-item popup__content-item_active">
-                        <form action="#">
+                        <form
+                            action="#"
+                            onSubmit={(e) => createGame(e)}
+                        >
                             <div className="inputs">
                                 <div className="inputs__item inputs__item-sum">
                                     <p>Сумма ставки:</p>
@@ -92,25 +254,31 @@ const PopupNewRoom = ({dataInfo}) => {
                                     </div>
                                 </div>
                             </div>
-                            <Link to={'/fight-running'}>Создать игру</Link>
+                            <button>Создать игру</button>
                         </form>
                     </div>
-                    <div className="popup__content-item popup__content-item-clothes">
+                    <form
+                        className="popup__content-item popup__content-item-clothes"
+                        onSubmit={(e) => createGame(e)}
+                    >
+                        <Link className={"link-to-page"} to={'/fight-running'} />
                         <div className="popup-new-room__zone">
                             <p>Перетащите сюда скины для ставки</p>
                             <ul>
 
                             </ul>
                         </div>
-                        <div className="inputs__item inputs__item-have">
+                        <div className="inputs__item inputs__item-have inputs__item_skins">
                             <p>Итоговая сумма ставки:</p>
                             <div className="input">
                                 <img src="images/header__coins.svg" alt="Ico"/>
-                                <span>0</span>
+                                <span>
+                                    0
+                                </span>
                             </div>
                         </div>
-                        <button disabled>Создать игру</button>
-                    </div>
+                        <button type={"submit"} disabled>Создать игру1</button>
+                    </form>
                 </div>
                 <div className="popup__content_rht">
                     <h2>Инвентарь сайта</h2>
@@ -125,7 +293,10 @@ const PopupNewRoom = ({dataInfo}) => {
                         </div>
                     </div>
                     <ul className="popup-new-room__list">
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -143,7 +314,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -161,7 +335,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -179,7 +356,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -197,7 +377,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -215,7 +398,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -233,7 +419,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -251,7 +440,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -269,7 +461,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -287,7 +482,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -305,7 +503,10 @@ const PopupNewRoom = ({dataInfo}) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>

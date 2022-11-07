@@ -1,10 +1,39 @@
 import React from 'react';
 
-const RightsShopItem = ({listItems, setListToCart}) => {
+const RightsShopItem = ({listItems, setListToCart, listToCart}) => {
+
+
+    const addProd = function () {
+        setListToCart(oldArr => [...oldArr, {listItems}])
+    }
+    const addItem = function (e) {
+
+        let a = false;
+
+        if (listToCart.length > 0) {
+
+            listToCart.map(item => {
+
+                if (item.listItems === listItems) {
+                    a = true
+                }
+
+            })
+
+            if( a == false ) {
+                addProd()
+            }
+
+        } else {
+            setListToCart(oldArr => [...oldArr, {listItems}])
+        }
+
+    }
+
     return (
         <div
             className="postamat__item"
-            onClick={() => setListToCart(oldArr => [...oldArr, {listItems}])}
+            onClick={(e) => addItem(e)}
         >
             <div className="item__buy">
                 <img src="images/basket.svg" alt="Basket"/>

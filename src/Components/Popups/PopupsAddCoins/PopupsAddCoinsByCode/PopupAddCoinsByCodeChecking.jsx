@@ -1,35 +1,35 @@
 import React, {useEffect} from 'react';
 import PopupCloseBackground from "../../PopupCloseBackground";
 
-const PopupAddCoinsByCodeChecking = ({pincode, checkingAcive, setCheckingAcive}) => {
+const PopupAddCoinsByCodeChecking = ({pincode, checkingCode, isCheckingCode, setPincode, setIsFailCode}) => {
 
     let openPopup = function (nextPopup) {
-        if(document.querySelector('.popup_active')){
+        if (document.querySelector('.popup_active')) {
             document.querySelector('.popup_active').classList.remove('popup_active')
         }
         document.querySelector('.' + nextPopup).classList.add('popup_active')
     }
 
-    let checkingCode = () => {
-        return (pincode == '1111 - 1111 - 1111') ?
-            openPopup('popup-add-coins-pin-code-success') :
-            openPopup('popup-add-coins-pin-code-fail')
-    }
 
-    // useEffect(() => {
-    //     if(document.querySelector('.popup-add-coins-pin-code-checking').classList.contains('popup_active')){
-    //         checkingCode()
-    //     }
-    // }, [checkingAcive])
+    setTimeout(() => {
+        if (checkingCode) {
+            isCheckingCode(false)
 
-    if(checkingAcive == true){
-        checkingCode()
-        setCheckingAcive(false)
-    }
+            if(pincode == '1111 - 1111 - 1111'){
+                setPincode('')
+                openPopup('popup-add-coins-pin-code-success')
+            } else {
+                setPincode('')
+                openPopup('popup-add-coins-pin-code-fail')
+                setIsFailCode(true)
+            }
+        }
+    }, 1000)
+
 
     return (
         <div className="popup popup-add-coins-pin-code-checking">
-            <PopupCloseBackground />
+            <PopupCloseBackground/>
             <div className="popup__content">
                 <h2>Пин-код</h2>
                 <div className="checking-code">

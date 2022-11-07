@@ -20,19 +20,11 @@ const AsidePlane = (props) => {
                 <img src="images/plane.svg" alt="Plane" />
                 <div className="timer">
                     <div className="min">
-                            <span>
-                                {
-                                    // tickSec > 0 ? tickSec : '00'
-                                }
-                            </span>
+                        <span>00</span>
                     </div>
                     <div className="sec">
                         <small className="dot">.</small>
-                        <span>
-                                {
-                                    // tickMilisec > 0 ? tickMilisec : '00'
-                                }
-                            </span>
+                        <span>10</span>
                     </div>
                 </div>
                 <div className="timer-line">

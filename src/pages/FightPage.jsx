@@ -1,42 +1,38 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import FightTop from "../Components/ComponentsFightPage/FightTop";
 import FightItem from "../Components/ComponentsFightPage/FightItem/FightItem";
 
-const FightPage = ({onSetCoins, mainCoins, dataInfo}) => {
+const FightPage = ({onSetCoins, mainCoins, dataInfo, listFights, setFightInfo}) => {
 
-    const listFights = [
-        {
-            id: 1,
-            onSetCoins: onSetCoins,
-            mainCoins: mainCoins,
-            typePrice: "clothes",
-            image: "images/user.jpeg",
-            name: "Amnesianna5360",
-            bid: "130",
-            opponentName: "Victorius",
-            opponentPhoto: "images/user.jpeg",
-            status: 'waiting',
-            youWon: null
-        },
-        {
-            id: 2,
-            onSetCoins: onSetCoins,
-            mainCoins: mainCoins,
-            typePrice: "coins",
-            image: "images/user.jpeg",
-            name: "Amnesianna5360",
-            bid: "130",
-            opponentName: "Victorius",
-            opponentPhoto: "images/user.jpeg",
-            status: 'waiting',
-            youWon: null
-        }
-    ]
+    const [loader, isLoader] = useState(true)
+    useEffect(() => {
+        isLoader(false)
+    })
+    if(loader) {
+        return(
+            <section className="section-shop">
+                <div className="loading">
+                    <div className="load">
+                        <div className="load__line">
 
+                        </div>
+                        <div className="load__line">
+
+                        </div>
+                        <div className="load__line">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        )
+    }
 
     return (
         <section className="section-shop">
-            <FightTop dataInfo={dataInfo} />
+
+
+            <FightTop dataInfo={dataInfo}/>
             <div className="section-shop__list-games">
                 {
                     listFights.map(item =>
@@ -52,9 +48,12 @@ const FightPage = ({onSetCoins, mainCoins, dataInfo}) => {
                             opponentPhoto={item.opponentPhoto}
                             status={item.status}
                             youWon={item.youWon}
+                            setFightInfo={setFightInfo}
                         />
                     )
                 }
+
+
                 <FightItem
                     onSetCoins={onSetCoins}
                     mainCoins={mainCoins}
@@ -116,6 +115,8 @@ const FightPage = ({onSetCoins, mainCoins, dataInfo}) => {
                     youWon={true}
                 />
             </div>
+
+
         </section>
     );
 };

@@ -5,7 +5,6 @@ const RightsFilter = ({setFilterChange}) => {
         <div className="postamat__filter">
             <input
                 type="radio"
-                checked
                 name="filter"
                 id="filterPrice"
                 // onChange={e => setFilterChange(e.target.checked)}

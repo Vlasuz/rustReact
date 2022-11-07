@@ -1,7 +1,32 @@
 import React from 'react';
 import ComponentMap from "../Components/ComponentsMap/ComponentMap";
+import {useEffect, useState} from "react";
 
 const AirdropPage = () => {
+
+    const [loader, isLoader] = useState(true)
+    useEffect(() => {
+        isLoader(false)
+    })
+    if(loader) {
+        return(
+            <section className="section-shop">
+                <div className="loading">
+                    <div className="load">
+                        <div className="load__line">
+
+                        </div>
+                        <div className="load__line">
+
+                        </div>
+                        <div className="load__line">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        )
+    }
 
 
     let pointXOfScale = 0
@@ -50,11 +75,14 @@ const AirdropPage = () => {
                 </div>
             </div>
 
-            <div className="notice-bottom"><span>Проигрыш</span>
-                <button className="notice-bottom__close">
-                    <img src="images/close.svg" alt="Close"/>
-                </button>
-            </div>
+            {/*<div className="notice-bottom"><span>Проигрыш</span>*/}
+            {/*    <button*/}
+            {/*        className="notice-bottom__close"*/}
+            {/*        onClick={e => e.target.closest('.notice-bottom').classList.add('notice-bottom_remove')}*/}
+            {/*    >*/}
+            {/*        <img src="images/close.svg" alt="Close"/>*/}
+            {/*    </button>*/}
+            {/*</div>*/}
         </section>
     );
 };

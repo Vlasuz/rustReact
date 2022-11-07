@@ -3,7 +3,10 @@ import React from 'react';
 const FightAreaBidClothes = () => {
     return (
         <div className="resources__clothes">
-            <button className="clothes__head">
+            <button
+                className="clothes__head"
+                onClick={e => e.target.closest('.resources__clothes').querySelector('.clothes__body').classList.toggle('clothes__body_active')}
+            >
                 <img src="images/clothes.svg" alt="Ico"/>
             </button>
             <div className="clothes__body">

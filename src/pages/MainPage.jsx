@@ -3,8 +3,33 @@ import TopGamer from "../Components/ComponentsMainPage/TopGamer";
 import Balance from "../Components/ComponentsMainPage/Balance";
 import Stats from "../Components/ComponentsMainPage/Stats";
 import Table from "../Components/ComponentsMainPage/Table";
+import {useEffect, useState} from "react";
 
 const MainPage = ({dataInfo, tradeLink, setTradeLink}) => {
+
+    const [loader, isLoader] = useState(true)
+    useEffect(() => {
+        isLoader(false)
+    })
+    if(loader) {
+        return(
+            <section>
+                <div className="loading">
+                    <div className="load">
+                        <div className="load__line">
+
+                        </div>
+                        <div className="load__line">
+
+                        </div>
+                        <div className="load__line">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        )
+    }
 
     let newcomer = false;
 

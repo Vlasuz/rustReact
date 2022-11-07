@@ -5,8 +5,19 @@ import PopupCloseCross from "../PopupCloseCross";
 const PopupAddCoinsByDollars = () => {
 
     let openPopup = function (nextPopup) {
-        document.querySelector('.popup_active').classList.remove('popup_active')
+        if(document.querySelector('.popup_active')){
+            document.querySelector('.popup_active').classList.remove('popup_active')
+        }
         document.querySelector('.'+nextPopup).classList.add('popup_active')
+    }
+
+    let chooseSum = function (e) {
+
+        for( let a of document.querySelectorAll('.balance__cost li') ){
+            a.classList.remove('li_active')
+        }
+
+        e.target.closest('li').classList.toggle('li_active')
     }
 
     return (
@@ -25,22 +36,46 @@ const PopupAddCoinsByDollars = () => {
                 <PopupCloseCross />
                 <ul className="balance__cost">
                     <li>
-                        <button>$1</button>
+                        <button
+                            onClick={e => chooseSum(e)}
+                        >
+                            $1
+                        </button>
                     </li>
                     <li>
-                        <button>$5</button>
+                        <button
+                            onClick={e => chooseSum(e)}
+                        >
+                            $5
+                        </button>
                     </li>
                     <li>
-                        <button>$10</button>
+                        <button
+                            onClick={e => chooseSum(e)}
+                        >
+                            $10
+                        </button>
                     </li>
                     <li>
-                        <button>$20</button>
+                        <button
+                            onClick={e => chooseSum(e)}
+                        >
+                            $20
+                        </button>
                     </li>
                     <li>
-                        <button>$40</button>
+                        <button
+                            onClick={e => chooseSum(e)}
+                        >
+                            $40
+                        </button>
                     </li>
                     <li>
-                        <button>$60</button>
+                        <button
+                            onClick={e => chooseSum(e)}
+                        >
+                            $60
+                        </button>
                     </li>
                 </ul>
                 <div className="balance__sum">
@@ -50,7 +85,7 @@ const PopupAddCoinsByDollars = () => {
                         <span>800</span>
                     </div>
                 </div>
-                <button onClick="openPopup('add-coins-balance-linking')">Перейти к оплате</button>
+                <button onClick={() => openPopup('popup-add-coins-balance-linking')}>Перейти к оплате</button>
             </div>
         </div>
     );

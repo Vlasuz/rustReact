@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import RightsShopItem from "./RightsShopItem";
 
-const RightsShopList = ({listItems, setIsAddCart, setListToCart}) => {
+const RightsShopList = ({listItems, setIsAddCart, setListToCart, listToCart}) => {
 
 
 
@@ -15,6 +15,7 @@ const RightsShopList = ({listItems, setIsAddCart, setListToCart}) => {
                         listItems={item}
                         setIsAddCart={setIsAddCart}
                         setListToCart={setListToCart}
+                        listToCart={listToCart}
                     />
                 )
             }

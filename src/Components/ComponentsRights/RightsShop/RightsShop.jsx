@@ -72,6 +72,7 @@ const RightsShop = () => {
                 <RightsShopList
                     listItems={listItems}
                     setListToCart={setListToCart}
+                    listToCart={listToCart}
                 />
                 {listToCart.length ? <RightsShopBottomFull listToCart={listToCart} setIsOpenCart={setIsOpenCart}/> : <RightsShopBottomEmpty/>}
 

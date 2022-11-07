@@ -11,6 +11,8 @@ import PopupAddCoinsByCodeFail from "./PopupsAddCoins/PopupsAddCoinsByCode/Popup
 import PopupAddCoinsBySkins from "./PopupsAddCoins/PopupAddCoinsBySkins";
 import PopupCloseBackground from "./PopupCloseBackground";
 import PopupCloseCross from "./PopupCloseCross";
+import PopupOutputSearch from "./PopupOutputItems/PopupOutputSearch";
+import PopupOutput from "./PopupOutputItems/PopupOutput";
 
 const AllPopups = ({dataInfo}) => {
 
@@ -20,34 +22,38 @@ const AllPopups = ({dataInfo}) => {
         })
     }
 
-    const [pincode, setPincode] = useState('')
     const [checkingAcive, setCheckingAcive] = useState(false)
 
+
+
+    const [pincode, setPincode] = useState('')
+    const [checkingCode, isCheckingCode] = useState(false)
     const [isFailCode, setIsFailCode] = useState(false)
 
     return (
         <>
-            {/*<PopupFairGame/>*/}
+            <PopupFairGame/>
 
             <PopupAddCoins/>
             <PopupAddCoinsByCode
-                pincode={pincode}
+                isCheckingCode={isCheckingCode}
                 setPincode={setPincode}
-                setCheckingAcive={setCheckingAcive}
-                setIsFailCode={setIsFailCode}
             />
             <PopupAddCoinsByDollars/>
             <PopupAddCoinsBySkins/>
             <PopupAddCoinsByCodeChecking
                 pincode={pincode}
-                checkingAcive={checkingAcive}
-                setCheckingAcive={setCheckingAcive}
+                checkingCode={checkingCode}
+                isCheckingCode={isCheckingCode}
+                setPincode={setPincode}
+                setIsFailCode={setIsFailCode}
             />
             <PopupAddCoinsByCodeSuccess/>
             <PopupAddCoinsByCodeFail
                 isFailCode={isFailCode}
+                setIsFailCode={setIsFailCode}
             />
-            {/*<PopupAddCoinsLinking/>*/}
+            <PopupAddCoinsLinking/>
 
 
             <div className="popup popup-trade popup-trade-waiting">
@@ -145,320 +151,9 @@ const AllPopups = ({dataInfo}) => {
                 </div>
             </div>
 
-            <div className="popup popup-pull">
-                <PopupCloseBackground />
-                <div className="popup__content">
-                    <h2>Статус ботов</h2>
-                    <PopupCloseCross />
-                    <div className="popup-pull__block">
-                        <div className="popup-pull__item">
-                            <div className="item__top">
-                                <div className="item__photo">
-                                    <img src="images/robot.png" alt="Robot"/>
-                                </div>
-                                <h3 className="item__name">Бот #6</h3>
-                                <div className="item__status">
-                                    <div className="img">
-                                        <img src="images/green-check.svg" alt="Ico"/>
-                                    </div>
-                                </div>
-                                <button className="item__repeat">
-                                    <img src="images/reload.svg" alt="Reload"/>
-                                    <span>Повторить</span>
-                                </button>
-                                <button className="item__delete">
-                                    <img src="images/cross.svg" alt="Delete"/>
-                                </button>
-                            </div>
-                            <div className="item__bottom">
-                                <ul className="item__skins">
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
 
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                        <div className="item__count">2</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="popup-pull__item">
-                            <div className="item__top">
-                                <div className="item__photo">
-                                    <img src="images/robot.png" alt="Robot"/>
-                                </div>
-                                <h3 className="item__name">Бот #6</h3>
-                                <div className="item__status">
-                                    <div className="load">
-                                        <div className="load__line">
-
-                                        </div>
-                                        <div className="load__line">
-
-                                        </div>
-                                        <div className="load__line">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <button className="item__repeat">
-                                    <img src="images/reload.svg" alt="Reload"/>
-                                    <span>Повторить</span>
-                                </button>
-                                <button className="item__delete">
-                                    <img src="images/cross.svg" alt="Delete"/>
-                                </button>
-                            </div>
-                            <div className="item__bottom">
-                                <ul className="item__skins">
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                        <div className="item__count">2</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="popup-pull__item">
-                            <div className="item__top">
-                                <div className="item__photo">
-                                    <img src="images/robot.png" alt="Robot"/>
-                                </div>
-                                <h3 className="item__name">Бот #6</h3>
-                                <div className="item__status">
-                                    <img src="images/status-error.svg" alt="Fail"/>
-                                </div>
-                                <button className="item__repeat item__repeat_active">
-                                    <img src="images/reload.svg" alt="Reload"/>
-                                    <span>Повторить</span>
-                                </button>
-                                <button className="item__delete">
-                                    <img src="images/cross.svg" alt="Delete"/>
-                                </button>
-                            </div>
-                            <div className="item__bottom">
-                                <ul className="item__skins">
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="popup-pull__item">
-                            <div className="item__top">
-                                <div className="item__photo">
-                                    <img src="images/robot.png" alt="Robot"/>
-                                </div>
-                                <h3 className="item__name">Бот #6</h3>
-                                <div className="item__status">
-
-                                </div>
-                                <button className="item__repeat item__repeat_active">
-                                    <img src="images/reload.svg" alt="Reload"/>
-                                    <span>Повторить</span>
-                                </button>
-                                <button className="item__delete">
-                                    <img src="images/cross.svg" alt="Delete"/>
-                                </button>
-                            </div>
-                            <div className="item__bottom">
-                                <ul className="item__skins">
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                        <div className="item__count">2</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="popup-pull__item">
-                            <div className="item__top">
-                                <div className="item__photo">
-                                    <img src="images/robot.png" alt="Robot"/>
-                                </div>
-                                <h3 className="item__name">Бот #6</h3>
-                                <div className="item__status">
-
-                                </div>
-                                <button className="item__repeat item__repeat_active">
-                                    <img src="images/reload.svg" alt="Reload"/>
-                                    <span>Повторить</span>
-                                </button>
-                                <button className="item__delete">
-                                    <img src="images/cross.svg" alt="Delete"/>
-                                </button>
-                            </div>
-                            <div className="item__bottom">
-                                <ul className="item__skins">
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                        <div className="item__count">2</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="popup-pull__item">
-                            <div className="item__top">
-                                <div className="item__photo">
-                                    <img src="images/robot.png" alt="Robot"/>
-                                </div>
-                                <h3 className="item__name">Бот #6</h3>
-                                <div className="item__status">
-
-                                </div>
-                                <button className="item__repeat item__repeat_active">
-                                    <img src="images/reload.svg" alt="Reload"/>
-                                    <span>Повторить</span>
-                                </button>
-                                <button className="item__delete">
-                                    <img src="images/cross.svg" alt="Delete"/>
-                                </button>
-                            </div>
-                            <div className="item__bottom">
-                                <ul className="item__skins">
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                        <div className="item__count">2</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="popup-pull__item">
-                            <div className="item__top">
-                                <div className="item__photo">
-                                    <img src="images/robot.png" alt="Robot"/>
-                                </div>
-                                <h3 className="item__name">Бот #6</h3>
-                                <div className="item__status">
-
-                                </div>
-                                <button className="item__repeat item__repeat_active">
-                                    <img src="images/reload.svg" alt="Reload"/>
-                                    <span>Повторить</span>
-                                </button>
-                                <button className="item__delete">
-                                    <img src="images/cross.svg" alt="Delete"/>
-                                </button>
-                            </div>
-                            <div className="item__bottom">
-                                <ul className="item__skins">
-                                    <li className="item__skin">
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src="images/skin.png" alt="Skin"/>
-                                        <div className="item__count">2</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div className="popup-pull__buttons">
-                        <button className="grey" onClick="openPopup('pull-search')">
-                            <span>Через браузер</span>
-                        </button>
-                        <button className="steam">
-                            <span>Через Steam</span>
-                            <img src="images/steam.svg" alt="Steam"/>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div className="popup popup-pull-search">
-                <PopupCloseBackground />
-                <div className="popup__content">
-                    <h2>Статус ботов</h2>
-                    <PopupCloseCross />
-                    <div className="popup-pull-search__text">
-                        <p>Подбираем ботов</p>
-                        <div className="load">
-                            <div className="load__line">
-
-                            </div>
-                            <div className="load__line">
-
-                            </div>
-                            <div className="load__line">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <PopupOutputSearch />
+            <PopupOutput />
 
 
 

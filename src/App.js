@@ -27,6 +27,61 @@ function App() {
         milliseconds: milliseconds
     }
 
+    const listFights = [
+        {
+            id: 1,
+            onSetCoins: setCoins,
+            mainCoins: coins,
+            typePrice: "clothes",
+            image: "images/user.jpeg",
+            name: "Amnesianna5360",
+            bid: "130",
+            opponentName: "Victorius",
+            opponentPhoto: "images/user.jpeg",
+            status: 'waiting',
+            youWon: null
+        },
+        {
+            id: 2,
+            onSetCoins: setCoins,
+            mainCoins: coins,
+            typePrice: "coins",
+            image: "images/user.jpeg",
+            name: "Amnesianna5360",
+            bid: "130",
+            opponentName: "Victorius",
+            opponentPhoto: "images/user.jpeg",
+            status: 'waiting',
+            youWon: null
+        },
+        {
+            id: 3,
+            onSetCoins: setCoins,
+            mainCoins: coins,
+            typePrice: "coins",
+            image: "images/user.jpeg",
+            name: "Amna5360",
+            bid: "560",
+            opponentName: "VictoriusGood",
+            opponentPhoto: "images/user.jpeg",
+            status: 'waiting',
+            youWon: null
+        }
+    ]
+    const [fightInfo, setFightInfo] = useState([
+        {
+            onSetCoins: setCoins,
+            mainCoins: coins,
+            typePrice: "",
+            image: "",
+            name: "",
+            bid: "",
+            opponentName: "",
+            opponentPhoto: "",
+            youWon: null
+        },
+    ])
+
     const dataItems = [
         {
             rating: 'red',
@@ -97,6 +152,8 @@ function App() {
                                 mainCoins={coins}
                                 onSetCoins={setCoins}
                                 dataInfo={dataInfo}
+                                listFights={listFights}
+                                setFightInfo={setFightInfo}
                             />
                         }
                     />

@@ -1,12 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PopupCloseBackground from "../../PopupCloseBackground";
 import PopupCloseCross from "../../PopupCloseCross";
 import IMask from 'imask';
 
-const PopupAddCoinsByCode = ({pincode, setPincode, setCheckingAcive, setIsFailCode}) => {
+const PopupAddCoinsByCode = ({setPincode, isCheckingCode}) => {
+
 
     let openPopup = function (nextPopup) {
-        document.querySelector('.popup_active').classList.remove('popup_active')
+        if(document.querySelector('.popup_active')){
+            document.querySelector('.popup_active').classList.remove('popup_active')
+        }
         document.querySelector('.' + nextPopup).classList.add('popup_active')
     }
 
@@ -16,23 +19,25 @@ const PopupAddCoinsByCode = ({pincode, setPincode, setCheckingAcive, setIsFailCo
         });
     })
 
+
+    const [pinInput, setPinInput] = useState('')
+    const clickToButton = function (e) {
+        e.preventDefault()
+        setPincode(pinInput)
+        isCheckingCode(true)
+        openPopup('popup-add-coins-pin-code-checking')
+    }
+
     const keyUpFunc = function (e) {
-
-        setPincode(e.target.value)
-
+        setPinInput(e.target.value)
         if (e.target.value.length <= 17) {
             e.target.closest('.form').querySelector('button').setAttribute('disabled', 'disabled')
             return;
         }
         e.target.closest('.form').querySelector('button').removeAttribute('disabled')
-
+        return;
     }
 
-    let checkingCode = function (e) {
-        setCheckingAcive(true)
-        setIsFailCode(true)
-        openPopup('popup-add-coins-pin-code-checking')
-    }
 
     return (
         <div className="popup popup-add-coins-pin-code">
@@ -41,7 +46,11 @@ const PopupAddCoinsByCode = ({pincode, setPincode, setCheckingAcive, setIsFailCo
                 <h2>Пин-код <sub>(пин код для удачи 1111 - 1111 - 1111)</sub>
                 </h2>
                 <PopupCloseCross/>
-                <div className={"form"}>
+                <form
+                    className={"form"}
+                    action={"#"}
+                    onSubmit={e => clickToButton(e)}
+                >
                     <label
                         className="popup-add-coins-pin-code__input input-pincode">
                         <span>Пин-код пополнения:</span>
@@ -50,17 +59,14 @@ const PopupAddCoinsByCode = ({pincode, setPincode, setCheckingAcive, setIsFailCo
                             placeholder="XXXX - XXXX - XXXX"
                             required
                             minLength="12"
-                            value={pincode}
                             onChange={e => keyUpFunc(e)}
+                            value={pinInput}
                         />
                     </label>
-                    <button
-                        // disabled
-                        onClick={() => checkingCode()}
-                    >
+                    <button disabled="disabled">
                         Применить купон
                     </button>
-                </div>
+                </form>
             </div>
         </div>
     );

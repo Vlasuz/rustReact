@@ -1,6 +1,31 @@
 import React from 'react';
+import {useEffect, useState} from "react";
 
 const PolicyPage = () => {
+    const [loader, isLoader] = useState(true)
+    useEffect(() => {
+        isLoader(false)
+    })
+    if(loader) {
+        return(
+            <section>
+                <div className="loading">
+                    <div className="load">
+                        <div className="load__line">
+
+                        </div>
+                        <div className="load__line">
+
+                        </div>
+                        <div className="load__line">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        )
+    }
+
     return (
         <section className="section-terms">
             <div className="section-terms__top">

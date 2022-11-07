@@ -194,47 +194,47 @@ function timeDeadlineFuncAside(timeDeadline){
 
 
 
-document.querySelectorAll('.storage .postamat__item').forEach(function (storItem) {
-
-  storItem.addEventListener('click', storItemClick)
-
-  function storItemsCheck() {
-
-    let sumItems = 0
-
-    for( let i = 0; i < document.querySelectorAll('.storage .postamat__item').length; i++ ){
-      if( document.querySelectorAll('.storage .postamat__item')[i].classList.contains('postamat__item_active') ){
-        sumItems++
-      }
-    }
-
-    return sumItems;
-
-  }
-
-  function storItemClick() {
-
-    storItem.classList.toggle('postamat__item_active')
-
-    let checkedItemsActive = storItemsCheck();
-
-    document.querySelector('.zone__count').innerText = checkedItemsActive
-
-    if( checkedItemsActive >= 1 ){
-
-      document.querySelector('.storage__zone .zone__empty').style.display = 'none';
-      document.querySelector('.storage__zone .zone__button').style.display = 'flex';
-
-    } else {
-
-      document.querySelector('.storage__zone .zone__empty').style.display = 'flex';
-      document.querySelector('.storage__zone .zone__button').style.display = 'none';
-
-    }
-
-  }
-
-})
+// document.querySelectorAll('.storage .postamat__item').forEach(function (storItem) {
+//
+//   storItem.addEventListener('click', storItemClick)
+//
+//   function storItemsCheck() {
+//
+//     let sumItems = 0
+//
+//     for( let i = 0; i < document.querySelectorAll('.storage .postamat__item').length; i++ ){
+//       if( document.querySelectorAll('.storage .postamat__item')[i].classList.contains('postamat__item_active') ){
+//         sumItems++
+//       }
+//     }
+//
+//     return sumItems;
+//
+//   }
+//
+//   function storItemClick() {
+//
+//     storItem.classList.toggle('postamat__item_active')
+//
+//     let checkedItemsActive = storItemsCheck();
+//
+//     document.querySelector('.zone__count').innerText = checkedItemsActive
+//
+//     if( checkedItemsActive >= 1 ){
+//
+//       document.querySelector('.storage__zone .zone__empty').style.display = 'none';
+//       document.querySelector('.storage__zone .zone__button').style.display = 'flex';
+//
+//     } else {
+//
+//       document.querySelector('.storage__zone .zone__empty').style.display = 'flex';
+//       document.querySelector('.storage__zone .zone__button').style.display = 'none';
+//
+//     }
+//
+//   }
+//
+// })
 
 
 
@@ -260,18 +260,18 @@ function skinsActive(selector) {
 
 
 
-document.querySelectorAll('.balance__cost button').forEach(function (btn) {
-
-  btn.onclick = function () {
-
-    for( let a of document.querySelectorAll('.balance__cost li') ){
-      a.classList.remove('li_active')
-    }
-
-    this.closest('li').classList.toggle('li_active')
-  }
-
-})
+// document.querySelectorAll('.balance__cost button').forEach(function (btn) {
+//
+//   btn.onclick = function () {
+//
+//     for( let a of document.querySelectorAll('.balance__cost li') ){
+//       a.classList.remove('li_active')
+//     }
+//
+//     this.closest('li').classList.toggle('li_active')
+//   }
+//
+// })
 
 
 
@@ -427,22 +427,22 @@ sumCountItems(document.querySelectorAll('.list-players'))
 sumCountItems(document.querySelectorAll('.section-history__item'))
 sumCountItems(document.querySelectorAll('.resources__clothes .clothes__body'))
 
-document.querySelectorAll('.count.count_active').forEach(function (count) {
-
-  count.onclick = function () {
-
-    if(this.closest('ul')){
-
-      for( let it of this.closest('ul').querySelectorAll('li') ){
-        it.style.display = 'flex'
-      }
-
-      this.remove()
-    }
-
-  }
-
-})
+// document.querySelectorAll('.count.count_active').forEach(function (count) {
+//
+//   count.onclick = function () {
+//
+//     if(this.closest('ul')){
+//
+//       for( let it of this.closest('ul').querySelectorAll('li') ){
+//         it.style.display = 'flex'
+//       }
+//
+//       this.remove()
+//     }
+//
+//   }
+//
+// })
 
 
 
@@ -475,14 +475,14 @@ deleteItems(document.querySelectorAll('.popup-pull__item .item__delete'), 'popup
 
 
 
-
-document.querySelectorAll('.clothes__head').forEach(function (clHead) {
-  clHead.onclick = function () {
-    
-    this.parentNode.querySelector('.clothes__body').classList.toggle('clothes__body_active')
-
-  }
-})
+//
+// document.querySelectorAll('.clothes__head').forEach(function (clHead) {
+//   clHead.onclick = function () {
+//
+//     this.parentNode.querySelector('.clothes__body').classList.toggle('clothes__body_active')
+//
+//   }
+// })
 
 
 // for( let tab of document.querySelectorAll('.tabs li') ){
@@ -527,11 +527,11 @@ if( document.querySelector('.section-right__bottom input') ) {
 }
 
 
-for( let close of document.querySelectorAll('.notice-bottom__close') ){
-  close.addEventListener('click', function () {
-    this.closest('.notice-bottom').classList.add('notice-bottom_remove')
-  })
-}
+// for( let close of document.querySelectorAll('.notice-bottom__close') ){
+//   close.addEventListener('click', function () {
+//     this.closest('.notice-bottom').classList.add('notice-bottom_remove')
+//   })
+// }
 
 
 document.querySelectorAll('.section-right__top .top__item').forEach(function (itemTop, itemTopNum) {
@@ -929,120 +929,120 @@ function checkListLi(container) {
 
 }
 
-document.querySelectorAll('.popup-new-room__list .popup-new-room__item').forEach(function (postItem) {
-  let currentDroppable = null;
-  postItem.onmousedown = function (event) {
-
-      let currentDroppable = null;
-      let postItemThis = this;
-
-      let shiftX = event.clientX - postItemThis.getBoundingClientRect().left;
-      let shiftY = event.clientY - postItemThis.getBoundingClientRect().top;
-
-
-      function onMouseMove(event){
-
-        document.querySelector('body').append(postItem)
-
-        postItem.style.position = 'absolute';
-        postItem.style.zIndex = 999;
-
-        moveAt(event.clientX, event.clientY)
-
-        postItem.style.display = 'none';
-        let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-        postItem.style.display = 'flex';
-
-        if(!elemBelow) return;
-
-        let droppableBelow = elemBelow.closest('.popup-new-room__zone')
-
-
-        function movedNotInZone() {
-
-          document.onmouseup = function (e) {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.onmouseup = null;
-
-            postItem.style.position = 'relative';
-            postItem.style.left = 'auto';
-            postItem.style.top = 'auto';
-
-            document.querySelector('.popup-new-room__list').append(postItem)
-
-            checkListLi(e.target.closest('.popup'))
-
-          }
-
-        }
-
-
-        if(!currentDroppable) movedNotInZone()
-
-        if( currentDroppable != droppableBelow ){
-
-          if(currentDroppable){
-            document.querySelector('.popup-new-room__zone').style.background = 'transparent';
-          }
-
-          currentDroppable = droppableBelow;
-
-          if(currentDroppable){
-            droppableBelow.style.background = '#26293b';
-            document.onmouseup = function (e) {
-              document.removeEventListener('mousemove', onMouseMove);
-              document.onmouseup = null;
-
-              postItem.style.position = 'relative';
-              postItem.style.left = 'auto';
-              postItem.style.top = 'auto';
-
-              droppableBelow.querySelector('ul').append(postItem)
-
-              checkListLi(e.target.closest('.popup'))
-
-            }
-          }
-
-        }
-
-      }
-
-      function moveAt(pageX, pageY){
-
-        let coodX = pageX - shiftX;
-        let coodY = pageY - shiftY;
-
-        postItemThis.style.left = coodX + 'px';
-        postItemThis.style.top = coodY + 'px';
-
-      }
-        
-      document.addEventListener('mousemove', onMouseMove);
-
-      document.onmouseup = function (e) {
-
-        document.removeEventListener('mousemove', onMouseMove);
-        document.onmouseup = null;
-
-        if( !e.target.closest('.li__delete') ){
-
-          e.target.closest('.popup').querySelector('.popup-new-room__zone ul').append(postItem)
-          checkListLi(e.target.closest('.popup'))
-
-        }
-
-        itemZoneDelete(e.target.closest('.popup'))
-
-      }
-
-      postItemThis.ondragstart = function() {
-        return false;
-      };
-
-    
-  }
-})
+// document.querySelectorAll('.popup-new-room__list .popup-new-room__item').forEach(function (postItem) {
+//   let currentDroppable = null;
+//   postItem.onmousedown = function (event) {
+//
+//       let currentDroppable = null;
+//       let postItemThis = this;
+//
+//       let shiftX = event.clientX - postItemThis.getBoundingClientRect().left;
+//       let shiftY = event.clientY - postItemThis.getBoundingClientRect().top;
+//
+//
+//       function onMouseMove(event){
+//
+//         document.querySelector('body').append(postItem)
+//
+//         postItem.style.position = 'absolute';
+//         postItem.style.zIndex = 999;
+//
+//         moveAt(event.clientX, event.clientY)
+//
+//         postItem.style.display = 'none';
+//         let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+//         postItem.style.display = 'flex';
+//
+//         if(!elemBelow) return;
+//
+//         let droppableBelow = elemBelow.closest('.popup-new-room__zone')
+//
+//
+//         function movedNotInZone() {
+//
+//           document.onmouseup = function (e) {
+//             document.removeEventListener('mousemove', onMouseMove);
+//             document.onmouseup = null;
+//
+//             postItem.style.position = 'relative';
+//             postItem.style.left = 'auto';
+//             postItem.style.top = 'auto';
+//
+//             document.querySelector('.popup-new-room__list').append(postItem)
+//
+//             checkListLi(e.target.closest('.popup'))
+//
+//           }
+//
+//         }
+//
+//
+//         if(!currentDroppable) movedNotInZone()
+//
+//         if( currentDroppable != droppableBelow ){
+//
+//           if(currentDroppable){
+//             document.querySelector('.popup-new-room__zone').style.background = 'transparent';
+//           }
+//
+//           currentDroppable = droppableBelow;
+//
+//           if(currentDroppable){
+//             droppableBelow.style.background = '#26293b';
+//             document.onmouseup = function (e) {
+//               document.removeEventListener('mousemove', onMouseMove);
+//               document.onmouseup = null;
+//
+//               postItem.style.position = 'relative';
+//               postItem.style.left = 'auto';
+//               postItem.style.top = 'auto';
+//
+//               droppableBelow.querySelector('ul').append(postItem)
+//
+//               checkListLi(e.target.closest('.popup'))
+//
+//             }
+//           }
+//
+//         }
+//
+//       }
+//
+//       function moveAt(pageX, pageY){
+//
+//         let coodX = pageX - shiftX;
+//         let coodY = pageY - shiftY;
+//
+//         postItemThis.style.left = coodX + 'px';
+//         postItemThis.style.top = coodY + 'px';
+//
+//       }
+//
+//       document.addEventListener('mousemove', onMouseMove);
+//
+//       document.onmouseup = function (e) {
+//
+//         document.removeEventListener('mousemove', onMouseMove);
+//         document.onmouseup = null;
+//
+//         if( !e.target.closest('.li__delete') ){
+//
+//           e.target.closest('.popup').querySelector('.popup-new-room__zone ul').append(postItem)
+//           checkListLi(e.target.closest('.popup'))
+//
+//         }
+//
+//         itemZoneDelete(e.target.closest('.popup'))
+//
+//       }
+//
+//       postItemThis.ondragstart = function() {
+//         return false;
+//       };
+//
+//
+//   }
+// })
 
 
 
