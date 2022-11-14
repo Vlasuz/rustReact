@@ -2,7 +2,7 @@ import React from 'react';
 import RightsTop from "./RightsTop";
 import RightsSwitcher from "./RightsSwitcher";
 
-const RightsContainer = ({onCoinsChange, onCoins, dataItems, switcherRights, onSwitcherRightsChange, timer}) => {
+const RightsContainer = ({onCoinsChange, onCoins, dataItems, switcherRights, onSwitcherRightsChange, timer, setTimeToFly, isAirdropEnd}) => {
 
 
 
@@ -19,6 +19,8 @@ const RightsContainer = ({onCoinsChange, onCoins, dataItems, switcherRights, onS
                 onSwitcherRightsChange={onSwitcherRightsChange}
 
                 timer={timer}
+                setTimeToFly={setTimeToFly}
+                isAirdropEnd={isAirdropEnd}
             />
         </section>
     );

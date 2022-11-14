@@ -1,4 +1,5 @@
 import React from 'react';
+import {Trans, useTranslation} from "react-i18next";
 
 const BalanceTop = ({dataInfo}) => {
 
@@ -6,10 +7,13 @@ const BalanceTop = ({dataInfo}) => {
         document.querySelector('.popup-add-coins').classList.add('popup_active')
     }
 
+    const {t} = useTranslation();
     return (
         <div className="balance__top">
             <div className="balance__block">
-                <h3>Баланс</h3>
+                <h3>
+                    <Trans t={t}>textBalance</Trans>
+                </h3>
                 <div className="balance__coins">
                     <img src="images/header__coins.svg" alt="Ico"/>
                     <span>
@@ -17,7 +21,10 @@ const BalanceTop = ({dataInfo}) => {
                     </span>
                 </div>
             </div>
-            <button className="balance__add" onClick={openPopup}><span>Пополнить</span>
+            <button className="balance__add" onClick={openPopup}>
+                <span>
+                    <Trans t={t}>textAddCash</Trans>
+                </span>
                 <img src="images/balance-add.svg" alt="Ico"/>
             </button>
         </div>

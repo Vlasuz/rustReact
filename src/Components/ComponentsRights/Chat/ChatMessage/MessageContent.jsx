@@ -3,7 +3,7 @@ import MessageTop from "./MessageTop";
 import MessageText from "./MessageText";
 import MessageDropdown from "./MessageDropdown";
 
-const MessageContent = ({messageInfo}) => {
+const MessageContent = ({messageInfo, messages, setMessages, thisId}) => {
 
     const [openDropdown, setOpenDropdown] = useState(false)
 
@@ -11,7 +11,12 @@ const MessageContent = ({messageInfo}) => {
         <div className="item__inner">
             <MessageTop messageInfo={messageInfo} setOpenDropdown={setOpenDropdown} />
             <MessageText messageInfo={messageInfo} />
-            <MessageDropdown openDropdown={openDropdown} />
+            <MessageDropdown
+                thisId={thisId}
+                openDropdown={openDropdown}
+                messages={messages}
+                setMessages={setMessages}
+            />
         </div>
     );
 };

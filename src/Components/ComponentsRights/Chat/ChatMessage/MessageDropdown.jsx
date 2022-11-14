@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MessageDropdown = ({openDropdown}) => {
+const MessageDropdown = ({openDropdown, messages, setMessages, thisId}) => {
 
     let showNotice = function () {
         document.querySelector('.section-right__notice .notice__block-chat').classList.add('notice__item_active')
@@ -8,6 +8,11 @@ const MessageDropdown = ({openDropdown}) => {
         setTimeout(function () {
             document.querySelector('.section-right__notice .notice__block-chat').classList.remove('notice__item_active')
         }, 2000)
+    }
+
+    const deleteMessage = (e) => {
+        let findIndex = messages.map(e => e.id).indexOf(thisId)
+        setMessages((products) => products.filter((_, index) => index !== findIndex))
     }
 
     return (
@@ -29,7 +34,10 @@ const MessageDropdown = ({openDropdown}) => {
             <li>
                 <a href="#">Бан чата</a>
             </li>
-            <li className="li__delete">
+            <li
+                className="li__delete"
+                onClick={e => deleteMessage(e)}
+            >
                 <a href="#">Удалить</a>
             </li>
         </ul>

@@ -135,21 +135,38 @@ const RightsItem = (props) => {
 
     }
 
-    let coolClass = '';
-    switch (props.cools) {
-        case 'green':
-            coolClass = 'item__cool clothes__cool_green';
-            break;
-        case 'red':
-            coolClass = 'item__cool clothes__cool_red';
-            break;
-        case 'blue':
-            coolClass = 'item__cool clothes__cool_blue';
-            break;
-        case 'grey':
-            coolClass = 'item__cool clothes__cool_grey';
-            break;
-    }
+    // let coolClass = '';
+    // switch (props.cools) {
+    //     case 'green':
+    //         coolClass = 'item__cool clothes__cool_green';
+    //         break;
+    //     case 'red':
+    //         coolClass = 'item__cool clothes__cool_red';
+    //         break;
+    //     case 'blue':
+    //         coolClass = 'item__cool clothes__cool_blue';
+    //         break;
+    //     case 'grey':
+    //         coolClass = 'item__cool clothes__cool_grey';
+    //         break;
+    // }
+    //
+    // const rarityChoose = () => {
+    //     switch (props.cools) {
+    //         case 'green':
+    //             return 'item__cool clothes__cool_green';
+    //             break;
+    //         case 'red':
+    //             return 'item__cool clothes__cool_red';
+    //             break;
+    //         case 'blue':
+    //             return 'item__cool clothes__cool_blue';
+    //             break;
+    //         case 'grey':
+    //             return 'item__cool clothes__cool_grey';
+    //             break;
+    //     }
+    // }
 
     return (
         <li
@@ -159,7 +176,7 @@ const RightsItem = (props) => {
             <div className="item__count">
                 {props.count}
             </div>
-            <div className={coolClass}>
+            <div className={props.cools}>
 
             </div>
             <div className="item__photo">

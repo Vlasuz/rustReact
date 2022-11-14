@@ -1,35 +1,14 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Timer from "../../Timer";
 
-const RightsAirdropBlock = ({onCoins, timer}) => {
-
-    function func() {
-        if (document.querySelector('.trajectory'))
-            document.querySelector('.trajectory').classList.add('trajectory_active')
-    }
+const RightsAirdropBlock = ({onCoins, timer, setNumSwitch, numSwitch, isAirdropEnd}) => {
 
     return (
         <div className="airdrop__block">
             <div className="airdrop__fly">
                 <div className="fly__top">
                     <p>До вылета:</p>
-                    <div className="timer">
-                        <div className="min">
-                            <span>
-                                {
-                                    timer.seconds < 10 ? "0" + timer.seconds : timer.seconds
-                                }
-                            </span>
-                        </div>
-                        <div className="sec">
-                            <small className="dot">.</small>
-                            <span>
-                                {
-                                    timer.milliseconds < 10 ? "0" + timer.milliseconds : timer.milliseconds
-                                }
-                            </span>
-                        </div>
-                    </div>
+                    <Timer />
                 </div>
                 <div className="fly__bottom">
                     <div className="fly__timer">

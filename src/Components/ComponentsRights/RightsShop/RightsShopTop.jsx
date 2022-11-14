@@ -1,7 +1,7 @@
 import React from 'react';
 import RightsSearch from "../RightsSearch";
 import RightsShopRange from "./RightsShopRange";
-import RightsFilter from "../RightsFilter";
+import RightsSortable from "../RightsSortable";
 import {useState} from "react";
 
 const RightsShopTop = () => {
@@ -40,7 +40,7 @@ const RightsShopTop = () => {
                 setSumOfRange={setSumOfRange}
                 maxCoins={maxCoins}
             />
-            <RightsFilter
+            <RightsSortable
                 filterChange={filterChange}
                 setFilterChange={setFilterChange}
             />

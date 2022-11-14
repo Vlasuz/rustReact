@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import RightsAirdropSleepersList from "./RightsAirdropSleepersList";
 import RightsAirdropSleepersButtons from "./RightsAirdropSleepersButtons";
 
-const RightsAirdropMoveSleepers = ({sleepersCount, setNumSwitch}) => {
+const RightsAirdropMoveSleepers = ({sleepersCount, setNumSwitch, setTimeToFly, numSwitch}) => {
 
 
     let currentDroppable = null;
-    let sleepersMove = function (event) {
+    let sleepersMove = function (e, event) {
 
-        let sleeper = event.closest('li')
+        let sleeper = e.closest('li')
 
         sleeper.style.position = 'absolute';
         sleeper.style.zIndex = 1000;
@@ -29,6 +29,7 @@ const RightsAirdropMoveSleepers = ({sleepersCount, setNumSwitch}) => {
 
             sleeper.style.left = cX + 'px';
             sleeper.style.top = cY + 'px';
+
         }
 
         function onMouseMove(event) {
@@ -40,7 +41,7 @@ const RightsAirdropMoveSleepers = ({sleepersCount, setNumSwitch}) => {
 
             if (!elemBelow) return;
 
-            let droppableBelow = elemBelow.closest('.section-map__map')
+            let droppableBelow = elemBelow.closest('.map__points')
 
             if (currentDroppable != droppableBelow) {
 
@@ -93,18 +94,19 @@ const RightsAirdropMoveSleepers = ({sleepersCount, setNumSwitch}) => {
     useEffect(() => {
 
         document.querySelectorAll('.sleepers__item').forEach(sl => {
-            sl.querySelector('button').onmousedown = function () {
-                sleepersMove(sl)
+            sl.querySelector('button').onmousedown = function (e) {
+                sleepersMove(sl, e)
             }
         })
 
     })
 
+
     return (
         <div className="airdrop__move">
 
             <RightsAirdropSleepersList sleepersCount={sleepersCount}/>
-            <RightsAirdropSleepersButtons setNumSwitch={setNumSwitch}/>
+            <RightsAirdropSleepersButtons setNumSwitch={setNumSwitch} numSwitch={numSwitch} setTimeToFly={setTimeToFly}/>
 
         </div>
     );

@@ -2,17 +2,16 @@ import React, {useState} from 'react';
 import RightsNotice from "./RightsNotice";
 import RightsProcessor from "./RightsProcessor";
 import RightsChat from "./Chat/RightsChat";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
 import RightsStorage from "./RightsStorage";
 import RightsShop from "./RightsShop/RightsShop";
 import RightsAirdrop from "./RightsAirdrop/RightsAirdrop";
 import RightsAirdropMoveSleepers from "./RightsAirdrop/RightsAirdropMoveSleepers";
 
-const RightsSwitcher = ({onCoinsChange, onCoins, dataItems, switcherRights, timer}) => {
+const RightsSwitcher = ({onCoinsChange, onCoins, dataItems, switcherRights, timer, setTimeToFly, isAirdropEnd}) => {
 
     let switcherFunction = function () {
         if (switcherRights == 'pr') {
-
             return (<RightsProcessor
                 onCoinsChange={onCoinsChange}
                 onCoins={onCoins}
@@ -39,6 +38,8 @@ const RightsSwitcher = ({onCoinsChange, onCoins, dataItems, switcherRights, time
                 onCoinsChange={onCoinsChange}
 
                 timer={timer}
+                setTimeToFly={setTimeToFly}
+                isAirdropEnd={isAirdropEnd}
             />)
 
         } else if (switcherRights == 'rights-airdrop-sleepers') {
@@ -50,6 +51,8 @@ const RightsSwitcher = ({onCoinsChange, onCoins, dataItems, switcherRights, time
             />)
 
         }
+
+
     }
 
     return (

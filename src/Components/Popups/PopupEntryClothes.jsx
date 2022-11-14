@@ -1,8 +1,175 @@
 import React from 'react';
 import PopupCloseBackground from "./PopupCloseBackground";
 import PopupCloseCross from "./PopupCloseCross";
+import {Link} from "react-router-dom";
 
 const PopupEntryClothes = (props) => {
+
+
+    const submitToGame = (e) => {
+        e.preventDefault();
+
+        document.querySelector('.link-to-page').click()
+    }
+
+
+    const sumListItems = function () {
+        let sum = 0
+        if(document.querySelector('.popup-new-room__zone li')) {
+            document.querySelectorAll('.popup-new-room__zone li').forEach((item) => {
+                sum += +item.querySelector('.item__price span').innerText
+            })
+
+            document.querySelector('.inputs__item-sum .input__sum').closest('.popup-entry-clothes').querySelector('.popup__content-item-clothes button').removeAttribute('disabled')
+        } else {
+            sum = 0;
+            document.querySelector('.popup__content-item-clothes button').setAttribute('disabled', 'disabled')
+        }
+        document.querySelector('.inputs__item-sum .input__sum').innerHTML = sum;
+    }
+
+    function checkListLi(container) {
+
+        if (container.querySelectorAll('.popup-new-room__zone ul li').length > 0 && container.querySelector('.popup-new-room__zone p')) {
+            container.querySelector('.popup-new-room__zone p').style.display = 'none';
+        } else {
+            container.querySelector('.popup-new-room__zone p').style.display = 'block';
+        }
+
+    }
+    function itemZoneDelete(container) {
+
+        container.querySelectorAll('.popup-new-room__zone .li__delete').forEach((del) => {
+
+            del.onclick = function () {
+                this.closest('.popup').querySelector('.popup-new-room__list').append(this.closest('li'))
+                sumListItems()
+                checkListLi(container)
+            }
+
+        })
+
+    }
+    const itemMove = function (event) {
+
+        let postItem = event.target.closest('.popup-new-room__item')
+        let currentDroppable = null;
+
+        let shiftX = event.clientX - postItem.getBoundingClientRect().left;
+        let shiftY = event.clientY - postItem.getBoundingClientRect().top;
+
+
+        function onMouseMove(event) {
+
+            document.querySelector('body').append(postItem)
+
+            postItem.style.position = 'absolute';
+            postItem.style.zIndex = 999;
+
+            moveAt(event.clientX, event.clientY)
+
+            postItem.style.display = 'none';
+            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+            postItem.style.display = 'flex';
+
+            if (!elemBelow) return;
+
+            let droppableBelow = elemBelow.closest('.popup-new-room__zone')
+
+
+            function movedNotInZone() {
+
+                document.onmouseup = function (e) {
+
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.onmouseup = null;
+
+                    postItem.style.position = 'relative';
+                    postItem.style.left = 'auto';
+                    postItem.style.top = 'auto';
+
+                    document.querySelector('.popup-new-room__list').append(postItem)
+
+                    sumListItems()
+
+                    checkListLi(e.target.closest('.popup'))
+
+                }
+
+            }
+
+
+            if (!currentDroppable) movedNotInZone()
+
+            if (currentDroppable != droppableBelow) {
+
+                if (currentDroppable) {
+                    document.querySelector('.popup-new-room__zone').style.background = 'transparent';
+                }
+
+                currentDroppable = droppableBelow;
+
+                if (currentDroppable) {
+                    droppableBelow.style.background = '#26293b';
+                    document.onmouseup = function (e) {
+
+
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.onmouseup = null;
+
+                        postItem.style.position = 'relative';
+                        postItem.style.left = 'auto';
+                        postItem.style.top = 'auto';
+
+                        droppableBelow.querySelector('ul').append(postItem)
+
+                        sumListItems()
+
+                        checkListLi(e.target.closest('.popup'))
+
+                    }
+                }
+
+            }
+
+        }
+
+        function moveAt(pageX, pageY) {
+
+            let coodX = pageX - shiftX;
+            let coodY = pageY - shiftY;
+
+            postItem.style.left = coodX + 'px';
+            postItem.style.top = coodY + 'px';
+
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        document.onmouseup = function (e) {
+
+            document.removeEventListener('mousemove', onMouseMove);
+            document.onmouseup = null;
+
+            if (!e.target.closest('.li__delete')) {
+
+                e.target.closest('.popup').querySelector('.popup-new-room__zone ul').append(postItem)
+                sumListItems()
+                checkListLi(e.target.closest('.popup'))
+
+            }
+
+            itemZoneDelete(e.target.closest('.popup'))
+
+        }
+
+        postItem.ondragstart = function () {
+            return false;
+        };
+
+
+    }
+
     return (
         <div className="popup popup-entry-clothes">
             <PopupCloseBackground />
@@ -17,7 +184,11 @@ const PopupEntryClothes = (props) => {
 
                             </ul>
                         </div>
-                        <form action="#">
+                        <form
+                            action="#"
+                            onSubmit={e => submitToGame(e)}
+                        >
+                            <Link className={"link-to-page"} to={'/fight-running'} />
                             <div className="inputs">
                                 <div className="inputs__item inputs__item-sum">
                                     <p>Сумма ставки:</p>
@@ -58,7 +229,10 @@ const PopupEntryClothes = (props) => {
                         </div>
                     </div>
                     <ul className="popup-new-room__list">
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -76,7 +250,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -94,7 +271,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -112,7 +292,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -130,7 +313,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -148,7 +334,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -166,7 +355,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -184,7 +376,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -202,7 +397,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -220,7 +418,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>
@@ -238,7 +439,10 @@ const PopupEntryClothes = (props) => {
                                 <span>3000</span>
                             </div>
                         </li>
-                        <li className="popup-new-room__item">
+                        <li
+                            className="popup-new-room__item"
+                            onMouseDown={(e) => itemMove(e)}
+                        >
                             <div className="clothes__cool clothes__cool_green">
 
                             </div>

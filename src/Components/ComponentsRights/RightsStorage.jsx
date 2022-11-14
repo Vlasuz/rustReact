@@ -1,6 +1,6 @@
 import React from 'react';
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
-import RightsFilter from "./RightsFilter";
+import RightsSortable from "./RightsSortable";
 
 const RightsStorage = ({dataItems}) => {
 
@@ -124,7 +124,7 @@ const RightsStorage = ({dataItems}) => {
             {/*        <span>Обновить</span>*/}
             {/*    </button>*/}
             {/*</form>*/}
-            <RightsFilter />
+            <RightsSortable />
             <hr/>
             <ul className="postamat__block">
 

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const RightsAirdropMember = () => {
+
     return (
         <div className="airdrop__member">
             <div className="member__ico">

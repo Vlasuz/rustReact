@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import PopupAddTradeLink from "../Popups/PopupTradeLink/PopupAddTradeLink";
 import PopupSuccessAddedTradeLink from "../Popups/PopupTradeLink/PopupSuccessAddedTradeLink";
 import PopupChangeTradeLink from "../Popups/PopupTradeLink/PopupChangeTradeLink";
+import {Trans, useTranslation} from "react-i18next";
 
 const TopGamerTradeLink = ({tradeLink, setTradeLink}) => {
 
@@ -13,6 +14,7 @@ const TopGamerTradeLink = ({tradeLink, setTradeLink}) => {
         document.querySelector('.' + nextPopup).classList.add('popup_active')
     }
 
+    const {t} = useTranslation();
     return (
         <>
 
@@ -27,16 +29,21 @@ const TopGamerTradeLink = ({tradeLink, setTradeLink}) => {
                 <div className="top-gamer__trade-link">
                     <PopupChangeTradeLink tradeLink={tradeLink} />
                     <div className="trade-link__block">
-                        <h3>Trade-ссылка</h3>
+                        <h3>
+                            <Trans t={t}>mainPage.TextTradeLink</Trans>
+                        </h3>
                         <button
                             className="trade-link__button"
                             onClick={() => openPopup('popup-trade-link-change')}
                         >
-                            Изменить
+                            <Trans t={t}>textChange</Trans>
                         </button>
                     </div>
                     <div className="trade-link__check">
-                        <img src="images/active.svg" alt="Photo"/><span>АКТИВНО</span>
+                        <img src="images/active.svg" alt="Photo"/>
+                        <span>
+                            <Trans t={t}>mainPage.textTradeLinkActive</Trans>
+                        </span>
                     </div>
                 </div>
 
@@ -49,12 +56,14 @@ const TopGamerTradeLink = ({tradeLink, setTradeLink}) => {
                             className="trade-link__button"
                             onClick={() => openPopup('popup-trade-link')}
                         >
-                            Добавить
+                            <Trans t={t}>mainPage.textTradeLinkAdd</Trans>
                         </button>
                     </div>
                     <div className="trade-link__check">
                         <img src="images/nonactive.svg" alt="Photo"/>
-                        <span>НЕ АКТИВНО</span>
+                        <span>
+                            <Trans t={t}>mainPage.textTradeLinkNonActive</Trans>
+                        </span>
                     </div>
                 </div>
 

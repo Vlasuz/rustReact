@@ -1,6 +1,69 @@
 import React from 'react';
+import i18n from "i18next";
+import {useTranslation, initReactI18next, Trans} from "react-i18next";
+
+const jsonLanguages = {
+    en: {
+        translation: {
+            header: {
+                headerSupport: "support",
+            },
+            mainPage: {
+                weeklyGamer: "Top gamer",
+                TextProfile: "Profile",
+                TextTradeLink: "Trade-link",
+                textTradeLinkActive: "Active",
+                textTradeLinkNonActive: "Not active",
+                textTradeLinkAdd: "Add",
+                textHistoryBalance: "History balance",
+            },
+
+            textAddCash: "Add",
+            textBalance: "Balance",
+            textChange: "Change",
+        }
+    },
+    ru: {
+        translation: {
+            header: {
+                headerSupport: "Поддержка",
+            },
+            mainPage: {
+                weeklyGamer: "Игрок недели",
+                TextProfile: "Профиль",
+                TextTradeLink: "Trade-ссылка",
+                textTradeLinkActive: "Активно",
+                textTradeLinkNonActive: "Не активно",
+                textTradeLinkAdd: "Добавить",
+                textHistoryBalance: "Итория баланса",
+            },
+
+            textAddCash: "Пополнить",
+            textBalance: "Баланс",
+            textChange: "Изменить",
+        }
+    },
+}
+
+// Инициализация:
+i18n.use(initReactI18next).init({
+    resources: jsonLanguages,
+    lng: "ru",
+    fallbackLng: "ru"
+});
 
 const HeaderLanguages = () => {
+
+    const {t} = useTranslation();
+    const {i18n} = useTranslation();
+
+    const langChange = (e, lang) => {
+        e.target.closest('ul').querySelectorAll('li').forEach(li => li.classList.remove('lang_active'))
+        e.target.closest('li').classList.add('lang_active')
+        i18n.changeLanguage(lang)
+
+    }
+
     return (
         <div
             className="header__lang"
@@ -17,13 +80,47 @@ const HeaderLanguages = () => {
                 </svg>
             </div>
             <ul className="lang__list">
-                <li><a href="#">Китайский</a>
+                <li className={'lang_active'}>
+                    <button
+                        onClick={e => langChange(e, 'ru')}
+                    >
+                        Русский
+                    </button>
                 </li>
-                <li className="lang_active"><a href="#">Корейский</a>
+                <li>
+                    <button
+                        onClick={e => langChange(e, 'en')}
+                    >
+                        Английский
+                    </button>
                 </li>
-                <li><a href="#">Вьетнамский</a>
+                <li>
+                    <button
+                        onClick={e => langChange(e, 'china')}
+                    >
+                        Китайский
+                    </button>
                 </li>
-                <li><a href="#">Японский</a>
+                <li>
+                    <button
+                        onClick={e => langChange(e, 'kor')}
+                    >
+                        Корейский
+                    </button>
+                </li>
+                <li>
+                    <button
+                        onClick={e => langChange(e, 'vie')}
+                    >
+                        Вьетнамский
+                    </button>
+                </li>
+                <li>
+                    <button
+                        onClick={e => langChange(e, 'jap')}
+                    >
+                        Японский
+                    </button>
                 </li>
             </ul>
         </div>

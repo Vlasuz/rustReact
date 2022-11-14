@@ -2,7 +2,7 @@ import React from 'react';
 import RightsAirdropPlayers from "./RightsAirdropPlayers";
 import RightsAirdropSection from "./RightsAirdropSection";
 
-const RightsAirdrop = ({onCoinsChange, onCoins, timer}) => {
+const RightsAirdrop = ({onCoinsChange, onCoins, timer, setTimeToFly, isAirdropEnd}) => {
 
     return (
         <>
@@ -11,6 +11,8 @@ const RightsAirdrop = ({onCoinsChange, onCoins, timer}) => {
                 onCoins={onCoins}
 
                 timer={timer}
+                setTimeToFly={setTimeToFly}
+                isAirdropEnd={isAirdropEnd}
             />
 
             <RightsAirdropPlayers/>

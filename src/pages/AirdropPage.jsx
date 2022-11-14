@@ -39,27 +39,27 @@ const AirdropPage = () => {
     let onWheelEvent = function (event) {
         event.target.closest('.section-map').style.transformOrigin = `${pointXOfScale}px ${pointYOfScale}px`;
 
-        let count = event.deltaY / 100;
+        let count = event.deltaY / 2000;
 
         boundingTop = document.querySelector('.map__scale').getBoundingClientRect().top;
         boundingLeft = document.querySelector('.map__scale').getBoundingClientRect().left;
 
         sum -= count;
 
-        if (sum > 0.99) {
+        if (sum >= 1 && sum < 3) {
             event.target.closest('.map__scale').style.transform = `scale(${sum})`;
-        } else if (sum < 0.8) {
+        } else if (sum <= 1) {
             sum = 1
+            event.target.closest('.map__scale').style.transform = `scale(${sum})`;
+        } else if (sum > 3){
+            sum = 3
             event.target.closest('.map__scale').style.transform = `scale(${sum})`;
         }
         return;
     }
 
     return (
-        <section
-            className="section-map"
-
-        >
+        <section className="section-map" >
             <div className="section-map__top">
                 <div className="section-map__game-is">Игра #32875002</div>
                 <div className="section-map__code">

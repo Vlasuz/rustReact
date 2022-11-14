@@ -1,37 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import RightsItem from "./RightsItem";
+import RightsFilterForm from "./RightsFilterForm";
 
 const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
-
-
     let ratingColor = function (item) {
 
-        switch (item.rating) {
+        switch (item) {
             case 'green':
-                return 'clothes__cool_green';
+                return 'item__cool clothes__cool_green';
                 break;
             case 'red':
-                return 'clothes__cool_red';
+                return 'item__cool clothes__cool_red';
                 break;
             case 'blue':
-                return 'clothes__cool_blue';
+                return 'item__cool clothes__cool_blue';
                 break;
             default:
-                return 'clothes__cool_grey';
+                return 'item__cool clothes__cool_grey';
                 break;
 
         }
     }
 
-    function checkListLi(container) {
-
-        if( container.querySelectorAll('.popup-new-room__zone ul li').length > 0 && container.querySelector('.popup-new-room__zone p') ){
-            container.querySelector('.popup-new-room__zone p').style.display = 'none';
-        } else {
-            container.querySelector('.ppup-new-room__zone p').style.display = 'block';
-        }
-
-    }
+    // function checkListLi(container) {
+    //
+    //     if( container.querySelectorAll('.popup-new-room__zone ul li').length > 0 && container.querySelector('.popup-new-room__zone p') ){
+    //         container.querySelector('.popup-new-room__zone p').style.display = 'none';
+    //     } else {
+    //         container.querySelector('.ppup-new-room__zone p').style.display = 'block';
+    //     }
+    //
+    // }
 
     let pererabCoins = function (e) {
         onCoinsChange(+onCoins + +e.target.closest('.pererab__button').querySelector('.rht span').innerText)
@@ -43,36 +42,24 @@ const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
         e.target.closest('.pererab__button').querySelector('.rht span').innerHTML = 0
     }
 
-    return (
-        <div className="postamat pererab">
-            <div className="postamat__search">
-                <input type="text" placeholder="Поиск"/>
-                <button>
-                    <img src="images/search.svg" alt="Search"/>
-                </button>
-            </div>
-            <form className="postamat__filter" action="#">
-                {/*checked*/}
-                <input type="radio" name="filter" id="filterPrice"/>
-                <label className="filter__item filter__price" htmlFor="filterPrice"><span>По цене</span>
-                    <input type="checkbox" name="upDown"/>
-                    <img src="images/filter.svg" alt="filter"/>
-                </label>
-                <input type="radio" name="filter" id="filterCool"/>
-                <label className="filter__item filter__item_active filter__cool"
-                       htmlFor="filterCool"><span>По раритетности</span>
-                    <input type="checkbox" name="upDown"/>
-                    <img src="images/filter.svg" alt="filter"/>
-                </label>
-                <button className="filter__reload">
-                    <img src="images/reload.svg" alt="filter"/>
-                    <span>Обновить</span>
-                </button>
-            </form>
-            <hr/>
-            <ul className="postamat__block">
 
-                {dataItems.map((item, itemNum) =>
+    const [sortArray, setSortArray] = useState(
+        {
+            search: '',
+            filterRadio: '',
+            filterCheckbox: false,
+        }
+    )
+
+
+    const sortableItem = () => {
+        if (sortArray.search && sortArray.filterRadio) {
+            return dataItems
+                .filter(item => item.title.includes(sortArray.search))
+                .sort((a, b) => (!sortArray.filterCheckbox) ?
+                    ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
+                    ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
+                .map((item, itemNum) =>
                     <RightsItem
                         key={itemNum}
                         count={item.count}
@@ -80,7 +67,54 @@ const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
                         image={item.image}
                         coins={item.cost}
                     />
-                )}
+                )
+
+        } else if (sortArray.filterRadio) {
+            return dataItems
+                .sort((a, b) => (!sortArray.filterCheckbox) ?
+                    ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
+                    ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
+                .map((item, itemNum) =>
+                    <RightsItem
+                        key={itemNum}
+                        count={item.count}
+                        cools={ratingColor(item.rating)}
+                        image={item.image}
+                        coins={item.cost}
+                    />)
+        } else if (sortArray.search) {
+            return dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
+                <RightsItem
+                    key={itemNum}
+                    count={item.count}
+                    cools={ratingColor(item.rating)}
+                    image={item.image}
+                    coins={item.cost}
+                />)
+
+        } else {
+            return dataItems.map((item, itemNum) =>
+                <RightsItem
+                    key={itemNum}
+                    count={item.count}
+                    cools={ratingColor(item.rating)}
+                    image={item.image}
+                    coins={item.cost}
+                />
+            )
+        }
+    }
+
+    return (
+        <div className="postamat pererab">
+            <RightsFilterForm sortArray={sortArray} setSortArray={setSortArray}/>
+
+            <hr/>
+            <ul className="postamat__block">
+
+                {
+                    sortableItem()
+                }
 
 
             </ul>

@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import interact from 'interactjs';
 import {useSpring, animated} from "@react-spring/web";
 import {useDrag} from "react-use-gesture";
 
@@ -10,13 +9,13 @@ const ComponentMap = () => {
         x: 0,
         y: 0
     }))
-
     const bindDrag = useDrag(({offset}) => {
         api({
             x: offset[0],
             y: offset[1],
         })
     });
+
 
     return (
         <animated.div
@@ -25,11 +24,11 @@ const ComponentMap = () => {
         >
 
             <img className="map-img" src="images/map.png" alt="Map"/>
-            <div
+            <ul
                 className="map__points"
                 // onMouseMove={mousemovePointScale}
             >
-                <div
+                <li
                     className="point"
                     style={
                         {
@@ -104,8 +103,8 @@ const ComponentMap = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="point"
+                </li>
+                <li className="point"
                      style={
                          {
                              left: '600px',
@@ -180,8 +179,8 @@ const ComponentMap = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
             <div className="trajectory">
                 <div className="plane">
                     <img src="images/plane.png" alt="Plane" width="54"/>
