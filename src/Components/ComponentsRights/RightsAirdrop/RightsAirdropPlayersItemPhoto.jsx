@@ -1,9 +1,9 @@
 import React from 'react';
 
-const RightsAirdropPlayersItemPhoto = ({infoPlayer}) => {
+const RightsAirdropPlayersItemPhoto = (props) => {
     return (
         <div className="item__photo">
-            <img src={infoPlayer.photo} alt="User"/>
+            <img src={props.infoPlayer.photo} alt="User"/>
         </div>
     );
 };

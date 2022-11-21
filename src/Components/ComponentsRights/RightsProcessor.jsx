@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import RightsItem from "./RightsItem";
 import RightsFilterForm from "./RightsFilterForm";
 
-const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
+const RightsProcessor = (props) => {
     let ratingColor = function (item) {
 
         switch (item) {
@@ -33,7 +33,7 @@ const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
     // }
 
     let pererabCoins = function (e) {
-        onCoinsChange(+onCoins + +e.target.closest('.pererab__button').querySelector('.rht span').innerText)
+        props.onCoinsChange(+props.onCoins + +e.target.closest('.pererab__button').querySelector('.rht span').innerText)
         document.querySelector('.zone__list ul').innerHTML = ''
         document.querySelector('.zone__done').style.display = 'none'
         document.querySelectorAll('.zone__empty').forEach(zone => {
@@ -54,7 +54,7 @@ const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
 
     const sortableItem = () => {
         if (sortArray.search && sortArray.filterRadio) {
-            return dataItems
+            return props.dataItems
                 .filter(item => item.title.includes(sortArray.search))
                 .sort((a, b) => (!sortArray.filterCheckbox) ?
                     ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
@@ -70,7 +70,7 @@ const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
                 )
 
         } else if (sortArray.filterRadio) {
-            return dataItems
+            return props.dataItems
                 .sort((a, b) => (!sortArray.filterCheckbox) ?
                     ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
                     ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
@@ -83,7 +83,7 @@ const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
                         coins={item.cost}
                     />)
         } else if (sortArray.search) {
-            return dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
+            return props.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
                 <RightsItem
                     key={itemNum}
                     count={item.count}
@@ -93,7 +93,7 @@ const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
                 />)
 
         } else {
-            return dataItems.map((item, itemNum) =>
+            return props.dataItems.map((item, itemNum) =>
                 <RightsItem
                     key={itemNum}
                     count={item.count}
@@ -107,7 +107,10 @@ const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
 
     return (
         <div className="postamat pererab">
-            <RightsFilterForm sortArray={sortArray} setSortArray={setSortArray}/>
+            <RightsFilterForm
+                sortArray={sortArray}
+                setSortArray={setSortArray}
+            />
 
             <hr/>
             <ul className="postamat__block">
@@ -124,7 +127,9 @@ const RightsProcessor = ({onCoinsChange, onCoins, dataItems}) => {
                     <img src="images/pererab-ico.svg" alt="Ico"/>
                 </div>
                 <div className="zone__list">
-                    <ul></ul>
+                    <ul>
+
+                    </ul>
                 </div>
             </div>
             <div className="pererab__button">

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import FightTop from "../Components/ComponentsFightPage/FightTop";
 import FightItem from "../Components/ComponentsFightPage/FightItem/FightItem";
 
-const FightPage = ({onSetCoins, mainCoins, dataInfo, listFights, setFightInfo}) => {
+const FightPage = (props) => {
 
     const [loader, isLoader] = useState(true)
     useEffect(() => {
@@ -32,10 +32,10 @@ const FightPage = ({onSetCoins, mainCoins, dataInfo, listFights, setFightInfo}) 
         <section className="section-shop">
 
 
-            <FightTop dataInfo={dataInfo}/>
+            <FightTop dataInfo={props.dataInfo}/>
             <div className="section-shop__list-games">
                 {
-                    listFights.map(item =>
+                    props.listFightsMembers.map(item =>
                         <FightItem
                             key={item.id}
                             onSetCoins={item.onSetCoins}
@@ -48,15 +48,15 @@ const FightPage = ({onSetCoins, mainCoins, dataInfo, listFights, setFightInfo}) 
                             opponentPhoto={item.opponentPhoto}
                             status={item.status}
                             youWon={item.youWon}
-                            setFightInfo={setFightInfo}
+                            setFightInfo={props.setFightInfo}
                         />
                     )
                 }
 
 
                 <FightItem
-                    onSetCoins={onSetCoins}
-                    mainCoins={mainCoins}
+                    onSetCoins={props.onSetCoins}
+                    mainCoins={props.mainCoins}
                     typePrice={"coins"}
                     image={"images/user.jpeg"}
                     name={"Amnesianna5360"}
@@ -67,8 +67,8 @@ const FightPage = ({onSetCoins, mainCoins, dataInfo, listFights, setFightInfo}) 
                     youWon={null}
                 />
                 <FightItem
-                    onSetCoins={onSetCoins}
-                    mainCoins={mainCoins}
+                    onSetCoins={props.onSetCoins}
+                    mainCoins={props.mainCoins}
                     typePrice={"coins"}
                     image={"images/user.jpeg"}
                     name={"GoodGamer"}
@@ -79,8 +79,8 @@ const FightPage = ({onSetCoins, mainCoins, dataInfo, listFights, setFightInfo}) 
                     youWon={null}
                 />
                 <FightItem
-                    onSetCoins={onSetCoins}
-                    mainCoins={mainCoins}
+                    onSetCoins={props.onSetCoins}
+                    mainCoins={props.mainCoins}
                     typePrice={"clothes"}
                     image={"images/user.jpeg"}
                     name={"Amnesianna5360"}
@@ -91,8 +91,8 @@ const FightPage = ({onSetCoins, mainCoins, dataInfo, listFights, setFightInfo}) 
                     youWon={null}
                 />
                 <FightItem
-                    onSetCoins={onSetCoins}
-                    mainCoins={mainCoins}
+                    onSetCoins={props.onSetCoins}
+                    mainCoins={props.mainCoins}
                     typePrice={"clothes"}
                     image={"images/user.jpeg"}
                     name={"Amnesianna5360"}
@@ -103,8 +103,8 @@ const FightPage = ({onSetCoins, mainCoins, dataInfo, listFights, setFightInfo}) 
                     youWon={null}
                 />
                 <FightItem
-                    onSetCoins={onSetCoins}
-                    mainCoins={mainCoins}
+                    onSetCoins={props.onSetCoins}
+                    mainCoins={props.mainCoins}
                     typePrice={"coins"}
                     image={"images/user.jpeg"}
                     name={"Amnesianna5360"}

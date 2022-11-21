@@ -1,11 +1,14 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const HeaderUser = () => {
     return (
-        <a className="header__user" href="#">
-            <img src="images/user.jpeg" alt="User" />
+        <Link className="header__user" to={"/"}>
+
+
+            <img src="images/user.jpeg" alt="User"/>
             <span>Volaratice</span>
-        </a>
+        </Link>
     );
 };
 

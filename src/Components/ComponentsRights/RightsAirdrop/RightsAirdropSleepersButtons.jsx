@@ -1,12 +1,10 @@
 import React from 'react';
 
-const RightsAirdropSleepersButtons = ({setNumSwitch, setTimeToFly}) => {
+const RightsAirdropSleepersButtons = (props) => {
 
 
     const letsStart = () => {
-        console.log('lets start')
-        setTimeToFly(start => !start)
-        setNumSwitch(3)
+        props.setNumSwitch(3)
     }
 
 

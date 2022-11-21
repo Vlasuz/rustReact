@@ -1,9 +1,13 @@
 import React from 'react';
 
-const StatsTrue = () => {
+const StatsTrue = (props) => {
     return (
         <>
-            <p>782<sup>43%</sup>
+            <p>
+                {props.count}
+                <sup>
+                    {props.greenStats}
+                </sup>
             </p>
             <div className="lines">
                 <div className="line line_active"></div>

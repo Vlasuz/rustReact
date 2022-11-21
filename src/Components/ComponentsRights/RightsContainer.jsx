@@ -2,25 +2,27 @@ import React from 'react';
 import RightsTop from "./RightsTop";
 import RightsSwitcher from "./RightsSwitcher";
 
-const RightsContainer = ({onCoinsChange, onCoins, dataItems, switcherRights, onSwitcherRightsChange, timer, setTimeToFly, isAirdropEnd}) => {
+const RightsContainer = (props) => {
 
 
 
     return (
         <section className="section-right">
             <RightsTop
-                switcherRights={switcherRights}
+                switcherRights={props.switcherRights}
             />
             <RightsSwitcher
-                onCoinsChange={onCoinsChange}
-                onCoins={onCoins}
-                dataItems={dataItems}
-                switcherRights={switcherRights}
-                onSwitcherRightsChange={onSwitcherRightsChange}
+                onCoinsChange={props.onCoinsChange}
+                onCoins={props.onCoins}
+                dataItems={props.dataItems}
+                switcherRights={props.switcherRights}
+                onSwitcherRightsChange={props.onSwitcherRightsChange}
 
-                timer={timer}
-                setTimeToFly={setTimeToFly}
-                isAirdropEnd={isAirdropEnd}
+                numSwitch={props.numSwitch}
+                setNumSwitch={props.setNumSwitch}
+                listAirdropsMembers={props.listAirdropsMembers}
+                setListAirdropsMembers={props.setListAirdropsMembers}
+                showTimerToFly={props.showTimerToFly}
             />
         </section>
     );

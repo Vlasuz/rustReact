@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from "react";
 
-const RightsAirdropSleepers = ({setNumSwitch, onCoins, onCoinsChange, setSleepersCount}) => {
+const RightsAirdropSleepers = (props) => {
 
     const [sleeperCost, setSleeperCost] = useState(0);
 
@@ -10,7 +10,7 @@ const RightsAirdropSleepers = ({setNumSwitch, onCoins, onCoinsChange, setSleeper
             btn.querySelector('button').classList.remove('button_active')
         }
 
-        setSleepersCount(+e.target.closest('li').querySelector('button').innerText);
+        props.setSleepersCount(+e.target.closest('li').querySelector('button').innerText);
 
         e.target.closest('li').querySelector('button').classList.add('button_active')
 
@@ -38,10 +38,10 @@ const RightsAirdropSleepers = ({setNumSwitch, onCoins, onCoinsChange, setSleeper
 
     let isEnough = function () {
 
-        if(onCoins >= sleeperCost) {
+        if(props.onCoins >= sleeperCost) {
             return (
                 <button
-                    onClick={() => { onCoinsChange(prev => prev - sleeperCost); return setNumSwitch(2) } }
+                    onClick={() => { props.onCoinsChange(prev => prev - sleeperCost); return props.setNumSwitch(2) } }
                     className="sleepers__buy"
                 >
                     <span>Купить</span>

@@ -1,8 +1,15 @@
 import React from 'react';
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import RightsSortable from "./RightsSortable";
+import {useState} from "react";
+import RightsSearch from "./RightsSearch";
+import RightsFilterForm from "./RightsFilterForm";
+import RightsItemStorage from "./RightsItemStorage";
 
-const RightsStorage = ({dataItems}) => {
+const RightsStorage = (props) => {
+
+    const [filterChange, setFilterChange]   = useState('')
+    const [inputSearch, setInputSearch]     = useState('')
 
     let openPopup = function (nextPopup) {
         if(document.querySelector('.popup_active')){
@@ -13,7 +20,7 @@ const RightsStorage = ({dataItems}) => {
 
     let ratingColor = function (item) {
 
-        switch (item.rating) {
+        switch (item) {
             case 'green':
                 return 'clothes__cool_green';
                 break;
@@ -31,31 +38,31 @@ const RightsStorage = ({dataItems}) => {
     }
 
 
-    let items = dataItems.map((item, itemNum) =>
-
-        <li
-            className="postamat__item"
-            key={itemNum}
-            onClick={(e) => clickToSelectItem(e)}
-        >
-            <div className="item__check">
-                <img src="images/green-check.svg" alt="Check"/>
-            </div>
-            <div className="item__count">
-                {item.count}
-            </div>
-            <div className={"item__cool " + ratingColor(item)}>
-
-            </div>
-            <div className="item__photo">
-                <img src={item.image} alt="Skin"/>
-            </div>
-            <div className="item__price">
-                <img src="images/header__coins.svg" alt="Ico"/>
-                <span>{item.cost}</span>
-            </div>
-        </li>
-    )
+    // let items = props.dataItems.map((item, itemNum) =>
+    //
+    //     <li
+    //         className="postamat__item"
+    //         key={itemNum}
+    //         onClick={(e) => clickToSelectItem(e)}
+    //     >
+    //         <div className="item__check">
+    //             <img src="images/green-check.svg" alt="Check"/>
+    //         </div>
+    //         <div className="item__count">
+    //             {item.count}
+    //         </div>
+    //         <div className={"item__cool " + ratingColor(item)}>
+    //
+    //         </div>
+    //         <div className="item__photo">
+    //             <img src={item.image} alt="Skin"/>
+    //         </div>
+    //         <div className="item__price">
+    //             <img src="images/header__coins.svg" alt="Ico"/>
+    //             <span>{item.cost}</span>
+    //         </div>
+    //     </li>
+    // )
 
 
     const clickToSelectItem = function (e) {
@@ -97,40 +104,82 @@ const RightsStorage = ({dataItems}) => {
 
     }
 
+    const [sortArray, setSortArray] = useState(
+        {
+            search: '',
+            filterRadio: '',
+            filterCheckbox: false,
+        }
+    )
+    const sortableItem = () => {
+        if (sortArray.search && sortArray.filterRadio) {
+            return props.dataItems
+                .filter(item => item.title.includes(sortArray.search))
+                .sort((a, b) => (!sortArray.filterCheckbox) ?
+                    ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
+                    ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
+                .map((item, itemNum) =>
+                    <RightsItemStorage
+                        clickToSelectItem={clickToSelectItem}
+                        key={itemNum}
+                        count={item.count}
+                        cools={ratingColor(item.rating)}
+                        image={item.image}
+                        coins={item.cost}
+                    />
+                )
+
+        } else if (sortArray.filterRadio) {
+            return props.dataItems
+                .sort((a, b) => (!sortArray.filterCheckbox) ?
+                    ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
+                    ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
+                .map((item, itemNum) =>
+                    <RightsItemStorage
+                        clickToSelectItem={clickToSelectItem}
+                        key={itemNum}
+                        count={item.count}
+                        cools={ratingColor(item.rating)}
+                        image={item.image}
+                        coins={item.cost}
+                    />)
+        } else if (sortArray.search) {
+            return props.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
+                <RightsItemStorage
+                    clickToSelectItem={clickToSelectItem}
+                    key={itemNum}
+                    count={item.count}
+                    cools={ratingColor(item.rating)}
+                    image={item.image}
+                    coins={item.cost}
+                />)
+
+        } else {
+            return props.dataItems.map((item, itemNum) =>
+                <RightsItemStorage
+                    clickToSelectItem={clickToSelectItem}
+                    key={itemNum}
+                    count={item.count}
+                    cools={ratingColor(item.rating)}
+                    image={item.image}
+                    coins={item.cost}
+                />
+            )
+        }
+    }
+
     return (
 
         <div className="postamat storage">
-            <div className="postamat__search">
-                <input type="text" placeholder="Поиск"/>
-                <button>
-                    <img src="images/search.svg" alt="Search"/>
-                </button>
-            </div>
-            {/*<form className="postamat__filter" action="#">*/}
-            {/*    <input type="radio" checked name="filter" id="filterPrice"/>*/}
-            {/*    <label className="filter__item filter__price" htmlFor="filterPrice">*/}
-            {/*        <span>По цене</span>*/}
-            {/*        <input type="checkbox" name="upDown"/>*/}
-            {/*        <img src="images/filter.svg" alt="filter"/>*/}
-            {/*    </label>*/}
-            {/*    <input type="radio" name="filter" id="filterCool"/>*/}
-            {/*    <label className="filter__item filter__item_active filter__cool" htmlFor="filterCool">*/}
-            {/*        <span>По раритетности</span>*/}
-            {/*        <input type="checkbox" name="upDown"/>*/}
-            {/*        <img src="images/filter.svg" alt="filter"/>*/}
-            {/*    </label>*/}
-            {/*    <button className="filter__reload">*/}
-            {/*        <img src="images/reload.svg" alt="filter"/>*/}
-            {/*        <span>Обновить</span>*/}
-            {/*    </button>*/}
-            {/*</form>*/}
-            <RightsSortable />
+            <RightsFilterForm
+                sortArray={sortArray}
+                setSortArray={setSortArray}
+            />
+
             <hr/>
-            <ul className="postamat__block">
 
-                {items}
+            <ul className="postamat__block"> {sortableItem()} </ul>
 
-            </ul>
             <div className="storage__zone">
                 <div className="zone__empty">
                     <p>Выберите предмет для вывода</p>

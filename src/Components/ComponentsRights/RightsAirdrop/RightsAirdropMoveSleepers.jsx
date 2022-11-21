@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import RightsAirdropSleepersList from "./RightsAirdropSleepersList";
 import RightsAirdropSleepersButtons from "./RightsAirdropSleepersButtons";
 
-const RightsAirdropMoveSleepers = ({sleepersCount, setNumSwitch, setTimeToFly, numSwitch}) => {
+const RightsAirdropMoveSleepers = (props) => {
 
 
     let currentDroppable = null;
@@ -59,7 +59,6 @@ const RightsAirdropMoveSleepers = ({sleepersCount, setNumSwitch, setTimeToFly, n
 
         function leaveMap(item) {
             currentDroppable.classList.remove('point-inner')
-            // currentDroppable.append(item)
         }
 
         function overMap(item) {
@@ -105,8 +104,8 @@ const RightsAirdropMoveSleepers = ({sleepersCount, setNumSwitch, setTimeToFly, n
     return (
         <div className="airdrop__move">
 
-            <RightsAirdropSleepersList sleepersCount={sleepersCount}/>
-            <RightsAirdropSleepersButtons setNumSwitch={setNumSwitch} numSwitch={numSwitch} setTimeToFly={setTimeToFly}/>
+            <RightsAirdropSleepersList sleepersCount={props.sleepersCount}/>
+            <RightsAirdropSleepersButtons setNumSwitch={props.setNumSwitch}/>
 
         </div>
     );

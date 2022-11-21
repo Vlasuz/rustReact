@@ -4,19 +4,15 @@ import HeaderUser from "./HeaderUser";
 import HeaderBurgerMenu from "./HeaderBurgerMenu";
 import HeaderLoginButton from "./HeaderLoginButton";
 import HeaderLogged from "./HeaderLogged";
+import States from "../../States";
 
-const HeaderRight = ({dataInfo}) => {
+const HeaderRight = (props) => {
 
-    const [auth, setAuth] = useState(true);
-
+    const state = States()
 
     return (
         <div className="header__right">
-
-            {!auth ? <HeaderLoginButton/> : <HeaderLogged dataInfo={dataInfo}/>}
-
-
-
+            {!state.auth ? <HeaderLoginButton/> : <HeaderLogged setAuth={state.setAuth} dataInfo={props.dataInfo}/>}
         </div>
     );
 };

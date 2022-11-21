@@ -4,8 +4,11 @@ import RightsShopBottomFull from "./RightsShopBottomFull";
 import RightsShopBottomEmpty from "./RightsShopBottomEmpty";
 import RightsShopList from "./RightsShopList";
 import RightsShopTop from "./RightsShopTop";
+import RightsItemStorage from "../RightsItemStorage";
+import RightsShopItem from "./RightsShopItem";
+import RightsFilterForm from "../RightsFilterForm";
 
-const RightsShop = () => {
+const RightsShop = (props) => {
 
     const [listToCart, setListToCart] = useState([])
     const [isOpenCart, setIsOpenCart] = useState(false)
@@ -41,6 +44,98 @@ const RightsShop = () => {
     //     document.querySelector('.section-right__cart-bought').classList.remove('section-right__cart_active')
     // }
 
+    let ratingColor = function (item) {
+
+        switch (item) {
+            case 'green':
+                return 'clothes__cool_green';
+                break;
+            case 'red':
+                return 'clothes__cool_red';
+                break;
+            case 'blue':
+                return 'clothes__cool_blue';
+                break;
+            default:
+                return 'clothes__cool_grey';
+                break;
+
+        }
+    }
+    const [sortArray, setSortArray] = useState(
+        {
+            search: '',
+            filterRadio: '',
+            filterCheckbox: false,
+        }
+    )
+    const sortableItem = () => {
+        if (sortArray.search && sortArray.filterRadio) {
+            return props.dataItems
+                .filter(item => item.title.includes(sortArray.search))
+                .sort((a, b) => (!sortArray.filterCheckbox) ?
+                    ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
+                    ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
+                .map((item, itemNum) =>
+                    <RightsShopItem
+                        listItems={listItems}
+                        setListItems={setListItems}
+                        key={itemNum}
+                        cools={ratingColor(item.rating)}
+                        listItems={item}
+                        setIsAddCart={props.setIsAddCart}
+                        setListToCart={setListToCart}
+                        listToCart={listToCart}
+                    />
+                )
+
+        } else if (sortArray.filterRadio) {
+            return props.dataItems
+                .sort((a, b) => (!sortArray.filterCheckbox) ?
+                    ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
+                    ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
+                .map((item, itemNum) =>
+                    <RightsShopItem
+                        listItems={listItems}
+                        setListItems={setListItems}
+                        key={itemNum}
+                        cools={ratingColor(item.rating)}
+                        listItems={item}
+                        setIsAddCart={props.setIsAddCart}
+                        setListToCart={setListToCart}
+                        listToCart={listToCart}
+                    />
+                )
+        } else if (sortArray.search) {
+            return props.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
+                <RightsShopItem
+                    listItems={listItems}
+                    setListItems={setListItems}
+                    key={itemNum}
+                    cools={ratingColor(item.rating)}
+                    listItems={item}
+                    setIsAddCart={props.setIsAddCart}
+                    setListToCart={setListToCart}
+                    listToCart={listToCart}
+                />
+            )
+
+        } else {
+            return props.dataItems.map((item, itemNum) =>
+                <RightsShopItem
+                    listItems={listItems}
+                    setListItems={setListItems}
+                    key={itemNum}
+                    cools={ratingColor(item.rating)}
+                    listItems={item}
+                    setIsAddCart={props.setIsAddCart}
+                    setListToCart={setListToCart}
+                    listToCart={listToCart}
+                />
+            )
+        }
+    }
+
     return (
         <>
             <div className="section-right__cart-bought">
@@ -65,16 +160,26 @@ const RightsShop = () => {
 
             <div className="postamat">
 
-                <RightsShopTop/>
+                {/*<RightsShopTop/>*/}
+                <RightsFilterForm
+                    sortArray={sortArray}
+                    setSortArray={setSortArray}
+                />
 
                 <hr/>
 
-                <RightsShopList
-                    listItems={listItems}
-                    setListToCart={setListToCart}
-                    listToCart={listToCart}
-                />
-                {listToCart.length ? <RightsShopBottomFull listToCart={listToCart} setIsOpenCart={setIsOpenCart}/> : <RightsShopBottomEmpty/>}
+
+                <div className="postamat__block">
+
+                    {
+                        sortableItem()
+                    }
+
+
+                </div>
+
+                {listToCart.length ? <RightsShopBottomFull listToCart={listToCart} setIsOpenCart={setIsOpenCart}/> :
+                    <RightsShopBottomEmpty/>}
 
             </div>
         </>

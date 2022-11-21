@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-const RightsSortable = ({filterRadio, setFilterRadio, setFilterCheckbox}) => {
+const RightsSortable = (props) => {
 
     let changeRatio = (e) => {
-        setFilterRadio(e.target.checked ? e.target.id : '')
-        setFilterCheckbox(e.target.nextSibling.querySelector('input').checked)
+        props.setFilterRadio(e.target.checked ? e.target.id : '')
+        props.setFilterCheckbox(e.target.nextSibling.querySelector('input').checked)
     }
 
     return (
@@ -20,7 +20,7 @@ const RightsSortable = ({filterRadio, setFilterRadio, setFilterCheckbox}) => {
                 <input
                     type="checkbox"
                     name="upDown"
-                    onChange={e => filterRadio == e.target.closest('label').getAttribute('for') ? setFilterCheckbox(e.target.checked) : ''}
+                    onChange={e => props.filterRadio == e.target.closest('label').getAttribute('for') ? props.setFilterCheckbox(e.target.checked) : ''}
                 />
                 <img src="images/filter.svg" alt="filter"/>
             </label>
@@ -36,7 +36,7 @@ const RightsSortable = ({filterRadio, setFilterRadio, setFilterCheckbox}) => {
                 <input
                     type="checkbox"
                     name="upDown"
-                    onChange={e => filterRadio == e.target.closest('label').getAttribute('for') ? setFilterCheckbox(e.target.checked) : ''}
+                    onChange={e => props.filterRadio == e.target.closest('label').getAttribute('for') ? props.setFilterCheckbox(e.target.checked) : ''}
                 />
                 <img src="images/filter.svg" alt="filter"/>
             </label>

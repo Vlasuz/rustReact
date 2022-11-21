@@ -1,14 +1,17 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import states from "../../States";
 
-const HeaderBurgerMenu = () => {
+const HeaderBurgerMenu = (props) => {
+
+    // const {auth, setAuth} = states()
 
     const burgerClick = () => {
         document.querySelector('.burger__menu').classList.toggle('burger__menu_active')
     }
 
-    let closeWindow = function () {
-        window.close()
+    let logout = function () {
+        props.setAuth(false)
     }
 
     return (
@@ -38,7 +41,7 @@ const HeaderBurgerMenu = () => {
                     </li>
                     <li>
                         <button
-                            onClick={closeWindow}
+                            onClick={() => logout()}
                         >
                             Выйти с сайта
                         </button>

@@ -45,7 +45,7 @@ const RightsChat = () => {
                 }
 
             </div>
-            <RightsChatSmiles/>
+            <RightsChatSmiles setMessages={setMessages}/>
             <RightsChatRules />
             <RightsChatResources />
             <RightsChatTextarea setMessages={setMessages}/>

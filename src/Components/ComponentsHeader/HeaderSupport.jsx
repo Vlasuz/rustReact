@@ -7,7 +7,7 @@ const HeaderSupport = () => {
         <button className="header__support">
             <img src="images/support.svg" alt="Ico" />
             <span>
-                <Trans t={t}>header.headerSupport</Trans>
+                <Trans t={t}>header_support</Trans>
             </span>
         </button>
     );

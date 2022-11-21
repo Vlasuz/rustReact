@@ -3,17 +3,16 @@ import RightsSearch from "./RightsSearch";
 import {useState} from "react";
 import RightsSortable from "./RightsSortable";
 
-const RightsFilterForm = ({sortArray, setSortArray}) => {
+const RightsFilterForm = (props) => {
 
-    const [inputSearch, setInputSearch]         = useState('')
-    const [filterRadio, setFilterRadio]         = useState('')
-    const [filterCheckbox, setFilterCheckbox]   = useState(false)
-
+    const [inputSearch, setInputSearch] = useState('')
+    const [filterRadio, setFilterRadio] = useState('')
+    const [filterCheckbox, setFilterCheckbox] = useState(false)
 
     const submitFilter = (e) => {
         e.preventDefault()
 
-        setSortArray(
+        props.setSortArray(
             {
                 search: inputSearch,
                 filterRadio: filterRadio,
@@ -24,21 +23,24 @@ const RightsFilterForm = ({sortArray, setSortArray}) => {
     }
 
     return (
-        <form
-            className=""
-            action="#"
-            onSubmit={e => submitFilter(e)}
-        >
+        <>
+
             <RightsSearch
                 inputSearch={inputSearch}
                 setInputSearch={setInputSearch}
+                setSortArray={props.setSortArray}
             />
-            <RightsSortable
-                filterRadio={filterRadio}
-                setFilterRadio={setFilterRadio}
-                setFilterCheckbox={setFilterCheckbox}
-            />
-        </form>
+            <form
+                action="#"
+                onSubmit={e => submitFilter(e)}
+            >
+                <RightsSortable
+                    filterRadio={filterRadio}
+                    setFilterRadio={setFilterRadio}
+                    setFilterCheckbox={setFilterCheckbox}
+                />
+            </form>
+        </>
     );
 };
 

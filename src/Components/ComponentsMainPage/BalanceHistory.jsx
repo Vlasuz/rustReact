@@ -9,7 +9,7 @@ const BalanceHistory = () => {
         <Link to={"/history"} className="balance__history">
             <img src="images/clock.svg" alt="Ico" />
             <span>
-                <Trans t={t}>mainPage.textHistoryBalance</Trans>
+                <Trans t={t}>text_history_balance</Trans>
             </span>
         </Link>
     );

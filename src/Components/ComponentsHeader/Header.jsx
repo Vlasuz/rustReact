@@ -4,12 +4,9 @@ import HeaderLanguages from "./HeaderLanguages";
 import HeaderVolume from "./HeaderVolume";
 import HeaderSupport from "./HeaderSupport";
 import HeaderSocials from "./HeaderSocials";
-import HeaderCoins from "./HeaderCoins";
-import HeaderUser from "./HeaderUser";
-import HeaderBurgerMenu from "./HeaderBurgerMenu";
 import HeaderRight from "./HeaderRight";
 
-const Header = ({dataInfo}) => {
+const Header = (props) => {
     return (
         <header className="header">
             <div className="wrapper">
@@ -17,14 +14,13 @@ const Header = ({dataInfo}) => {
                     <HeaderLogo />
                     <HeaderLanguages />
                     <HeaderVolume />
-                    <div className="header__lowright">
 
+                    <div className="header__lowright">
                         <HeaderSupport />
                         <HeaderSocials />
-
                     </div>
 
-                    <HeaderRight dataInfo={dataInfo} />
+                    <HeaderRight setAuth={props.setAuth} dataInfo={props.dataInfo} />
                 </div>
             </div>
         </header>

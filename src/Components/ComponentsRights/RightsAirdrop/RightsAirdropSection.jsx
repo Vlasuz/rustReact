@@ -4,35 +4,31 @@ import RightsAirdropSleepers from "./RightsAirdropSleepers";
 import RightsAirdropMoveSleepers from "./RightsAirdropMoveSleepers";
 import RightsAirdropMember from "./RightsAirdropMember";
 import {useState} from "react";
+import States from "../../../States";
 
-const RightsAirdropSection = ({onCoinsChange, onCoins, timer, setTimeToFly, isAirdropEnd}) => {
+const RightsAirdropSection = (props) => {
 
-    const [numSwitch, setNumSwitch] = useState(1)
     const [sleepersCount, setSleepersCount] = useState(0)
 
-    // if(numSwitch == 3){
-    //     setNumSwitch(1)
-    // }
 
     let funcNumSwitch = function () {
-        if(numSwitch === 1){
+        if(props.numSwitch === 1){
             return (
                 <RightsAirdropSleepers
                     setSleepersCount={setSleepersCount}
-                    onCoins={onCoins}
-                    onCoinsChange={onCoinsChange}
-                    setNumSwitch={setNumSwitch}
+                    onCoins={props.onCoins}
+                    onCoinsChange={props.onCoinsChange}
+                    setNumSwitch={props.setNumSwitch}
                 />
             )
-        } else if(numSwitch === 2){
+        } else if(props.numSwitch === 2){
             return (
                 <RightsAirdropMoveSleepers
                     sleepersCount={sleepersCount}
-                    setNumSwitch={setNumSwitch}
-                    setTimeToFly={setTimeToFly}
+                    setNumSwitch={props.setNumSwitch}
                 />
             )
-        } else if (numSwitch === 3){
+        } else if (props.numSwitch === 3){
             return (
                 <RightsAirdropMember/>
             )
@@ -41,7 +37,12 @@ const RightsAirdropSection = ({onCoinsChange, onCoins, timer, setTimeToFly, isAi
 
     return (
         <div className="section-right__airdrop">
-            <RightsAirdropBlock isAirdropEnd={isAirdropEnd} numSwitch={numSwitch} setNumSwitch={setNumSwitch} onCoins={onCoins} timer={timer} />
+            <RightsAirdropBlock
+                numSwitch={props.numSwitch}
+                setNumSwitch={props.setNumSwitch}
+                onCoins={props.onCoins}
+                showTimerToFly={props.showTimerToFly}
+            />
             {funcNumSwitch()}
         </div>
     );

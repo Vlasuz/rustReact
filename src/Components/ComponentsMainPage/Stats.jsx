@@ -1,11 +1,11 @@
 import React from 'react';
 import StatsTrue from "./StatsTrue";
 
-const Stats = ({title, stats}) => {
+const Stats = (props) => {
     return (
-        <div className={stats ? 'stats' : 'stats stats_disabled'}>
-            <h3>{title}</h3>
-            {stats ? <StatsTrue /> : <p>Нет данных</p>}
+        <div className={props.count > 0 ? 'stats' : 'stats stats_disabled'}>
+            <h3>{props.title}</h3>
+            {props.count > 0 ? <StatsTrue greenStats={props.greenStats} count={props.count} /> : <p>Нет данных</p>}
         </div>
     );
 };

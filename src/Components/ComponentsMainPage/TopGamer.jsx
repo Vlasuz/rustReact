@@ -9,7 +9,7 @@ const TopGamer = ({tradeLink, setTradeLink}) => {
         <div className="top-gamer">
             <div className="top-gamer__vertical">
                 <span>
-                    <Trans t={t}>mainPage.weeklyGamer</Trans>
+                    <Trans t={t}>weekly_gamer</Trans>
                 </span>
             </div>
             <div className="top-gamer__info">
@@ -21,7 +21,7 @@ const TopGamer = ({tradeLink, setTradeLink}) => {
                     <a className="info__profile" href="#">
                         <img src="images/steam.svg" alt="Steam"/>
                         <span>
-                            <Trans t={t}>mainPage.TextProfile</Trans>
+                            <Trans t={t}>text_profile</Trans>
                         </span>
                     </a>
                 </div>

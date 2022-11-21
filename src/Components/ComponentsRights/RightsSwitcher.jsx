@@ -8,46 +8,40 @@ import RightsShop from "./RightsShop/RightsShop";
 import RightsAirdrop from "./RightsAirdrop/RightsAirdrop";
 import RightsAirdropMoveSleepers from "./RightsAirdrop/RightsAirdropMoveSleepers";
 
-const RightsSwitcher = ({onCoinsChange, onCoins, dataItems, switcherRights, timer, setTimeToFly, isAirdropEnd}) => {
+const RightsSwitcher = (props) => {
 
     let switcherFunction = function () {
-        if (switcherRights == 'pr') {
+        if (props.switcherRights == 'pr') {
             return (<RightsProcessor
-                onCoinsChange={onCoinsChange}
-                onCoins={onCoins}
-                dataItems={dataItems}
+                onCoinsChange={props.onCoinsChange}
+                onCoins={props.onCoins}
+                dataItems={props.dataItems}
             />)
 
-        } else if (switcherRights == 'st') {
+        } else if (props.switcherRights == 'st') {
 
             return (<RightsStorage
-                dataItems={dataItems}
+                dataItems={props.dataItems}
             />)
 
-        } else if (switcherRights == 'sh') {
+        } else if (props.switcherRights == 'sh') {
 
             return (<RightsShop
-                dataItems={dataItems}
+                dataItems={props.dataItems}
             />)
 
-        } else if (switcherRights == 'rights-airdrop') {
+        } else if (props.switcherRights == 'rights-airdrop') {
 
             return (<RightsAirdrop
-                dataItems={dataItems}
-                onCoins={onCoins}
-                onCoinsChange={onCoinsChange}
+                dataItems={props.dataItems}
+                onCoins={props.onCoins}
+                onCoinsChange={props.onCoinsChange}
 
-                timer={timer}
-                setTimeToFly={setTimeToFly}
-                isAirdropEnd={isAirdropEnd}
-            />)
-
-        } else if (switcherRights == 'rights-airdrop-sleepers') {
-
-            return (<RightsAirdropMoveSleepers
-                dataItems={dataItems}
-                onCoins={onCoins}
-                onCoinsChange={onCoinsChange}
+                numSwitch={props.numSwitch}
+                setNumSwitch={props.setNumSwitch}
+                listAirdropsMembers={props.listAirdropsMembers}
+                setListAirdropsMembers={props.setListAirdropsMembers}
+                showTimerToFly={props.showTimerToFly}
             />)
 
         }

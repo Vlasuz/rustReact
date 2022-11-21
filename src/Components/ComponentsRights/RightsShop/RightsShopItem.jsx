@@ -38,12 +38,8 @@ const RightsShopItem = ({listItems, setListToCart, listToCart}) => {
             <div className="item__buy">
                 <img src="images/basket.svg" alt="Basket"/>
             </div>
-            <div className="item__count">
-                {
-                    listItems.count
-                }
-            </div>
-            <div className={"item__cool clothes__cool_" + listItems.cool}>
+            <div className="item__count"> {listItems.count} </div>
+            <div className={"item__cool clothes__cool_" + listItems.rating}>
 
             </div>
             <div className="item__photo">

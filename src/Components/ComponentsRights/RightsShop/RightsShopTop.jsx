@@ -9,19 +9,17 @@ const RightsShopTop = () => {
     const [valueOfRange, setValueOfRange]   = useState(0);
     const [sumOfRange, setSumOfRange]       = useState(0);
     const [maxCoins, setMaxCoins]           = useState(7892);
-
     const [filterChange, setFilterChange]   = useState('')
-
     const [inputSearch, setInputSearch]     = useState('')
 
 
     const sendForm = function (e) {
         e.preventDefault();
 
-        console.log('Range: ' + sumOfRange)
-        console.log('Search: ' + inputSearch)
-        console.log(e.target.querySelector('input[type=radio]:checked').id)
-        console.log(e.target.querySelector('input[type=radio]:checked + label input[type="checkbox"]').checked)
+        // console.log('Range: ' + sumOfRange)
+        // console.log('Search: ' + inputSearch)
+        // console.log(e.target.querySelector('input[type=radio]:checked').id)
+        // console.log(e.target.querySelector('input[type=radio]:checked + label input[type="checkbox"]').checked)
     }
 
     return (

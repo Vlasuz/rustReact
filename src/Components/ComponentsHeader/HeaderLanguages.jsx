@@ -3,44 +3,94 @@ import i18n from "i18next";
 import {useTranslation, initReactI18next, Trans} from "react-i18next";
 
 const jsonLanguages = {
-    en: {
-        translation: {
-            header: {
-                headerSupport: "support",
-            },
-            mainPage: {
-                weeklyGamer: "Top gamer",
-                TextProfile: "Profile",
-                TextTradeLink: "Trade-link",
-                textTradeLinkActive: "Active",
-                textTradeLinkNonActive: "Not active",
-                textTradeLinkAdd: "Add",
-                textHistoryBalance: "History balance",
-            },
-
-            textAddCash: "Add",
-            textBalance: "Balance",
-            textChange: "Change",
-        }
-    },
     ru: {
         translation: {
-            header: {
-                headerSupport: "Поддержка",
-            },
-            mainPage: {
-                weeklyGamer: "Игрок недели",
-                TextProfile: "Профиль",
-                TextTradeLink: "Trade-ссылка",
-                textTradeLinkActive: "Активно",
-                textTradeLinkNonActive: "Не активно",
-                textTradeLinkAdd: "Добавить",
-                textHistoryBalance: "Итория баланса",
-            },
-
-            textAddCash: "Пополнить",
-            textBalance: "Баланс",
-            textChange: "Изменить",
+            header_support: "Поддержка",
+            weekly_gamer: "Игрок недели",
+            text_profile: "Профиль",
+            text_trade_link: "Trade-ссылка",
+            text_trade_link_active: "Активно",
+            text_trade_link_non_active: "Не активно",
+            text_trade_link_add: "Добавить",
+            text_history_balance: "Итория баланса",
+            text_add_cash: "Пополнить",
+            text_balance: "Баланс",
+            text_change: "Изменить",
+        }
+    },
+    en: {
+        translation: {
+            header_support: "Support",
+            weekly_gamer: "Player of the Week",
+            text_profile: "Profile",
+            text_trade_link: "Trade-Trade link",
+            text_trade_link_active: "Actively",
+            text_trade_link_non_active: "Not active",
+            text_trade_link_add: "Add",
+            text_history_balance: "History of balance",
+            text_add_cash: "Top up",
+            text_balance: "Balance",
+            text_change: "Change",
+        }
+    },
+    china: {
+        translation: {
+            header_support: "支持",
+            weekly_gamer: "本周最佳球员",
+            text_profile: "轮廓",
+            text_trade_link: "贸易链接",
+            text_trade_link_active: "积极地",
+            text_trade_link_non_active: "不活跃",
+            text_trade_link_add: "添加",
+            text_history_balance: "平衡的历史",
+            text_add_cash: "充值",
+            text_balance: "平衡",
+            text_change: "改变",
+        }
+    },
+    kor: {
+        translation: {
+            header_support: "지원하다",
+            weekly_gamer: "금주의 선수",
+            text_profile: "프로필",
+            text_trade_link: "거래 링크",
+            text_trade_link_active: "적극적으로",
+            text_trade_link_non_active: "활성화되지 않은",
+            text_trade_link_add: "추가하다",
+            text_history_balance: "균형의 역사",
+            text_add_cash: "충전",
+            text_balance: "균형",
+            text_change: "변화",
+        }
+    },
+    vie: {
+        translation: {
+            header_support: "Ủng hộ",
+            weekly_gamer: "cầu thủ của tuần",
+            text_profile: "Hồ sơ",
+            text_trade_link: "liên kết thương mại",
+            text_trade_link_active: "tích cực",
+            text_trade_link_non_active: "Không hoạt động",
+            text_trade_link_add: "cộng",
+            text_history_balance: "Lịch sử cân bằng",
+            text_add_cash: "nạp tiền",
+            text_balance: "THĂNG BẰNG",
+            text_change: "Biến đổi",
+        }
+    },
+    jap: {
+        translation: {
+            header_support: "サポート",
+            weekly_gamer: "今週のプレーヤー",
+            text_profile: "プロフィール",
+            text_trade_link: "トレードリンク",
+            text_trade_link_active: "積極的に",
+            text_trade_link_non_active: "非活動中",
+            text_trade_link_add: "追加",
+            text_history_balance: "天びんの歴史",
+            text_add_cash: "補充する",
+            text_balance: "バランス",
+            text_change: "変化する",
         }
     },
 }

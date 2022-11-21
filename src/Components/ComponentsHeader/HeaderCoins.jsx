@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeaderCoins = ({dataInfo}) => {
+const HeaderCoins = (props) => {
 
     let openPopup = function () {
         document.querySelector('.popup-add-coins').classList.add('popup_active')
@@ -10,7 +10,7 @@ const HeaderCoins = ({dataInfo}) => {
         <button className="header__coins" onClick={openPopup}>
             <img src="images/header__coins.svg" alt="Coins" />
             <span>
-                {dataInfo.coins}
+                {props.dataInfo.coins}
             </span>
             <div className="ico">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

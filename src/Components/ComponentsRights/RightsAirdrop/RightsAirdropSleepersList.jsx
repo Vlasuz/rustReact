@@ -1,12 +1,12 @@
 import React from 'react';
 
-const RightsAirdropSleepersList = ({sleepersCount}) => {
+const RightsAirdropSleepersList = (props) => {
 
     let sleepersCountFunc = function () {
 
         let sleeper = 1
         let sleepers = [];
-        while (sleeper <= sleepersCount) {
+        while (sleeper <= props.sleepersCount) {
             sleepers.push(
                 <li
                     className="sleepers__item"
