@@ -6,7 +6,7 @@ import FightPageOpponentSelect from "../Components/ComponentsFightPage/FightPage
 import FightTimer from "../Components/ComponentsFightPage/FightTimer";
 import FightAreaLeft from "../Components/ComponentsFightPage/FightArea/FightAreaLeft";
 
-const FightPageRunning = ({arrayForHit, setArrayForHit}) => {
+const FightPageRunning = (props) => {
 
     let [hit, setHit] = useState(false);
 
@@ -22,7 +22,7 @@ const FightPageRunning = ({arrayForHit, setArrayForHit}) => {
 
             <FightTimer />
 
-            {hit ? <FightPageOpponentSelect setArrayForHit={setArrayForHit} arrayForHit={arrayForHit}/> : <FightItemOpponentDisabled/>}
+            {hit ? <FightPageOpponentSelect states={props.states}/> : <FightItemOpponentDisabled/>}
 
         </section>
     );

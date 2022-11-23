@@ -10,19 +10,13 @@ const Aside = (props) => {
 
             <AsidePlane
                 to={"/airdrop"}
-                onSwitcherRightsChange={props.onSwitcherRightsChange}
-                setListAirdropsMembers={props.setListAirdropsMembers}
-                setNumSwitch={props.setNumSwitch}
-                setShowTimerToFly={props.setShowTimerToFly}
+                states={props.states}
             />
             <AsideFight
                 to={"/fight"}
             />
 
-            <AsideCenter
-                switcherRights={props.switcherRights}
-                onSwitcherRightsChange={props.onSwitcherRightsChange}
-            />
+            <AsideCenter states={props.states}/>
 
         </aside>
     );

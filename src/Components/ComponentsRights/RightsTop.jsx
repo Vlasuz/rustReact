@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RightsTop = ({switcherRights}) => {
+const RightsTop = (props) => {
 
     const switcherButtons = function (thisItem) {
         for( let itemTop1 of document.querySelectorAll('.section-right__switcher .section-right__item') ){
@@ -44,7 +44,7 @@ const RightsTop = ({switcherRights}) => {
                 onClick={switcherButtons}
             >
                 <span>
-                    {chose(switcherRights)}
+                    {chose(props.states.switcherRights)}
                 </span>
             </button>
             <button
@@ -53,7 +53,8 @@ const RightsTop = ({switcherRights}) => {
             >
                 <span>Чат</span>
                 <div className="people">
-                    <img src="images/users.svg" alt="Ico"/><span>176</span>
+                    <img src="images/users.svg" alt="Ico"/>
+                    <span>176</span>
                 </div>
             </button>
         </div>

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PopupCloseBackground from "../PopupCloseBackground";
 import PopupCloseCross from "../PopupCloseCross";
 
-const PopupAddTradeLink = ({tradeLink, setTradeLink}) => {
+const PopupAddTradeLink = (props) => {
 
     let openPopup = function (nextPopup) {
         if(document.querySelector('.popup_active')){
@@ -16,7 +16,7 @@ const PopupAddTradeLink = ({tradeLink, setTradeLink}) => {
     const successSubmit = function (e) {
         e.preventDefault()
         openPopup('popup-trade-link-success')
-        setTradeLink(inputTradeLink)
+        props.states.setTradeLink(inputTradeLink)
     }
 
     return (

@@ -11,38 +11,17 @@ import RightsAirdropMoveSleepers from "./RightsAirdrop/RightsAirdropMoveSleepers
 const RightsSwitcher = (props) => {
 
     let switcherFunction = function () {
-        if (props.switcherRights == 'pr') {
-            return (<RightsProcessor
-                onCoinsChange={props.onCoinsChange}
-                onCoins={props.onCoins}
-                dataItems={props.dataItems}
-            />)
+        if (props.states.switcherRights === 'pr') {
+            return (<RightsProcessor states={props.states}/>)
 
-        } else if (props.switcherRights == 'st') {
+        } else if (props.states.switcherRights === 'st') {
+            return (<RightsStorage states={props.states}/>)
 
-            return (<RightsStorage
-                dataItems={props.dataItems}
-            />)
+        } else if (props.states.switcherRights === 'sh') {
+            return (<RightsShop states={props.states}/>)
 
-        } else if (props.switcherRights == 'sh') {
-
-            return (<RightsShop
-                dataItems={props.dataItems}
-            />)
-
-        } else if (props.switcherRights == 'rights-airdrop') {
-
-            return (<RightsAirdrop
-                dataItems={props.dataItems}
-                onCoins={props.onCoins}
-                onCoinsChange={props.onCoinsChange}
-
-                numSwitch={props.numSwitch}
-                setNumSwitch={props.setNumSwitch}
-                listAirdropsMembers={props.listAirdropsMembers}
-                setListAirdropsMembers={props.setListAirdropsMembers}
-                showTimerToFly={props.showTimerToFly}
-            />)
+        } else if (props.states.switcherRights === 'rights-airdrop') {
+            return (<RightsAirdrop states={props.states}/>)
 
         }
 

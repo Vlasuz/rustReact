@@ -5,20 +5,20 @@ import RightsAirdropPlayersItem from "./RightsAirdropPlayersItem";
 const RightsAirdropPlayers = (props) => {
 
     let isHavePlayers = function () {
-        if (!props.listAirdropsMembers.length) {
+        if (!props.states.listAirdropsMembers.length) {
             return <big>Ставок нет</big>
         }
-        return <PlayersAirdropPlayersTop listAirdropsMembers={props.listAirdropsMembers}/>
+        return <PlayersAirdropPlayersTop listAirdropsMembers={props.states.listAirdropsMembers}/>
     }
 
     return (
         <div
-            className={props.listAirdropsMembers.length <= 0 ? "section-right__players section-right__players_none" : "section-right__players"}>
+            className={props.states.listAirdropsMembers.length <= 0 ? "section-right__players section-right__players_none" : "section-right__players"}>
 
             {isHavePlayers()}
 
             {
-                props.listAirdropsMembers.map(player =>
+                props.states.listAirdropsMembers.map(player =>
                     <RightsAirdropPlayersItem
                         key={player.id}
                         infoPlayer={player}

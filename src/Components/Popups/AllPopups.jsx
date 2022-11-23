@@ -13,18 +13,9 @@ import PopupCloseBackground from "./PopupCloseBackground";
 import PopupCloseCross from "./PopupCloseCross";
 import PopupOutputSearch from "./PopupOutputItems/PopupOutputSearch";
 import PopupOutput from "./PopupOutputItems/PopupOutput";
+import States from "../../States";
 
-const AllPopups = ({dataInfo}) => {
-
-    const closePopup = function () {
-        document.querySelectorAll('.popup').forEach(function (pp) {
-            pp.classList.remove('popup_active')
-        })
-    }
-
-    const [checkingAcive, setCheckingAcive] = useState(false)
-
-
+const AllPopups = (props) => {
 
     const [pincode, setPincode] = useState('')
     const [checkingCode, isCheckingCode] = useState(false)
@@ -40,11 +31,11 @@ const AllPopups = ({dataInfo}) => {
                 setPincode={setPincode}
             />
             <PopupAddCoinsByDollars/>
-            <PopupAddCoinsBySkins/>
+            <PopupAddCoinsBySkins states={props.states}/>
             <PopupAddCoinsByCodeChecking
-                pincode={pincode}
                 checkingCode={checkingCode}
                 isCheckingCode={isCheckingCode}
+                pincode={pincode}
                 setPincode={setPincode}
                 setIsFailCode={setIsFailCode}
             />

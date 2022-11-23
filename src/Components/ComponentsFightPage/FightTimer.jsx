@@ -5,25 +5,33 @@ import {useState} from "react";
 
 const FightTimer = () => {
 
+    let millisecondNum = 99
     const [time, setTime] = useState(10)
+    const [millisec, setMillisec] = useState(millisecondNum)
     const [bol, setBol] = useState(true)
 
     if (bol) {
         setBol(false)
 
-        let timer = setInterval(() => {
-            setTime(prev => prev - 1)
+        let timeillisecond = setInterval(() => {
+            setMillisec(prev => prev < 1 ? millisecondNum : prev - 1)
+        }, 10)
 
+        let timer = setInterval(() => {
             setTimeout(() => {
-                // setTime(10)
                 clearInterval(timer)
+                clearInterval(timeillisecond)
+                setMillisec(0)
+                setTime(0)
             }, 10000)
+
+            setTime(prev => prev - 1)
         }, 1000)
 
 
         setTimeout(() => {
             document.querySelector('.link-to-hit').click()
-        }, 10000)
+        }, 11000)
     }
     return (
         <div className="section-fight__center">
@@ -32,11 +40,14 @@ const FightTimer = () => {
                 <span>Начало</span>
                 <div className="timer">
                     <div className="min">
-                        <span>{time}</span>
+                        <span>
+                            {time < 10 ? "0" + time : time}
+                        </span>
                     </div>
                     <div className="sec">
                         <small className="dot">.</small>
                         <span>
+                            {millisec < 10 ? "0" + millisec : millisec}
                         </span>
                     </div>
                 </div>

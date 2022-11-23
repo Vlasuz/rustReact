@@ -6,17 +6,23 @@ const RightsAirdropSleepersList = (props) => {
 
         let sleeper = 1
         let sleepers = [];
-        while (sleeper <= props.sleepersCount) {
+        while (sleeper <= props.states.sleepersCount) {
             sleepers.push(
                 <li
+                    key={sleeper}
                     className="sleepers__item"
                 >
-                    <div className="li__winner-block">
-                        <div className="circle1">
-
+                    <div className="point__winner-table">
+                        <div className="table__left">
+                            <img src="images/user.jpeg" alt="Photo"/>
+                            <span>CulverCriegi</span>
                         </div>
-                        <div className="circle2">
-
+                        <div className="table__right">
+                            <p>Забирает банк:</p>
+                            <div className="right__bottom">
+                                <img src="images/header__coins.svg" alt="Coins"/>
+                                <span>750</span>
+                            </div>
                         </div>
                     </div>
                     <button>

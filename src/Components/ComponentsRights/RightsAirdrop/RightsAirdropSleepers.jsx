@@ -1,23 +1,20 @@
 import React from 'react';
-import {useState} from "react";
 
 const RightsAirdropSleepers = (props) => {
-
-    const [sleeperCost, setSleeperCost] = useState(0);
 
     let chooseSleepers = function (e) {
         for (let btn of document.querySelectorAll('.airdrop__sleepers li')) {
             btn.querySelector('button').classList.remove('button_active')
         }
 
-        props.setSleepersCount(+e.target.closest('li').querySelector('button').innerText);
+        props.states.setSleepersCount(+e.target.closest('li').querySelector('button').innerText);
 
         e.target.closest('li').querySelector('button').classList.add('button_active')
 
-        setSleeperCost(+e.target.closest('li').querySelector('button').innerText * 100)
+        props.states.setSleeperCost(+e.target.closest('li').querySelector('button').innerText * 100)
     }
 
-    function countOfSleepers () {
+    function countOfSleepers() {
         let sleeper = 1
         let sleepers = [];
         while (sleeper <= 9) {
@@ -38,15 +35,18 @@ const RightsAirdropSleepers = (props) => {
 
     let isEnough = function () {
 
-        if(props.onCoins >= sleeperCost) {
+        if (props.states.coins >= props.states.sleeperCost) {
             return (
                 <button
-                    onClick={() => { props.onCoinsChange(prev => prev - sleeperCost); return props.setNumSwitch(2) } }
+                    onClick={() => {
+                        props.states.setCoins(prev => prev - props.states.sleeperCost);
+                        return props.states.setNumSwitch(2)
+                    }}
                     className="sleepers__buy"
                 >
                     <span>Купить</span>
                     <img src="images/header__coins.svg" alt="Coin"/>
-                    <span>{sleeperCost}</span>
+                    <span>{props.states.sleeperCost}</span>
                 </button>
             )
         } else {
@@ -64,7 +64,7 @@ const RightsAirdropSleepers = (props) => {
                         style={
                             {color: '#777'}
                         }
-                    >{sleeperCost}</span>
+                    >{props.states.sleeperCost}</span>
                 </button>
             )
         }
@@ -77,7 +77,7 @@ const RightsAirdropSleepers = (props) => {
             <ul>
                 {countOfSleepers()}
             </ul>
-            {isEnough()}
+            {props.states.sleeperCost !== 0 && isEnough()}
         </div>
     );
 };

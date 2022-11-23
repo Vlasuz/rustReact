@@ -4,7 +4,7 @@ const RightsAirdropSleepersButtons = (props) => {
 
 
     const letsStart = () => {
-        props.setNumSwitch(3)
+        props.states.setNumSwitch(3)
     }
 
 

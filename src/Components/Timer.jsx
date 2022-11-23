@@ -9,10 +9,13 @@ const Timer = (props) => {
     return (
         <div className="timer">
             <TimerSeconds
-                setNumSwitch={props.setNumSwitch}
-                setListAirdropsMembers={props.setListAirdropsMembers}
-                setShowTimerToFly={props.setShowTimerToFly}
+                setNumSwitch={states.setNumSwitch}
+                setListAirdropsMembers={states.setListAirdropsMembers}
+                setShowTimerToFly={props.states.setShowTimerToFly}
+                seconds={states.seconds}
+                setSeconds={states.setSeconds}
                 states={states}
+                setNumSwitch={props.states.setNumSwitch}
             />
             <TimerMilliseconds/>
         </div>

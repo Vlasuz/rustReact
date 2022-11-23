@@ -3,14 +3,14 @@ import {NavLink} from "react-router-dom";
 import PopupCloseBackground from "./PopupCloseBackground";
 import PopupCloseCross from "./PopupCloseCross";
 
-const PopupEntryCoins = ({coins, onSetCoins, mainCoins}) => {
+const PopupEntryCoins = (props) => {
 
     let minusCoins = function () {
-        onSetCoins(prevCoins => prevCoins - coins)
+        props.onSetCoins(prevCoins => prevCoins - props.coins)
     }
 
     let moreCoins = function () {
-        if (mainCoins >= coins) {
+        if (props.mainCoins >= props.coins) {
             return (
                 <NavLink to={"/fight-running"}>
                     <button
@@ -40,7 +40,7 @@ const PopupEntryCoins = ({coins, onSetCoins, mainCoins}) => {
                     <div className="info__coins">
                         <img src="images/header__coins.svg" alt="Ico"/>
                         <span>
-                            {coins}
+                            {props.coins}
                         </span>
                     </div>
                 </div>

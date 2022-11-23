@@ -3,13 +3,15 @@ import {useState} from "react";
 
 const States = () => {
 
-    let newcomer = false;
+    let newcomer = true;
+    const [sumCoinsInShop, setSumCoinsInShop] = useState(0)
     const [trajectoryPlane, setTrajectoryPlane] = useState(0)
     const [lengthPlaneFly, setLengthPlaneFly] = useState(0)
     const [seconds, setSeconds] = useState(60);
     const [isDropDown, setIsDropDown] = useState(false);
     const [isTrajectoryActive, setIsTrajectoryActive] = useState(false);
-
+    const [sleeperCost, setSleeperCost] = useState(0);
+    const [sleepersCount, setSleepersCount] = useState(0)
     const [showTimerToFly, setShowTimerToFly] = useState(false)
     const [auth, setAuth] = useState(true);
     const [coins, setCoins] = useState(0);
@@ -239,6 +241,12 @@ const States = () => {
         }
     ]
 
+
+    const [randomTimerToDrop, setRandomTimerToDrop] = useState(0)
+    const [timerOfSeconds, setTimerOfSeconds] = useState(59)
+    const [timerOfMillisecond, setTimerOfMillisecond] = useState(99)
+    const [isTimerGoOn, setIsTimerGoOn] = useState(true)
+
     return {
         coins,
         setCoins,
@@ -273,6 +281,21 @@ const States = () => {
         setIsDropDown,
         isTrajectoryActive,
         setIsTrajectoryActive,
+        sleeperCost,
+        setSleeperCost,
+        sleepersCount,
+        setSleepersCount,
+        sumCoinsInShop,
+        setSumCoinsInShop,
+
+        timerOfSeconds,
+        setTimerOfSeconds,
+        timerOfMillisecond,
+        setTimerOfMillisecond,
+        isTimerGoOn,
+        setIsTimerGoOn,
+        randomTimerToDrop,
+        setRandomTimerToDrop,
     }
 
 };

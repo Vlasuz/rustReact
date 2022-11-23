@@ -1,41 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import FightTop from "../Components/ComponentsFightPage/FightTop";
 import FightItem from "../Components/ComponentsFightPage/FightItem/FightItem";
+import Loader from "../Hooks/Loader";
 
 const FightPage = (props) => {
-
-    const [loader, isLoader] = useState(true)
-    useEffect(() => {
-        isLoader(false)
-    })
-    if(loader) {
-        return(
-            <section className="section-shop">
-                <div className="loading">
-                    <div className="load">
-                        <div className="load__line">
-
-                        </div>
-                        <div className="load__line">
-
-                        </div>
-                        <div className="load__line">
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-        )
-    }
+    Loader();
 
     return (
         <section className="section-shop">
 
 
-            <FightTop dataInfo={props.dataInfo}/>
+            <FightTop states={props.states}/>
             <div className="section-shop__list-games">
                 {
-                    props.listFightsMembers.map(item =>
+                    props.states.listFightsMembers.map(item =>
                         <FightItem
                             key={item.id}
                             onSetCoins={item.onSetCoins}
@@ -48,15 +26,15 @@ const FightPage = (props) => {
                             opponentPhoto={item.opponentPhoto}
                             status={item.status}
                             youWon={item.youWon}
-                            setFightInfo={props.setFightInfo}
+                            setFightInfo={props.states.setFightInfo}
                         />
                     )
                 }
 
 
                 <FightItem
-                    onSetCoins={props.onSetCoins}
-                    mainCoins={props.mainCoins}
+                    onSetCoins={props.states.onSetCoins}
+                    mainCoins={props.states.mainCoins}
                     typePrice={"coins"}
                     image={"images/user.jpeg"}
                     name={"Amnesianna5360"}
@@ -67,8 +45,8 @@ const FightPage = (props) => {
                     youWon={null}
                 />
                 <FightItem
-                    onSetCoins={props.onSetCoins}
-                    mainCoins={props.mainCoins}
+                    onSetCoins={props.states.onSetCoins}
+                    mainCoins={props.states.mainCoins}
                     typePrice={"coins"}
                     image={"images/user.jpeg"}
                     name={"GoodGamer"}
@@ -79,8 +57,8 @@ const FightPage = (props) => {
                     youWon={null}
                 />
                 <FightItem
-                    onSetCoins={props.onSetCoins}
-                    mainCoins={props.mainCoins}
+                    onSetCoins={props.states.onSetCoins}
+                    mainCoins={props.states.mainCoins}
                     typePrice={"clothes"}
                     image={"images/user.jpeg"}
                     name={"Amnesianna5360"}
@@ -91,8 +69,8 @@ const FightPage = (props) => {
                     youWon={null}
                 />
                 <FightItem
-                    onSetCoins={props.onSetCoins}
-                    mainCoins={props.mainCoins}
+                    onSetCoins={props.states.onSetCoins}
+                    mainCoins={props.states.mainCoins}
                     typePrice={"clothes"}
                     image={"images/user.jpeg"}
                     name={"Amnesianna5360"}
@@ -103,8 +81,8 @@ const FightPage = (props) => {
                     youWon={null}
                 />
                 <FightItem
-                    onSetCoins={props.onSetCoins}
-                    mainCoins={props.mainCoins}
+                    onSetCoins={props.states.onSetCoins}
+                    mainCoins={props.states.mainCoins}
                     typePrice={"coins"}
                     image={"images/user.jpeg"}
                     name={"Amnesianna5360"}

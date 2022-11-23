@@ -1,8 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const RightsChatTextarea = ({setMessages}) => {
 
     const [textMessage, setTextMessage] = useState('')
+
+    const scrollToBottom = () => {
+        let chatBlock = document.querySelector('.section-right__chatting')
+        chatBlock.scrollTo({
+            top: chatBlock.scrollHeight,
+            behavior: "smooth"
+        });
+    }
 
     let smilesOpen = function () {
         document.querySelector('.section-right__smiles').classList.toggle('section-right__smiles_active')
@@ -27,13 +35,13 @@ const RightsChatTextarea = ({setMessages}) => {
 
         if (textMessage.trim()) {
             setMessages(oldMessages => [...oldMessages, newMessage]);
-
-            let chatBlock = document.querySelector('.section-right__chatting')
-            chatBlock.scrollTop = chatBlock.scrollHeight
-
         }
         setTextMessage('')
     }
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [textMessage])
 
     let inputMessage = function (e) {
         setTextMessage(e.target.value)
@@ -42,7 +50,7 @@ const RightsChatTextarea = ({setMessages}) => {
     return (
         <form
             className="section-right__bottom"
-            action="#"
+            action="/"
             onSubmit={sendMessage}
         >
             <label className="textarea">

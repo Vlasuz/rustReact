@@ -10,66 +10,60 @@ import HistoryPage from "../pages/HistoryPage";
 import PolicyPage from "../pages/PolicyPage";
 import ClothesShopPage from "../pages/ClothesShopPage";
 import States from "../States";
+import FightPageWaiting from "../pages/FightPageWaiting";
 
-const MainRouters = () => {
-    const states = States()
+const MainRouters = (props) => {
     const location = useLocation()
+
+    const Routers = [
+        {
+            path: "/",
+            element: <MainPage states={props.states}/>,
+        },
+        {
+            path: "/airdrop",
+            element: <AirdropPage states={props.states}/>,
+        },
+        {
+            path: "/fight",
+            element: <FightPage states={props.states}/>,
+        },
+        {
+            path: "/fight-waiting",
+            element: <FightPageWaiting states={props.states}/>,
+        },
+        {
+            path: "/fight-running",
+            element: <FightPageRunning states={props.states}/>,
+        },
+        {
+            path: "/fight-finish",
+            element: <FightPageFinish states={props.states}/>,
+        },
+        {
+            path: "/history",
+            element: <HistoryPage states={props.states}/>,
+        },
+        {
+            path: "/policy",
+            element: <PolicyPage states={props.states}/>,
+        },
+        {
+            path: "/clothes-shop",
+            element: <ClothesShopPage states={props.states}/>,
+        },
+    ]
+
     return (
         <div className="centerSections">
             <TransitionGroup component={null}>
                 <CSSTransition key={location.key} classNames={'fade'} timeout={300}>
                     <Routes location={location}>
-                        <Route path="/"
-                               element={ <MainPage
-                                   dataInfo={states.dataInfo}
-                                   tradeLink={states.tradeLink}
-                                   setTradeLink={states.setTradeLink}
-                               /> }
-                        />
-                        <Route
-                            path="/airdrop"
-                            element={<AirdropPage />}
-                        />
-                        <Route
-                            path="/fight"
-                            element={<FightPage
-                                mainCoins={states.coins}
-                                onSetCoins={states.setCoins}
-                                dataInfo={states.dataInfo}
-                                listFightsMembers={states.listFightsMembers}
-                                setFightInfo={states.setFightInfo}
-                            />}
-                        />
-                        <Route
-                            path="/fight-running"
-                            element={
-                                <FightPageRunning
-                                    arrayForHit={states.arrayForHit}
-                                    setArrayForHit={states.setArrayForHit}
-                                />
-                            }
-                        />
-                        <Route
-                            path="/fight-finish"
-                            element={
-                                <FightPageFinish
-                                    arrayForHit={states.arrayForHit}
-                                    setArrayForHit={states.setArrayForHit}
-                                />
-                            }
-                        />
-
-                        <Route path="/history" element={<HistoryPage/>}/>
-                        <Route path="/policy" element={<PolicyPage/>}/>
-
-                        <Route
-                            path="/clothes-shop"
-                            element={
-                                <ClothesShopPage
-                                    dataInfo={states.dataInfo}
-                                />
-                            }
-                        />
+                        {
+                            Routers.map((router, routerId) =>
+                                <Route key={routerId} path={router.path} element={router.element}/>
+                            )
+                        }
                     </Routes>
                 </CSSTransition>
             </TransitionGroup>

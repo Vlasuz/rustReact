@@ -3,7 +3,7 @@ import PopupCloseCross from "./PopupCloseCross";
 import PopupCloseBackground from "./PopupCloseBackground";
 import {Link} from "react-router-dom";
 
-const PopupNewRoom = ({dataInfo}) => {
+const PopupNewRoom = (props) => {
 
     function createGame(e) {
         e.preventDefault();
@@ -55,7 +55,7 @@ const PopupNewRoom = ({dataInfo}) => {
     }
     let changeInput = function (e) {
 
-        if (e.target.value != '' && e.target.value > 0 && e.target.value <= dataInfo.coins) {
+        if (e.target.value != '' && e.target.value > 0 && e.target.value <= props.states.coins) {
             e.target.closest('form').querySelector('button').removeAttribute('disabled')
         } else {
             e.target.closest('form').querySelector('button').setAttribute('disabled', 'disabled')
@@ -218,12 +218,12 @@ const PopupNewRoom = ({dataInfo}) => {
                                 className="li_active"
                                 onClick={switcherLi}
                             >
-                                <a href="#">На валюту</a>
+                                <a href="#" onClick={e => e.preventDefault()}>На валюту</a>
                             </li>
                             <li
                                 onClick={switcherLi}
                             >
-                                <a href="#">На скины</a>
+                                <a href="#" onClick={e => e.preventDefault()}>На скины</a>
                             </li>
                         </ul>
                     </div>
@@ -249,19 +249,19 @@ const PopupNewRoom = ({dataInfo}) => {
                                     <div className="input">
                                         <img src="images/header__coins.svg" alt="Ico"/>
                                         <span>
-                                            {dataInfo.coins}
+                                            {props.states.coins}
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <button>Создать игру</button>
+                            <button type={"submit"} disabled>Создать игру</button>
                         </form>
                     </div>
                     <form
                         className="popup__content-item popup__content-item-clothes"
                         onSubmit={(e) => createGame(e)}
                     >
-                        <Link className={"link-to-page"} to={'/fight-running'} />
+                        <Link className={"link-to-page"} to={'/fight-waiting'} />
                         <div className="popup-new-room__zone">
                             <p>Перетащите сюда скины для ставки</p>
                             <ul>
@@ -277,7 +277,7 @@ const PopupNewRoom = ({dataInfo}) => {
                                 </span>
                             </div>
                         </div>
-                        <button type={"submit"} disabled>Создать игру1</button>
+                        <button type={"submit"} disabled>Создать игру</button>
                     </form>
                 </div>
                 <div className="popup__content_rht">

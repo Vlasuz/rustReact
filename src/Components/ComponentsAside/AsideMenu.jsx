@@ -2,25 +2,22 @@ import React from 'react';
 import AsideMenuItem from "./AsideMenuItem";
 import {Link, Router} from "react-router-dom";
 
-const AsideMenu = ({onSwitcherRightsChange, switcherRights}) => {
+const AsideMenu = (props) => {
     return (
         <ul className="aside__list">
             <AsideMenuItem
                 className={"li_active"}
-                onSwitcherRightsChange={onSwitcherRightsChange}
-                switcherRights={switcherRights}
                 title={"Переработчик"}
                 linkTo={'pr'}
+                states={props.states}
             />
             <AsideMenuItem
-                onSwitcherRightsChange={onSwitcherRightsChange}
-                switcherRights={switcherRights}
+                states={props.states}
                 title={"Хранилище"}
                 linkTo={'st'}
             />
             <AsideMenuItem
-                onSwitcherRightsChange={onSwitcherRightsChange}
-                switcherRights={switcherRights}
+                states={props.states}
                 title={"Магазин"}
                 linkTo={'sh'}
             />

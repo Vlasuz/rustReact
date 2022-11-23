@@ -8,11 +8,9 @@ import States from "../../States";
 
 const HeaderRight = (props) => {
 
-    const state = States()
-
     return (
         <div className="header__right">
-            {!state.auth ? <HeaderLoginButton/> : <HeaderLogged setAuth={state.setAuth} dataInfo={props.dataInfo}/>}
+            {!props.states.auth ? <HeaderLoginButton/> : <HeaderLogged setAuth={props.states.setAuth} dataInfo={props.states.dataInfo}/>}
         </div>
     );
 };

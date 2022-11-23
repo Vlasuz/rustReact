@@ -1,27 +1,20 @@
 import React from 'react';
 
-const RightsShopBottomFull = ({setIsOpenCart, listToCart}) => {
+const RightsShopBottomFull = (props) => {
 
-    const sumCoins = function () {
-        let coinssum = 0;
-        listToCart.map(coins => {
-            coinssum += coins.listItems.cost
-        })
-        return coinssum
-    }
 
     return (
         <div
             className="postamat__cart postamat__cart_show postamat__cart_full"
-            onClick={() => setIsOpenCart(prev => !prev)}
+            onClick={() => props.setIsOpenCart(prev => !prev)}
         >
             <span>
-                {listToCart.length} предмета
+                {props.listToCart.length} предмета
             </span>
             <div className="sum">
                 <img src="images/header__coins.svg" alt="Coins"/>
                 <span>
-                    {sumCoins()}
+                    {props.states.sumCoinsInShop}
                 </span>
             </div>
         </div>

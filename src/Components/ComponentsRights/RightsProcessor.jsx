@@ -22,18 +22,9 @@ const RightsProcessor = (props) => {
         }
     }
 
-    // function checkListLi(container) {
-    //
-    //     if( container.querySelectorAll('.popup-new-room__zone ul li').length > 0 && container.querySelector('.popup-new-room__zone p') ){
-    //         container.querySelector('.popup-new-room__zone p').style.display = 'none';
-    //     } else {
-    //         container.querySelector('.ppup-new-room__zone p').style.display = 'block';
-    //     }
-    //
-    // }
 
     let pererabCoins = function (e) {
-        props.onCoinsChange(+props.onCoins + +e.target.closest('.pererab__button').querySelector('.rht span').innerText)
+        props.states.setCoins(+props.states.coins + +e.target.closest('.pererab__button').querySelector('.rht span').innerText)
         document.querySelector('.zone__list ul').innerHTML = ''
         document.querySelector('.zone__done').style.display = 'none'
         document.querySelectorAll('.zone__empty').forEach(zone => {
@@ -54,7 +45,7 @@ const RightsProcessor = (props) => {
 
     const sortableItem = () => {
         if (sortArray.search && sortArray.filterRadio) {
-            return props.dataItems
+            return props.states.dataItems
                 .filter(item => item.title.includes(sortArray.search))
                 .sort((a, b) => (!sortArray.filterCheckbox) ?
                     ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
@@ -70,7 +61,7 @@ const RightsProcessor = (props) => {
                 )
 
         } else if (sortArray.filterRadio) {
-            return props.dataItems
+            return props.states.dataItems
                 .sort((a, b) => (!sortArray.filterCheckbox) ?
                     ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
                     ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
@@ -83,7 +74,7 @@ const RightsProcessor = (props) => {
                         coins={item.cost}
                     />)
         } else if (sortArray.search) {
-            return props.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
+            return props.states.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
                 <RightsItem
                     key={itemNum}
                     count={item.count}
@@ -93,7 +84,7 @@ const RightsProcessor = (props) => {
                 />)
 
         } else {
-            return props.dataItems.map((item, itemNum) =>
+            return props.states.dataItems.map((item, itemNum) =>
                 <RightsItem
                     key={itemNum}
                     count={item.count}

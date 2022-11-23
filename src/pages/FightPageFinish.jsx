@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-const FightPageFinish = ({arrayForHit, setArrayForHit}) => {
+const FightPageFinish = (props) => {
 
     const [shieldOpponent, setShieldOpponent] = useState([true, false, true])
 
@@ -216,9 +216,9 @@ const FightPageFinish = ({arrayForHit, setArrayForHit}) => {
                         <div
                             // className="attacked__bullet_good"
                             className={
-                                (arrayForHit[0] ? "attacked__bullet_active" : "") +
+                                (props.states.arrayForHit[0] ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((shieldOpponent[0] == arrayForHit[0]) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((shieldOpponent[0] == props.states.arrayForHit[0]) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="images/bullet.svg" alt="Ico"/>
@@ -229,9 +229,9 @@ const FightPageFinish = ({arrayForHit, setArrayForHit}) => {
                         <div
                             // className="attacked__bullet attacked__bullet_active attacked__bullet_bad "
                             className={
-                                (arrayForHit[1] ? "attacked__bullet_active" : "") +
+                                (props.states.arrayForHit[1] ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-body" +
-                                ((shieldOpponent[1] == arrayForHit[1]) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((shieldOpponent[1] == props.states.arrayForHit[1]) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="images/bullet.svg" alt="Ico"/>
@@ -241,9 +241,9 @@ const FightPageFinish = ({arrayForHit, setArrayForHit}) => {
                         </div>
                         <div
                             className={
-                                (arrayForHit[2] ? "attacked__bullet_active" : "") +
+                                (props.states.arrayForHit[2] ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-legs" +
-                                ((shieldOpponent[2] == arrayForHit[2]) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((shieldOpponent[2] == props.states.arrayForHit[2]) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="images/bullet.svg" alt="Ico"/>

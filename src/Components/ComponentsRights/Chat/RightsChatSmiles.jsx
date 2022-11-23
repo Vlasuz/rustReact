@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState} from "react";
 
 const RightsChatSmiles = (props) => {
@@ -8,6 +8,14 @@ const RightsChatSmiles = (props) => {
         {id: 1, title: "Стикеры «Фермер»"},
         {id: 2, title: "«Стикеры Грибник»"}
     ]
+
+    const scrollToBottom = () => {
+        let chatBlock = document.querySelector('.section-right__chatting')
+        chatBlock.scrollTo({
+            top: chatBlock.scrollHeight,
+            behavior: "smooth"
+        });
+    }
 
     const clickSmilesBlocks = (e) => {
         document.querySelectorAll('.smiles__switches li').forEach(li => li.classList.remove('li_active'))
@@ -33,6 +41,10 @@ const RightsChatSmiles = (props) => {
             text: <img src={linkToImage} />
         }
     }
+
+    useEffect(() => {
+        scrollToBottom()
+    })
 
 
 

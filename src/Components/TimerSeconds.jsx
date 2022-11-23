@@ -10,7 +10,7 @@ const TimerSeconds = (props) => {
 
     // УСЛОВИЕ ВЫПАВШЕГО ДРОПА
     if (var_section) {
-        props.states.isDropDown ? var_section.classList.add('dropIsDown') : var_section.classList.remove('dropIsDown')
+        document.querySelector('.airdrop-drop-sent') ? var_section.classList.add('dropIsDown') : var_section.classList.remove('dropIsDown')
     }
     // УСЛОВИЕ ВЫПАВШЕГО ДРОПА
 
@@ -27,35 +27,34 @@ const TimerSeconds = (props) => {
         let max
         if (document.querySelector('.section-map__map')) max = document.querySelector('.section-map__map').clientHeight - 100
         let rand = Math.ceil(Math.random() * (max - 100) + 100)
-        if (props.states.setTrajectoryPlane) props.states.setTrajectoryPlane(rand);
+        if (props.states.setTrajectoryPlane && rand > 0) props.states.setTrajectoryPlane(rand);
     }
     // РАНДОМНАЯ ТРАЕКТОРИЯ ПОЛЕТА
 
 
     // ВЫПАДЕНИЕ ДРОПА
+    console.log(props.states.randomTimerToDrop)
     const randomDropFly = () => {
-        let randomTimoutDrop = Math.ceil(Math.random() * (17000 - 5000) + 5000)
+
+        // let randomTimoutDrop = Math.ceil(Math.random() * (17000 - 5000) + 5000)
+        // console.log(document.querySelector('.section-map .trajectory')?.clientWidth)
 
         if (props.states.isDropDown && !document.querySelector('.airdrop-drop-sent')) {
-            let element = document.querySelector('.section-map .plane')
-            let cood;
-            if (element) cood = element.getBoundingClientRect()
+
+            setTimeout(() => {
+                selectWinner()
+            }, 1500)
+
             let drop = document.createElement('div')
             drop.classList.add('airdrop-drop-sent');
 
-
-            if (document.querySelector('.section-map__map')) document.querySelector('.section-map__map').append(drop)
-            if (document.querySelector('.airdrop-drop-sent')) {
+            if (props.states.trajectoryPlane > 0 && document.querySelector('.section-map__map')) {
+                document.querySelector('.section-map__map').append(drop)
                 document.querySelector('.airdrop-drop-sent').innerHTML = "<div class='point'></div><div class='line-to-winner'></div>";
-                document.querySelector('.airdrop-drop-sent').style.left = cood.left - 200 + 'px';
+                document.querySelector('.airdrop-drop-sent').style.left = props.states.randomTimerToDrop - 250 + 'px';
                 document.querySelector('.airdrop-drop-sent').style.top = props.states.trajectoryPlane + 19 + 'px';
             }
         }
-
-        setTimeout(() => {
-            props.states.setIsDropDown(true)
-            selectWinner()
-        }, randomTimoutDrop)
     }
     // ВЫПАДЕНИЕ ДРОПА
 
@@ -136,9 +135,6 @@ const TimerSeconds = (props) => {
         // ЛОГИКА ВЫБОРА ПОБЕДИТЕЛЯ
 
 
-        document.querySelectorAll('.map__points li')[winnerId].classList.add('sleepers__item_winner')
-
-
         // ЛОГИКА ДЛЯ ЛИНИИ ОТ ДРОПА К ПОБЕДИТЕЛЮ
 
         let winnerX = document.querySelectorAll('.map__points li')[winnerId]?.style.left.replace('px', '');
@@ -152,47 +148,50 @@ const TimerSeconds = (props) => {
 
         katX = dropX > winnerX ? dropX - winnerX : winnerX - dropX;
         katY = dropY > winnerY ? dropY - winnerY : winnerY - dropY;
-        gip = Math.sqrt((katX * katX) + (katY * katY) );
+        gip = Math.sqrt((katX * katX) + (katY * katY));
 
-        if(document.querySelector('.line-to-winner')) document.querySelector('.line-to-winner').style.width = gip + "px";
+        if (document.querySelector('.line-to-winner')) document.querySelector('.line-to-winner').style.width = gip + "px";
 
 
         sinA = katY / gip
         radian = Math.asin(sinA)
         angle = (radian * 180 / Math.PI);
 
-
-
-        // console.log("katY: " + katY)
-        // console.log("gip: " + gip)
-        // console.log("sinA: " + sinA)
-        // console.log("radian: " + radian)
-        // console.log("angle: " + angle)
-        // console.log(dropY)
-
         if (winnerX < dropX && winnerY < dropY) {
-            document.querySelector('.line-to-winner').style.transform = `rotate(-${180 - angle}deg)`
-
-            // console.log('if1: ' + angle)
+            document.querySelector('.line-to-winner').style.transform = `rotate(-${180 - angle}deg)`;
 
         } else if (winnerX > dropX && winnerY > dropY) {
             document.querySelector('.line-to-winner').style.transform = `rotate(${90 - angle}deg)`;
 
-            // console.log('if2: ' + angle)
-
         } else if (winnerX > dropX && winnerY < dropY) {
-            document.querySelector('.line-to-winner').style.transform = `rotate(-${angle}deg)`
-
-            // console.log('if3: ' + angle)
+            document.querySelector('.line-to-winner').style.transform = `rotate(-${angle}deg)`;
 
         } else if (winnerX < dropX && winnerY > dropY) {
-
-            document.querySelector('.line-to-winner').style.transform = `rotate(${180 - angle}deg)`
-
-            // console.log('if4: ' + angle)
+            document.querySelector('.line-to-winner').style.transform = `rotate(${180 - angle}deg)`;
 
         }
 
+        setTimeout(() => {
+            document.querySelector('.line-to-winner')?.classList.add('line-to-winner_active')
+            document.querySelector('.line-to-winner').style.width = "0px";
+            document.querySelector('.line-to-winner').animate([
+                {width: '0px'},
+                {width: gip+'px'}
+            ], {
+                duration: 1000,
+            })
+
+            if (document.querySelector('.line-to-winner')) document.querySelector('.line-to-winner').style.width = gip + "px";
+
+        }, 500)
+
+        setTimeout(() => {
+            document.querySelectorAll('.map__points li')[winnerId]?.classList.add('sleepers__item_winner')
+        }, 1000)
+
+        setTimeout(() => {
+            document.querySelectorAll('.map__points li:not(li.sleepers__item_winner)').forEach(li => li.remove())
+        }, 1500)
 
         // ЛОГИКА ДЛЯ ЛИНИИ ОТ ДРОПА К ПОБЕДИТЕЛЮ
 
@@ -211,7 +210,7 @@ const TimerSeconds = (props) => {
     // ПОЛУЧЕНИЕ РЕАЛЬНОГО ВРЕМЕНИ
     const getTime = () => {
         const time = Date.parse(deadline) - Date.now()
-        props.states.setSeconds(Math.floor((time / 1000) % 60));
+        props.setSeconds(Math.floor((time / 1000) % 60));
     }
     // ПОЛУЧЕНИЕ РЕАЛЬНОГО ВРЕМЕНИ
 
@@ -225,13 +224,13 @@ const TimerSeconds = (props) => {
 
             // ФУНКЦИЯ ЗАВЕРШЕНИЕ АИРДРОПА
             let airdropFinish = () => {
-                // if(props.setNumSwitch !== undefined){
-                //     props.setNumSwitch(1)
-                // }
+                if(props.setNumSwitch !== undefined){
+                    props.setNumSwitch(1)
+                }
                 // if(props.setListAirdropsMembers !== undefined){
                 //     props.setListAirdropsMembers([])
                 // }
-                // document.querySelectorAll('.map__points li').forEach(li => li.remove())
+                document.querySelectorAll('.map__points li').forEach(li => li.remove())
                 document.querySelectorAll('.airdrop-drop-sent').forEach(drop => drop.remove())
 
                 props.states.setIsTrajectoryActive(false)
@@ -242,16 +241,26 @@ const TimerSeconds = (props) => {
 
 
             // УСЛОВИЕ ТАЙМЕРА
-            if (props.states.seconds <= 59) { // НАЧАЛО ПОЛЕТА САМОЛЕТА С ОТСЧЕТОМ НА ВЫБРОС ДРОПА
+            if (props.seconds <= 60) { // НАЧАЛО ПОЛЕТА САМОЛЕТА С ОТСЧЕТОМ НА ВЫБРОС ДРОПА
 
                 randomDropFly()
-                props.states.setIsTrajectoryActive(true)
-                if (document.querySelector('.trajectory'))
+                setTimeout(() => {
+                    props.states.setIsTrajectoryActive(true)
+                }, 1000)
+
+                if (!props.states.isDropDown && props.states.randomTimerToDrop < document.querySelector('.section-map .trajectory')?.clientWidth && props.states.randomTimerToDrop > 0) {
+                    props.states.setIsDropDown(true)
+                }
+
+                if (document.querySelector('.trajectory') && props.states.isTrajectoryActive && props.states.trajectoryPlane > 0) {
                     document.querySelector('.trajectory').style.top = props.states.trajectoryPlane + 'px'
+                }
 
             }
 
-            if (props.states.seconds < 2) {
+            // console.log(props.states.trajectoryPlane)
+
+            if (props.seconds < 1) {
                 // ЗАВЕРШЕНИЕ АИРДРОПА
                 airdropFinish()
                 // ЗАВЕРШЕНИЕ АИРДРОПА
@@ -260,21 +269,25 @@ const TimerSeconds = (props) => {
 
 
             // УСТАНОВКА ДЛИНЫ ПОЛЕТА В ПРОЦЕНТАХ
-            props.states.setLengthPlaneFly(props.states.seconds > 1 ? -((props.states.seconds * 2) - 140) : props.states.lengthPlaneFly)
+            props.states.setLengthPlaneFly(props.seconds > 1 ? -((props.seconds * 2) - 140) : props.states.lengthPlaneFly)
             // УСТАНОВКА ДЛИНЫ ПОЛЕТА В ПРОЦЕНТАХ
 
-            if (document.querySelector('.aside__plane .timer-line__line_done')) document.querySelector('.aside__plane .timer-line__line_done').style.width = -((props.states.seconds * 100) / 60 - 100) + "%"
-            if (document.querySelector('.fly__timer .line_done')) document.querySelector('.fly__timer .line_done').style.width = -((props.states.seconds * 100) / 60 - 100) + "%"
+            if (document.querySelector('.aside__plane .timer-line__line_done')) document.querySelector('.aside__plane .timer-line__line_done').style.width = -((props.seconds * 100) / 60 - 100) + "%"
+            if (document.querySelector('.fly__timer .line_done')) document.querySelector('.fly__timer .line_done').style.width = -((props.seconds * 100) / 60 - 100) + "%"
 
         } else {
             if (props.setShowTimerToFly) props.setShowTimerToFly(true)
+            props.states.setLengthPlaneFly(0)
 
             // ЛИНИЯ ТАЙМЕРА
-            if (document.querySelector('.aside__plane .timer-line__line_done')) document.querySelector('.aside__plane .timer-line__line_done').style.width = props.states.seconds * 100 / 60 + "%"
-            if (document.querySelector('.fly__timer .line_done')) document.querySelector('.fly__timer .line_done').style.width = props.states.seconds * 100 / 60 + "%"
+            if (document.querySelector('.aside__plane .timer-line__line_done')) document.querySelector('.aside__plane .timer-line__line_done').style.width = props.seconds * 100 / 60 + "%"
+            if (document.querySelector('.fly__timer .line_done')) document.querySelector('.fly__timer .line_done').style.width = props.seconds * 100 / 60 + "%"
             // ЛИНИЯ ТАЙМЕРА
+
+            props.states.setRandomTimerToDrop(Math.ceil(Math.random() * (1100 - 350) + 350))
 
             randomTrajectoryFly()
+            randomDropFly()
         }
 
 
@@ -297,13 +310,13 @@ const TimerSeconds = (props) => {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [props.states.seconds]);
+    }, [props.seconds]);
 
 
     return (
         <div className="min">
             <span>
-                {props.states.seconds < 10 ? "0" + props.states.seconds : props.states.seconds}
+                {props.seconds < 10 ? "0" + props.seconds : props.seconds}
             </span>
         </div>
     );

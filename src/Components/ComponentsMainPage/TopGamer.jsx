@@ -2,7 +2,7 @@ import React from 'react';
 import TopGamerTradeLink from "./TopGamerTradeLink";
 import {Trans, useTranslation} from "react-i18next";
 
-const TopGamer = ({tradeLink, setTradeLink}) => {
+const TopGamer = (props) => {
 
     const {t} = useTranslation();
     return (
@@ -26,10 +26,7 @@ const TopGamer = ({tradeLink, setTradeLink}) => {
                     </a>
                 </div>
             </div>
-            <TopGamerTradeLink
-                tradeLink={tradeLink}
-                setTradeLink={setTradeLink}
-            />
+            <TopGamerTradeLink states={props.states}/>
         </div>
     );
 };

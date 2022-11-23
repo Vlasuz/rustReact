@@ -20,7 +20,9 @@ const Header = (props) => {
                         <HeaderSocials />
                     </div>
 
-                    <HeaderRight setAuth={props.setAuth} dataInfo={props.dataInfo} />
+                    <HeaderRight
+                        states={props.states}
+                    />
                 </div>
             </div>
         </header>

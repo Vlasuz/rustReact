@@ -10,14 +10,10 @@ const AsidePlane = (props) => {
             className={isActive => isActive ? 'aside__plane' : 'aside__plane aside__plane_active'}
         >
             <button
-                onClick={e => props.onSwitcherRightsChange('rights-airdrop')}
+                onClick={e => props.states.setSwitcherRights('rights-airdrop')}
             >
                 <img src="images/plane.svg" alt="Plane"/>
-                <Timer
-                    setListAirdropsMembers={props.setListAirdropsMembers}
-                    setNumSwitch={props.setNumSwitch}
-                    setShowTimerToFly={props.setShowTimerToFly}
-                />
+                <Timer states={props.states}/>
                 <div className="timer-line">
                     <img src="images/timer-line.svg" alt="Line"/>
                     <div className="timer-line__line">

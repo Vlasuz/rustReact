@@ -9,7 +9,7 @@ const PopupEntryClothes = (props) => {
     const submitToGame = (e) => {
         e.preventDefault();
 
-        document.querySelector('.link-to-page').click()
+        document.querySelector('.link-to-page-fight').click()
     }
 
 
@@ -188,7 +188,7 @@ const PopupEntryClothes = (props) => {
                             action="#"
                             onSubmit={e => submitToGame(e)}
                         >
-                            <Link className={"link-to-page"} to={'/fight-running'} />
+                            <Link className={"link-to-page-fight"} to={'/fight-running'} />
                             <div className="inputs">
                                 <div className="inputs__item inputs__item-sum">
                                     <p>Сумма ставки:</p>

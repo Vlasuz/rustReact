@@ -8,27 +8,16 @@ import States from "../../../States";
 
 const RightsAirdropSection = (props) => {
 
-    const [sleepersCount, setSleepersCount] = useState(0)
-
-
     let funcNumSwitch = function () {
-        if(props.numSwitch === 1){
+        if(props.states.numSwitch === 1){
             return (
-                <RightsAirdropSleepers
-                    setSleepersCount={setSleepersCount}
-                    onCoins={props.onCoins}
-                    onCoinsChange={props.onCoinsChange}
-                    setNumSwitch={props.setNumSwitch}
-                />
+                <RightsAirdropSleepers states={props.states}/>
             )
-        } else if(props.numSwitch === 2){
+        } else if(props.states.numSwitch === 2){
             return (
-                <RightsAirdropMoveSleepers
-                    sleepersCount={sleepersCount}
-                    setNumSwitch={props.setNumSwitch}
-                />
+                <RightsAirdropMoveSleepers states={props.states}/>
             )
-        } else if (props.numSwitch === 3){
+        } else if (props.states.numSwitch === 3){
             return (
                 <RightsAirdropMember/>
             )
@@ -37,12 +26,7 @@ const RightsAirdropSection = (props) => {
 
     return (
         <div className="section-right__airdrop">
-            <RightsAirdropBlock
-                numSwitch={props.numSwitch}
-                setNumSwitch={props.setNumSwitch}
-                onCoins={props.onCoins}
-                showTimerToFly={props.showTimerToFly}
-            />
+            <RightsAirdropBlock states={props.states}/>
             {funcNumSwitch()}
         </div>
     );

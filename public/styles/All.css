@@ -619,7 +619,10 @@ main {
     background: rgba(162,171,197,.15)
 }
 .popup-add-coins-skins .skins__item_active .item__check {
-    opacity: 1
+    opacity: 1;
+    z-index: 2;
+    top: 5px;
+    right: 5px;
 }
 .popup-add-coins-skins .skins__item:active {
     -webkit-transform: scale(.95);
@@ -5557,9 +5560,18 @@ section {
     width: 100%;
     height: 100%
 }
+.section-map__map .point__group {
+    position: absolute;
+    top: -65px;
+}
 .section-map__map .point {
     position: absolute;
-    margin-top: -65px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    z-index: 13;
+    align-items: flex-end;
+    justify-content: center;
 }
 .section-map__map .point__nearly .point__group {
     margin-top: -100px;
@@ -5604,7 +5616,23 @@ section {
     left: 8px;
     top: 8px;
     transform-origin: center left;
+    opacity: 0;
 }
+.line-to-winner.line-to-winner_active{
+    animation: lineWidth .5s ease-out forwards;
+}
+
+@keyframes lineWidth {
+    from {
+        /*width: 0;*/
+        opacity: 0;
+    }
+    to{
+        /*width: 100%;*/
+        opacity: 1;
+    }
+}
+
 .section-map__map .point__winner .circle2 {
     width: 140px;
     height: 140px;
@@ -6776,7 +6804,8 @@ section {
     grid-template-columns: repeat(3,1fr);
     grid-gap: 6px;
     overflow: auto;
-    height: calc(100vh - 420px)
+    /*height: calc(100vh - 420px)*/
+    height: calc(100vh - 380px)
 }
 .postamat__item {
     background: rgba(162,171,197,.06);
@@ -7609,7 +7638,8 @@ section {
     color: #fff;
     margin-bottom: -10px
 }
-.section-fight__bottom button {
+.section-fight__bottom button,
+.section-fight__bottom a {
     background: rgba(46,49,69,.5);
     border-radius: 8px;
     font-weight: 700;
@@ -7632,14 +7662,17 @@ section {
     -webkit-transition: all .3s ease;
     -o-transition: all .3s ease;
     transition: all .3s ease;
-    cursor: pointer
+    cursor: pointer;
+    max-width: 100%;
 }
-.section-fight__bottom button:hover {
+.section-fight__bottom button:hover,
+.section-fight__bottom a:hover {
     -webkit-transform: scale(1.05);
     -ms-transform: scale(1.05);
     transform: scale(1.05)
 }
-.section-fight__bottom button:active {
+.section-fight__bottom button:active,
+.section-fight__bottom a:active {
     -webkit-transform: scale(.95);
     -ms-transform: scale(.95);
     transform: scale(.95)
@@ -9755,13 +9788,28 @@ section {
     display: flex;
     position: absolute;
     left: calc(50% + 62px);
-    bottom: calc(100% - 53px);
+    bottom: calc(100% + 10px);
     transform: translateX(-50%);
 
     transition: all .3s ease;
     z-index: 14;
     opacity: 0;
     visibility: hidden;
+}
+
+.point .point__winner-table{
+    bottom: calc(100% - 50px);
+}
+
+.go-to-fight{
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    opacity: 0;
+}
+
+.postamat__item:hover .item__photo{
+    opacity: 1;
 }
 
 @media screen and (max-width: 768px){

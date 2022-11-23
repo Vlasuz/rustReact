@@ -8,10 +8,8 @@ import UserStats from "../Components/ComponentsMainPage/UserStats";
 
 const MainPage = (props) => {
     Loader();
-    const {newcomer} = States()
 
-
-    let newcomerClass = newcomer ?
+    let newcomerClass = !props.states.auth ?
         'section-block section-block-information section-block-newcomer' :
         'section-block section-block-information';
 
@@ -19,12 +17,10 @@ const MainPage = (props) => {
         <section className="section-blocks">
             <div className={newcomerClass}>
 
-                <TopGamer
-                    tradeLink={props.tradeLink}
-                    setTradeLink={props.setTradeLink}
-                />
+                <TopGamer states={props.states}/>
 
-                <Balance dataInfo={props.dataInfo} />
+                {props.states.auth && <Balance dataInfo={props.states.dataInfo} />}
+
 
                 <UserStats/>
 

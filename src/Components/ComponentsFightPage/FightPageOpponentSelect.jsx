@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
 
-const FightPageOpponentSelect = ({setArrayForHit, arrayForHit}) => {
+const FightPageOpponentSelect = (props) => {
 
 
     let funcMouseMove = function (e) {
@@ -56,7 +55,7 @@ const FightPageOpponentSelect = ({setArrayForHit, arrayForHit}) => {
 
         }
 
-        setArrayForHit(arrayOfName)
+        props.states.setArrayForHit(arrayOfName)
 
     }
 

@@ -6,27 +6,27 @@ const RightsAirdropBlock = (props) => {
 
     return (
         <div className="airdrop__block">
-            {props.showTimerToFly ?
+            {props.states.showTimerToFly ?
                 <div className="airdrop__fly">
-                <div className="fly__top">
-                    <p>До вылета:</p>
-                    <Timer />
-                </div>
-                <div className="fly__bottom">
-                    <div className="fly__timer">
-                        <img src="images/line-for-right.svg" alt="Ico"/>
-                        <div className="line">
-                            <div className="line_done">
+                    <div className="fly__top">
+                        <p>До вылета:</p>
+                        <Timer states={props.states}/>
+                    </div>
+                    <div className="fly__bottom">
+                        <div className="fly__timer">
+                            <img src="images/line-for-right.svg" alt="Ico"/>
+                            <div className="line">
+                                <div className="line_done">
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
                 :
                 <div className="airdrop__timer-to-ready">
                     <div className="fly__top">
-                        <Timer />
+                        <Timer states={props.states}/>
                     </div>
                     <div className="fly__bottom">
                         <div className="fly__timer">
@@ -45,7 +45,7 @@ const RightsAirdropBlock = (props) => {
                 <div className="coins">
                     <img src="images/header__coins.svg" alt="Ico"/>
                     <span>
-                        {props.onCoins}
+                        {props.states.coins}
                     </span>
                 </div>
             </div>

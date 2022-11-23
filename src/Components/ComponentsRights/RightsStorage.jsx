@@ -1,22 +1,10 @@
 import React from 'react';
-import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
-import RightsSortable from "./RightsSortable";
 import {useState} from "react";
-import RightsSearch from "./RightsSearch";
 import RightsFilterForm from "./RightsFilterForm";
 import RightsItemStorage from "./RightsItemStorage";
+import OpenPopup from "../../Hooks/OpenPopup";
 
 const RightsStorage = (props) => {
-
-    const [filterChange, setFilterChange]   = useState('')
-    const [inputSearch, setInputSearch]     = useState('')
-
-    let openPopup = function (nextPopup) {
-        if(document.querySelector('.popup_active')){
-            document.querySelector('.popup_active').classList.remove('popup_active')
-        }
-        document.querySelector('.'+nextPopup).classList.add('popup_active')
-    }
 
     let ratingColor = function (item) {
 
@@ -36,33 +24,6 @@ const RightsStorage = (props) => {
 
         }
     }
-
-
-    // let items = props.dataItems.map((item, itemNum) =>
-    //
-    //     <li
-    //         className="postamat__item"
-    //         key={itemNum}
-    //         onClick={(e) => clickToSelectItem(e)}
-    //     >
-    //         <div className="item__check">
-    //             <img src="images/green-check.svg" alt="Check"/>
-    //         </div>
-    //         <div className="item__count">
-    //             {item.count}
-    //         </div>
-    //         <div className={"item__cool " + ratingColor(item)}>
-    //
-    //         </div>
-    //         <div className="item__photo">
-    //             <img src={item.image} alt="Skin"/>
-    //         </div>
-    //         <div className="item__price">
-    //             <img src="images/header__coins.svg" alt="Ico"/>
-    //             <span>{item.cost}</span>
-    //         </div>
-    //     </li>
-    // )
 
 
     const clickToSelectItem = function (e) {
@@ -113,7 +74,7 @@ const RightsStorage = (props) => {
     )
     const sortableItem = () => {
         if (sortArray.search && sortArray.filterRadio) {
-            return props.dataItems
+            return props.states.dataItems
                 .filter(item => item.title.includes(sortArray.search))
                 .sort((a, b) => (!sortArray.filterCheckbox) ?
                     ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
@@ -130,7 +91,7 @@ const RightsStorage = (props) => {
                 )
 
         } else if (sortArray.filterRadio) {
-            return props.dataItems
+            return props.states.dataItems
                 .sort((a, b) => (!sortArray.filterCheckbox) ?
                     ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
                     ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
@@ -144,7 +105,7 @@ const RightsStorage = (props) => {
                         coins={item.cost}
                     />)
         } else if (sortArray.search) {
-            return props.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
+            return props.states.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
                 <RightsItemStorage
                     clickToSelectItem={clickToSelectItem}
                     key={itemNum}
@@ -155,7 +116,7 @@ const RightsStorage = (props) => {
                 />)
 
         } else {
-            return props.dataItems.map((item, itemNum) =>
+            return props.states.dataItems.map((item, itemNum) =>
                 <RightsItemStorage
                     clickToSelectItem={clickToSelectItem}
                     key={itemNum}
@@ -178,7 +139,9 @@ const RightsStorage = (props) => {
 
             <hr/>
 
-            <ul className="postamat__block"> {sortableItem()} </ul>
+            <ul className="postamat__block">
+                {sortableItem()}
+            </ul>
 
             <div className="storage__zone">
                 <div className="zone__empty">
@@ -186,7 +149,7 @@ const RightsStorage = (props) => {
                 </div>
                 <button
                     className="zone__button"
-                    onClick={() => openPopup('popup-pull')}
+                    onClick={() => OpenPopup('popup-pull')}
                 >
                     <img src="images/arr-r-t.svg" alt="Ico"/>
                     <span>Вывести предметы</span>

@@ -6,18 +6,8 @@ const RightsAirdrop = (props) => {
 
     return (
         <>
-            <RightsAirdropSection
-                onCoinsChange={props.onCoinsChange}
-                onCoins={props.onCoins}
-                numSwitch={props.numSwitch}
-                setNumSwitch={props.setNumSwitch}
-                showTimerToFly={props.showTimerToFly}
-            />
-
-            <RightsAirdropPlayers
-                listAirdropsMembers={props.listAirdropsMembers}
-                setListAirdropsMembers={props.setListAirdropsMembers}
-            />
+            <RightsAirdropSection states={props.states}/>
+            <RightsAirdropPlayers states={props.states}/>
         </>
     );
 };

@@ -104,8 +104,8 @@ const RightsAirdropMoveSleepers = (props) => {
     return (
         <div className="airdrop__move">
 
-            <RightsAirdropSleepersList sleepersCount={props.sleepersCount}/>
-            <RightsAirdropSleepersButtons setNumSwitch={props.setNumSwitch}/>
+            <RightsAirdropSleepersList states={props.states}/>
+            <RightsAirdropSleepersButtons states={props.states}/>
 
         </div>
     );
