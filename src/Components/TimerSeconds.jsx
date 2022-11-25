@@ -33,7 +33,7 @@ const TimerSeconds = (props) => {
 
 
     // ВЫПАДЕНИЕ ДРОПА
-    console.log(props.states.randomTimerToDrop)
+    // console.log(props.states.randomTimerToDrop)
     const randomDropFly = () => {
 
         // let randomTimoutDrop = Math.ceil(Math.random() * (17000 - 5000) + 5000)

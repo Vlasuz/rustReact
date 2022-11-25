@@ -145,6 +145,9 @@ const ComponentMap = () => {
                     <img src="images/plane.png" alt="Plane" width="54"/>
                 </div>
             </div>
+            <div className="hide-map">
+
+            </div>
         </animated.div>
     );
 };

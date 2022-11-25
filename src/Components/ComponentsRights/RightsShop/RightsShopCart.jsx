@@ -8,15 +8,18 @@ const RightsShopCart = (props) => {
 
     const buyItemsButton = (e) => {
 
-        if (props.states.coins > props.states.sumCoinsInShop) {
-            e.target.disabled = false;
+        // console.log(e.target)
+        // console.log(e.target.closest('button'))
+
+        if (props.globalStates.coins >= props.states.sumCoinsInShop) {
+            e.target.closest('button').disabled = false;
             e.target.closest('button').classList.add('buttons__buy')
             e.target.closest('button').classList.remove('buttons__back')
-            props.states.setCoins(prev => prev - props.states.sumCoinsInShop)
+            props.globalStates.setCoins(prev => prev - props.states.sumCoinsInShop)
             props.states.setSumCoinsInShop(0)
             props.setListToCart([])
         } else {
-            e.target.disabled = true;
+            e.target.closest('button').disabled = true;
             e.target.closest('button').classList.remove('buttons__buy')
             e.target.closest('button').classList.add('buttons__back')
         }

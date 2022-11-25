@@ -1,12 +1,17 @@
 import React from 'react';
+import {useState} from "react";
 
 const RightsItemStorage = (props) => {
 
+    let isClassActive = false
+
     return (
         <li
-            className="postamat__item"
+            className={isClassActive ? "postamat__item postamat__item_active" : "postamat__item"}
             key={props.itemNum}
-            onClick={(e) => props.clickToSelectItem(e)}
+            onClick={(e) => {
+                props.clickToSelectItem(e)
+            }}
         >
             <div className="item__check">
                 <img src="images/green-check.svg" alt="Check"/>

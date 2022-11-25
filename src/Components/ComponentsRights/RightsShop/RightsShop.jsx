@@ -4,11 +4,14 @@ import RightsShopBottomFull from "./RightsShopBottomFull";
 import RightsShopBottomEmpty from "./RightsShopBottomEmpty";
 import RightsShopItem from "./RightsShopItem";
 import RightsFilterForm from "../RightsFilterForm";
+import States from "../../../States";
 
 const RightsShop = (props) => {
 
     const [listToCart, setListToCart] = useState([])
     const [isOpenCart, setIsOpenCart] = useState(false)
+
+    const states = States();
 
     let ratingColor = function (item) {
 
@@ -45,10 +48,10 @@ const RightsShop = (props) => {
                 .map((item, itemNum) =>
                     <RightsShopItem
                         listItems={item}
-                        states={props.states}
+                        states={states}
                         key={itemNum}
                         cools={ratingColor(item.rating)}
-                        setIsAddCart={props.states.setIsAddCart}
+                        setIsAddCart={states.setIsAddCart}
                         setListToCart={setListToCart}
                         listToCart={listToCart}
                     />
@@ -62,10 +65,10 @@ const RightsShop = (props) => {
                 .map((item, itemNum) =>
                     <RightsShopItem
                         listItems={item}
-                        states={props.states}
+                        states={states}
                         key={itemNum}
                         cools={ratingColor(item.rating)}
-                        setIsAddCart={props.states.setIsAddCart}
+                        setIsAddCart={states.setIsAddCart}
                         setListToCart={setListToCart}
                         listToCart={listToCart}
                     />
@@ -74,10 +77,10 @@ const RightsShop = (props) => {
             return props.states.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
                 <RightsShopItem
                     listItems={item}
-                    states={props.states}
+                    states={states}
                     key={itemNum}
                     cools={ratingColor(item.rating)}
-                    setIsAddCart={props.states.setIsAddCart}
+                    setIsAddCart={states.setIsAddCart}
                     setListToCart={setListToCart}
                     listToCart={listToCart}
                 />
@@ -87,10 +90,10 @@ const RightsShop = (props) => {
             return props.states.dataItems.map((item, itemNum) =>
                 <RightsShopItem
                     listItems={item}
-                    states={props.states}
+                    states={states}
                     key={itemNum}
                     cools={ratingColor(item.rating)}
-                    setIsAddCart={props.states.setIsAddCart}
+                    setIsAddCart={states.setIsAddCart}
                     setListToCart={setListToCart}
                     listToCart={listToCart}
                 />
@@ -117,7 +120,8 @@ const RightsShop = (props) => {
                 isOpenCart={isOpenCart}
                 setIsOpenCart={setIsOpenCart}
                 setListToCart={setListToCart}
-                states={props.states}
+                states={states}
+                globalStates={props.states}
             />
 
             <div className="postamat">
@@ -140,7 +144,7 @@ const RightsShop = (props) => {
 
                 </div>
 
-                {listToCart.length ? <RightsShopBottomFull states={props.states} listToCart={listToCart} setIsOpenCart={setIsOpenCart}/> :
+                {listToCart.length ? <RightsShopBottomFull states={states} listToCart={listToCart} setIsOpenCart={setIsOpenCart}/> :
                     <RightsShopBottomEmpty/>}
 
             </div>

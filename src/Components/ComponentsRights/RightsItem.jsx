@@ -42,11 +42,14 @@ const RightsItem = (props) => {
 
                     document.querySelector('.pererab .postamat__block').append(postItem)
 
+                    props.states.setDataItems(prev => props.states.dataItems.splice(prev.indexOf(props.thisItem), 1) )
+                    props.states.setDataItems(prev => [...props.states.dataItems, props.thisItem] )
+
                     checkLengthList(document.querySelectorAll('.zone__list ul li').length)
                 }
             }
 
-            if (currentDroppable != droppableBelow) {
+            if (currentDroppable !== droppableBelow) {
 
                 if (currentDroppable) {
                     document.querySelector('.pererab__zone').style.background = 'transparent';

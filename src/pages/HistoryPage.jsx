@@ -21,7 +21,7 @@ const HistoryPage = () => {
 
                         list.querySelectorAll('li')[i].style.display = 'none';
 
-                        list.querySelector('.count').classList.add('count_active')
+                        list.querySelector('.count')?.classList.add('count_active')
                         list.querySelector('.count').innerHTML = "+" + a
 
                     }

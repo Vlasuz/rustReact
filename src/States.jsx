@@ -1,12 +1,11 @@
-import React from 'react';
-import {useState} from "react";
+import React, {useState} from "react";
 
 const States = () => {
 
     let newcomer = true;
-    const [sumCoinsInShop, setSumCoinsInShop] = useState(0)
-    const [trajectoryPlane, setTrajectoryPlane] = useState(0)
-    const [lengthPlaneFly, setLengthPlaneFly] = useState(0)
+    const [sumCoinsInShop, setSumCoinsInShop] = useState(0);
+    const [trajectoryPlane, setTrajectoryPlane] = useState(0);
+    const [lengthPlaneFly, setLengthPlaneFly] = useState(0);
     const [seconds, setSeconds] = useState(60);
     const [isDropDown, setIsDropDown] = useState(false);
     const [isTrajectoryActive, setIsTrajectoryActive] = useState(false);
@@ -18,7 +17,8 @@ const States = () => {
     const [switcherRights, setSwitcherRights] = useState('pr')
     const [tradeLink, setTradeLink] = useState('')
     const [arrayForHit, setArrayForHit] = useState([]);
-    const [numSwitch, setNumSwitch] = useState(1)
+    const [numSwitch, setNumSwitch] = useState(1);
+    const [processorArrayElements, setProcessorArrayElements] = useState([])
     const listFightsMembers = [
         {
             id: 1,
@@ -73,7 +73,7 @@ const States = () => {
             youWon: null
         },
     ])
-    const dataItems = [
+    const [dataItems, setDataItems] = useState([
         {
             id: 1,
             title: "Yellow Racer Pants",
@@ -164,7 +164,7 @@ const States = () => {
             count: 1,
             cost: 12989
         },
-    ]
+    ])
     const dataInfo = {
         coins: coins
     }
@@ -264,6 +264,7 @@ const States = () => {
         fightInfo,
         setFightInfo,
         dataItems,
+        setDataItems,
         dataInfo,
         listAirdropsMembers,
         setListAirdropsMembers,
@@ -296,6 +297,9 @@ const States = () => {
         setIsTimerGoOn,
         randomTimerToDrop,
         setRandomTimerToDrop,
+
+        processorArrayElements,
+        setProcessorArrayElements,
     }
 
 };

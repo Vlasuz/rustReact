@@ -2,7 +2,6 @@ import React from 'react';
 
 const RightsShopBottomFull = (props) => {
 
-
     return (
         <div
             className="postamat__cart postamat__cart_show postamat__cart_full"

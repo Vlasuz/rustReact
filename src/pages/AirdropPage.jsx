@@ -67,6 +67,7 @@ const AirdropPage = () => {
                 </div>
             </div>
             <div className="map__container">
+                {/*map__scale_hidden*/}
                 <div
                     className="map__scale"
                     onWheel={onWheelEvent}

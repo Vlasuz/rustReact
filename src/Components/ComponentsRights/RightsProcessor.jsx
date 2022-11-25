@@ -23,6 +23,8 @@ const RightsProcessor = (props) => {
     }
 
 
+    // props.states.dataItems.map(item => console.log(item))
+
     let pererabCoins = function (e) {
         props.states.setCoins(+props.states.coins + +e.target.closest('.pererab__button').querySelector('.rht span').innerText)
         document.querySelector('.zone__list ul').innerHTML = ''
@@ -52,6 +54,8 @@ const RightsProcessor = (props) => {
                     ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
                 .map((item, itemNum) =>
                     <RightsItem
+                        thisItem={item}
+                        states={props.states}
                         key={itemNum}
                         count={item.count}
                         cools={ratingColor(item.rating)}
@@ -61,12 +65,15 @@ const RightsProcessor = (props) => {
                 )
 
         } else if (sortArray.filterRadio) {
+            // console.log(props.states.dataItems)
             return props.states.dataItems
                 .sort((a, b) => (!sortArray.filterCheckbox) ?
                     ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
                     ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
                 .map((item, itemNum) =>
                     <RightsItem
+                        thisItem={item}
+                        states={props.states}
                         key={itemNum}
                         count={item.count}
                         cools={ratingColor(item.rating)}
@@ -76,6 +83,8 @@ const RightsProcessor = (props) => {
         } else if (sortArray.search) {
             return props.states.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
                 <RightsItem
+                    thisItem={item}
+                    states={props.states}
                     key={itemNum}
                     count={item.count}
                     cools={ratingColor(item.rating)}
@@ -86,6 +95,8 @@ const RightsProcessor = (props) => {
         } else {
             return props.states.dataItems.map((item, itemNum) =>
                 <RightsItem
+                    thisItem={item}
+                    states={props.states}
                     key={itemNum}
                     count={item.count}
                     cools={ratingColor(item.rating)}
