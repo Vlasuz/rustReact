@@ -6,13 +6,13 @@ const jsonLanguages = {
     ru: {
         translation: {
             header_support: "Поддержка",
-            weekly_gamer: "Игрок недели",
+            weekly_gamer: "?????",
             text_profile: "Профиль",
             text_trade_link: "Trade-ссылка",
             text_trade_link_active: "Активно",
             text_trade_link_non_active: "Не активно",
             text_trade_link_add: "Добавить",
-            text_history_balance: "Итория баланса",
+            text_history_balance: "История баланса",
             text_add_cash: "Пополнить",
             text_balance: "Баланс",
             text_change: "Изменить",
@@ -21,7 +21,7 @@ const jsonLanguages = {
     en: {
         translation: {
             header_support: "Support",
-            weekly_gamer: "Player of the Week",
+            weekly_gamer: "?????",
             text_profile: "Profile",
             text_trade_link: "Trade-Trade link",
             text_trade_link_active: "Actively",
@@ -36,7 +36,7 @@ const jsonLanguages = {
     china: {
         translation: {
             header_support: "支持",
-            weekly_gamer: "本周最佳球员",
+            weekly_gamer: "?????",
             text_profile: "轮廓",
             text_trade_link: "贸易链接",
             text_trade_link_active: "积极地",
@@ -51,7 +51,7 @@ const jsonLanguages = {
     kor: {
         translation: {
             header_support: "지원하다",
-            weekly_gamer: "금주의 선수",
+            weekly_gamer: "?????",
             text_profile: "프로필",
             text_trade_link: "거래 링크",
             text_trade_link_active: "적극적으로",
@@ -66,7 +66,7 @@ const jsonLanguages = {
     vie: {
         translation: {
             header_support: "Ủng hộ",
-            weekly_gamer: "cầu thủ của tuần",
+            weekly_gamer: "?????",
             text_profile: "Hồ sơ",
             text_trade_link: "liên kết thương mại",
             text_trade_link_active: "tích cực",
@@ -81,7 +81,7 @@ const jsonLanguages = {
     jap: {
         translation: {
             header_support: "サポート",
-            weekly_gamer: "今週のプレーヤー",
+            weekly_gamer: "?????",
             text_profile: "プロフィール",
             text_trade_link: "トレードリンク",
             text_trade_link_active: "積極的に",

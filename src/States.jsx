@@ -3,6 +3,7 @@ import React, {useState} from "react";
 const States = () => {
 
     let newcomer = true;
+    const [isPlaneShow, setIsPlaneShow] = useState(true);
     const [sumCoinsInShop, setSumCoinsInShop] = useState(0);
     const [trajectoryPlane, setTrajectoryPlane] = useState(0);
     const [lengthPlaneFly, setLengthPlaneFly] = useState(0);
@@ -16,7 +17,7 @@ const States = () => {
     const [coins, setCoins] = useState(0);
     const [switcherRights, setSwitcherRights] = useState('pr')
     const [tradeLink, setTradeLink] = useState('')
-    const [arrayForHit, setArrayForHit] = useState([]);
+    const [arrayForHit, setArrayForHit] = useState([false, false, false]);
     const [numSwitch, setNumSwitch] = useState(1);
     const [processorArrayElements, setProcessorArrayElements] = useState([])
     const listFightsMembers = [
@@ -73,93 +74,94 @@ const States = () => {
             youWon: null
         },
     ])
+    const [sumOfPererab, setSumOfPererab] = useState(0)
     const [dataItems, setDataItems] = useState([
         {
             id: 1,
+            isCheck: false,
             title: "Yellow Racer Pants",
-            rarity: 2,
-            rating: 'green',
+            rarity: 1,
             image: 'images/skins/skin1.png',
             count: 1,
             cost: 2450
         },
         {
             id: 2,
+            isCheck: false,
             title: "Excavator Door",
-            rarity: 3,
-            rating: 'blue',
+            rarity: 2,
             image: 'images/skins/skin2.png',
             count: 1,
             cost: 4050
         },
         {
             id: 3,
+            isCheck: false,
             title: "Glory AK47",
-            rarity: 4,
-            rating: 'red',
+            rarity: 3,
             image: 'images/skins/skin3.png',
             count: 1,
             cost: 4050
         },
         {
             id: 4,
+            isCheck: false,
             title: "Alien Relic SMG",
-            rarity: 4,
-            rating: 'red',
+            rarity: 3,
             image: 'images/skins/skin4.png',
             count: 1,
             cost: 8009
         },
         {
             id: 5,
+            isCheck: false,
             title: "Grandmother's Gift Barricade",
-            rarity: 3,
-            rating: 'blue',
+            rarity: 2,
             image: 'images/skins/skin5.png',
             count: 1,
             cost: 1450
         },
         {
             id: 6,
+            isCheck: false,
             title: "Santa Balaclava",
-            rarity: 2,
-            rating: 'green',
+            rarity: 1,
             image: 'images/skins/skin6.png',
             count: 1,
             cost: 540
         },
         {
             id: 7,
+            isCheck: false,
             title: "Raven",
-            rarity: 4,
-            rating: 'red',
+            rarity: 3,
             image: 'images/skins/skin7.png',
             count: 1,
             cost: 8990
         },
         {
             id: 8,
+            isCheck: false,
             title: "Train Conductor Miner's Hat",
-            rarity: 2,
-            rating: 'green',
+            rarity: 1,
             image: 'images/skins/skin8.png',
             count: 1,
             cost: 1450
         },
         {
             id: 9,
+            isCheck: false,
             title: "Urban Ice Jacket",
-            rarity: 2,
-            rating: 'green',
+            rarity: 1,
             image: 'images/skins/skin9.png',
             count: 1,
             cost: 4372
         },
         {
             id: 10,
+            isCheck: false,
             title: "Combat Knife from Hell",
-            rarity: 4,
-            rating: 'red',
+            rarity: 3,
             image: 'images/skins/skin10.png',
             count: 1,
             cost: 12989
@@ -226,18 +228,18 @@ const States = () => {
         },
         {
             title: "Схватка",
+            count: 2,
+            greenStats: "21",
+        },
+        {
+            title: "Бобовка",
             count: 0,
             greenStats: "",
         },
         {
-            title: "Бобовка",
-            count: 186,
-            greenStats: "74 победы",
-        },
-        {
-            title: "Иподром",
-            count: 40,
-            greenStats: "8 побед",
+            title: "Ипподром",
+            count: 0,
+            greenStats: "",
         }
     ]
 
@@ -300,6 +302,12 @@ const States = () => {
 
         processorArrayElements,
         setProcessorArrayElements,
+
+        isPlaneShow,
+        setIsPlaneShow,
+
+        sumOfPererab,
+        setSumOfPererab,
     }
 
 };

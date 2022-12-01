@@ -6,27 +6,7 @@ import OpenPopup from "../../Hooks/OpenPopup";
 
 const RightsStorage = (props) => {
 
-    let ratingColor = function (item) {
-
-        switch (item) {
-            case 'green':
-                return 'clothes__cool_green';
-                break;
-            case 'red':
-                return 'clothes__cool_red';
-                break;
-            case 'blue':
-                return 'clothes__cool_blue';
-                break;
-            default:
-                return 'clothes__cool_grey';
-                break;
-
-        }
-    }
-
-
-    const clickToSelectItem = function (e) {
+    const clickToSelect = (e) => {
 
         let storItem = e.target.closest('.postamat__item')
 
@@ -61,8 +41,6 @@ const RightsStorage = (props) => {
             document.querySelector('.storage__zone .zone__button').style.display = 'none';
 
         }
-
-
     }
 
     const [sortArray, setSortArray] = useState(
@@ -72,62 +50,48 @@ const RightsStorage = (props) => {
             filterCheckbox: false,
         }
     )
-    const sortableItem = () => {
-        if (sortArray.search && sortArray.filterRadio) {
-            return props.states.dataItems
-                .filter(item => item.title.includes(sortArray.search))
-                .sort((a, b) => (!sortArray.filterCheckbox) ?
-                    ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
-                    ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
-                .map((item, itemNum) =>
-                    <RightsItemStorage
-                        clickToSelectItem={clickToSelectItem}
-                        key={itemNum}
-                        count={item.count}
-                        cools={ratingColor(item.rating)}
-                        image={item.image}
-                        coins={item.cost}
-                    />
-                )
-
-        } else if (sortArray.filterRadio) {
-            return props.states.dataItems
-                .sort((a, b) => (!sortArray.filterCheckbox) ?
-                    ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
-                    ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
-                .map((item, itemNum) =>
-                    <RightsItemStorage
-                        clickToSelectItem={clickToSelectItem}
-                        key={itemNum}
-                        count={item.count}
-                        cools={ratingColor(item.rating)}
-                        image={item.image}
-                        coins={item.cost}
-                    />)
-        } else if (sortArray.search) {
-            return props.states.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
-                <RightsItemStorage
-                    clickToSelectItem={clickToSelectItem}
-                    key={itemNum}
-                    count={item.count}
-                    cools={ratingColor(item.rating)}
-                    image={item.image}
-                    coins={item.cost}
-                />)
-
-        } else {
-            return props.states.dataItems.map((item, itemNum) =>
-                <RightsItemStorage
-                    clickToSelectItem={clickToSelectItem}
-                    key={itemNum}
-                    count={item.count}
-                    cools={ratingColor(item.rating)}
-                    image={item.image}
-                    coins={item.cost}
-                />
-            )
-        }
-    }
+    // const sortableItem = () => {
+    //     if (sortArray.search && sortArray.filterRadio) {
+    //         return
+    //
+    //     } else if (sortArray.filterRadio) {
+    //         return props.states.dataItems
+    //             .sort((a, b) => (!sortArray.filterCheckbox) ?
+    //                 ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
+    //                 ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
+    //             .map((item, itemNum) =>
+    //                 <RightsItemStorage
+    //                     clickToSelectItem={clickToSelectItem}
+    //                     key={itemNum}
+    //                     count={item.count}
+    //                     cools={ratingColor(item.rating)}
+    //                     image={item.image}
+    //                     coins={item.cost}
+    //                 />)
+    //     } else if (sortArray.search) {
+    //         return props.states.dataItems.filter(item => item.title.includes(sortArray.search)).map((item, itemNum) =>
+    //             <RightsItemStorage
+    //                 clickToSelectItem={clickToSelectItem}
+    //                 key={itemNum}
+    //                 count={item.count}
+    //                 cools={ratingColor(item.rating)}
+    //                 image={item.image}
+    //                 coins={item.cost}
+    //             />)
+    //
+    //     } else {
+    //         return props.states.dataItems.map((item, itemNum) =>
+    //             <RightsItemStorage
+    //                 clickToSelectItem={clickToSelectItem}
+    //                 key={itemNum}
+    //                 count={item.count}
+    //                 cools={ratingColor(item.rating)}
+    //                 image={item.image}
+    //                 coins={item.cost}
+    //             />
+    //         )
+    //     }
+    // }
 
     return (
 
@@ -140,7 +104,22 @@ const RightsStorage = (props) => {
             <hr/>
 
             <ul className="postamat__block">
-                {sortableItem()}
+
+                {
+                    props.states.dataItems
+                        ?.filter(item => item.title.includes(sortArray.search))
+                        ?.sort((a, b) => (!sortArray.filterCheckbox) ?
+                            ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
+                            ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
+                        .map((item, itemNum) =>
+                            <RightsItemStorage
+                                key={itemNum}
+                                item={item}
+                                clickToSelect={clickToSelect}
+                            />
+                        )
+                }
+
             </ul>
 
             <div className="storage__zone">

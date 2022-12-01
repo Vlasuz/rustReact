@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const MessageTop = ({messageInfo, setOpenDropdown}) => {
 
@@ -15,8 +16,6 @@ const MessageTop = ({messageInfo, setOpenDropdown}) => {
         // e.target.closest('.item__inner').querySelector('.item__dropdown').classList.toggle('item__dropdown_active')
 
 
-
-
         // if (e.target.closest('.item__inner').querySelector('.item__dropdown').classList.contains('item__dropdown_active')) {
         //     e.target.closest('.item__inner').querySelector('.item__dropdown').classList.remove('item__dropdown_active')
         // } else {
@@ -29,9 +28,9 @@ const MessageTop = ({messageInfo, setOpenDropdown}) => {
 
     return (
         <div className="item__top">
-            <h4 className="item__name">
+            <Link to={'/person'} className="item__name">
                 {messageInfo.user?.name}
-            </h4>
+            </Link>
             <div className="item__muted">
                 <img src="images/muted.svg" alt="Menu"/>
             </div>

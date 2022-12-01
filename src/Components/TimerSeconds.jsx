@@ -220,6 +220,8 @@ const TimerSeconds = (props) => {
         if (new Date().getMinutes() % 2 === 0) {
             // if(new Date().getMinutes()){
 
+            if(document.querySelector('.map__scale')) document.querySelector('.map__scale').classList.add('map__scale_hidden')
+
             if (props.setShowTimerToFly) props.setShowTimerToFly(false)
 
             // ФУНКЦИЯ ЗАВЕРШЕНИЕ АИРДРОПА
@@ -278,6 +280,8 @@ const TimerSeconds = (props) => {
         } else {
             if (props.setShowTimerToFly) props.setShowTimerToFly(true)
             props.states.setLengthPlaneFly(0)
+
+            if(document.querySelector('.map__scale')) document.querySelector('.map__scale').classList.remove('map__scale_hidden')
 
             // ЛИНИЯ ТАЙМЕРА
             if (document.querySelector('.aside__plane .timer-line__line_done')) document.querySelector('.aside__plane .timer-line__line_done').style.width = props.seconds * 100 / 60 + "%"

@@ -3,7 +3,7 @@ import {useSpring, animated} from "@react-spring/web";
 import {useDrag} from "react-use-gesture";
 
 
-const ComponentMap = () => {
+const ComponentMap = (props) => {
 
     const [{x, y}, api] = useSpring(() => ({
         x: 0,
@@ -48,6 +48,7 @@ const ComponentMap = () => {
                             </svg>
                         </div>
                         <div className="point__winner-table">
+                            <img className={'confetti-image'} src="images/confetti.gif" alt="Ico"/>
                             <div className="table__left">
                                 <img src="images/user2.jpeg" alt="Photo"/>
                                 <span>CulverCriegi</span>
@@ -103,6 +104,7 @@ const ComponentMap = () => {
                             </svg>
                         </div>
                         <div className="point__winner-table">
+                            <img className={'confetti-image'} src="images/confetti.gif" alt="Ico"/>
                             <div className="table__left">
                                 <img src="images/user.jpeg" alt="Photo"/>
                                 <span>CulverCriegi</span>

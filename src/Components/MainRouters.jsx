@@ -11,6 +11,8 @@ import PolicyPage from "../pages/PolicyPage";
 import ClothesShopPage from "../pages/ClothesShopPage";
 import States from "../States";
 import FightPageWaiting from "../pages/FightPageWaiting";
+import PersonPage from "../pages/PersonPage";
+import FaqPage from "../pages/FaqPage";
 
 const MainRouters = (props) => {
     const location = useLocation()
@@ -51,6 +53,14 @@ const MainRouters = (props) => {
         {
             path: "/clothes-shop",
             element: <ClothesShopPage states={props.states}/>,
+        },
+        {
+            path: "/person",
+            element: <PersonPage states={props.states}/>,
+        },
+        {
+            path: "/faq",
+            element: <FaqPage states={props.states}/>,
         },
     ]
 

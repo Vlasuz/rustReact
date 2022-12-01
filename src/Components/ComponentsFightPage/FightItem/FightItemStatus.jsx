@@ -1,8 +1,9 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const FightItemStatus = (props) => {
 
-    let status = props.status == "waiting" ? "item__user item__user_load" : "item__user";
+    let status = props.status === "waiting" ? "item__user item__user_load" : "item__user";
     let statusLooser = props.youWon ? " item__user_looser" : "";
 
     return (
@@ -20,12 +21,14 @@ const FightItemStatus = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="user__name">
-                {props.opponentName}
-            </div>
-            <div className="user__photo">
-                <img src={props.opponentPhoto} alt="Photo"/>
-            </div>
+            <Link to={"/person"}>
+                <div className="user__name">
+                    {props.opponentName}
+                </div>
+                <div className="user__photo">
+                    <img src={props.opponentPhoto} alt="Photo"/>
+                </div>
+            </Link>
         </div>
     );
 };

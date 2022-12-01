@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import ShopItem from "./ShopItem";
 
-const ShopList = () => {
+const ShopList = (props) => {
 
     return (
         <div className="skins__block">
-            <ShopItem/>
-            <ShopItem/>
-            <ShopItem/>
-            <ShopItem/>
-            <ShopItem/>
+            <ShopItem states={props.states} />
+            <ShopItem states={props.states} />
+            <ShopItem states={props.states} />
+            <ShopItem states={props.states} />
+            <ShopItem states={props.states} />
         </div>
     );
 };

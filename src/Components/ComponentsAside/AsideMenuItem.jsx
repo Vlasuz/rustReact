@@ -23,23 +23,31 @@ const AsideMenuItem = (props) => {
                 item.classList.remove('li_active')
             })
         }
+        document.querySelector('.section-right__item').classList.remove('section-right__item_hidden')
+        document.querySelector('.section-right__item').classList.add('section-right__item_show')
     })
 
     let switcherLi = function (e) {
-        document.querySelectorAll('.aside__list li').forEach(item => {
-            item.classList.remove('li_active')
-        })
+
+        document.querySelector('.section-right__switcher')?.classList.remove('section-right__switcher-airdrop')
+        document.querySelector('.section-right__item_change-show')?.classList.remove('section-right__item_change-show')
+        document.querySelector('.section-right__item').classList.remove('section-right__item_show')
+        document.querySelector('.section-right__item').classList.add('section-right__item_hidden')
+        setTimeout(() => {
+            props.states.setSwitcherRights(props.linkTo)
+        }, 300)
+
+        document.querySelector('.aside__list .li_active')?.classList.remove('li_active')
+        document.querySelector('.section-right__top .top__item:first-child').click()
         e.target.closest('li').classList.add('li_active')
     }
 
     return (
         <li
-            onClick={switcherLi}
+            onClick={e => switcherLi(e)}
             className={props.className}
         >
-            <button
-                onClick={() => props.states.setSwitcherRights(props.linkTo)}
-            >
+            <button>
                 {icon(props.title)}
                 <span className="absolute-span">
                     {props.title}

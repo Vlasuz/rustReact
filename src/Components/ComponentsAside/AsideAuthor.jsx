@@ -4,7 +4,7 @@ const AsideAuthor = () => {
     return (
         <div className="aside__author">
             <img src="images/author.svg" alt="Ico" />
-            <p>Тёмкин<span>Дизайн сайта</span></p>
+            <p>Deniel Sonis<span>разработка сайтов</span></p>
         </div>
     );
 };

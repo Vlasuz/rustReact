@@ -9,7 +9,7 @@ const TableAirdrop = () => {
                     <div className="tr">
                         <div className="td">Дата</div>
                         <div className="td">Спальники</div>
-                        <div className="td">Игроки</div>
+                        <div className="td">Победитель</div>
                         <div className="td">Ставка</div>
                         <div className="td">Банк</div>
                         <div className="td">PF</div>
@@ -24,8 +24,6 @@ const TableAirdrop = () => {
                                 sleepers: "R15",
                                 players: [
                                     {1: "images/user2.jpeg"},
-                                    {2: "images/user2.jpeg"},
-                                    {3: "images/user2.jpeg"},
                                 ],
                                 coins: 100,
                                 bank: 1250,
@@ -40,11 +38,6 @@ const TableAirdrop = () => {
                                 sleepers: "R11",
                                 players: [
                                     {1: "images/user.jpeg"},
-                                    {2: "images/user2.jpeg"},
-                                    {3: "images/user2.jpeg"},
-                                    {4: "images/user2.jpeg"},
-                                    {5: "images/user2.jpeg"},
-                                    {6: "images/user2.jpeg"},
                                 ],
                                 coins: 200,
                                 bank: 2000,
@@ -59,13 +52,6 @@ const TableAirdrop = () => {
                                 sleepers: "R12",
                                 players: [
                                     {1: "images/user2.jpeg"},
-                                    {2: "images/user2.jpeg"},
-                                    {3: "images/user2.jpeg"},
-                                    {4: "images/user.jpeg"},
-                                    {5: "images/user2.jpeg"},
-                                    {6: "images/user2.jpeg"},
-                                    {7: ""},
-                                    {8: "images/user2.jpeg"},
                                 ],
                                 coins: 200,
                                 bank: 2045,

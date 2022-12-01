@@ -40,7 +40,7 @@ const Table = () => {
                     <a href="#">Бобовка</a>
                 </li>
                 <li>
-                    <a href="#">Иподром</a>
+                    <a href="#">Ипподром</a>
                 </li>
             </ul>
             <div className="tabs__block">

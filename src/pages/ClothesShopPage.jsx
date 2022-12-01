@@ -14,7 +14,7 @@ const ClothesShopPage = (props) => {
 
             <div className="section-shop__skins">
                 <ShopTop />
-                <ShopList />
+                <ShopList states={props.states} />
             </div>
         </section>
     );

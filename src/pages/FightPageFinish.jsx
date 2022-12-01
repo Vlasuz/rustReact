@@ -19,9 +19,11 @@ const FightPageFinish = (props) => {
         }, 20)
     }
 
+    console.log(shieldOpponent)
+
     useEffect(() => {
         setTimeout(function () {
-            document.querySelector('.section-fight__confetti_active img').setAttribute('src', 'images/confetti.webp')
+            document.querySelector('.section-fight__confetti_active img').setAttribute('src', 'images/confetti.gif')
             document.querySelector('.section-fight__confetti_active').style.opacity = '1';
 
             minusingCoins();
@@ -126,8 +128,8 @@ const FightPageFinish = (props) => {
                     </div>
                     <div className="persone__green">
                         <img className="head" src="images/head.png" alt="Photo" width="72"/>
-                        <img className="body" src="images/body.png" alt="Photo" width="295"/>
-                        <img className="legs" src="images/legs.png" alt="Photo" width="145"/>
+                        <img className="body" src="images/body.png" alt="Photo" width="300"/>
+                        <img className="legs" src="images/legs.png" alt="Photo" width="300"/>
                     </div>
                     <div className="persone__start">
                         <img src="images/persone-nss.png" alt="Persone"/>
@@ -218,7 +220,7 @@ const FightPageFinish = (props) => {
                             className={
                                 (props.states.arrayForHit[0] ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((shieldOpponent[0] == props.states.arrayForHit[0]) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((shieldOpponent[0] === props.states.arrayForHit[0]) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="images/bullet.svg" alt="Ico"/>
@@ -231,7 +233,7 @@ const FightPageFinish = (props) => {
                             className={
                                 (props.states.arrayForHit[1] ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-body" +
-                                ((shieldOpponent[1] == props.states.arrayForHit[1]) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((shieldOpponent[1] === props.states.arrayForHit[1]) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="images/bullet.svg" alt="Ico"/>
@@ -243,7 +245,7 @@ const FightPageFinish = (props) => {
                             className={
                                 (props.states.arrayForHit[2] ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-legs" +
-                                ((shieldOpponent[2] == props.states.arrayForHit[2]) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((shieldOpponent[2] === props.states.arrayForHit[2]) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="images/bullet.svg" alt="Ico"/>
@@ -254,8 +256,8 @@ const FightPageFinish = (props) => {
                     </div>
                     <div className="persone__red">
                         <img className="head-hit" src="images/head-hit.png" alt="Photo" width="72"/>
-                        <img className="body-hit" src="images/body-hit.png" alt="Photo" width="295"/>
-                        <img className="legs-hit" src="images/legs-hit.png" alt="Photo" width="145"/>
+                        <img className="body-hit" src="images/body-hit.png" alt="Photo" width="300"/>
+                        <img className="legs-hit" src="images/legs-hit.png" alt="Photo" width="300"/>
                     </div>
                     <div className="persone__start">
                         <img src="images/persone-sns.png" alt="Persone"/>

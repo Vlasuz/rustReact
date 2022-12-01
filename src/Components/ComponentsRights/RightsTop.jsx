@@ -1,14 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const RightsTop = (props) => {
 
     const switcherButtons = function (thisItem) {
-        for( let itemTop1 of document.querySelectorAll('.section-right__switcher .section-right__item') ){
-            itemTop1.classList.remove('section-right_active')
-        }
-        for( let itemTop1 of document.querySelectorAll('.section-right__top .top__item') ){
-            itemTop1.classList.remove('top__item_active')
-        }
+
+        document.querySelector('.section-right__switcher')?.classList.remove('section-right__switcher-airdrop')
+        document.querySelector('.section-right__item_show')?.classList.remove('section-right__item_show')
+        document.querySelector('.section-right__item_change-show')?.classList.remove('section-right__item_change-show')
+        document.querySelector('.section-right__top .top__item.top__item_active').classList.remove('top__item_active')
+        document.querySelector('.section-right .section-right_active').classList.add('section-right__item_change-hidden')
 
         let arrayOfItems = []
         thisItem.target.closest('.section-right__top').querySelectorAll('.top__item').forEach(item => {
@@ -16,8 +16,22 @@ const RightsTop = (props) => {
         })
         let numberOfBlock = arrayOfItems.indexOf(thisItem.target.closest('.top__item'))
 
-        document.querySelectorAll('.section-right__switcher .section-right__item')[numberOfBlock].classList.add('section-right_active')
         thisItem.target.closest('.top__item').classList.add('top__item_active')
+
+        setTimeout(() => {
+            document.querySelector('.section-right_active').classList.remove('section-right_active')
+            document.querySelector('.section-right .section-right__item_change-hidden').classList.remove('section-right__item_change-hidden')
+
+            document.querySelectorAll('.section-right__switcher .section-right__item')[numberOfBlock].classList.add('section-right_active')
+
+            setTimeout(() => {
+                document.querySelector('.section-right__switcher .section-right_active').classList.add('section-right__item_change-show')
+            }, 10)
+
+            document.querySelector('.section-right__switcher')?.classList.add('section-right__switcher-airdrop')
+
+        }, 300)
+
     }
 
     let chose = function (switcherRights) {

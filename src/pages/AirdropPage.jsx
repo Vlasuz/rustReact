@@ -1,32 +1,20 @@
 import React from 'react';
 import ComponentMap from "../Components/ComponentsMap/ComponentMap";
 import {useEffect, useState} from "react";
+import Loader from "../Hooks/Loader";
 
-const AirdropPage = () => {
+const AirdropPage = (props) => {
 
-    const [loader, isLoader] = useState(true)
+    Loader();
+
     useEffect(() => {
-        isLoader(false)
-    })
-    if(loader) {
-        return(
-            <section className="section-shop">
-                <div className="loading">
-                    <div className="load">
-                        <div className="load__line">
-
-                        </div>
-                        <div className="load__line">
-
-                        </div>
-                        <div className="load__line">
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-        )
-    }
+        // props.states.setIsPlaneShow(false)
+        // console.log(false)
+        document.querySelector('.trajectory').style.transition = 'width 0s linear';
+        setTimeout(() => {
+            document.querySelector('.trajectory').style.transition = 'width 1s linear';
+        }, 500)
+    }, [props.states.isPlaneShow])
 
 
     let pointXOfScale = 0
@@ -67,12 +55,11 @@ const AirdropPage = () => {
                 </div>
             </div>
             <div className="map__container">
-                {/*map__scale_hidden*/}
                 <div
                     className="map__scale"
                     onWheel={onWheelEvent}
                 >
-                    <ComponentMap />
+                    <ComponentMap states={props.states} />
                 </div>
             </div>
 

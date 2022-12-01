@@ -24,16 +24,16 @@ const HeaderBurgerMenu = (props) => {
             </button>
             <div className="burger__menu">
                 <ul>
-                    <li>
-                        <Link to={"/"}>
-                            Профиль
-                        </Link>
-                    </li>
-                    <li className={"li_notice"}>
-                        <Link to={"/history"}>
-                            История игр
-                        </Link>
-                    </li>
+                    {/*<li>*/}
+                    {/*    <Link to={"/"}>*/}
+                    {/*        Профиль*/}
+                    {/*    </Link>*/}
+                    {/*</li>*/}
+                    {/*<li className={"li_notice"}>*/}
+                    {/*    <Link to={"/history"}>*/}
+                    {/*        История игр*/}
+                    {/*    </Link>*/}
+                    {/*</li>*/}
                     <li>
                         <Link to={"/history"}>
                             История баланса

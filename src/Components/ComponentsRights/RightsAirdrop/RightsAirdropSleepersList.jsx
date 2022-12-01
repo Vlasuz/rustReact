@@ -13,6 +13,7 @@ const RightsAirdropSleepersList = (props) => {
                     className="sleepers__item"
                 >
                     <div className="point__winner-table">
+                        <img className={'confetti-image'} src="images/confetti.gif" alt="ico"/>
                         <div className="table__left">
                             <img src="images/user.jpeg" alt="Photo"/>
                             <span>CulverCriegi</span>

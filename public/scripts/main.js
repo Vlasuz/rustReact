@@ -1065,118 +1065,118 @@ toggleFunctions(document.querySelectorAll('.section-faq__item .item__head'), 'se
 
 
 
-// function fightSelect(selector) {
-//
-//   let lenActive = 0
-//
-//   document.querySelectorAll(selector + ' button').forEach(function (btn, btnNum) {
-//
-//     btn.onmousemove = function () {
-//       let attr = btn.getAttribute('data-persone')
-//       document.querySelector('.'+attr).classList.add('img_hover')
-//     }
-//     btn.onmouseout = function () {
-//       let attr = btn.getAttribute('data-persone')
-//       document.querySelector('.'+attr).classList.remove('img_hover')
-//     }
-//     btn.onclick = function () {
-//       let attr = btn.getAttribute('data-persone')
-//       document.querySelector('.'+attr).classList.toggle('img_clicked');
-//       btn.classList.toggle('button_active')
-//       let checkNumberClicked = 0;
-//
-//       for( let check of document.querySelectorAll(selector + ' button') ){
-//         if( check.classList.contains('button_active') ){
-//           checkNumberClicked++;
-//         }
-//       }
-//
-//       let arrayOfName = ['n', 'n', 'n'];
-//
-//       for( let check1 of document.querySelectorAll(selector + ' button') ){
-//
-//         if(checkNumberClicked > 1 && !check1.classList.contains('button_active') ){
-//           check1.classList.add('button_disabled')
-//         } else {
-//           check1.classList.remove('button_disabled')
-//         }
-//
-//
-//         if( check1.classList.contains('button_active') ){
-//           let numOfButtons = Array.from(document.querySelectorAll(selector + ' button')).indexOf(check1)
-//           arrayOfName[numOfButtons] = 's';
-//         }else{
-//           let numOfButtons = Array.from(document.querySelectorAll(selector + ' button')).indexOf(check1)
-//           arrayOfName[numOfButtons] = 'n';
-//         }
-//
-//       }
-//
-//       if( selector == '.section-fight__select' ){
-//
-//
-//         let nameOfImage = 'persone-'+arrayOfName.join('')+'.png';
-//
-//         document.querySelector('.persone__start images').setAttribute('src', 'images/'+nameOfImage)
-//
-//       }
-//
-//
-//     }
-//
-//   })
-//
-//   document.querySelectorAll('.section-fight__persone images').forEach((imgItem) => {
-//
-//     if( !document.querySelector('.section-fight__confetti') ){
-//
-//       let btn = document.querySelector(`button[data-persone="${imgItem.classList.value.split(' ')[0]}"]`)
-//
-//       imgItem.addEventListener('mousemove', function () {
-//
-//         if(imgItem.classList.value){
-//           imgItem.classList.add('img_hover')
-//           document.querySelector(`button[data-persone="${imgItem.classList.value.split(' ')[0]}"]`).classList.add('button_hover')
-//         }
-//
-//       })
-//       imgItem.addEventListener('mouseout', function () {
-//
-//         if(imgItem.classList.value){
-//           imgItem.classList.remove('img_hover')
-//           document.querySelector(`button[data-persone="${imgItem.classList.value.split(' ')[0]}"]`).classList.remove('button_hover')
-//         }
-//
-//       })
-//       imgItem.onclick = function (event) {
-//
-//         if(imgItem.classList.value){
-//
-//           lenActive = 0
-//
-//           btn.click()
-//
-//           for( let imgCheck of event.target.closest('.section-fight__persone').querySelectorAll('images') ){
-//             if( imgCheck.classList.contains('img_clicked') ){
-//               lenActive++;
-//             }
-//           }
-//
-//           if ( lenActive > 2 ){
-//             btn.click()
-//             return
-//           }
-//
-//         }
-//
-//       }
-//
-//     }
-//
-//   })
-//
-// }
-//
+function fightSelect(selector) {
+
+  let lenActive = 0
+
+  // document.querySelectorAll(selector + ' button').forEach(function (btn, btnNum) {
+  //
+  //   btn.onmousemove = function () {
+  //     let attr = btn.getAttribute('data-persone')
+  //     document.querySelector('.'+attr).classList.add('img_hover')
+  //   }
+  //   btn.onmouseout = function () {
+  //     let attr = btn.getAttribute('data-persone')
+  //     document.querySelector('.'+attr).classList.remove('img_hover')
+  //   }
+  //   btn.onclick = function () {
+  //     let attr = btn.getAttribute('data-persone')
+  //     document.querySelector('.'+attr).classList.toggle('img_clicked');
+  //     btn.classList.toggle('button_active')
+  //     let checkNumberClicked = 0;
+  //
+  //     for( let check of document.querySelectorAll(selector + ' button') ){
+  //       if( check.classList.contains('button_active') ){
+  //         checkNumberClicked++;
+  //       }
+  //     }
+  //
+  //     let arrayOfName = ['n', 'n', 'n'];
+  //
+  //     for( let check1 of document.querySelectorAll(selector + ' button') ){
+  //
+  //       if(checkNumberClicked > 1 && !check1.classList.contains('button_active') ){
+  //         check1.classList.add('button_disabled')
+  //       } else {
+  //         check1.classList.remove('button_disabled')
+  //       }
+  //
+  //
+  //       if( check1.classList.contains('button_active') ){
+  //         let numOfButtons = Array.from(document.querySelectorAll(selector + ' button')).indexOf(check1)
+  //         arrayOfName[numOfButtons] = 's';
+  //       }else{
+  //         let numOfButtons = Array.from(document.querySelectorAll(selector + ' button')).indexOf(check1)
+  //         arrayOfName[numOfButtons] = 'n';
+  //       }
+  //
+  //     }
+  //
+  //     if( selector == '.section-fight__select' ){
+  //
+  //
+  //       let nameOfImage = 'persone-'+arrayOfName.join('')+'.png';
+  //
+  //       document.querySelector('.persone__start images').setAttribute('src', 'images/'+nameOfImage)
+  //
+  //     }
+  //
+  //
+  //   }
+  //
+  // })
+
+  document.querySelectorAll('.section-fight__persone img').forEach((imgItem) => {
+
+    if( !document.querySelector('.section-fight__confetti') ){
+
+      let btn = document.querySelector(`button[data-persone="${imgItem.classList.value.split(' ')[0]}"]`)
+
+      imgItem.addEventListener('mousemove', function () {
+
+        if(imgItem.classList.value){
+          imgItem.classList.add('img_hover')
+          document.querySelector(`button[data-persone="${imgItem.classList.value.split(' ')[0]}"]`).classList.add('button_hover')
+        }
+
+      })
+      imgItem.addEventListener('mouseout', function () {
+
+        if(imgItem.classList.value){
+          imgItem.classList.remove('img_hover')
+          document.querySelector(`button[data-persone="${imgItem.classList.value.split(' ')[0]}"]`).classList.remove('button_hover')
+        }
+
+      })
+      imgItem.onclick = function (event) {
+
+        if(imgItem.classList.value){
+
+          lenActive = 0
+
+          btn.click()
+
+          for( let imgCheck of event.target.closest('.section-fight__persone').querySelectorAll('images') ){
+            if( imgCheck.classList.contains('img_clicked') ){
+              lenActive++;
+            }
+          }
+
+          if ( lenActive > 2 ){
+            btn.click()
+            return
+          }
+
+        }
+
+      }
+
+    }
+
+  })
+
+}
+
 // fightSelect('.section-fight__select')
 // fightSelect('.section-fight__select-hit')
 

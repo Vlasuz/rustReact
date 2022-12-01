@@ -1,55 +1,9 @@
 import React from 'react';
+import SelectFightOnButtonMousemove from "../../../Hooks/SelectFightOnButtonMousemove";
+import SelectFightOnButtonMouseout from "../../../Hooks/SelectFightOnButtonMouseout";
+import SelectFightOnButtonClick from "../../../Hooks/SelectFightOnButtonClick";
 
 const FightAreaBottom = () => {
-
-    let funcMouseMove = function (e) {
-        let attr = e.target.closest('button').getAttribute('data-persone')
-        document.querySelector('.' + attr).classList.add('img_hover')
-    }
-    let funcMouseOut = function (e) {
-        let attr = e.target.closest('button').getAttribute('data-persone')
-        document.querySelector('.' + attr).classList.remove('img_hover')
-    }
-    let funcClick = function (e) {
-        let attr = e.target.closest('button').getAttribute('data-persone')
-        document.querySelector('.' + attr).classList.toggle('img_clicked');
-        e.target.closest('button').classList.toggle('button_active')
-        let checkNumberClicked = 0;
-
-        for (let check of document.querySelectorAll('.section-fight__select button')) {
-            if (check.classList.contains('button_active')) {
-                checkNumberClicked++;
-            }
-        }
-
-        let arrayOfName = ['n', 'n', 'n'];
-
-        for (let check1 of document.querySelectorAll('.section-fight__select button')) {
-
-            if (checkNumberClicked > 1 && !check1.classList.contains('button_active')) {
-                check1.classList.add('button_disabled')
-
-            } else {
-                check1.classList.remove('button_disabled')
-            }
-
-
-            if (check1.classList.contains('button_active')) {
-                let numOfButtons = Array.from(document.querySelectorAll('.section-fight__select button')).indexOf(check1)
-                arrayOfName[numOfButtons] = 's';
-            } else {
-                let numOfButtons = Array.from(document.querySelectorAll('.section-fight__select button')).indexOf(check1)
-                arrayOfName[numOfButtons] = 'n';
-            }
-
-        }
-
-        let nameOfImage = 'persone-' + arrayOfName.join('') + '.png';
-
-        document.querySelector('.persone__start img').setAttribute('src', 'images/' + nameOfImage)
-
-
-    }
 
     return (
         <div className="section-fight__bottom">
@@ -60,9 +14,9 @@ const FightAreaBottom = () => {
                 <li>
                     <button
                         data-persone="head"
-                        onMouseMove={funcMouseMove}
-                        onMouseOut={funcMouseOut}
-                        onClick={funcClick}
+                        onMouseMove={e => SelectFightOnButtonMousemove(e)}
+                        onMouseOut={e => SelectFightOnButtonMouseout(e)}
+                        onClick={e => SelectFightOnButtonClick(e)}
                     >
                         <span>Голова</span>
                         <img src="images/green-check.svg" alt="Ico"/>
@@ -71,9 +25,9 @@ const FightAreaBottom = () => {
                 <li>
                     <button
                         data-persone="body"
-                        onMouseMove={funcMouseMove}
-                        onMouseOut={funcMouseOut}
-                        onClick={funcClick}
+                        onMouseMove={e => SelectFightOnButtonMousemove(e)}
+                        onMouseOut={e => SelectFightOnButtonMouseout(e)}
+                        onClick={e => SelectFightOnButtonClick(e)}
                     >
                         <span>Торс</span>
                         <img src="images/green-check.svg" alt="Ico"/>
@@ -82,9 +36,9 @@ const FightAreaBottom = () => {
                 <li>
                     <button
                         data-persone="legs"
-                        onMouseMove={funcMouseMove}
-                        onMouseOut={funcMouseOut}
-                        onClick={funcClick}
+                        onMouseMove={e => SelectFightOnButtonMousemove(e)}
+                        onMouseOut={e => SelectFightOnButtonMouseout(e)}
+                        onClick={e => SelectFightOnButtonClick(e)}
                     >
                         <span>Ноги</span>
                         <img src="images/green-check.svg" alt="Ico"/>

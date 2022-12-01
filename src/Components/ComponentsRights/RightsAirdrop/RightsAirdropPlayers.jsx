@@ -17,14 +17,16 @@ const RightsAirdropPlayers = (props) => {
 
             {isHavePlayers()}
 
-            {
-                props.states.listAirdropsMembers.map(player =>
-                    <RightsAirdropPlayersItem
-                        key={player.id}
-                        infoPlayer={player}
-                    />
-                )
-            }
+            <div className="players__list">
+                {
+                    props.states.listAirdropsMembers.map(player =>
+                        <RightsAirdropPlayersItem
+                            key={player.id}
+                            infoPlayer={player}
+                        />
+                    )
+                }
+            </div>
         </div>
     );
 };

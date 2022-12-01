@@ -4,7 +4,7 @@ import ShopItemPhoto from "./ShopItemPhoto";
 import ShopItemButton from "./ShopItemButton";
 import ShopItemCheck from "./ShopItemCheck";
 
-const ShopItem = () => {
+const ShopItem = (props) => {
 
     const [isBought, setIsBought] = useState(false)
     return (
@@ -12,7 +12,7 @@ const ShopItem = () => {
             <ShopItemCheck />
             <ShopItemTop />
             <ShopItemPhoto />
-            <ShopItemButton isBought={isBought} setIsBought={setIsBought} />
+            <ShopItemButton isBought={isBought} setIsBought={setIsBought} states={props.states} />
         </div>
     );
 };

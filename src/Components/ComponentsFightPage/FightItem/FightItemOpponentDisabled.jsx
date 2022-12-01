@@ -1,6 +1,8 @@
 import React from 'react';
+import SelectFightOnBody from "../../../Hooks/SelectFightOnBody";
 
 const FightItemOpponentDisabled = () => {
+
     return (
         <div className="section-fight__rht">
             <div className="section-fight__top">
