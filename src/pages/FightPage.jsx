@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import FightTop from "../Components/ComponentsFightPage/FightTop";
 import FightItem from "../Components/ComponentsFightPage/FightItem/FightItem";
 import Loader from "../Hooks/Loader";

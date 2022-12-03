@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PopupCloseCross from "./PopupCloseCross";
 import PopupCloseBackground from "./PopupCloseBackground";
 import {Link} from "react-router-dom";
@@ -10,9 +10,22 @@ const PopupNewRoom = (props) => {
         document.querySelector('.link-to-page').click()
     }
 
+    let changeSort = (e) => {
+
+        e.target.closest('.select').querySelector('.select__head span').innerText = e.target.textContent
+        e.target.closest('.select').classList.toggle('select_open')
+
+        document.querySelectorAll('.section-history__item').forEach(item => {
+            item.style.position = 'static'
+            item.style.zIndex = '1'
+            item.classList.remove('section-history__item_deleted')
+        })
+        props.setChangeHistoryList({...props.changeHistoryList, switcher_sort: e.target.getAttribute('data-value')})
+    }
+
     const sumListItems = function () {
         let sum = 0
-        if(document.querySelector('.popup-new-room__zone li')) {
+        if (document.querySelector('.popup-new-room__zone li')) {
             document.querySelectorAll('.popup-new-room__zone li').forEach((item) => {
                 sum += +item.querySelector('.item__price span').innerText
             })
@@ -71,6 +84,7 @@ const PopupNewRoom = (props) => {
         }
 
     }
+
     function itemZoneDelete(container) {
 
         container.querySelectorAll('.popup-new-room__zone .li__delete').forEach((del) => {
@@ -84,6 +98,7 @@ const PopupNewRoom = (props) => {
         })
 
     }
+
     const itemMove = function (event) {
 
         let postItem = event.target.closest('.popup-new-room__item')
@@ -261,7 +276,7 @@ const PopupNewRoom = (props) => {
                         className="popup__content-item popup__content-item-clothes"
                         onSubmit={(e) => createGame(e)}
                     >
-                        <Link className={"link-to-page"} to={'/fight-waiting'} />
+                        <Link className={"link-to-page"} to={'/fight-waiting'}/>
                         <div className="popup-new-room__zone">
                             <p>Перетащите сюда скины для ставки</p>
                             <ul>
@@ -285,11 +300,21 @@ const PopupNewRoom = (props) => {
                     <PopupCloseCross/>
                     <div className="popup-new-room__sort">
                         <span>Сортировка</span>
-                        <div className="select">
-                            <select>
-                                <option>По цене</option>
-                                <option>По дате</option>
-                            </select>
+                        <div
+                            className="select"
+                            onClick={e => changeSort(e)}
+                        >
+                            <div className="select__head">
+                                <span>По дате</span>
+                            </div>
+                            <div className="select__body">
+                                <div className="select__item">
+                                    По цене
+                                </div>
+                                <div className="select__item">
+                                    По дате
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <ul className="popup-new-room__list">

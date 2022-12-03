@@ -2,7 +2,6 @@ import React from 'react';
 import FightTop from "../Components/ComponentsFightPage/FightTop";
 import ShopTop from "../Components/ComponentsShop/ShopTop";
 import ShopList from "../Components/ComponentsShop/ShopList";
-import {useEffect, useState} from "react";
 import Loader from "../Hooks/Loader";
 
 const ClothesShopPage = (props) => {

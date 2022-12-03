@@ -2,7 +2,10 @@ import React, {useState} from "react";
 
 const States = () => {
 
+    const timeSecondForFights = 10;
     let newcomer = true;
+    const [fightsYourArmor, setFightsYourArmor] = useState([false, false, false])
+    const [arrayForHit, setArrayForHit] = useState([false, false, false]);
     const [isPlaneShow, setIsPlaneShow] = useState(true);
     const [sumCoinsInShop, setSumCoinsInShop] = useState(0);
     const [trajectoryPlane, setTrajectoryPlane] = useState(0);
@@ -17,7 +20,6 @@ const States = () => {
     const [coins, setCoins] = useState(0);
     const [switcherRights, setSwitcherRights] = useState('pr')
     const [tradeLink, setTradeLink] = useState('')
-    const [arrayForHit, setArrayForHit] = useState([false, false, false]);
     const [numSwitch, setNumSwitch] = useState(1);
     const [processorArrayElements, setProcessorArrayElements] = useState([])
     const listFightsMembers = [
@@ -308,6 +310,11 @@ const States = () => {
 
         sumOfPererab,
         setSumOfPererab,
+
+        timeSecondForFights,
+
+        fightsYourArmor,
+        setFightsYourArmor,
     }
 
 };

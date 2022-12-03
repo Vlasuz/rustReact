@@ -4,7 +4,6 @@ import SelectFightOnButtonMouseout from "../../Hooks/SelectFightOnButtonMouseout
 
 const FightPageOpponentSelect = (props) => {
 
-
     return (
         <div className="section-fight__rht">
             <div className="section-fight__top">

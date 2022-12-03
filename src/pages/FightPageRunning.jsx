@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import Timer from "../Components/Timer";
-import {Link, Navigate} from "react-router-dom";
 import FightItemOpponentDisabled from "../Components/ComponentsFightPage/FightItem/FightItemOpponentDisabled";
 import FightPageOpponentSelect from "../Components/ComponentsFightPage/FightPageOpponentSelect";
 import FightTimer from "../Components/ComponentsFightPage/FightTimer";
@@ -13,7 +11,8 @@ const FightPageRunning = (props) => {
 
     setTimeout(function () {
         setHit(true)
-    }, 11000)
+        document.querySelector('.section-fight__lft').classList.add('section-fight__lft_disabled')
+    }, (props.states.timeSecondForFights + 1) + "000")
 
 
     useEffect(() => {
@@ -23,9 +22,9 @@ const FightPageRunning = (props) => {
 
     return (
         <section className="section-fight">
-            <FightAreaLeft />
+            <FightAreaLeft states={props.states} />
 
-            <FightTimer />
+            <FightTimer states={props.states} />
 
             {hit ? <FightPageOpponentSelect states={props.states}/> : <FightItemOpponentDisabled/>}
 

@@ -3,7 +3,7 @@ import SelectFightOnButtonMousemove from "../../../Hooks/SelectFightOnButtonMous
 import SelectFightOnButtonMouseout from "../../../Hooks/SelectFightOnButtonMouseout";
 import SelectFightOnButtonClick from "../../../Hooks/SelectFightOnButtonClick";
 
-const FightAreaBottom = () => {
+const FightAreaBottom = (props) => {
 
     return (
         <div className="section-fight__bottom">
@@ -16,7 +16,7 @@ const FightAreaBottom = () => {
                         data-persone="head"
                         onMouseMove={e => SelectFightOnButtonMousemove(e)}
                         onMouseOut={e => SelectFightOnButtonMouseout(e)}
-                        onClick={e => SelectFightOnButtonClick(e)}
+                        onClick={e => SelectFightOnButtonClick(e, props.states)}
                     >
                         <span>Голова</span>
                         <img src="images/green-check.svg" alt="Ico"/>
@@ -27,7 +27,7 @@ const FightAreaBottom = () => {
                         data-persone="body"
                         onMouseMove={e => SelectFightOnButtonMousemove(e)}
                         onMouseOut={e => SelectFightOnButtonMouseout(e)}
-                        onClick={e => SelectFightOnButtonClick(e)}
+                        onClick={e => SelectFightOnButtonClick(e, props.states)}
                     >
                         <span>Торс</span>
                         <img src="images/green-check.svg" alt="Ico"/>
@@ -38,7 +38,7 @@ const FightAreaBottom = () => {
                         data-persone="legs"
                         onMouseMove={e => SelectFightOnButtonMousemove(e)}
                         onMouseOut={e => SelectFightOnButtonMouseout(e)}
-                        onClick={e => SelectFightOnButtonClick(e)}
+                        onClick={e => SelectFightOnButtonClick(e, props.states)}
                     >
                         <span>Ноги</span>
                         <img src="images/green-check.svg" alt="Ico"/>

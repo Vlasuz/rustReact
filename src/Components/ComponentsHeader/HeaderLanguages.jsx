@@ -1,98 +1,16 @@
 import React from 'react';
 import i18n from "i18next";
-import {useTranslation, initReactI18next, Trans} from "react-i18next";
+import {useTranslation, initReactI18next} from "react-i18next";
+import Lang_EN from '../../Languages/en.json'
+import Lang_RU from '../../Languages/ru.json'
+import Lang_CH from '../../Languages/ch.json'
+
+console.log(Lang_EN)
 
 const jsonLanguages = {
-    ru: {
-        translation: {
-            header_support: "Поддержка",
-            weekly_gamer: "?????",
-            text_profile: "Профиль",
-            text_trade_link: "Trade-ссылка",
-            text_trade_link_active: "Активно",
-            text_trade_link_non_active: "Не активно",
-            text_trade_link_add: "Добавить",
-            text_history_balance: "История баланса",
-            text_add_cash: "Пополнить",
-            text_balance: "Баланс",
-            text_change: "Изменить",
-        }
-    },
-    en: {
-        translation: {
-            header_support: "Support",
-            weekly_gamer: "?????",
-            text_profile: "Profile",
-            text_trade_link: "Trade-Trade link",
-            text_trade_link_active: "Actively",
-            text_trade_link_non_active: "Not active",
-            text_trade_link_add: "Add",
-            text_history_balance: "History of balance",
-            text_add_cash: "Top up",
-            text_balance: "Balance",
-            text_change: "Change",
-        }
-    },
-    china: {
-        translation: {
-            header_support: "支持",
-            weekly_gamer: "?????",
-            text_profile: "轮廓",
-            text_trade_link: "贸易链接",
-            text_trade_link_active: "积极地",
-            text_trade_link_non_active: "不活跃",
-            text_trade_link_add: "添加",
-            text_history_balance: "平衡的历史",
-            text_add_cash: "充值",
-            text_balance: "平衡",
-            text_change: "改变",
-        }
-    },
-    kor: {
-        translation: {
-            header_support: "지원하다",
-            weekly_gamer: "?????",
-            text_profile: "프로필",
-            text_trade_link: "거래 링크",
-            text_trade_link_active: "적극적으로",
-            text_trade_link_non_active: "활성화되지 않은",
-            text_trade_link_add: "추가하다",
-            text_history_balance: "균형의 역사",
-            text_add_cash: "충전",
-            text_balance: "균형",
-            text_change: "변화",
-        }
-    },
-    vie: {
-        translation: {
-            header_support: "Ủng hộ",
-            weekly_gamer: "?????",
-            text_profile: "Hồ sơ",
-            text_trade_link: "liên kết thương mại",
-            text_trade_link_active: "tích cực",
-            text_trade_link_non_active: "Không hoạt động",
-            text_trade_link_add: "cộng",
-            text_history_balance: "Lịch sử cân bằng",
-            text_add_cash: "nạp tiền",
-            text_balance: "THĂNG BẰNG",
-            text_change: "Biến đổi",
-        }
-    },
-    jap: {
-        translation: {
-            header_support: "サポート",
-            weekly_gamer: "?????",
-            text_profile: "プロフィール",
-            text_trade_link: "トレードリンク",
-            text_trade_link_active: "積極的に",
-            text_trade_link_non_active: "非活動中",
-            text_trade_link_add: "追加",
-            text_history_balance: "天びんの歴史",
-            text_add_cash: "補充する",
-            text_balance: "バランス",
-            text_change: "変化する",
-        }
-    },
+    ru: {translation: Lang_RU},
+    en: {translation: Lang_EN},
+    china: {translation: Lang_CH},
 }
 
 // Инициализация:
@@ -103,8 +21,6 @@ i18n.use(initReactI18next).init({
 });
 
 const HeaderLanguages = () => {
-
-    const {t} = useTranslation();
     const {i18n} = useTranslation();
 
     const langChange = (e, lang) => {
@@ -149,27 +65,6 @@ const HeaderLanguages = () => {
                         onClick={e => langChange(e, 'china')}
                     >
                         Китайский
-                    </button>
-                </li>
-                <li>
-                    <button
-                        onClick={e => langChange(e, 'kor')}
-                    >
-                        Корейский
-                    </button>
-                </li>
-                <li>
-                    <button
-                        onClick={e => langChange(e, 'vie')}
-                    >
-                        Вьетнамский
-                    </button>
-                </li>
-                <li>
-                    <button
-                        onClick={e => langChange(e, 'jap')}
-                    >
-                        Японский
                     </button>
                 </li>
             </ul>

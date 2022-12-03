@@ -6,7 +6,9 @@ const SelectFightOnButtonClick = (e, states) => {
     document.querySelector('.' + attr).classList.toggle('img_clicked');
     e.target.closest('button').classList.toggle('button_active')
     let checkNumberClicked = 0;
-    let sf_select = e.target.closest('.section-fight__lft') ? document.querySelectorAll('.section-fight__select button') : document.querySelectorAll('.section-fight__select-hit button')
+    let sf_select = e.target.closest('.section-fight__lft') ?
+        document.querySelectorAll('.section-fight__select button') :
+        document.querySelectorAll('.section-fight__select-hit button')
 
     for (let check of sf_select) {
         if (check.classList.contains('button_active')) {
@@ -22,8 +24,7 @@ const SelectFightOnButtonClick = (e, states) => {
         if (e.target.closest('.section-fight__rht')) e.target.closest('.section-fight__rht').querySelector('.bottom__info').style.opacity = 1
     }
 
-    let arrayOfName;
-    e.target.closest('.section-fight__lft') ? arrayOfName = ['n', 'n', 'n'] : arrayOfName = [false, false, false]
+    let arrayOfName = [false, false, false];
 
     for (let check1 of sf_select) {
 
@@ -36,20 +37,25 @@ const SelectFightOnButtonClick = (e, states) => {
 
         if (check1.classList.contains('button_active')) {
             let numOfButtons = Array.from(sf_select).indexOf(check1)
-            e.target.closest('.section-fight__lft') ? arrayOfName[numOfButtons] = 's' : arrayOfName[numOfButtons] = true;
+            arrayOfName[numOfButtons] = true;
 
         } else {
             let numOfButtons = Array.from(sf_select).indexOf(check1)
-            e.target.closest('.section-fight__lft') ? arrayOfName[numOfButtons] = 'n' : arrayOfName[numOfButtons] = false
+            arrayOfName[numOfButtons] = false
         }
 
     }
-    console.log(arrayOfName)
     if(e.target.closest('.section-fight__rht')) states.setArrayForHit(arrayOfName)
-    console.log(states?.arrayForHit)
 
     if (e.target.closest('.section-fight__lft')) {
-        let nameOfImage = 'persone-' + arrayOfName.join('') + '.png';
+
+        let arrayForImage = []
+        arrayOfName.map(item => {
+            arrayForImage.push(item ? String(item).replace(true, 's') : String(item).replace(false, 'n'))
+        })
+        let nameOfImage = 'persone-' + arrayForImage.join('') + '.png';
+
+        states.setFightsYourArmor(arrayOfName)
 
         document.querySelector('.persone__start img').setAttribute('src', 'images/' + nameOfImage)
     }

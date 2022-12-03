@@ -9,7 +9,6 @@ import FightPageFinish from "../pages/FightPageFinish";
 import HistoryPage from "../pages/HistoryPage";
 import PolicyPage from "../pages/PolicyPage";
 import ClothesShopPage from "../pages/ClothesShopPage";
-import States from "../States";
 import FightPageWaiting from "../pages/FightPageWaiting";
 import PersonPage from "../pages/PersonPage";
 import FaqPage from "../pages/FaqPage";

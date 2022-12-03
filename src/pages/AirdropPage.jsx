@@ -1,15 +1,12 @@
 import React from 'react';
 import ComponentMap from "../Components/ComponentsMap/ComponentMap";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import Loader from "../Hooks/Loader";
 
 const AirdropPage = (props) => {
-
     Loader();
 
     useEffect(() => {
-        // props.states.setIsPlaneShow(false)
-        // console.log(false)
         document.querySelector('.trajectory').style.transition = 'width 0s linear';
         setTimeout(() => {
             document.querySelector('.trajectory').style.transition = 'width 1s linear';

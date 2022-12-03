@@ -41,10 +41,6 @@ const TimerSeconds = (props) => {
 
         if (props.states.isDropDown && !document.querySelector('.airdrop-drop-sent')) {
 
-            setTimeout(() => {
-                selectWinner()
-            }, 1500)
-
             let drop = document.createElement('div')
             drop.classList.add('airdrop-drop-sent');
 
@@ -260,14 +256,17 @@ const TimerSeconds = (props) => {
 
             }
 
-            // console.log(props.states.trajectoryPlane)
-
             if (props.seconds < 1) {
                 // ЗАВЕРШЕНИЕ АИРДРОПА
                 airdropFinish()
                 // ЗАВЕРШЕНИЕ АИРДРОПА
             }
             // УСЛОВИЕ ТАЙМЕРА
+
+
+            if(props.seconds == 10){
+                selectWinner()
+            }
 
 
             // УСТАНОВКА ДЛИНЫ ПОЛЕТА В ПРОЦЕНТАХ
@@ -280,6 +279,7 @@ const TimerSeconds = (props) => {
         } else {
             if (props.setShowTimerToFly) props.setShowTimerToFly(true)
             props.states.setLengthPlaneFly(0)
+            props.states.setIsTrajectoryActive(false)
 
             if(document.querySelector('.map__scale')) document.querySelector('.map__scale').classList.remove('map__scale_hidden')
 

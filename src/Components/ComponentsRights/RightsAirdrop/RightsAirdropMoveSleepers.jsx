@@ -5,8 +5,8 @@ import RightsAirdropSleepersButtons from "./RightsAirdropSleepersButtons";
 const RightsAirdropMoveSleepers = (props) => {
 
 
-    let currentDroppable = null;
     let sleepersMove = function (e, event) {
+        let currentDroppable = null;
 
         let sleeper = e.closest('li')
 
@@ -44,6 +44,7 @@ const RightsAirdropMoveSleepers = (props) => {
             let droppableBelow = elemBelow.closest('.map__points')
 
             if (currentDroppable != droppableBelow) {
+
 
                 if (currentDroppable) {
                     leaveMap(sleeper)

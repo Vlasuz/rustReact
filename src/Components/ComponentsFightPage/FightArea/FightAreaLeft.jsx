@@ -5,7 +5,7 @@ import FightAreaBidCoins from "./FightAreaBidCoins";
 import FightAreaBottom from "./FightAreaBottom";
 import SelectFightOnBody from "../../../Hooks/SelectFightOnBody";
 
-const FightAreaLeft = () => {
+const FightAreaLeft = (props) => {
 
     return (
         <div className="section-fight__lft">
@@ -18,15 +18,15 @@ const FightAreaLeft = () => {
             </div>
             <div className="section-fight__persone">
                 <div className="persone__green">
-                    <img className="head" src="images/head.png" alt="Photo" width="72"/>
-                    <img className="body" src="images/body.png" alt="Photo" width="300"/>
-                    <img className="legs" src="images/legs.png" alt="Photo" width="300"/>
+                    <img className="head" src="images/head.png" alt="Photo" />
+                    <img className="body" src="images/body.png" alt="Photo" />
+                    <img className="legs" src="images/legs.png" alt="Photo" />
                 </div>
                 <div className="persone__start">
                     <img src="images/persone-nnn.png" alt="Persone"/>
                 </div>
             </div>
-            <FightAreaBottom />
+            <FightAreaBottom states={props.states} />
         </div>
     );
 };

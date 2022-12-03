@@ -3,7 +3,6 @@ import TopGamer from "../Components/ComponentsMainPage/TopGamer";
 import Balance from "../Components/ComponentsMainPage/Balance";
 import Table from "../Components/ComponentsMainPage/Table";
 import Loader from "../Hooks/Loader";
-import States from "../States";
 import UserStats from "../Components/ComponentsMainPage/UserStats";
 
 const MainPage = (props) => {

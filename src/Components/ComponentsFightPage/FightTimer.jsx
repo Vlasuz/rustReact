@@ -3,12 +3,11 @@ import {Link} from "react-router-dom";
 import Timer from "../Timer";
 import {useState} from "react";
 
-const FightTimer = () => {
+const FightTimer = (props) => {
 
     let millisecondNum = 99;
-    let timeSecond = 10;
     const [step, setStep] = useState(1)
-    const [time, setTime] = useState(timeSecond)
+    const [time, setTime] = useState(props.states.timeSecondForFights)
     const [millisec, setMillisec] = useState(millisecondNum)
     const [bol, setBol] = useState(true)
 
@@ -19,35 +18,37 @@ const FightTimer = () => {
             setMillisec(prev => prev < 1 ? millisecondNum : prev - 1)
         }, 10)
 
-        let timer = setInterval(() => {
+
+    }
+
+    useEffect(() => {
+        const ti = setInterval(() => {
             setTime(prev => prev - 1)
         }, 1000)
 
-        setTimeout(() => {
+        if(step === 1 && time < 0){
             setStep(step + 1)
             setTime(10)
-        }, 11000)
-
-        setTimeout(() => {
-            clearInterval(timer)
-            clearInterval(timeillisecond)
-            setMillisec(0)
-            setTime(0)
-        }, 22000)
-
-
-        setTimeout(() => {
 
             let numOfButton = 0;
+            while (numOfButton < 2) {
+                document.querySelectorAll('.section-fight__select button:not(button.button_active):not(button.button_disabled)')[numOfButton]?.click()
+                numOfButton++;
+            }
+        } else if (step === 2 && time < 0) {
+            let numOfButton = 0;
+            setTime(0)
             while (numOfButton < 2) {
                 document.querySelectorAll('.section-fight__select-hit button:not(button.button_active):not(button.button_disabled)')[numOfButton]?.click()
                 numOfButton++;
             }
 
-            // document.querySelector('.link-to-hit').click()
-        }, 22000)
+            document.querySelector('.link-to-hit').click()
 
-    }
+        }
+
+        return () => clearInterval(ti)
+    }, [time])
 
 
 
@@ -67,7 +68,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity=".1" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin=".9s"
                                     values="0;370"
                                     repeatCount="indefinite"
@@ -78,7 +79,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity=".2" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin=".8s"
                                     values="0;370"
                                     repeatCount="indefinite"
@@ -89,7 +90,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity=".3" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin=".7s"
                                     values="0;370"
                                     repeatCount="indefinite"
@@ -100,7 +101,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity=".4" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin=".6s"
                                     values="0;370"
                                     repeatCount="indefinite"
@@ -111,7 +112,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity=".5" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin=".5s"
                                     values="0;370"
                                     repeatCount="indefinite"
@@ -122,7 +123,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity=".6" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin=".4s"
                                     values="0;370"
                                     repeatCount="indefinite"
@@ -133,7 +134,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity=".7" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin=".3s"
                                     values="0;370"
                                     repeatCount="indefinite"
@@ -144,7 +145,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity=".8" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin=".2s"
                                     values="0;370"
                                     repeatCount="indefinite"
@@ -155,7 +156,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity=".9" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin=".1s"
                                     values="0;370"
                                     repeatCount="indefinite"
@@ -166,7 +167,7 @@ const FightTimer = () => {
                             <rect className="maskCircle maskCircle__inner" strokeOpacity="1" rx="20">
                                 <animate
                                     attributeName="stroke-dashoffset"
-                                    dur={timeSecond + 1 + "s"}
+                                    dur={props.states.timeSecondForFights + 1 + "s"}
                                     begin="0s"
                                     values="0;370"
                                     repeatCount="indefinite"

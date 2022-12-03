@@ -6371,10 +6371,11 @@ section {
 .section-shop__skins .skins__item .item__buy .buy__price {
     background: #4a55bb
 }
+.section-shop__skins .skins__item .item__buy .buy__price:hover {
+    background: #5562DD;
+}
 .section-shop__skins .skins__item .item__buy .buy__buy {
     background: #5562dd;
-    /*opacity: 0;*/
-    /*visibility: hidden*/
 }
 .section-shop__skins .skins__item .item__buy_bought {
     background: 0 0
@@ -7365,6 +7366,7 @@ section {
     -ms-flex-align: center;
     align-items: center
 }
+.select span,
 .section-history__sort span {
     font-weight: 500;
     font-size: 13px;
@@ -7372,7 +7374,7 @@ section {
     color: rgba(162,171,197,.5);
     margin-right: 10px
 }
-.section-history__sort .select {
+.select {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -7382,7 +7384,7 @@ section {
     position: relative;
     padding-right: 10px
 }
-.section-history__sort .select:after {
+.select:after {
     content: "";
     display: block;
     background: url(../images/arr-td.svg) no-repeat;
@@ -7732,6 +7734,7 @@ section {
     bottom: 100%;
     margin-bottom: 30px;
     transition: all .3s ease;
+    z-index: 4;
 }
 .section-fight__bottom .bottom__info p {
     font-style: normal;
@@ -7944,6 +7947,19 @@ section {
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
+}
+.section-fight__lft_disabled:after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: .4;
+    background: transparent;
+    display: block;
+    z-index: 10;
 }
 .section-fight__rht {
     background: #212232 url(../images/bgd-fight.svg) no-repeat;
@@ -8002,7 +8018,9 @@ section {
     align-items: center;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between
+    justify-content: space-between;
+    position: relative;
+    z-index: 11;
 }
 .section-fight__resources {
     display: -webkit-box;
@@ -8152,7 +8170,7 @@ section {
 }
 .section-fight__center {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     background: #191a29;
     border-radius: 28px;
     width: 120px;
@@ -8270,7 +8288,8 @@ section {
     width: 100%;
     margin-top: auto;
     margin-bottom: 70px;
-    position: relative
+    position: relative;
+    height: 100%;
 }
 .section-fight__persone img {
     display: block;
@@ -8383,28 +8402,21 @@ section {
     background: url(../images/line-bullet.svg) repeat-x
 }
 .section-fight__persone .attacked__bullet:nth-child(1) {
-    top: 23px
+    bottom: 430px;
 }
 .section-fight__persone .attacked__bullet:nth-child(2) {
-    top: 127px
+    bottom: 320px;
 }
 .section-fight__persone .attacked__bullet:nth-child(3) {
-    top: 262px
+    bottom: 160px;
 }
 .section-fight__persone .persone__green,
 .section-fight__persone .persone__red {
-    position: absolute;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
-    min-width: 270px;
-    max-width: 270px;
+    /*position: absolute;*/
     width: 100%;
-    min-height: 471px;
-    max-height: 471px;
     height: 100%;
-    bottom: 0
+    bottom: 0;
+    z-index: 2;
 }
 .section-fight__persone .persone__green img,
 .section-fight__persone .persone__red img {
@@ -8412,21 +8424,25 @@ section {
     left: 50%;
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
-    transform: translateX(-50%)
+    transform: translateX(-50%);
+    width: 300px;
+    margin-left: -2px;
+    z-index: 4;
 }
 .section-fight__persone .persone__green img:nth-child(1),
 .section-fight__persone .persone__red img:nth-child(1) {
-    top: -15px;
+    bottom: 400px;
     opacity: 0
 }
 .section-fight__persone .persone__green img:nth-child(2),
 .section-fight__persone .persone__red img:nth-child(2) {
-    top: 55px;
+    bottom: 245px;
     opacity: 0
 }
 .section-fight__persone .persone__green img:nth-child(3),
 .section-fight__persone .persone__red img:nth-child(3) {
-    bottom: -10px;
+    bottom: -20px;
+    width: 290px;
     opacity: 0
 }
 .section-fight__persone .persone__green img.img_hover,
@@ -8461,17 +8477,20 @@ section {
     opacity: 1!important
 }
 .section-fight__persone .persone__start {
-    min-width: 270px;
-    max-width: 270px;
-    width: 100%;
-    min-height: 471px;
-    max-height: 471px;
+    position: absolute;
     height: 100%;
-    margin: 0 auto
+    top: 0;
+    left: 50%;
 }
 .section-fight__persone .persone__start img {
-    width: 100%;
-    height: 100%
+    width: 1060px;
+    object-position: center center;
+    object-fit: cover;
+    margin: 0 auto;
+    position: absolute;
+    bottom: -70px;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 @-webkit-keyframes attackLeft {
     0% {
@@ -8840,17 +8859,54 @@ section {
     color: rgba(136,144,168,.5)
 }
 @media screen and (max-width:1550px) {
-    .top-gamer {
-        -ms-grid-column: 1;
-        grid-column-start: 1;
-        -ms-grid-column-span: 4;
-        grid-column-end: 5
+    /*.top-gamer {*/
+    /*    -ms-grid-column: 1;*/
+    /*    grid-column-start: 1;*/
+    /*    -ms-grid-column-span: 4;*/
+    /*    grid-column-end: 5*/
+    /*}*/
+    /*.stats{*/
+    /*    height: 100px;*/
+    /*}*/
+    /*.balance__history,*/
+    /*.balance__add,*/
+    /*.balance{*/
+    /*    padding: 10px;*/
+    /*}*/
+    /*.section-block{*/
+    /*    padding: 10px;*/
+    /*}*/
+
+    /*.section-blocks .section-block:last-child{*/
+    /*    height: calc(100vh - 486px);*/
+    /*}*/
+    /*.tabs__block{*/
+    /*    height: 77%;*/
+    /*}*/
+
+    .balance__add span{
+        display: none;
+    }
+    .balance,
+    .balance__history{
+        padding: 10px;
     }
 }
 @media screen and (max-width:1400px) {
     .section-block-information {
-        grid-template-columns: repeat(3,1fr)
+        /*grid-template-columns: repeat(3,1fr)*/
     }
+
+    .top-gamer__trade-link .trade-link__check{
+        margin-left: 10px;
+    }
+    .top-gamer__vertical{
+        margin-right: 10px;
+    }
+    .top-gamer__info .info__block{
+        margin-left: 10px;
+    }
+
     .section-block-newcomer .top-gamer {
         -ms-grid-column: 1;
         grid-column-start: 1;
@@ -8865,6 +8921,9 @@ section {
     }
 }
 @media screen and (max-width:1280px) {
+    .balance__add span{
+        display: block;
+    }
     .section-block {
         margin: 10px 0
     }
@@ -9937,12 +9996,11 @@ section {
     height: 300%;
     top: -100%;
     left: -100%;
-    z-index: 9999;
-    display: none;
+    z-index: -1;
 }
 
 .map__scale.map__scale_hidden .hide-map{
-    display: block;
+    z-index: 9999;
 }
 
 .section-history__block{
@@ -10085,6 +10143,100 @@ section {
     position: absolute;
     top: 8px;
     left: 8px;
+}
+
+@media screen and (max-height: 800px) {
+    .section-fight__persone .persone__start img{
+        width: 950px;
+    }
+    .section-fight__persone .persone__green img, .section-fight__persone .persone__red img{
+        width: 270px;
+    }
+    .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
+        bottom: 350px;
+    }
+    .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
+        bottom: 213px;
+    }
+    .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
+        bottom: -23px;
+        width: 260px;
+    }
+
+    .section-fight__persone .attacked__bullet:nth-child(1),
+    .section-fight__persone-hit .attacked__bullet:nth-child(1){
+        bottom: 380px;
+    }
+    .section-fight__persone .attacked__bullet:nth-child(2),
+    .section-fight__persone-hit .attacked__bullet:nth-child(2){
+        bottom: 290px;
+    }
+    .section-fight__persone .attacked__bullet:nth-child(3),
+    .section-fight__persone-hit .attacked__bullet:nth-child(3){
+        bottom: 140px;
+    }
+}
+@media screen and (max-height: 750px) {
+    .section-fight__persone .persone__start img{
+        width: 850px;
+    }
+    .section-fight__persone .persone__green img, .section-fight__persone .persone__red img{
+        width: 240px;
+    }
+    .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
+        bottom: 308px;
+    }
+    .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
+        bottom: 185px;
+    }
+    .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
+        bottom: -25px;
+        width: 232px;
+    }
+
+    .section-fight__persone .attacked__bullet:nth-child(1),
+    .section-fight__persone-hit .attacked__bullet:nth-child(1){
+        bottom: 335px;
+    }
+    .section-fight__persone .attacked__bullet:nth-child(2),
+    .section-fight__persone-hit .attacked__bullet:nth-child(2){
+        bottom: 250px;
+    }
+    .section-fight__persone .attacked__bullet:nth-child(3),
+    .section-fight__persone-hit .attacked__bullet:nth-child(3){
+        bottom: 120px;
+    }
+}
+@media screen and (max-height: 700px) {
+    .section-fight__persone .persone__start img{
+        width: 750px;
+    }
+    .section-fight__persone .persone__green img, .section-fight__persone .persone__red img{
+        width: 210px;
+    }
+    .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
+        bottom: 264px;
+    }
+    .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
+        bottom: 155px;
+    }
+    .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
+        bottom: -30px;
+        width: 200px;
+    }
+
+    .section-fight__persone .attacked__bullet:nth-child(1),
+    .section-fight__persone-hit .attacked__bullet:nth-child(1){
+        bottom: 285px;
+    }
+    .section-fight__persone .attacked__bullet:nth-child(2),
+    .section-fight__persone-hit .attacked__bullet:nth-child(2){
+        bottom: 220px;
+    }
+    .section-fight__persone .attacked__bullet:nth-child(3),
+    .section-fight__persone-hit .attacked__bullet:nth-child(3){
+        bottom: 100px;
+    }
 }
 
 @media screen and (min-width: 1980px) {

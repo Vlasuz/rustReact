@@ -1,9 +1,7 @@
 import React from 'react';
-import TopGamer from "../Components/ComponentsMainPage/TopGamer";
 import UserStats from "../Components/ComponentsMainPage/UserStats";
 import Table from "../Components/ComponentsMainPage/Table";
 import {Trans, useTranslation} from "react-i18next";
-import TopGamerTradeLink from "../Components/ComponentsMainPage/TopGamerTradeLink";
 
 const PersonPage = (props) => {
 
