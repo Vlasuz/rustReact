@@ -1,6 +1,7 @@
-import Timer from "../../Timer";
-import {useState} from "react";
-import States from "../../../States";
+import {useEffect} from "react";
+import Timer from "../../TimerForAirdrop/Timer";
+import TimerMilliseconds from "../../TimerForAirdrop/TimerMilliseconds";
+
 
 const RightsAirdropBlock = (props) => {
 
@@ -10,7 +11,21 @@ const RightsAirdropBlock = (props) => {
                 <div className="airdrop__fly">
                     <div className="fly__top">
                         <p>До вылета:</p>
-                        <Timer states={props.states}/>
+                        {/*<Timer states={props.states}/>*/}
+                        <div className="timer">
+                            <div className="min">
+                                <span>
+                                    {props.states.seconds < 10 ? "0" + props.states.seconds : props.states.seconds}
+                                </span>
+                            </div>
+                            {/*<div className="sec">*/}
+                            {/*    <small className="dot">.</small>*/}
+                            {/*    <span>*/}
+                            {/*        {props.states.milliseconds < 10 ? "0" + props.states.milliseconds : props.states.milliseconds}*/}
+                            {/*    </span>*/}
+                            {/*</div>*/}
+                            {TimerMilliseconds()}
+                        </div>
                     </div>
                     <div className="fly__bottom">
                         <div className="fly__timer">
@@ -26,7 +41,21 @@ const RightsAirdropBlock = (props) => {
                 :
                 <div className="airdrop__timer-to-ready">
                     <div className="fly__top">
-                        <Timer states={props.states}/>
+                        {/*<Timer states={props.states}/>*/}
+                        <div className="timer">
+                            <div className="min">
+                                <span>
+                                    {props.states.seconds < 10 ? "0" + props.states.seconds : props.states.seconds}
+                                </span>
+                            </div>
+                            {/*<div className="sec"><small className="dot">.</small>*/}
+                            {/*    <span>*/}
+                            {/*        /!*{props.states.milliseconds < 10 ? "0" + props.states.milliseconds : props.states.milliseconds}*!/*/}
+
+                            {/*    </span>*/}
+                            {/*</div>*/}
+                            {TimerMilliseconds()}
+                        </div>
                     </div>
                     <div className="fly__bottom">
                         <div className="fly__timer">

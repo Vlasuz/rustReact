@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ComponentMap from "../Components/ComponentsMap/ComponentMap";
 import {useEffect} from "react";
 import Loader from "../Hooks/Loader";
 
 const AirdropPage = (props) => {
     Loader();
+
+    const [scale, setScale] = useState(0)
 
     useEffect(() => {
         document.querySelector('.trajectory').style.transition = 'width 0s linear';
@@ -30,21 +32,27 @@ const AirdropPage = (props) => {
         boundingLeft = document.querySelector('.map__scale').getBoundingClientRect().left;
 
         sum -= count;
+        setScale(sum => sum - count);
 
-        if (sum >= 1 && sum < 3) {
-            event.target.closest('.map__scale').style.transform = `scale(${sum})`;
-        } else if (sum <= 1) {
-            sum = 1
-            event.target.closest('.map__scale').style.transform = `scale(${sum})`;
-        } else if (sum > 3){
-            sum = 3
-            event.target.closest('.map__scale').style.transform = `scale(${sum})`;
+        console.log(sum)
+
+        if (scale >= 1 && scale < 3) {
+            event.target.closest('.map__scale').style.transform = `scale(${scale})`;
+        } else if (scale <= 1) {
+            setScale(1)
+            event.target.closest('.map__scale').style.transform = `scale(${scale})`;
+        } else if (scale > 3){
+            setScale(3)
+            event.target.closest('.map__scale').style.transform = `scale(${scale})`;
         }
         return;
     }
 
     return (
-        <section className="section-map" >
+        <section
+            // className="section-map"
+            className={props.states.isDropDown ? "section-map dropIsDown" : "section-map"}
+        >
             <div className="section-map__top">
                 <div className="section-map__game-is">Игра #32875002</div>
                 <div className="section-map__code">
@@ -54,7 +62,7 @@ const AirdropPage = (props) => {
             <div className="map__container">
                 <div
                     className="map__scale"
-                    onWheel={onWheelEvent}
+                    onWheel={e => onWheelEvent(e)}
                 >
                     <ComponentMap states={props.states} />
                 </div>

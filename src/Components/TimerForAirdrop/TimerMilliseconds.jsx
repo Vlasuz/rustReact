@@ -1,7 +1,8 @@
 import React from 'react';
 import {useState, useEffect} from "react";
 
-const TimerMilliseconds = () => {
+const TimerMilliseconds = (props) => {
+
 
     const [milliseconds, setMilliseconds] = useState(0);
     const deadline = `November, 9, 3000, 12:45:00`;

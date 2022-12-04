@@ -8,6 +8,7 @@ import UserStats from "../Components/ComponentsMainPage/UserStats";
 const MainPage = (props) => {
     Loader();
 
+    console.log('sad')
     let newcomerClass = !props.states.auth ?
         'section-block section-block-information section-block-newcomer' :
         'section-block section-block-information';

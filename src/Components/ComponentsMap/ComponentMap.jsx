@@ -142,7 +142,12 @@ const ComponentMap = (props) => {
                     </div>
                 </li>
             </ul>
-            <div className="trajectory">
+            <div
+                className={props.states.isTrajectoryActive ? "trajectory trajectory_active" : "trajectory"}
+                style={
+                    {width: props.states.lengthPlaneFly + "%"}
+                }
+            >
                 <div className="plane">
                     <img src="images/plane.png" alt="Plane" width="54"/>
                 </div>

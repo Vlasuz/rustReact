@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
-import Timer from "../Timer";
+import Timer from "../TimerForAirdrop/Timer";
 import {useState} from "react";
 
 const FightTimer = (props) => {

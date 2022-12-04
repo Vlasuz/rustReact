@@ -1,6 +1,6 @@
 import React, {createElement, useEffect, useState} from 'react';
 import {NavLink} from "react-router-dom";
-import Timer from "../Timer";
+import Timer from "../TimerForAirdrop/Timer";
 
 const AsidePlane = (props) => {
 
