@@ -11,7 +11,7 @@ const FightPageRunning = (props) => {
 
     setTimeout(function () {
         setHit(true)
-        document.querySelector('.section-fight__lft').classList.add('section-fight__lft_disabled')
+        document.querySelector('.section-fight__lft')?.classList.add('section-fight__lft_disabled')
     }, (props.states.timeSecondForFights + 1) + "000")
 
 

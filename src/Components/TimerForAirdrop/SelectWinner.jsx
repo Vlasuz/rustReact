@@ -129,14 +129,16 @@ const SelectWinner = () => {
     }
 
     setTimeout(() => {
-        document.querySelector('.line-to-winner')?.classList.add('line-to-winner_active')
-        document.querySelector('.line-to-winner').style.width = "0px";
-        document.querySelector('.line-to-winner').animate([
-            {width: '0px'},
-            {width: gip + 'px'}
-        ], {
-            duration: 4000,
-        })
+        document.querySelector('.line-to-winner')?.classList.add('line-to-winner_active');
+        if(document.querySelector('.line-to-winner')) document.querySelector('.line-to-winner').style.width = "0px";
+        if(document.querySelector('.line-to-winner')) {
+            document.querySelector('.line-to-winner').animate([
+                {width: '0px'},
+                {width: gip + 'px'}
+            ], {
+                duration: 4000,
+            })
+        }
 
         if (document.querySelector('.line-to-winner')) document.querySelector('.line-to-winner').style.width = gip + "px";
 

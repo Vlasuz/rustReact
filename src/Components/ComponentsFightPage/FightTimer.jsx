@@ -190,7 +190,7 @@ const FightTimer = (props) => {
                     </svg>
                     <div className="min">
                         <span>
-                            {time < 10 ? "0" + time : time}
+                            {time < 10 && time >= 0 ? "0" + time : time < 0 ? "00" : time}
                         </span>
                     </div>
                     <div className="sec">

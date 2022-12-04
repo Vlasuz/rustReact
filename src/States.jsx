@@ -11,7 +11,7 @@ const States = () => {
     const [trajectoryPlane, setTrajectoryPlane] = useState(0);
     const [lengthPlaneFly, setLengthPlaneFly] = useState(0);
     const [airdropStep, setAirdropStep] = useState(1)
-    const [seconds, setSeconds] = useState(10);
+    const [seconds, setSeconds] = useState(60);
     const [milliseconds, setMilliseconds] = useState(99);
     const [isDropDown, setIsDropDown] = useState(false);
     const [isTrajectoryActive, setIsTrajectoryActive] = useState(false);

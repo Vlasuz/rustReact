@@ -45,11 +45,11 @@ const TimeToFly = (props) => {
             airdropFinish()
             // ЗАВЕРШЕНИЕ АИРДРОПА
 
-            props.states.setSeconds(10)
+            props.states.setSeconds(60)
             props.states.setAirdropStep(prev => prev - 1)
 
             document.querySelector('.aside__plane .timer').style.opacity = 1
-            document.querySelector('.airdrop__timer-to-ready .timer').style.opacity = 1
+            if(document.querySelector('.airdrop__timer-to-ready .timer')) document.querySelector('.airdrop__timer-to-ready .timer').style.opacity = 1
         }, 10000)
 
         setTimeout(() => {
@@ -62,7 +62,7 @@ const TimeToFly = (props) => {
     if (props.states.seconds < 1) {
         props.states.setSeconds(0)
         document.querySelector('.aside__plane .timer').style.opacity = 0
-        document.querySelector('.airdrop__timer-to-ready .timer').style.opacity = 0
+        if(document.querySelector('.airdrop__timer-to-ready .timer')) document.querySelector('.airdrop__timer-to-ready .timer').style.opacity = 0
     }
     if (props.states.seconds === 1) {
         // ФУНКЦИЯ ВЫБОРА ПОБЕДИТЕЛЯ

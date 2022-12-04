@@ -23,7 +23,7 @@ const TimeBeforeFly = (props) => {
     props.states.setRandomTimerToDrop(Math.ceil(Math.random() * (1100 - 350) + 350))
 
     if (props.states.seconds < 1) {
-        props.states.setSeconds(10)
+        props.states.setSeconds(60)
         props.states.setAirdropStep(prev => prev + 1)
     }
 
