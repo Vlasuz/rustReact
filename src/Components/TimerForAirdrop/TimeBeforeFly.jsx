@@ -3,6 +3,8 @@ import RandomDrop from "./RandomDrop";
 import RandomTrajectory from "./RandomTrajectory";
 
 const TimeBeforeFly = (props) => {
+    document.querySelector('.airdrop-drop-sent')?.remove()
+    document.querySelector('.map__points li.sleepers__item_winner')?.remove()
 
     props.states.setShowTimerToFly(true)
     props.states.setIsTrajectoryActive(false)
@@ -10,9 +12,6 @@ const TimeBeforeFly = (props) => {
         props.states.setLengthPlaneFly(0)
         props.states.setIsDropDown(false)
     }, 1000)
-
-    document.querySelector('.airdrop-drop-sent')?.remove()
-    document.querySelector('.map__points li.sleepers__item_winner')?.remove()
 
     if (document.querySelector('.map__scale')) document.querySelector('.map__scale').classList.remove('map__scale_hidden')
 
@@ -23,14 +22,13 @@ const TimeBeforeFly = (props) => {
 
     props.states.setRandomTimerToDrop(Math.ceil(Math.random() * (1100 - 350) + 350))
 
-
     if (props.states.seconds < 1) {
         props.states.setSeconds(10)
         props.states.setAirdropStep(prev => prev + 1)
     }
 
-    RandomTrajectory(props)
     RandomDrop(props)
+    RandomTrajectory(props)
 };
 
 export default TimeBeforeFly;

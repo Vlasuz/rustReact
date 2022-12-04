@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {useEffect} from "react";
-import SelectWinner from "./SelectWinner";
 import TimeBeforeFly from "./TimeBeforeFly";
-import RandomDrop from "./RandomDrop";
 import TimeToFly from "./TimeToFly";
 
 const TimerSeconds = (props) => {

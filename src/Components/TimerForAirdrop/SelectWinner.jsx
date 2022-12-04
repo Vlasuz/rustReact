@@ -133,7 +133,7 @@ const SelectWinner = () => {
         document.querySelector('.line-to-winner').style.width = "0px";
         document.querySelector('.line-to-winner').animate([
             {width: '0px'},
-            {width: gip+'px'}
+            {width: gip + 'px'}
         ], {
             duration: 4000,
         })
@@ -144,7 +144,7 @@ const SelectWinner = () => {
 
     setTimeout(() => {
         document.querySelectorAll('.map__points li')[winnerId]?.classList.add('sleepers__item_winner')
-    }, 4000)
+    }, 4500)
 
     // ЛОГИКА ДЛЯ ЛИНИИ ОТ ДРОПА К ПОБЕДИТЕЛЮ
 
