@@ -4172,9 +4172,6 @@ section {
     z-index: 2
 }
 .section-right__players {
-    overflow: auto;
-    /*height: calc(100vh - 370px);*/
-    /*height: calc(100vh - 510px);*/
     height: 100%;
     margin-top: 14px;
     background: #202232;
@@ -4183,6 +4180,9 @@ section {
 }
 .players__list{
     height: 100%;
+    overflow: auto;
+    padding-right: 10px;
+    margin-right: -10px;
 }
 .section-right__players .players__top {
     display: -webkit-box;
@@ -5074,6 +5074,25 @@ section {
     border-bottom: none;
     /*border-right: none;*/
 }
+.section-right__top .top__item:not(.top__item.top__item_active):first-child:after{
+    content: "";
+    height: 5px;
+    width: 50%;
+    position: absolute;
+    background: #191a29;
+    left: 0;
+    bottom: -5px
+}
+.section-right__top .top__item:not(.top__item.top__item_active):last-child:after{
+    content: "";
+    height: 4px;
+    width: 50%;
+    position: absolute;
+    background: #191a29;
+    right: 0;
+    z-index: 0;
+    bottom: -5px
+}
 .section-right__top .top__item:before {
     content: "";
     height: 5px;
@@ -5154,16 +5173,19 @@ section {
     border: 4px solid #202232
 }
 .section-right__switcher {
-    height: 100%
+    height: 100%;
+    margin-top: -1px;
+    z-index: 2;
+    background: #202232;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }
 .section-right__item {
     display: none;
     height: 100%;
     transition: opacity .3s ease;
     opacity: 0;
-}
-.section-right__switcher{
-    background: #202232;
 }
 .section-right_active {
     display: block;
@@ -6456,6 +6478,9 @@ section {
     width: 100%;
     margin-left: 14px
 }
+.section-shop__top .clothes-shop:hover{
+    background: linear-gradient(270deg, rgba(109, 69, 193, 0.6) 0%, rgba(109, 69, 193, 0.6) 100%);
+}
 .section-shop__top .clothes-shop p {
     font-weight: 500;
     font-size: 14px;
@@ -6828,13 +6853,14 @@ section {
     padding-top: 24px;
     background: #202232;
     padding: 15px;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 10px 10px 10px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     height: 100%;
     transition: all .3s ease;
+    z-index: 1;
 }
 .postamat .notice__add-cart {
     bottom: 100px
@@ -8431,18 +8457,20 @@ section {
 }
 .section-fight__persone .persone__green img:nth-child(1),
 .section-fight__persone .persone__red img:nth-child(1) {
-    bottom: 400px;
-    opacity: 0
+    bottom: 402px;
+    opacity: 0;
+    width: 280px;
 }
 .section-fight__persone .persone__green img:nth-child(2),
 .section-fight__persone .persone__red img:nth-child(2) {
-    bottom: 245px;
-    opacity: 0
+    bottom: 265px;
+    opacity: 0;
+    width: 290px;
 }
 .section-fight__persone .persone__green img:nth-child(3),
 .section-fight__persone .persone__red img:nth-child(3) {
-    bottom: -20px;
-    width: 290px;
+    bottom: -10px;
+    width: 280px;
     opacity: 0
 }
 .section-fight__persone .persone__green img.img_hover,
@@ -9900,7 +9928,7 @@ section {
 .point__winner-table .confetti-image{
     width: 200px;
     position: absolute;
-    bottom: 100%;
+    bottom: 0;
 }
 .point__winner-table .table__left span{
     font-weight: 500;
@@ -10153,14 +10181,16 @@ section {
         width: 270px;
     }
     .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
-        bottom: 350px;
+        bottom: 351px;
+        width: 260px;
     }
     .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
-        bottom: 213px;
+        bottom: 236px;
+        width: 250px;
     }
     .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
-        bottom: -23px;
-        width: 260px;
+        bottom: -17px;
+        width: 253px;
     }
 
     .section-fight__persone .attacked__bullet:nth-child(1),
@@ -10185,13 +10215,15 @@ section {
     }
     .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
         bottom: 308px;
+        width: 225px;
     }
     .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
-        bottom: 185px;
+        bottom: 200px;
+        width: 231px;
     }
     .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
-        bottom: -25px;
-        width: 232px;
+        bottom: -23px;
+        width: 227px;
     }
 
     .section-fight__persone .attacked__bullet:nth-child(1),
@@ -10216,9 +10248,11 @@ section {
     }
     .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
         bottom: 264px;
+        width: 197px;
     }
     .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
-        bottom: 155px;
+        bottom: 170px;
+        width: 200px;
     }
     .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
         bottom: -30px;
@@ -10242,7 +10276,12 @@ section {
 @media screen and (min-width: 1980px) {
     .section-fight__persone{
         transform: scale(1.5);
-        margin-bottom: 200px;
+        margin-bottom: 25vh;
+    }
+    .section-fight__persone .attacked__bullet,
+    .section-fight__persone-hit .attacked__bullet{
+        justify-content: flex-start;
+        width: 7vw;
     }
 }
 @media screen and (max-width: 768px){

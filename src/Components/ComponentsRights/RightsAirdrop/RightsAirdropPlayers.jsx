@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PlayersAirdropPlayersTop from "./PlayersAirdropPlayersTop";
 import RightsAirdropPlayersItem from "./RightsAirdropPlayersItem";
 
@@ -10,6 +10,11 @@ const RightsAirdropPlayers = (props) => {
         }
         return <PlayersAirdropPlayersTop listAirdropsMembers={props.states.listAirdropsMembers}/>
     }
+
+    useEffect(() => {
+        let rTopH = document.querySelector(".section-right__airdrop")?.clientHeight
+        if(document.querySelector('.players__list')) document.querySelector('.players__list').style.height = `calc(100% - ${rTopH}px - 90px)`;
+    })
 
     return (
         <div

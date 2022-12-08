@@ -22,6 +22,7 @@ const FightTimer = (props) => {
     }
 
     useEffect(() => {
+
         const ti = setInterval(() => {
             setTime(prev => prev - 1)
         }, 1000)
@@ -43,7 +44,7 @@ const FightTimer = (props) => {
                 numOfButton++;
             }
 
-            document.querySelector('.link-to-hit').click()
+            document.querySelector('.link-to-finish').click()
 
         }
 
@@ -55,7 +56,7 @@ const FightTimer = (props) => {
     return (
         <div className="section-fight__center">
             <div className="center__running">
-                <Link className={"link-to-hit"} to={'/fight-finish'}/>
+                <Link className={"link-to-finish"} to={'/fight-finish'}/>
                 <span>
                     {
                         step === 1 ? "Защита" : step === 2 ? "Атака" : ""

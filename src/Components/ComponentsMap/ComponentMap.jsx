@@ -48,7 +48,7 @@ const ComponentMap = (props) => {
                             </svg>
                         </div>
                         <div className="point__winner-table">
-                            <img className={'confetti-image'} src="images/confetti.gif" alt="Ico"/>
+                            <img className={'confetti-image'} src="images/confetti-map.gif" alt="Ico"/>
                             <div className="table__left">
                                 <img src="images/user2.jpeg" alt="Photo"/>
                                 <span>CulverCriegi</span>
@@ -104,7 +104,7 @@ const ComponentMap = (props) => {
                             </svg>
                         </div>
                         <div className="point__winner-table">
-                            <img className={'confetti-image'} src="images/confetti.gif" alt="Ico"/>
+                            <img className={'confetti-image'} src="images/confetti-map.gif" alt="Ico"/>
                             <div className="table__left">
                                 <img src="images/user.jpeg" alt="Photo"/>
                                 <span>CulverCriegi</span>

@@ -13,15 +13,15 @@ const FightPageFinish = (props) => {
 
 
     function minusingCoins() {
-        let minusCoinsCount = +document.querySelector('.resources__coins_minus span').innerText
+        let minusCoinsCount = +document.querySelector('.resources__coins_minus span')?.innerText
 
         let minusCounts = setInterval(function () {
             for (minusCoinsCount; minusCoinsCount >= 0;) {
-                document.querySelector('.resources__coins_minus span').innerText = minusCoinsCount--;
+                if(document.querySelector('.resources__coins_minus span')) document.querySelector('.resources__coins_minus span').innerText = minusCoinsCount--;
                 break;
             }
-            if (minusCoinsCount == -1) {
-                document.querySelector('.resources__coins_minus').classList.add('resources__coins_none')
+            if (minusCoinsCount === -1) {
+                if(document.querySelector('.resources__coins_minus')) document.querySelector('.resources__coins_minus').classList.add('resources__coins_none')
                 clearInterval(minusCounts)
             }
         }, 20)
@@ -72,22 +72,16 @@ const FightPageFinish = (props) => {
             }
 
         } else {
-            document.querySelector('.link-to-hit').click()
+            document.querySelector('.link-to-running')?.click()
         }
+
+        if(document.querySelector('.section-fight__confetti_active')) document.querySelector('.section-fight__confetti_active').style.opacity = '1';
+
+        minusingCoins();
     }, 3000)
 
     // WHO WINNER
 
-
-    useEffect(() => {
-        setTimeout(function () {
-            // document.querySelector('.section-fight__confetti_active img').setAttribute('src', 'images/confetti.gif')
-            document.querySelector('.section-fight__confetti_active').style.opacity = '1';
-
-            minusingCoins();
-
-        }, 3000)
-    })
 
     const finishArmorImage = () => {
         let arrayForImage = []
@@ -100,10 +94,10 @@ const FightPageFinish = (props) => {
 
     return (
         <section className="section-fight">
-            <Link className={"link-to-hit"} to={'/fight-running'}/>
+            <Link className={"link-to-running"} to={'/fight-running'}/>
             <div className="section-fight__lft">
                 <div className={"section-fight__confetti " + (isWinLFT ? "section-fight__confetti_active" : "")}>
-                    <img src="images/confetti.gif" alt="Confetti"/>
+                    <img src="images/confetti-fight.gif" alt="Confetti"/>
                 </div>
                 <div className="section-fight__top">
                     <div className="section-fight__user">
@@ -295,7 +289,7 @@ const FightPageFinish = (props) => {
             </div>
             <div className="section-fight__rht">
                 <div className={"section-fight__confetti " + (isWinRHT ? "section-fight__confetti_active" : "")}>
-                    <img src="images/confetti.gif" alt="Confetti"/>
+                    <img src="images/confetti-fight.gif" alt="Confetti"/>
                 </div>
                 <div className="section-fight__top">
                     <div className="section-fight__user">

@@ -8,12 +8,17 @@ import SelectFightOnBody from "../Hooks/SelectFightOnBody";
 const FightPageRunning = (props) => {
 
     let [hit, setHit] = useState(false);
+    let i = 0;
+
+    if(i === 0){
+        i++
+        document.querySelector('.section-fight__lft')?.classList.remove('section-fight__lft_disabled')
+    }
 
     setTimeout(function () {
         setHit(true)
         document.querySelector('.section-fight__lft')?.classList.add('section-fight__lft_disabled')
     }, (props.states.timeSecondForFights + 1) + "000")
-
 
     useEffect(() => {
         SelectFightOnBody()
