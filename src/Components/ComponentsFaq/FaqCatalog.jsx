@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
 
-const FaqCatalog = (props) => {
+const FaqCatalog = ({faq, error}) => {
 
     const switchCatalog = (e, itemNum) => {
 
@@ -23,16 +24,18 @@ const FaqCatalog = (props) => {
     return (
         <div className="section-faq__catalog">
 
+            {error ? <div style={{color: 'red'}}>Ошибка в соединении: 500</div> : ""}
+
             {
-                props.listOfQuestions.map((item, itemNum) =>
+                !error && faq.map((item, itemNum) =>
                     <button
                         key={itemNum}
                         className={itemNum == 0 ? "catalog__item catalog__item_active" : "catalog__item"}
                         onClick={e => switchCatalog(e, itemNum)}
                     >
-                        <img src={item.icon} alt="Ico"/>
+                        <img src={"https://rust.onefut.net/"+item.image} alt="Ico"/>
                         <h2>
-                            {item.catalog_title}
+                            {item.title}
                         </h2>
                     </button>
                 )

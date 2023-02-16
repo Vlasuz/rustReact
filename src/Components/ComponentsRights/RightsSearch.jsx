@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Trans, useTranslation} from "react-i18next";
 
 const RightsSearch = (props) => {
+    const {t} = useTranslation();
+
+    const [placeholder, setPlaceholder] = useState(<Trans t={t}>search</Trans>)
 
     const submitFilter = (e) => {
         e.preventDefault()
@@ -18,14 +22,19 @@ const RightsSearch = (props) => {
 
     return (
         <div className="postamat__search">
+            {
+                !props.inputSearch.length &&
+                <span className="placeholder-search">
+                    <Trans t={t}>search</Trans>
+                </span>
+            }
             <input
                 type="text"
-                placeholder="Поиск"
                 value={props.inputSearch}
                 onChange={e => submitFilter(e)}
             />
             <button>
-                <img src="images/search.svg" alt="Search"/>
+                <img src="../images/search.svg" alt="Search"/>
             </button>
         </div>
     );

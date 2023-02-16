@@ -13,7 +13,7 @@ const PopupSuccessAddedTradeLink = () => {
                 <PopupCloseCross />
                 <div className="success">
                     <div className="success__inner">
-                        <img src="images/check-blue.svg" alt="Close"/>
+                        <img src="../images/check-blue.svg" alt="Close"/>
                         <span>АКТИВНО</span>
                     </div>
                 </div>

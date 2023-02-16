@@ -5,29 +5,29 @@ import RightsAirdropMoveSleepers from "./RightsAirdropMoveSleepers";
 import RightsAirdropMember from "./RightsAirdropMember";
 import {useState} from "react";
 import States from "../../../States";
+import {useSelector} from "react-redux";
+import {reducerAirdropStepRights} from "../../../Redux/Reducers/reducerAirdropStepRights";
 
 const RightsAirdropSection = (props) => {
 
-    let funcNumSwitch = function () {
-        if(props.states.numSwitch === 1){
-            return (
-                <RightsAirdropSleepers states={props.states}/>
-            )
-        } else if(props.states.numSwitch === 2){
-            return (
-                <RightsAirdropMoveSleepers states={props.states}/>
-            )
-        } else if (props.states.numSwitch === 3){
-            return (
-                <RightsAirdropMember/>
-            )
-        }
-    }
+    const switcherRightsStep = useSelector(state => state.reducerAirdropStepRights.step)
+    const stepAirdrop = useSelector(state => state.reducerAirdropStep.step)
+    const auth = useSelector(state => state.reducerAuth.auth)
 
     return (
         <div className="section-right__airdrop">
             <RightsAirdropBlock states={props.states}/>
-            {funcNumSwitch()}
+            {
+                stepAirdrop === 1 && auth ?
+                    <>
+                        {
+                            switcherRightsStep === 1 ? <RightsAirdropSleepers states={props.states}/> :
+                                switcherRightsStep === 2 ? <RightsAirdropMoveSleepers states={props.states}/> :
+                                    switcherRightsStep === 3 ? <RightsAirdropMember/> : ""
+                        }
+                    </> : ""
+            }
+
         </div>
     );
 };

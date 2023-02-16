@@ -2,10 +2,10 @@ import React from 'react';
 
 const AsideAuthor = () => {
     return (
-        <div className="aside__author">
-            <img src="images/author.svg" alt="Ico" />
+        <a href={'https://freelancehunt.com/freelancer/denielsonis.html'} target={'_blank'} className="aside__author">
+            <img src="../images/author.svg" alt="Ico" />
             <p>Deniel Sonis<span>разработка сайтов</span></p>
-        </div>
+        </a>
     );
 };
 

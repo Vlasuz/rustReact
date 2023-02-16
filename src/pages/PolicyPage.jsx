@@ -8,7 +8,7 @@ const PolicyPage = () => {
         <section className="section-terms">
             <div className="section-terms__top">
                 <h1>Пользовательское соглашение</h1>
-                <img src="images/terms.png" alt="Photo" />
+                <img src="../images/terms.png" alt="Photo" />
             </div>
             <div className="section-terms__content">
                 <h2>Правила для пользователя</h2>

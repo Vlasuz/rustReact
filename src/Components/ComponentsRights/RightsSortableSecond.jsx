@@ -22,7 +22,7 @@ const RightsSortableSecond = (props) => {
                     name="upDown"
                     onChange={e => props.filterRadio == e.target.closest('label').getAttribute('for') ? props.setFilterCheckbox(e.target.checked) : ''}
                 />
-                <img src="images/filter.svg" alt="filter"/>
+                <img src="../images/filter.svg" alt="filter"/>
             </label>
             <input
                 type="radio"
@@ -38,13 +38,13 @@ const RightsSortableSecond = (props) => {
                     name="upDown"
                     onChange={e => props.filterRadio == e.target.closest('label').getAttribute('for') ? props.setFilterCheckbox(e.target.checked) : ''}
                 />
-                <img src="images/filter.svg" alt="filter"/>
+                <img src="../images/filter.svg" alt="filter"/>
             </label>
             <button
                 type={"submit"}
                 className="filter__reload"
             >
-                <img src="images/reload.svg" alt="filter"/>
+                <img src="../images/reload.svg" alt="filter"/>
                 <span>Обновить</span>
             </button>
         </div>

@@ -1,129 +1,63 @@
 import React, {useEffect} from 'react';
 import {useState} from "react";
+import axios from "axios";
 
-const RightsChatSmiles = (props) => {
+const RightsChatSmiles = ({ websocket }) => {
 
-    const smilesBlocks = [
-        {id: 0, title: "Смайлики"},
-        {id: 1, title: "Стикеры «Фермер»"},
-        {id: 2, title: "«Стикеры Грибник»"}
-    ]
+    const [stickers, setStickers] = useState([])
+    const [stickerOrder, setStickerOrder] = useState(0)
 
-    const scrollToBottom = () => {
-        let chatBlock = document.querySelector('.section-right__chatting')
-        chatBlock.scrollTo({
-            top: chatBlock.scrollHeight,
-            behavior: "smooth"
-        });
-    }
-
-    const clickSmilesBlocks = (e) => {
+    const clickSmilesBlocks = (e, itemNum) => {
         document.querySelectorAll('.smiles__switches li').forEach(li => li.classList.remove('li_active'))
         e.target.closest('li').classList.add('li_active')
+        document.querySelector('.smiles__block').style.opacity = 0
+        setTimeout(() => {
+            setStickerOrder(itemNum)
+            document.querySelector('.smiles__block').style.opacity = 1
+        }, 300)
     }
 
-    const sendSmile = (e) => {
-        let timeNow = new Date();
-        let linkToImage = e.target.closest('img').getAttribute('src')
+    const sendSmile = (e, item) => {
 
-        props.setMessages(oldMessages => [...oldMessages, newMessage]);
+        document.querySelector('.section-right__smiles_active').classList.remove('section-right__smiles_active')
+        websocket.send(JSON.stringify({"type": "send_message", "data": {"message": `https://rust.onefut.net/${item.image}`}}));
 
-        let newMessage = {
-            id: timeNow.getTime(),
-            date: {
-                hour: (timeNow.getHours() < 10) ? '0' + timeNow.getHours() : timeNow.getHours(),
-                min: (timeNow.getMinutes() < 10) ? '0' + timeNow.getMinutes() : timeNow.getMinutes(),
-            },
-            user: {
-                image: 'images/user.jpeg',
-                name: 'Михоелъ'
-            },
-            text: <img src={linkToImage} />
-        }
     }
+
 
     useEffect(() => {
-        scrollToBottom()
-    })
 
+        axios.get('https://rust.onefut.net/api/chat/stickers/').then(res => setStickers(res.data))
 
-
+    }, [])
 
     return (
         <div className="section-right__smiles">
             <div className="smiles__inner">
                 <div className="smiles__block">
                     <ul>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-0.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-1.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-2.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-3.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-4.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-5.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-0.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-1.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-2.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-3.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-4.png" alt="Smile"/>
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={e => sendSmile(e)}>
-                                <img src="images/Bitmap-5.png" alt="Smile"/>
-                            </button>
-                        </li>
+                        {
+                            stickers.length && stickers[stickerOrder].stickers.map((item, itemNum) =>
+                                <li key={item.id}>
+                                    <button onClick={e => sendSmile(e, item)}>
+                                        <img src={"https://rust.onefut.net/" + item.image} alt="Smile"/>
+                                    </button>
+                                </li>
+                            )
+                        }
                     </ul>
                 </div>
             </div>
             <div className="smiles__switches">
                 <ul>
                     {
-                        smilesBlocks.map(item =>
-                            <li key={item.id} className={item.id === 0 ? 'li_active' : ''} onClick={e => clickSmilesBlocks(e)}>
-                                <button>{item.title}</button>
-                            </li>
+                        stickers.map((item, itemNum) => {
+                                return (
+                                    <li key={item.id} className={itemNum === 0 ? 'li_active' : ''} onClick={e => clickSmilesBlocks(e, itemNum)}>
+                                        <button>{item.title}</button>
+                                    </li>
+                                )
+                            }
                         )
                     }
                 </ul>

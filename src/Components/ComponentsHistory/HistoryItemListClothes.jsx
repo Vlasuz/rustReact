@@ -65,7 +65,7 @@ const HistoryItemListClothes = ({images}) => {
             {/*    <div className="clothes__cool clothes__cool_green">*/}
 
             {/*    </div>*/}
-            {/*    <img src="images/skin.png" alt="Skin"/>*/}
+            {/*    <img src="../images/skin.png" alt="Skin"/>*/}
             {/*    <div className="li__name">*/}
             {/*        <p>Cucumber Eoka</p>*/}
             {/*        <b>$32.18</b>*/}
@@ -75,7 +75,7 @@ const HistoryItemListClothes = ({images}) => {
             {/*    <div className="clothes__cool clothes__cool_green">*/}
 
             {/*    </div>*/}
-            {/*    <img src="images/skin.png" alt="Skin"/>*/}
+            {/*    <img src="../images/skin.png" alt="Skin"/>*/}
             {/*    <div className="li__name">*/}
             {/*        <p>Cucumber Eoka</p>*/}
             {/*        <b>$32.18</b>*/}

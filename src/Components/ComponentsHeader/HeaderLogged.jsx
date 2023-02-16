@@ -3,14 +3,12 @@ import HeaderUser from "./HeaderUser";
 import HeaderBurgerMenu from "./HeaderBurgerMenu";
 import HeaderCoins from "./HeaderCoins";
 
-const HeaderLogged = (props) => {
+const HeaderLogged = () => {
     return (
         <>
-            <HeaderCoins dataInfo={props.dataInfo}/>
-
+            <HeaderCoins/>
             <HeaderUser/>
-
-            <HeaderBurgerMenu setAuth={props.setAuth}/>
+            <HeaderBurgerMenu/>
         </>
     );
 };

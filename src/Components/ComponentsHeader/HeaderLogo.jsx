@@ -5,7 +5,7 @@ const HeaderLogo = () => {
     return (
         <Link to="/" className="header__logo">
             <div className="ico">
-                <img src="images/logo-ico.svg" alt="Ico" />
+                <img src="../images/logo-ico.svg" alt="Ico" />
             </div>
             <span><span>SMALL</span>STASH</span>
         </Link>

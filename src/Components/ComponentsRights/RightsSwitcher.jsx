@@ -7,26 +7,12 @@ import RightsStorage from "./RightsStorage";
 import RightsShop from "./RightsShop/RightsShop";
 import RightsAirdrop from "./RightsAirdrop/RightsAirdrop";
 import RightsAirdropMoveSleepers from "./RightsAirdrop/RightsAirdropMoveSleepers";
+import {useSelector} from "react-redux";
+import {reducerSwitcherRights} from "../../Redux/Reducers/reducerSwitcherRights";
 
 const RightsSwitcher = (props) => {
 
-    let switcherFunction = function () {
-        if (props.states.switcherRights === 'pr') {
-            return (<RightsProcessor states={props.states}/>)
-
-        } else if (props.states.switcherRights === 'st') {
-            return (<RightsStorage states={props.states}/>)
-
-        } else if (props.states.switcherRights === 'sh') {
-            return (<RightsShop states={props.states}/>)
-
-        } else if (props.states.switcherRights === 'rights-airdrop') {
-            return (<RightsAirdrop states={props.states}/>)
-
-        }
-
-
-    }
+    const switcherRights = useSelector(state => state.reducerSwitcherRights.data)
 
     return (
         <div className="section-right__switcher">
@@ -34,7 +20,12 @@ const RightsSwitcher = (props) => {
 
             <div className="section-right__item section-right_active">
 
-                {switcherFunction()}
+                {
+                    switcherRights === 'st' ? <RightsStorage states={props.states}/> :
+                        switcherRights === 'sh' ? <RightsShop states={props.states}/> :
+                            switcherRights === 'ra' ? <RightsAirdrop states={props.states}/> :
+                                <RightsProcessor states={props.states}/>
+                }
 
             </div>
 

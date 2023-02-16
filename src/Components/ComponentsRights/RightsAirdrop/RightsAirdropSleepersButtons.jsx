@@ -1,10 +1,13 @@
 import React from 'react';
+import {airdropStepRights} from "../../../Redux/actions";
+import {useDispatch} from "react-redux";
 
-const RightsAirdropSleepersButtons = (props) => {
+const RightsAirdropSleepersButtons = () => {
 
+    const dispatch = useDispatch()
 
     const letsStart = () => {
-        props.states.setNumSwitch(3)
+        dispatch(airdropStepRights(3))
     }
 
 
@@ -39,7 +42,7 @@ const RightsAirdropSleepersButtons = (props) => {
                 onClick={() => randomMove()}
             >
                 <span>случайно</span>
-                <img src="images/random.svg" alt="Random"/>
+                <img src="../images/random.svg" alt="Random"/>
             </button>
             <button
                 className="move__submit"

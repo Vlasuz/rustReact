@@ -1,10 +1,9 @@
 import React from 'react';
+import {airdropTrajectoryPlane} from "../../Redux/actions";
+import {useDispatch} from "react-redux";
 
-const RandomTrajectory = (props) => {
-    let max
-    if (document.querySelector('.section-map__map')) max = document.querySelector('.section-map__map').clientHeight - 100
-    let rand = Math.ceil(Math.random() * (max - 100) + 100)
-    if (props.states.setTrajectoryPlane && rand > 0) props.states.setTrajectoryPlane(rand);
+const RandomTrajectory = () => {
+
 }
 
 export default RandomTrajectory;

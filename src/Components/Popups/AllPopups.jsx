@@ -14,6 +14,7 @@ import PopupCloseCross from "./PopupCloseCross";
 import PopupOutputSearch from "./PopupOutputItems/PopupOutputSearch";
 import PopupOutput from "./PopupOutputItems/PopupOutput";
 import States from "../../States";
+import PopupLogin from "./PopupAuth";
 
 const AllPopups = (props) => {
 
@@ -23,6 +24,8 @@ const AllPopups = (props) => {
 
     return (
         <>
+            <PopupLogin/>
+
             <PopupFairGame/>
 
             <PopupAddCoins/>
@@ -55,7 +58,7 @@ const AllPopups = (props) => {
                     <PopupCloseCross />
                     <div className="popup-trade__bot">
                         <div className="bot__photo">
-                            <img src="images/robot.png" alt="Photo"/>
+                            <img src="../../images/robot.png" alt="Photo"/>
                         </div>
                         <div className="bot__info">
                             <p>Михоелъ</p>
@@ -68,7 +71,7 @@ const AllPopups = (props) => {
                         </button>
                         <button className="steam">
                             <span>Через Steam</span>
-                            <img src="images/steam.svg" alt="Steam"/>
+                            <img src="../images/steam.svg" alt="Steam"/>
                         </button>
                     </div>
                 </div>
@@ -79,7 +82,7 @@ const AllPopups = (props) => {
                     <h2>
                         <span>Ошибка</span>
                         <div className="img">
-                            <img src="images/error-red.svg" alt="Error"/>
+                            <img src="../images/error-red.svg" alt="Error"/>
                         </div>
                     </h2>
                     <p>Ваш инвентарь в steam скрыт,
@@ -91,7 +94,7 @@ const AllPopups = (props) => {
                         </button>
                         <button className="steam">
                             <span>Через Steam</span>
-                            <img src="images/steam.svg" alt="Steam"/>
+                            <img src="../images/steam.svg" alt="Steam"/>
                         </button>
                     </div>
                 </div>
@@ -102,7 +105,7 @@ const AllPopups = (props) => {
                     <h2>
                         <span>Ошибка</span>
                         <div className="img">
-                            <img src="images/error-red.svg" alt="Error"/>
+                            <img src="../images/error-red.svg" alt="Error"/>
                         </div>
                     </h2>
                     <p>Вы не добавили трейд-ссылку в профиле</p>
@@ -110,7 +113,7 @@ const AllPopups = (props) => {
                     <div className="trade__buttons">
                         <button className="grey mini">
                             <span>К профилю</span>
-                            <img src="images/arr-td.svg" alt="Arr"/>
+                            <img src="../images/arr-td.svg" alt="Arr"/>
                         </button>
                     </div>
                 </div>
@@ -121,7 +124,7 @@ const AllPopups = (props) => {
                     <h2>
                         <span>Ошибка</span>
                         <div className="img">
-                            <img src="images/error-red.svg" alt="Error"/>
+                            <img src="../images/error-red.svg" alt="Error"/>
                         </div>
                     </h2>
                     <p>Вы отменили трейд-предложение</p>
@@ -134,7 +137,7 @@ const AllPopups = (props) => {
                     <h2 className="green">
                         <span>Отлично</span>
                         <div className="img">
-                            <img src="images/green-check.svg" alt="Error"/>
+                            <img src="../images/green-check.svg" alt="Error"/>
                         </div>
                     </h2>
                     <p>Баланс сайта пополнен</p>

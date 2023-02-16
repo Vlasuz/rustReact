@@ -7,7 +7,7 @@ const TableTdCode = ({infoItem}) => {
     return (
         <div className="td">
             <div className="shield">
-                <img src="images/shield.svg" alt="Shield" />
+                <img src="../images/shield.svg" alt="Shield" />
                 <a href="#">
                     {code}
                 </a>

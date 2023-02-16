@@ -9,9 +9,7 @@ const PopupCloseBackground = () => {
     }
 
     return (
-        <div className="popup__bgd" onClick={closePopup}>
-
-        </div>
+        <div className="popup__bgd" onClick={closePopup} />
     );
 };
 

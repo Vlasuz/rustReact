@@ -6,7 +6,7 @@ const HeaderSupport = () => {
     const {t} = useTranslation();
     return (
         <Link to={"/faq"} className="header__support">
-            <img src="images/support.svg" alt="Ico" />
+            <img src="../images/support.svg" alt="Ico" />
             <span>
                 <Trans t={t}>header_support</Trans>
             </span>

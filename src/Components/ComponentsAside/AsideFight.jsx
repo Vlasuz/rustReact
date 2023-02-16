@@ -1,18 +1,24 @@
-import React from 'react';
-import {NavLink} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {NavLink, useLocation, useParams} from "react-router-dom";
 
-const AsideFight = (props) => {
+const AsideFight = () => {
 
-    // let isActive = this.context.router.route.location.pathname === this.props.to;
-    // console.log(isActive)
+    const location = useLocation();
+
+    const [isActive, setIsActive] = useState('')
+
+    useEffect(() => {
+        setIsActive(location.pathname === "/" ? 'aside__fight aside__fight_active' : 'aside__fight')
+
+        if(location.pathname.includes('airdrop')) {
+            document.cookie = 'prevPage=airdrop';
+        }
+
+    }, [location.pathname])
 
     return (
-        <NavLink
-            to={props.to}
-            className={isActive => isActive ? 'aside__fight' : 'aside__fight aside__fight_active'}
-        >
-            {/*aside__fight aside__fight_active*/}
-            <img src="./images/fight.svg" alt="Fight" />
+        <NavLink to={"/"} className={isActive}>
+            <img src="../images/fight.svg" alt="Fight" />
         </NavLink>
     );
 };

@@ -1,45 +1,40 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {Route, Routes, useLocation} from "react-router-dom";
 import MainPage from "../pages/MainPage";
 import AirdropPage from "../pages/AirdropPage";
 import FightPage from "../pages/FightPage";
-import FightPageRunning from "../pages/FightPageRunning";
-import FightPageFinish from "../pages/FightPageFinish";
 import HistoryPage from "../pages/HistoryPage";
 import PolicyPage from "../pages/PolicyPage";
 import ClothesShopPage from "../pages/ClothesShopPage";
-import FightPageWaiting from "../pages/FightPageWaiting";
 import PersonPage from "../pages/PersonPage";
 import FaqPage from "../pages/FaqPage";
+import FightRoom from "../pages/FightRoom";
+import {useSelector} from "react-redux";
+import NotFound from "../pages/NotFound";
+import {logger} from "../middleware/logger";
 
 const MainRouters = (props) => {
     const location = useLocation()
+    const auth = useSelector(state => state.reducerAuth.auth)
+
 
     const Routers = [
         {
             path: "/",
+            element: <FightPage states={props.states}/>,
+        },
+        {
+            path: "/fight/:id",
+            element: <FightRoom states={props.states}/>,
+        },
+        {
+            path: "/profile",
             element: <MainPage states={props.states}/>,
         },
         {
             path: "/airdrop",
             element: <AirdropPage states={props.states}/>,
-        },
-        {
-            path: "/fight",
-            element: <FightPage states={props.states}/>,
-        },
-        {
-            path: "/fight-waiting",
-            element: <FightPageWaiting states={props.states}/>,
-        },
-        {
-            path: "/fight-running",
-            element: <FightPageRunning states={props.states}/>,
-        },
-        {
-            path: "/fight-finish",
-            element: <FightPageFinish states={props.states}/>,
         },
         {
             path: "/history",
@@ -54,12 +49,16 @@ const MainRouters = (props) => {
             element: <ClothesShopPage states={props.states}/>,
         },
         {
-            path: "/person",
-            element: <PersonPage states={props.states}/>,
+            path: "/user/:id",
+            element: <PersonPage/>,
         },
         {
             path: "/faq",
             element: <FaqPage states={props.states}/>,
+        },
+        {
+            path: "*",
+            element: <NotFound/>,
         },
     ]
 
@@ -70,7 +69,17 @@ const MainRouters = (props) => {
                     <Routes location={location}>
                         {
                             Routers.map((router, routerId) =>
-                                <Route key={routerId} path={router.path} element={router.element}/>
+                                {
+                                    if(!auth) {
+                                        if(router.path === '/profile'){
+                                            router.element = <NotFound/>
+                                        } else if (router.path === '/history'){
+                                            router.element =  <NotFound/>
+                                        }
+                                    }
+
+                                    return <Route key={routerId} path={router.path} element={router.element}/>
+                                }
                             )
                         }
                     </Routes>

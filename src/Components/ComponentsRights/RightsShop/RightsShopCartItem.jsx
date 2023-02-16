@@ -1,16 +1,15 @@
 import React from 'react';
+import {useDispatch} from "react-redux";
+import {shopListAdd, shopListRemove} from "../../../Redux/actions";
+import axios from "axios";
 
-const RightsShopCartItem = (props) => {
+const RightsShopCartItem = ({ item }) => {
+
+    const dispatch = useDispatch()
 
     const removeItem = (e) => {
-        props.setSumCoinsInShop(old => old - +e.target.closest('.cart__item').querySelector('.item__price span').textContent)
-        props.listToCart.map(item => {
-            let checkItem = item === props.listItems;
-            if (checkItem) {
-                props.setListToCart(current => current.filter(employee => {
-                    return employee.id !== item.id
-                }) );
-            }
+        axios.post(`https://rust.onefut.net/api/basket/remove?item_id=${item.id}`).then(res => {
+            dispatch(shopListAdd(res.data))
         })
     }
 
@@ -20,24 +19,23 @@ const RightsShopCartItem = (props) => {
 
             </div>
             <div className="item__photo">
-                <img src={props.listItems.image} alt="Ico"/>
+                <img src={item.image} alt="Ico"/>
             </div>
             <div className="item__info">
                 <div className="item__name">
-                    {props.listItems.title}
+                    {item.title}
                 </div>
                 <div className="item__price">
-                    <img src="images/header__coins.svg" alt="Coins"/>
+                    <img src="../images/header__coins.svg" alt="Coins"/>
                     <span>
-                        {props.listItems.cost}
+                        {item.price.value}
                     </span>
                 </div>
             </div>
             <div
                 className="item__delete"
-                onClick={(e) => removeItem(e)}
-            >
-                <img src="images/cross.svg" alt="Delete"/>
+                onClick={(e) => removeItem(e)}>
+                <img src="../images/cross.svg" alt="Delete"/>
             </div>
         </div>
     );

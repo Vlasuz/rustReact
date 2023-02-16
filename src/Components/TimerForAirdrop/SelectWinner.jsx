@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 
 const SelectWinner = () => {
 
-    // const [gip, setGip] = useState(0)
-
     let allMembersCood = [];
     let dropX = document.querySelector('.airdrop-drop-sent')?.style.left.replace('px', '')
     let dropY = document.querySelector('.airdrop-drop-sent')?.style.top.replace('px', '')

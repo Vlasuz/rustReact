@@ -19,7 +19,7 @@ const TableFight = () => {
                         infoItem={
                             {
                                 players: [
-                                    {1: "images/user2.jpeg"},
+                                    {1: "../images/user2.jpeg"},
                                 ],
                                 coins: 100,
                                 bank: 1250,
@@ -31,7 +31,7 @@ const TableFight = () => {
                         infoItem={
                             {
                                 players: [
-                                    {1: "images/user2.jpeg"},
+                                    {1: "../images/user2.jpeg"},
                                 ],
                                 coins: 100,
                                 bank: 1250,

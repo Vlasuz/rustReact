@@ -8,6 +8,7 @@ import PopupAddCoinsBySkinsItem from "./PopupAddCoinsBySkins/PopupAddCoinsBySkin
 import RightsItemStorage from "../../ComponentsRights/RightsItemStorage";
 import RightsFilterForm from "../../ComponentsRights/RightsFilterForm";
 import RightsFilterFormSecond from "../../ComponentsRights/RightsFilterFormSecond";
+import {useSelector} from "react-redux";
 
 const PopupAddCoinsBySkins = (props) => {
 
@@ -19,6 +20,7 @@ const PopupAddCoinsBySkins = (props) => {
         }
     )
     const [sumOfCoins, setSumOfCoins] = useState(0)
+    const listOfItems = useSelector(state => state.reducerUserInventory.list)
 
     const addCoinsFunction = () => {
         props.states.setCoins(old => old + sumOfCoins)
@@ -56,8 +58,8 @@ const PopupAddCoinsBySkins = (props) => {
                     <div className="skins__block">
 
                         {
-                            props.states.dataItems
-                                ?.filter(item => item.title.includes(sortArray.search))
+                            listOfItems
+                                ?.filter(item => item.title.toLowerCase().includes(sortArray.search.toLowerCase()))
                                 ?.sort((a, b) => (!sortArray.filterCheckbox) ?
                                     ((sortArray.filterRadio === "filterPrice1") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice1" ? b.cost : b.rarity) :
                                     ((sortArray.filterRadio === "filterPrice1") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice1" ? a.cost : a.rarity))
@@ -78,10 +80,10 @@ const PopupAddCoinsBySkins = (props) => {
                     <div className="price__block">
                         <span>${(sumOfCoins * 0.038).toFixed(2)}</span>
                         <div className="ico">
-                            <img src="images/change-arr.svg" alt="Ico"/>
+                            <img src="../images/change-arr.svg" alt="Ico"/>
                         </div>
                         <div className="coins">
-                            <img src="images/header__coins.svg" alt="Ico" />
+                            <img src="../images/header__coins.svg" alt="Ico" />
                             <span>
                                 {sumOfCoins}
                             </span>
@@ -90,7 +92,7 @@ const PopupAddCoinsBySkins = (props) => {
                 </div>
                 <div className="skins__button">
                     <button className="grey">
-                        <img src="images/reload.svg" alt="ico" />
+                        <img src="../images/reload.svg" alt="ico" />
                         <span>Обновить</span>
                     </button>
                     <button

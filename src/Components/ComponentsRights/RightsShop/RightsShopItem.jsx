@@ -1,32 +1,36 @@
 import React from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {shopListAdd} from "../../../Redux/actions";
+import axios from "axios";
+import {userBalanceAddCoins} from "../../../Redux/Reducers/reducerUserBalance";
 
-const RightsShopItem = (props) => {
+const RightsShopItem = ({ data, seTisAdded }) => {
 
+    const dispatch = useDispatch()
+    const listAdded = useSelector(state => state.reducerShopListAdded.list)
+    const userData = useSelector(state => state.reducerUserData.data)
 
-    const addProd = function () {
-        props.setListToCart(oldArr => [...oldArr, props.item])
+    function getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
     }
+
     const addItem = function (e) {
-        let a = false;
+        let sameItems = listAdded.some(item => item.id === data.id)
 
-        if (props.listToCart.length > 0) {
+        if(!sameItems && !!Object.keys(userData).length) {
 
-            props.listToCart.map(item => {
-
-                if (item.id === props.item.id) {
-                    a = true;
-                }
-
+            axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
+            axios.post(`https://rust.onefut.net/api/basket/add?item_id=${data.id}`).then(res => {
+                seTisAdded(true)
+                dispatch(shopListAdd(res.data))
+                setTimeout(() => {
+                    seTisAdded(false)
+                }, 100)
             })
 
-            if (a === false) {
-                addProd()
-                props.states.setSumCoinsInShop(old => old + props.item.cost)
-            }
-
-        } else {
-            addProd()
-            props.states.setSumCoinsInShop(old => old + props.item.cost)
         }
     }
 
@@ -35,27 +39,25 @@ const RightsShopItem = (props) => {
             className="postamat__item"
             onClick={(e) => addItem(e)}
         >
-            <div className="item__buy">
-                <img src="images/basket.svg" alt="Basket"/>
-            </div>
-            <div className="item__count"> {props.item.count} </div>
+            {!!Object.keys(userData).length && <div className="item__buy">
+                <img src="../images/basket.svg" alt="Basket"/>
+            </div>}
+            {data.count && <div className="item__count"> {data.count} </div>}
             <div className={
-                props.item.rarity === 1 ? 'item__cool clothes__cool_green' :
-                    props.item.rarity === 2 ? 'item__cool clothes__cool_blue' :
-                        props.item.rarity === 3 ? 'item__cool clothes__cool_red' :
+                data.rarity.color === "1" ? 'item__cool clothes__cool_green' :
+                    data.rarity.color === "2" ? 'item__cool clothes__cool_blue' :
+                        data.rarity.color === "3" ? 'item__cool clothes__cool_red' :
                             'item__cool clothes__cool_grey'
             }>
 
             </div>
             <div className="item__photo">
-                <img src={props.item.image} alt="Skin"/>
+                <img src={data.image} alt="Skin"/>
             </div>
             <div className="item__price">
-                <img src="images/header__coins.svg" alt="Ico"/>
+                <img src="../images/header__coins.svg" alt="Ico"/>
                 <span>
-                    {
-                        props.item.cost
-                    }
+                    {data.price.value}
                 </span>
             </div>
         </div>

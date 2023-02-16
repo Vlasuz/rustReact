@@ -15,11 +15,6 @@ const RightsShopTop = () => {
 
     const sendForm = function (e) {
         e.preventDefault();
-
-        // console.log('Range: ' + sumOfRange)
-        // console.log('Search: ' + inputSearch)
-        // console.log(e.target.querySelector('input[type=radio]:checked').id)
-        // console.log(e.target.querySelector('input[type=radio]:checked + label input[type="checkbox"]').checked)
     }
 
     return (

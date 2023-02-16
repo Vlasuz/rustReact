@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import HistoryItemLeft from "./HistoryItemLeft";
 import HistoryItemDate from "./HistoryItemDate";
 import HistoryItemListClothes from "./HistoryItemListClothes";
@@ -6,7 +6,9 @@ import HistoryItemCoins from "./HistoryItemCoins";
 import HistoryItemDelete from "./HistoryItemDelete";
 import HistoryItemStats from "./HistoryItemStats";
 
-const HistoryItem = (props) => {
+const HistoryItem = ({data}) => {
+
+    const [showAllItems, setShowAllItems] = useState(4)
 
     useEffect(() => {
         document.querySelectorAll('.section-history__item').forEach(item => {
@@ -17,45 +19,65 @@ const HistoryItem = (props) => {
     })
 
     return (
-        <div
-            className="section-history__item"
-
-        >
+        <div className="section-history__item">
             <div
-                className={props.states.whichTransaction === "section-history__pull" ? "item__type item__type_get" : "item__type item__type_send"}>
+                className={"item__type" + (data.type === "withdraw" ? " item__type_send" : " item__type_get")}>
                 <img
-                    src={props.states.whichTransaction === "section-history__pull" ? "images/arr-get.svg" : "images/arr-send.svg"}
-                    alt="Send"/>
+                    src={data.type === "withdraw" ? "../images/arr-send.svg" : "../images/arr-get.svg"}
+                    alt=""/>
             </div>
             <div className="item__date">
-                {props.states.datePublic.time}
+                {data.created_at.slice(data.created_at.indexOf(" "))}
                 <span>
-                    {new Date(props.states.datePublic.date).getDate() < 10 ? '0'+new Date(props.states.datePublic.date).getDate() : new Date(props.states.datePublic.date).getDate()}.
-                    {new Date(props.states.datePublic.date).getMonth() < 10 ? '0'+new Date(props.states.datePublic.date).getMonth() : new Date(props.states.datePublic.date).getMonth()}.
-                    {new Date(props.states.datePublic.date).getFullYear() < 10 ? '0'+new Date(props.states.datePublic.date).getFullYear() : new Date(props.states.datePublic.date).getFullYear()}
+                    {data.created_at.slice(0, data.created_at.indexOf(" "))}
                 </span>
             </div>
 
             <div className="item__list">
-            {props.states.images.length ?
-                <HistoryItemListClothes images={props.states.images}/>
-                :
-                <p className="pin">
-                    PIN-CODE<span> {props.states.pin_code}</span>
-                </p>
-            }
+                {!!data.items.length ?
+
+                    <ul>
+                        {
+                            data.items.map((item, itemNum) => itemNum < showAllItems &&
+                                <li key={item.id}>
+                                    <div
+                                        className={
+                                            item.rarity.color === "3" ? "clothes__cool clothes__cool_red" :
+                                                item.rarity.color === "2" ? "clothes__cool clothes__cool_blue" :
+                                                    item.rarity.color === "1" ? "clothes__cool clothes__cool_green" : "clothes__cool clothes__cool_grey"
+                                        }
+                                    >
+
+                                    </div>
+                                    <img src={item.image} alt="Skin"/>
+                                    <div className="li__name">
+                                        <p>{item.title}</p>
+                                        <b>{item.price.value}</b>
+                                    </div>
+                                </li>
+                            )
+                        }
+                        {data.items.length > 4 && <li className="count" onClick={e => setShowAllItems(data.items.length)} style={{display: data.items.length !== showAllItems && 'flex'}}>+{data.items.length - 4}</li>}
+                    </ul>
+
+                    :
+                    <p className="pin">
+                        PIN-CODE<span> ${data.price}</span>
+                    </p>
+                }
             </div>
 
             <div className="item__price">
-                <img src="images/header__coins.svg" alt="Coins"/>
+                <img src="../images/header__coins.svg" alt="Coins"/>
                 <span>
-                    {props.states.cost}
+                    {data.value}
                 </span>
             </div>
 
-            <HistoryItemDelete states={props.states} setHistoryList={props.setHistoryList}
-                               historyList={props.historyList}/>
-            <HistoryItemStats status={props.states.status}/>
+            {/*states={props.states} setHistoryList={props.setHistoryList} historyList={props.historyList}*/}
+            <HistoryItemDelete />
+            {/*status={props.states.status}*/}
+            <HistoryItemStats data={data} />
         </div>
     );
 };

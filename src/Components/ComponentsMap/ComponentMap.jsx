@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useSpring, animated} from "@react-spring/web";
 import {useDrag} from "react-use-gesture";
+import {useSelector} from "react-redux";
 
 
 const ComponentMap = (props) => {
@@ -16,6 +17,8 @@ const ComponentMap = (props) => {
         })
     });
 
+    const plane_length = useSelector(state => state.reducerAirdropLengthPlane.length)
+
 
     return (
         <animated.div
@@ -23,7 +26,7 @@ const ComponentMap = (props) => {
             className="section-map__map"
         >
 
-            <img className="map-img" src="images/map.png" alt="Map"/>
+            <img className="map-img" src="../images/map.png" alt="Map"/>
             <ul
                 className="map__points"
                 // onMouseMove={mousemovePointScale}
@@ -39,7 +42,7 @@ const ComponentMap = (props) => {
                 >
                     <div className="point__group">
                         <div className="point__photo">
-                            <img src="images/user2.jpeg" alt="Photo"/>
+                            <img src="../images/user2.jpeg" alt="Photo"/>
                             <svg width="44" height="50" viewBox="0 0 44 50" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -48,15 +51,15 @@ const ComponentMap = (props) => {
                             </svg>
                         </div>
                         <div className="point__winner-table">
-                            <img className={'confetti-image'} src="images/confetti-map.gif" alt="Ico"/>
+                            <img className={'confetti-image'} src="../images/confetti-map.gif" alt="Ico"/>
                             <div className="table__left">
-                                <img src="images/user2.jpeg" alt="Photo"/>
+                                <img src="../images/user2.jpeg" alt="Photo"/>
                                 <span>CulverCriegi</span>
                             </div>
                             <div className="table__right">
                                 <p>Забирает банк:</p>
                                 <div className="right__bottom">
-                                    <img src="images/header__coins.svg" alt="Coins"/>
+                                    <img src="../images/header__coins.svg" alt="Coins"/>
                                     <span>750</span>
                                 </div>
                             </div>
@@ -95,7 +98,7 @@ const ComponentMap = (props) => {
                 >
                     <div className="point__group">
                         <div className="point__photo">
-                            <img src="images/user.jpeg" alt="Photo"/>
+                            <img src="../images/user.jpeg" alt="Photo"/>
                             <svg width="44" height="50" viewBox="0 0 44 50" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -104,15 +107,15 @@ const ComponentMap = (props) => {
                             </svg>
                         </div>
                         <div className="point__winner-table">
-                            <img className={'confetti-image'} src="images/confetti-map.gif" alt="Ico"/>
+                            <img className={'confetti-image'} src="../images/confetti-map.gif" alt="Ico"/>
                             <div className="table__left">
-                                <img src="images/user.jpeg" alt="Photo"/>
+                                <img src="../images/user.jpeg" alt="Photo"/>
                                 <span>CulverCriegi</span>
                             </div>
                             <div className="table__right">
                                 <p>Забирает банк:</p>
                                 <div className="right__bottom">
-                                    <img src="images/header__coins.svg" alt="Coins"/>
+                                    <img src="../images/header__coins.svg" alt="Coins"/>
                                     <span>750</span>
                                 </div>
                             </div>
@@ -145,11 +148,11 @@ const ComponentMap = (props) => {
             <div
                 className={props.states.isTrajectoryActive ? "trajectory trajectory_active" : "trajectory"}
                 style={
-                    {width: props.states.lengthPlaneFly + "%"}
+                    {width: plane_length + "%"}
                 }
             >
                 <div className="plane">
-                    <img src="images/plane.png" alt="Plane" width="54"/>
+                    <img src="../images/plane.png" alt="Plane" width="54"/>
                 </div>
             </div>
             <div className="hide-map">

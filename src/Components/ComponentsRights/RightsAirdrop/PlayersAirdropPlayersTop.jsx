@@ -5,7 +5,7 @@ const PlayersAirdropPlayersTop = (props) => {
         <div className="players__top">
             <h3>Игроки</h3>
             <div className="count">
-                <img src="images/players.svg" alt="Ico"/>
+                <img src="../images/players.svg" alt="Ico"/>
                 <span>
                     {props.listAirdropsMembers.length}
                 </span>

@@ -7,7 +7,7 @@ const RightsAirdropPlayersItemInfo = (props) => {
                 {props.infoPlayer.name}
             </p>
             <div className="item__coins">
-                <img src="images/header__coins.svg" alt="Coins"/>
+                <img src="../images/header__coins.svg" alt="Coins"/>
                 <span>
                     {props.infoPlayer.coins}
                 </span>

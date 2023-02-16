@@ -1,16 +1,18 @@
 import React from 'react';
+import OpenPopup from "../../Hooks/OpenPopup";
+import {useSelector} from "react-redux";
+import {reducerUserData} from "../../Redux/Reducers/reducerUserData";
+import {reducerUserBalance} from "../../Redux/Reducers/reducerUserBalance";
 
-const HeaderCoins = (props) => {
+const HeaderCoins = () => {
 
-    let openPopup = function () {
-        document.querySelector('.popup-add-coins').classList.add('popup_active')
-    }
+    const balance = useSelector(state => state.reducerUserBalance.balance)
 
     return (
-        <button className="header__coins" onClick={openPopup}>
-            <img src="images/header__coins.svg" alt="Coins" />
+        <button className="header__coins" onClick={e => OpenPopup('popup-add-coins')}>
+            <img src="../images/header__coins.svg" alt="Coins" />
             <span>
-                {props.dataInfo.coins}
+                {balance}
             </span>
             <div className="ico">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,8 +1,14 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {chatAddMessages, chatAddOnline, chatDeleteMessages} from "../../../Redux/Reducers/reducerChat";
+import {Trans, useTranslation} from "react-i18next";
 
-const RightsChatTextarea = ({setMessages}) => {
+const RightsChatTextarea = ({websocket, setIsNoticeActive}) => {
+    const {t} = useTranslation();
+
 
     const [textMessage, setTextMessage] = useState('')
+    const auth = useSelector(state => state.reducerAuth.auth)
 
     const scrollToBottom = () => {
         let chatBlock = document.querySelector('.section-right__chatting')
@@ -12,67 +18,68 @@ const RightsChatTextarea = ({setMessages}) => {
         });
     }
 
+
     let smilesOpen = function () {
-        document.querySelector('.section-right__smiles').classList.toggle('section-right__smiles_active')
-    }
-    let sendMessage = function (e) {
-        e.preventDefault();
-
-
-        let timeNow = new Date();
-        let newMessage = {
-            id: timeNow.getTime(),
-            date: {
-                hour: (timeNow.getHours() < 10) ? '0' + timeNow.getHours() : timeNow.getHours(),
-                min: (timeNow.getMinutes() < 10) ? '0' + timeNow.getMinutes() : timeNow.getMinutes(),
-            },
-            user: {
-                image: 'images/user.jpeg',
-                name: 'Михоелъ'
-            },
-            text: textMessage
+        if (auth) {
+            document.querySelector('.section-right__smiles').classList.toggle('section-right__smiles_active')
+        } else {
+            setIsNoticeActive(true)
+            setTimeout(() => {
+                setIsNoticeActive(false)
+            }, 1000)
         }
-
-        if (textMessage.trim()) {
-            setMessages(oldMessages => [...oldMessages, newMessage]);
-        }
-        setTextMessage('')
     }
 
     useEffect(() => {
         scrollToBottom()
     }, [textMessage])
 
-    let inputMessage = function (e) {
-        setTextMessage(e.target.value)
+
+    const sendMessage = (e) => {
+        e.preventDefault();
+
+        if (auth) {
+            !!textMessage.length && websocket.send(JSON.stringify({
+                "type": "send_message",
+                "data": {"message": textMessage}
+            }));
+            setTextMessage('')
+        } else {
+            setIsNoticeActive(true)
+            setTimeout(() => {
+                setIsNoticeActive(false)
+            }, 1000)
+        }
+
     }
 
     return (
-        <form
-            className="section-right__bottom"
-            action="/"
-            onSubmit={sendMessage}
-        >
+        <form className="section-right__bottom" onSubmit={sendMessage}>
             <label className="textarea">
+                {
+                    !textMessage.length &&
+                    <span className="placeholder-message">
+                        <Trans t={t}>chat_message_text</Trans>
+                    </span>
+                }
                 <input
-                    placeholder="Сообщение"
                     maxLength="150"
-                    onChange={inputMessage}
+                    onChange={e => setTextMessage(e.target.value)}
                     value={textMessage}
+                    disabled={!auth}
                 />
-                <span className="maxl">0/150</span>
+                <span className="maxl">{textMessage.length}/150</span>
             </label>
             <div
                 className="smiles"
                 onClick={smilesOpen}
             >
-                <img src="images/smile-1.png" alt="Smile"/>
+                <img src="../images/smile-1.png" alt="Smile"/>
             </div>
             <button className="send">
-                <img src="images/send-message.svg" alt="Ico"/>
+                <img src="../images/send-message.svg" alt="Ico"/>
             </button>
         </form>
     );
 };
-
 export default RightsChatTextarea;

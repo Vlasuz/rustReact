@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {setSettings} from "../../Redux/Reducers/reducerSettings";
 
 const HeaderSocials = () => {
+
+    const socials = useSelector(state => state.reducerSettings.settings)
+
     return (
         <ul className="header__socials">
             <li>
-                <a href="#">
+                <a href={socials.vkontakte} target={'_blank'}>
                     <svg width="17" height="10" viewBox="0 0 17 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -14,7 +20,7 @@ const HeaderSocials = () => {
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href={socials.telegram} target={'_blank'}>
                     <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -24,7 +30,7 @@ const HeaderSocials = () => {
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href={socials.discord} target={'_blank'}>
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path

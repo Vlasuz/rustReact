@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SelectFightOnButtonClick = (e, states) => {
+const SelectFightOnButtonClick = (e, skin, setting) => {
 
     let attr = e.target.closest('button').getAttribute('data-persone')
     document.querySelector('.' + attr).classList.toggle('img_clicked');
@@ -45,19 +45,24 @@ const SelectFightOnButtonClick = (e, states) => {
         }
 
     }
-    if(e.target.closest('.section-fight__rht')) states.setArrayForHit(arrayOfName)
+    if(e.target.closest('.section-fight__rht')) {
+        setting(prev => !prev)
+    }
 
     if (e.target.closest('.section-fight__lft')) {
 
         let arrayForImage = []
         arrayOfName.map(item => {
-            arrayForImage.push(item ? String(item).replace(true, 's') : String(item).replace(false, 'n'))
+            arrayForImage.push(item ? String(item).replace(true, 'x') : String(item).replace(false, 'i'))
         })
-        let nameOfImage = 'persone-' + arrayForImage.join('') + '.png';
+        let nameOfImage = arrayForImage.join('');
 
-        states.setFightsYourArmor(arrayOfName)
+        setting(prev => !prev)
 
-        document.querySelector('.persone__start img').setAttribute('src', 'images/' + nameOfImage)
+        // console.log(skin)
+        // console.log(skin[nameOfImage])
+        // console.log(nameOfImage)
+        document.querySelector('.persone__start img').setAttribute('src', 'https://rust.onefut.net/' + skin[nameOfImage])
     }
 };
 

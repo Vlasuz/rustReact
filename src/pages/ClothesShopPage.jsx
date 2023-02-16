@@ -3,6 +3,7 @@ import FightTop from "../Components/ComponentsFightPage/FightTop";
 import ShopTop from "../Components/ComponentsShop/ShopTop";
 import ShopList from "../Components/ComponentsShop/ShopList";
 import Loader from "../Hooks/Loader";
+import {useSelector} from "react-redux";
 
 const ClothesShopPage = (props) => {
     Loader()
@@ -12,9 +13,10 @@ const ClothesShopPage = (props) => {
             <FightTop states={props.states}/>
 
             <div className="section-shop__skins">
-                <ShopTop />
-                <ShopList states={props.states} />
+                <ShopTop/>
+                <ShopList/>
             </div>
+
         </section>
     );
 };

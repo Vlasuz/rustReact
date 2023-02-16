@@ -1,17 +1,34 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import states from "../../States";
+import {useDispatch, useSelector} from "react-redux";
+import {authAction, userData, userInventoryDelete} from "../../Redux/actions";
+import {reducerUserData} from "../../Redux/Reducers/reducerUserData";
+import {setSession} from "../../Redux/Reducers/reducerSession";
+import {userBalanceSetCoins} from "../../Redux/Reducers/reducerUserBalance";
 
-const HeaderBurgerMenu = (props) => {
+const HeaderBurgerMenu = () => {
 
-    // const {auth, setAuth} = states()
+    const dispatch = useDispatch()
+    const userDataReducer = useSelector(state => state.reducerUserData.data)
+    const balance = useSelector(state => state.reducerUserBalance.balance)
+    const navigate = useNavigate()
+    const socials = useSelector(state => state.reducerSettings.settings)
 
     const burgerClick = () => {
         document.querySelector('.burger__menu').classList.toggle('burger__menu_active')
     }
 
-    let logout = function () {
-        props.setAuth(false)
+    const handleLogout = () => {
+        dispatch(authAction(false))
+        dispatch(userData({}))
+        dispatch(setSession({}))
+        dispatch(userInventoryDelete([]))
+        dispatch(userBalanceSetCoins(0))
+
+        navigate('/')
+
+        document.cookie = 'access_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
     }
 
     return (
@@ -20,49 +37,37 @@ const HeaderBurgerMenu = (props) => {
                 className="header__burger header__burger_notice"
                 onClick={burgerClick}
             >
-                <img src="images/burger.svg"/>
+                <img src="../images/burger.svg"/>
             </button>
             <div className="burger__menu">
                 <ul>
-                    {/*<li>*/}
-                    {/*    <Link to={"/"}>*/}
-                    {/*        Профиль*/}
-                    {/*    </Link>*/}
-                    {/*</li>*/}
-                    {/*<li className={"li_notice"}>*/}
-                    {/*    <Link to={"/history"}>*/}
-                    {/*        История игр*/}
-                    {/*    </Link>*/}
-                    {/*</li>*/}
                     <li>
                         <Link to={"/history"}>
                             История баланса
                         </Link>
                     </li>
                     <li>
-                        <button
-                            onClick={() => logout()}
-                        >
+                        <button onClick={handleLogout}>
                             Выйти с сайта
                         </button>
                     </li>
                 </ul>
                 <div className="header__volume">
                     <button>
-                        <img src="images/mute.svg" alt="Ico"/>
+                        <img src="../images/mute.svg" alt="Ico"/>
                     </button>
                     <div className="volume__block">
-                        <img src="images/music.svg" alt="Ico"/>
+                        <img src="../images/music.svg" alt="Ico"/>
                         <input type="range"/>
                     </div>
                 </div>
                 <button className="header__support">
-                    <img src="images/support.svg" alt="Ico"/>
+                    <img src="../images/support.svg" alt="Ico"/>
                     <span>Поддержка</span>
                 </button>
                 <ul className="header__socials">
                     <li>
-                        <a href="#">
+                        <a href={socials.vkontakte} target={'_blank'}>
                             <svg width="17" height="10" viewBox="0 0 17 10" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -72,7 +77,7 @@ const HeaderBurgerMenu = (props) => {
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href={socials.telegram} target={'_blank'}>
                             <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -82,7 +87,7 @@ const HeaderBurgerMenu = (props) => {
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href={socials.discord} target={'_blank'}>
                             <svg width="16" height="12" viewBox="0 0 16 12" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -92,22 +97,19 @@ const HeaderBurgerMenu = (props) => {
                         </a>
                     </li>
                 </ul>
-                {/*onClick={openPopup('add-coins')}*/}
+
                 <button className="header__coins">
-                    <img src="images/header__coins.svg" alt="Coins"/>
-                    <span>6480</span>
+                    <img src="../images/header__coins.svg" alt="Coins"/>
+                    <span>
+                        {balance}
+                    </span>
                     <div className="ico">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" clipRule="evenodd"
-                                  d="M0.653961 3.27606C0 4.55953 0 6.23969 0 9.6V14.4C0 17.7603 0 19.4405 0.653961 20.7239C1.2292 21.8529 2.14708 22.7708 3.27606 23.346C4.55953 24 6.23969 24 9.6 24H14.4C17.7603 24 19.4405 24 20.7239 23.346C21.8529 22.7708 22.7708 21.8529 23.346 20.7239C24 19.4405 24 17.7603 24 14.4V9.6C24 6.23969 24 4.55953 23.346 3.27606C22.7708 2.14708 21.8529 1.2292 20.7239 0.653961C19.4405 0 17.7603 0 14.4 0H9.6C6.23969 0 4.55953 0 3.27606 0.653961C2.14708 1.2292 1.2292 2.14708 0.653961 3.27606ZM12.9541 7.95372C12.9541 7.42699 12.5272 7 12.0004 7C11.4737 7 11.0467 7.42699 11.0467 7.95372V11.0463H7.95372C7.42699 11.0463 7 11.4733 7 12C7 12.5267 7.42699 12.9537 7.95372 12.9537H11.0467V16.0463C11.0467 16.573 11.4737 17 12.0004 17C12.5272 17 12.9541 16.573 12.9541 16.0463V12.9537H16.0463C16.573 12.9537 17 12.5267 17 12C17 11.4733 16.573 11.0463 16.0463 11.0463H12.9541V7.95372Z"
-                                  fill="#F5AD57"/>
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M0.653961 3.27606C0 4.55953 0 6.23969 0 9.6V14.4C0 17.7603 0 19.4405 0.653961 20.7239C1.2292 21.8529 2.14708 22.7708 3.27606 23.346C4.55953 24 6.23969 24 9.6 24H14.4C17.7603 24 19.4405 24 20.7239 23.346C21.8529 22.7708 22.7708 21.8529 23.346 20.7239C24 19.4405 24 17.7603 24 14.4V9.6C24 6.23969 24 4.55953 23.346 3.27606C22.7708 2.14708 21.8529 1.2292 20.7239 0.653961C19.4405 0 17.7603 0 14.4 0H9.6C6.23969 0 4.55953 0 3.27606 0.653961C2.14708 1.2292 1.2292 2.14708 0.653961 3.27606ZM12.9541 7.95372C12.9541 7.42699 12.5272 7 12.0004 7C11.4737 7 11.0467 7.42699 11.0467 7.95372V11.0463H7.95372C7.42699 11.0463 7 11.4733 7 12C7 12.5267 7.42699 12.9537 7.95372 12.9537H11.0467V16.0463C11.0467 16.573 11.4737 17 12.0004 17C12.5272 17 12.9541 16.573 12.9541 16.0463V12.9537H16.0463C16.573 12.9537 17 12.5267 17 12C17 11.4733 16.573 11.0463 16.0463 11.0463H12.9541V7.95372Z" fill="#F5AD57"/></svg>
                     </div>
                 </button>
                 <a className="header__user" href="#">
-                    <img src="images/user.jpeg" alt="User"/>
-                    <span>Volaratice</span>
+                    <img src={userDataReducer.avatar} alt="User"/>
+                    <span>{userDataReducer.name}</span>
                 </a>
             </div>
         </>

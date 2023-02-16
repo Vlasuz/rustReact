@@ -1,48 +1,62 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PopupCloseBackground from "../PopupCloseBackground";
 import PopupCloseCross from "../PopupCloseCross";
+import axios from "axios";
+import OpenPopup from "../../../Hooks/OpenPopup";
+import {useDispatch, useSelector} from "react-redux";
+import {addTradeLink, reducerUserData} from "../../../Redux/Reducers/reducerUserData";
 
 const PopupAddTradeLink = (props) => {
 
-    let openPopup = function (nextPopup) {
-        if(document.querySelector('.popup_active')){
-            document.querySelector('.popup_active').classList.remove('popup_active')
-        }
-        document.querySelector('.' + nextPopup).classList.add('popup_active')
+    const [tradeLink, setTradeLink] = useState('')
+    const [isError, setIsError] = useState(false)
+    const userData = useSelector(state => state.reducerUserData.data)
+    const dispatch = useDispatch()
+
+    function getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
     }
 
-    const [inputTradeLink, setInputTradeLink] = useState('')
-
-    const successSubmit = function (e) {
+    const handleSubmit = function (e) {
         e.preventDefault()
-        openPopup('popup-trade-link-success')
-        props.states.setTradeLink(inputTradeLink)
+        setIsError(false)
+
+        // https://steamcommunity.com/tradeoffer/new/?partner=255591957&token=4cfAnyi-
+        if(tradeLink.includes('https://steamcommunity.com/tradeoffer')){
+            axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
+            axios.post(`https://rust.onefut.net/api/user/change_trade_link/?trade_link=${tradeLink}`).then(res => {
+                dispatch(addTradeLink(res.data))
+                OpenPopup('popup-trade-link-success')
+            })
+        } else {
+            setIsError(true)
+        }
     }
 
     return (
         <div className="popup popup-trade-link">
             <PopupCloseBackground />
             <div className="popup__content">
-                <h2>Трейд-ссылка</h2>
+                <h2>Трейд-ссылка 1</h2>
                 <p>Введите вашу трейд-ссылку Steam,
                     <br/>с ней можно пополнять баланс скинами</p>
                 <PopupCloseCross />
-                <form
-                    action="#"
-                    onSubmit={e => successSubmit(e)}
-                >
+                <form onSubmit={handleSubmit}>
                     <input
-                        className="trade-link__input"
+                        className={"trade-link__input" + (isError ? " trade-link__input_error" : "")}
                         type="text"
                         required
-                        value={inputTradeLink}
-                        onChange={e => setInputTradeLink(e.target.value)}
+                        value={tradeLink}
+                        onChange={e => setTradeLink(e.target.value)}
                     />
                     <div className="trade-link__buttons">
                         <button>
                             Сохранить
                         </button>
-                        <a href="#">Где ее взять?</a>
+                        <a target={"_blank"} href="https://steamcommunity.com/groups/dota2lounge/discussions/0/558746995155711933">Где ее взять?</a>
                     </div>
                 </form>
             </div>

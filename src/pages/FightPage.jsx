@@ -1,97 +1,58 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import FightTop from "../Components/ComponentsFightPage/FightTop";
 import FightItem from "../Components/ComponentsFightPage/FightItem/FightItem";
 import Loader from "../Hooks/Loader";
+import {useDispatch, useSelector} from "react-redux";
+import axios from "axios";
+import {fightRoomAdd, fightRoomChange, fightRoomRemove, fightRoomSet} from "../Redux/Reducers/reducerFightsRooms";
+import {setSkin} from "../Redux/Reducers/reducerFightsSkin";
+import {userInventoryAdd} from "../Redux/actions";
+import {useTranslation} from "react-i18next";
 
+let lobbysocket = new WebSocket(`wss://rust.onefut.net/ws/api/fight/lobby/`);
 const FightPage = (props) => {
-    Loader();
+
+    const rooms = useSelector(state => state.reducerFightsRooms.rooms)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        axios.get('https://rust.onefut.net/api/fight/room/list').then(res => {
+            dispatch(fightRoomSet(res.data.reverse()))
+        })
+    }, [])
+
+    lobbysocket.onmessage = (e) => {
+        const message = JSON.parse(JSON.parse(e.data))
+
+        switch (message.type) {
+            case "new_room":
+                dispatch(fightRoomAdd(message.data))
+                break;
+            case "remove_room":
+                axios.get('https://rust.onefut.net/api/fight/room/list').then(res => {
+                    dispatch(fightRoomSet(res.data.reverse()))
+                    dispatch(setSkin('me', {}))
+                    dispatch(userInventoryAdd(message.data.fight_players[0].items))
+                })
+                break;
+            case "change_room":
+                dispatch(fightRoomChange(message.data))
+                break;
+        }
+    }
+
 
     return (
         <section className="section-shop">
 
-
             <FightTop states={props.states}/>
+
             <div className="section-shop__list-games">
                 {
-                    props.states.listFightsMembers.map(item =>
-                        <FightItem
-                            key={item.id}
-                            onSetCoins={item.onSetCoins}
-                            mainCoins={item.mainCoins}
-                            typePrice={item.typePrice}
-                            image={item.image}
-                            name={item.name}
-                            bid={item.bid}
-                            opponentName={item.opponentName}
-                            opponentPhoto={item.opponentPhoto}
-                            status={item.status}
-                            youWon={item.youWon}
-                            setFightInfo={props.states.setFightInfo}
-                        />
+                    !!rooms.length && rooms.map(item =>
+                        <FightItem key={item.id} data={item}/>
                     )
                 }
-
-
-                <FightItem
-                    onSetCoins={props.states.onSetCoins}
-                    mainCoins={props.states.mainCoins}
-                    typePrice={"coins"}
-                    image={"images/user.jpeg"}
-                    name={"Amnesianna5360"}
-                    bid={"130"}
-                    opponentName={"Victorius"}
-                    opponentPhoto={"images/user.jpeg"}
-                    status={'waiting'}
-                    youWon={null}
-                />
-                <FightItem
-                    onSetCoins={props.states.onSetCoins}
-                    mainCoins={props.states.mainCoins}
-                    typePrice={"coins"}
-                    image={"images/user.jpeg"}
-                    name={"GoodGamer"}
-                    bid={"842"}
-                    opponentName={"Victorius"}
-                    opponentPhoto={"images/user.jpeg"}
-                    status={'waiting'}
-                    youWon={null}
-                />
-                <FightItem
-                    onSetCoins={props.states.onSetCoins}
-                    mainCoins={props.states.mainCoins}
-                    typePrice={"clothes"}
-                    image={"images/user.jpeg"}
-                    name={"Amnesianna5360"}
-                    bid={"100"}
-                    opponentName={"Victorius"}
-                    opponentPhoto={"images/user.jpeg"}
-                    status={'running'}
-                    youWon={null}
-                />
-                <FightItem
-                    onSetCoins={props.states.onSetCoins}
-                    mainCoins={props.states.mainCoins}
-                    typePrice={"clothes"}
-                    image={"images/user.jpeg"}
-                    name={"Amnesianna5360"}
-                    bid={"579"}
-                    opponentName={"Victorius"}
-                    opponentPhoto={"images/user.jpeg"}
-                    status={'running'}
-                    youWon={null}
-                />
-                <FightItem
-                    onSetCoins={props.states.onSetCoins}
-                    mainCoins={props.states.mainCoins}
-                    typePrice={"coins"}
-                    image={"images/user.jpeg"}
-                    name={"Amnesianna5360"}
-                    bid={"100"}
-                    opponentName={"Victorius"}
-                    opponentPhoto={"images/user.jpeg"}
-                    status={'finish'}
-                    youWon={true}
-                />
             </div>
 
 

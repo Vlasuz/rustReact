@@ -40,13 +40,13 @@ const PopupAddCoins = () => {
                 </div>
                 <div className="popup-add-coins__game">
                     <button className="game__item">
-                        <img src="images/dota.png" alt="Game"/>
+                        <img src="../images/dota.png" alt="Game"/>
                     </button>
                     <button className="game__item">
-                        <img src="images/rust.png" alt="Game"/>
+                        <img src="../images/rust.png" alt="Game"/>
                     </button>
                     <button className="game__item">
-                        <img src="images/csgo.png" alt="Game"/>
+                        <img src="../images/csgo.png" alt="Game"/>
                     </button>
                 </div>
             </div>

@@ -5,8 +5,6 @@ import Lang_EN from '../../Languages/en.json'
 import Lang_RU from '../../Languages/ru.json'
 import Lang_CH from '../../Languages/ch.json'
 
-console.log(Lang_EN)
-
 const jsonLanguages = {
     ru: {translation: Lang_RU},
     en: {translation: Lang_EN},
@@ -27,17 +25,14 @@ const HeaderLanguages = () => {
         e.target.closest('ul').querySelectorAll('li').forEach(li => li.classList.remove('lang_active'))
         e.target.closest('li').classList.add('lang_active')
         i18n.changeLanguage(lang)
-
     }
 
     return (
-        <div
-            className="header__lang"
-        >
+        <div className="header__lang">
             <div
                 className="lang__button"
-                onClick={e => e.target.closest('.header__lang').classList.toggle('header__lang_active')}
-            >
+                onClick={e => e.target.closest('.header__lang').classList.toggle('header__lang_active')}>
+
                 <svg width="32" height="16" viewBox="0 0 32 16" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
                     <path

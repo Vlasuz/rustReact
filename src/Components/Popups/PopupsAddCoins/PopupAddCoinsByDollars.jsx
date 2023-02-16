@@ -30,7 +30,7 @@ const PopupAddCoinsByDollars = () => {
                     href="#"
                     onClick={() => openPopup('popup-add-coins')}
                 >
-                    <img src="images/arr-td.svg" alt="Arr" />
+                    <img src="../images/arr-td.svg" alt="Arr" />
                     <span>Способы оплаты</span>
                 </a>
                 <PopupCloseCross />
@@ -81,7 +81,7 @@ const PopupAddCoinsByDollars = () => {
                 <div className="balance__sum">
                     <p>Зачисление на баланс:</p>
                     <div className="sum">
-                        <img src="images/header__coins.svg" alt="Ico" />
+                        <img src="../images/header__coins.svg" alt="Ico" />
                         <span>800</span>
                     </div>
                 </div>

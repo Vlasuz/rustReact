@@ -19,46 +19,46 @@ const TableAirdrop = () => {
                 <div className="tbody">
 
                     <TableAirdropItem
-                        infoItem={
-                            {
-                                sleepers: "R15",
-                                players: [
-                                    {1: "images/user2.jpeg"},
-                                ],
-                                coins: 100,
-                                bank: 1250,
-                                code: "E24fuk24fsukhhd42sukhd42E24fsu",
-                                status: false
-                            }
-                        }
+                        // infoItem={
+                        //     {
+                        //         sleepers: "R15",
+                        //         players: [
+                        //             {1: "../images/user2.jpeg"},
+                        //         ],
+                        //         coins: 100,
+                        //         bank: 1250,
+                        //         code: "E24fuk24fsukhhd42sukhd42E24fsu",
+                        //         status: false
+                        //     }
+                        // }
                     />
                     <TableAirdropItem
-                        infoItem={
-                            {
-                                sleepers: "R11",
-                                players: [
-                                    {1: "images/user.jpeg"},
-                                ],
-                                coins: 200,
-                                bank: 2000,
-                                code: "4fuk24fsukh4fuk24fsukhhdhdE242sukhd44fuk24fsukhhd2E24fs4fuk24fsukhhdu",
-                                status: false
-                            }
-                        }
+                        // infoItem={
+                        //     {
+                        //         sleepers: "R11",
+                        //         players: [
+                        //             {1: "../images/user.jpeg"},
+                        //         ],
+                        //         coins: 200,
+                        //         bank: 2000,
+                        //         code: "4fuk24fsukh4fuk24fsukhhdhdE242sukhd44fuk24fsukhhd2E24fs4fuk24fsukhhdu",
+                        //         status: false
+                        //     }
+                        // }
                     />
                     <TableAirdropItem
-                        infoItem={
-                            {
-                                sleepers: "R12",
-                                players: [
-                                    {1: "images/user2.jpeg"},
-                                ],
-                                coins: 200,
-                                bank: 2045,
-                                code: "uk24fsukhhd42Ed42E24fsuk24fsukhhd42",
-                                status: true
-                            }
-                        }
+                        // infoItem={
+                        //     {
+                        //         sleepers: "R12",
+                        //         players: [
+                        //             {1: "../images/user2.jpeg"},
+                        //         ],
+                        //         coins: 200,
+                        //         bank: 2045,
+                        //         code: "uk24fsukhhd42Ed42E24fsuk24fsukhhd42",
+                        //         status: true
+                        //     }
+                        // }
                     />
 
                 </div>

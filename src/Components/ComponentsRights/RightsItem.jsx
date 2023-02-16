@@ -1,18 +1,26 @@
 import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {
+    dragAndDrop,
+    dragAndDropAdd,
+    processorListAdd,
+    userInventoryAdd,
+    userInventoryRemove
+} from "../../Redux/actions";
 
 const RightsItem = (props) => {
 
+    const processorList = useSelector(state => state.reducerProcessorList)
+    const dispatch = useDispatch()
+
     let mouseActiveDrag = function (event) {
 
-        let postItem = event.target.closest('.postamat__item');
-
-        console.log(postItem)
-
+        let postItem = event.target.closest('.pererab__item');
+        let postItemThis = postItem.cloneNode(true);
         let currentDroppable = null;
-        let postItemThis = postItem;
 
-        let shiftX = event.clientX - postItemThis.getBoundingClientRect().left;
-        let shiftY = event.clientY - postItemThis.getBoundingClientRect().top;
+        let shiftX = postItemThis.getBoundingClientRect().left + 60;
+        let shiftY = postItemThis.getBoundingClientRect().top + 60;
 
         function moveAt(pageX, pageY) {
 
@@ -26,21 +34,22 @@ const RightsItem = (props) => {
 
         document.addEventListener('mousemove', onMouseMove);
 
-
         // DRAG & DROP
         function onMouseMove(event) {
 
-            document.querySelector('body').append(postItem)
+            postItem.style.display = 'none'
 
-            postItem.classList.add('pererab__item_moved')
-            postItem.style.position = 'absolute';
-            postItem.style.zIndex = 9;
+            document.querySelector('body').insertAdjacentElement('beforeend', postItemThis)
+
+            postItemThis.classList.add('pererab__item_moved')
+            postItemThis.style.position = 'absolute';
+            postItemThis.style.zIndex = 9;
 
             moveAt(event.clientX, event.clientY)
 
-            postItem.style.display = 'none';
+            postItemThis.style.display = 'none';
             let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-            postItem.style.display = 'flex';
+            postItemThis.style.display = 'flex';
 
             if (!elemBelow) return;
             let droppableBelow = elemBelow.closest('.pererab__zone')
@@ -49,19 +58,14 @@ const RightsItem = (props) => {
                     document.removeEventListener('mousemove', onMouseMove);
                     document.onmouseup = null;
 
-                    postItem.classList.remove('pererab__item_moved')
-                    postItem.style.position = 'relative';
-                    postItem.style.left = 'auto';
-                    postItem.style.top = 'auto';
+                    postItemThis.classList.add('pererab__item_delete')
+                    postItemThis.classList.remove('pererab__item_moved')
+                    postItemThis.style.position = 'relative';
+                    postItemThis.style.left = 'auto';
+                    postItemThis.style.top = 'auto';
 
-                    document.querySelector('.pererab .postamat__block').prepend(postItem)
-
-                    console.log(postItem)
-
-                    props.states.setDataItems(prev =>
-                        prev.filter(itemOld => itemOld.id !== props.item.id)
-                    )
-                    props.states.setDataItems(prev => [...prev, props.item])
+                    postItem.style.display = 'block'
+                    document.querySelector('.pererab__item_delete').remove()
 
                 }
             }
@@ -72,24 +76,27 @@ const RightsItem = (props) => {
                     document.querySelector('.pererab__zone').style.background = 'transparent';
                 }
                 currentDroppable = droppableBelow;
-                if (currentDroppable && document.querySelectorAll('.zone__list ul li')?.length < 6) {
+                if (currentDroppable && processorList.list.length < 6) {
+
                     droppableBelow.style.background = '#26293b';
                     document.onmouseup = function () {
                         document.removeEventListener('mousemove', onMouseMove);
                         document.onmouseup = null;
 
-                        postItem.classList.remove('pererab__item_moved')
-                        postItem.style.position = 'relative';
-                        postItem.style.left = 'auto';
-                        postItem.style.top = 'auto';
+                        droppableBelow.style.background = 'transparent';
 
-                        document.querySelector('.pererab .postamat__block').prepend(postItem)
+                        postItemThis.classList.add('pererab__item_delete')
+                        postItemThis.classList.remove('pererab__item_moved')
+                        postItemThis.style.position = 'relative';
+                        postItemThis.style.left = 'auto';
+                        postItemThis.style.top = 'auto';
 
-                        props.states.setDataItems(prev =>
-                            prev.filter(item => item.id !== props.item.id)
-                        )
-                        props.setListInPererab(prev => [...prev, props.item])
-                        props.states.setSumOfPererab(prev => prev + props.item.cost)
+                        postItem.style.display = 'block'
+                        document.querySelector('.pererab__item_delete').remove()
+
+                        // console.log(props.item)
+                        dispatch(processorListAdd([props.item]))
+                        dispatch(userInventoryRemove([props.item]))
 
                     }
                 }
@@ -106,13 +113,10 @@ const RightsItem = (props) => {
             document.removeEventListener('mousemove', onMouseMove);
             document.onmouseup = null;
 
-            if (!e.target.closest('.zone__list') && document.querySelectorAll('.zone__list ul li')?.length < 6) {
+            if (!e.target.closest('.zone__list') && processorList.list.length < 6) {
 
-                props.states.setDataItems(prev =>
-                    prev.filter(item => item.id !== props.item.id)
-                )
-                props.setListInPererab(prev => [...prev, props.item])
-                props.states.setSumOfPererab(prev => prev + props.item.cost)
+                dispatch(processorListAdd([props.item]))
+                dispatch(userInventoryRemove([props.item]))
 
             }
 
@@ -122,46 +126,28 @@ const RightsItem = (props) => {
         postItemThis.ondragstart = function () {
             return false;
         };
+        postItem.ondragstart = function () {
+            return false;
+        };
 
     }
 
-    function checkLengthList(length) {
-
-        if (length > 0 && length < 7) {
-            document.querySelector('.pererab__zone .zone__empty').style.display = 'none';
-            document.querySelector('.pererab__button .zone__empty').style.display = 'none';
-            document.querySelector('.pererab__zone').style.background = 'transparent';
-
-            document.querySelector('.zone__done').style.display = 'flex';
-            document.querySelector('.pererab__button').style.border = 'none';
-
-        } else {
-            document.querySelector('.pererab__zone').style.background = 'transparent';
-            document.querySelector('.pererab__zone .zone__empty').style.display = 'flex';
-            document.querySelector('.pererab__button .zone__empty').style.display = 'flex';
-
-            document.querySelector('.zone__done').style.display = 'none';
-            document.querySelector('.pererab__button').style.border = '1px dashed rgba(162,171,197,.15)';
-        }
-
-    }
-
-    useEffect(() => {
-        checkLengthList(document.querySelectorAll('.zone__list ul li').length)
-    })
 
     return (
         <li
             className="postamat__item pererab__item"
             onMouseDown={e => mouseActiveDrag(e)}
         >
-            <div className="item__count">
-                {props.item.count}
-            </div>
+            {props.item.count &&
+                <div className="item__count">
+                    {props.item.count}
+                </div>
+            }
+
             <div className={
-                props.item.rarity === 1 ? 'item__cool clothes__cool_green' :
-                    props.item.rarity === 2 ? 'item__cool clothes__cool_blue' :
-                        props.item.rarity === 3 ? 'item__cool clothes__cool_red' :
+                props.item.rarity.color === "1" ? 'item__cool clothes__cool_green' :
+                    props.item.rarity.color === "2" ? 'item__cool clothes__cool_blue' :
+                        props.item.rarity.color === "3" ? 'item__cool clothes__cool_red' :
                             'item__cool clothes__cool_grey'
             }>
 
@@ -170,9 +156,9 @@ const RightsItem = (props) => {
                 <img src={props.item.image} alt="Skin"/>
             </div>
             <div className="item__price">
-                <img src="images/header__coins.svg" alt="Ico"/>
+                <img src="../images/header__coins.svg" alt="Ico"/>
                 <span>
-                    {props.item.cost}
+                    {props.item.price.value}
                 </span>
             </div>
         </li>

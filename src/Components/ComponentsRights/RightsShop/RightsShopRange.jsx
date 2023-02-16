@@ -1,24 +1,45 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import MultiRangeSlider from "../../../Hooks/MultiRangeSlider";
+import {useSelector} from "react-redux";
 
-const RightsShopRange = ({valueOfRange, setValueOfRange, sumOfRange, setSumOfRange, maxCoins}) => {
+const RightsShopRange = ({ setRangeValue }) => {
 
-    let changeRange = function (e) {
-        let sum = Math.round(maxCoins * e.target.value / 100)
+    const shopListReducer = useSelector(state => state.reducerShopList.list)
+    const [lftValue, setLftValue] = useState(0)
+    const [rhtValue, setRhtValue] = useState(0)
+    const [maxValue, setMaxValue] = useState(0)
 
-        setValueOfRange(e.target.value)
-        setSumOfRange(sum)
+    useEffect(() => {
+        setMaxValue(Math.max(...shopListReducer.map(item => item.price.value)))
+    }, [shopListReducer])
+
+    useEffect(() => {
+        setRangeValue({
+            min: lftValue,
+            max: rhtValue
+        })
+    }, [lftValue, rhtValue])
+
+    const handleRange = ({ min, max }) => {
+        setRhtValue(max)
+        setLftValue(min)
     }
 
     return (
         <div className="postamat__range">
-            <input
-                type="range"
-                onChange={e => changeRange(e)}
-                value={valueOfRange}
-            />
+            {/*<input*/}
+            {/*    type="range"*/}
+            {/*    value={valueRange}*/}
+            {/*    onChange={e => setValueRange(e.target.value)}*/}
+            {/*/>*/}
+            {maxValue > 0 && <MultiRangeSlider
+                min={0}
+                max={maxValue}
+                onChange={handleRange}
+            />}
             <div className="range__text">
-                <img src="images/header__coins.svg" alt="Coin"/>
-                <p>{sumOfRange} — {maxCoins}</p>
+                <img src="../images/header__coins.svg" alt="Coin"/>
+                <p>{lftValue} — {rhtValue}</p>
             </div>
         </div>
     );

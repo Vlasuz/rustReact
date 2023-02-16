@@ -15,10 +15,10 @@ const PopupAddCoinsByCodeSuccess = () => {
                         <span>$10</span>
                     </div>
                     <div className="code-success__center">
-                        <img src="images/green-check.svg" alt="Ico"/>
+                        <img src="../images/green-check.svg" alt="Ico"/>
                     </div>
                     <div className="code-success__item">
-                        <img src="images/header__coins.svg" alt="Coins" />
+                        <img src="../images/header__coins.svg" alt="Coins" />
                         <span>800</span>
                     </div>
                 </div>

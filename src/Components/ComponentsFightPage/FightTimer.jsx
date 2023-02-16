@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import Timer from "../TimerForAirdrop/Timer";
 import {useState} from "react";
+import {useDispatch} from "react-redux";
 
 const FightTimer = (props) => {
 
@@ -10,6 +11,8 @@ const FightTimer = (props) => {
     const [time, setTime] = useState(props.states.timeSecondForFights)
     const [millisec, setMillisec] = useState(millisecondNum)
     const [bol, setBol] = useState(true)
+
+
 
     if (bol) {
         setBol(false)
@@ -44,14 +47,13 @@ const FightTimer = (props) => {
                 numOfButton++;
             }
 
-            document.querySelector('.link-to-finish').click()
-
         }
 
         return () => clearInterval(ti)
     }, [time])
 
 
+    // const timeLine = [1,2,3,4,5,6,7,8,9,10];
 
     return (
         <div className="section-fight__center">
@@ -176,6 +178,27 @@ const FightTimer = (props) => {
                             </rect>
                         </mask>
 
+                        {/*{*/}
+                        {/*    timeLine.map(item =>*/}
+                        {/*        <mask id={`msk${item}`}>*/}
+                        {/*            <rect className="maskCircle maskCircle__inner" strokeOpacity={item * 0.1} rx="20">*/}
+                        {/*                <animate*/}
+                        {/*                    attributeName="stroke-dashoffset"*/}
+                        {/*                    dur={props.states.timeSecondForFights + 1 + "s"}*/}
+                        {/*                    begin={1.0 - (item * 0.1)+"s"}*/}
+                        {/*                    values="0;370"*/}
+                        {/*                    repeatCount="indefinite"*/}
+                        {/*                />*/}
+                        {/*            </rect>*/}
+                        {/*        </mask>*/}
+                        {/*    )*/}
+                        {/*}*/}
+
+                        {/*{*/}
+                        {/*    timeLine.map(item =>*/}
+                        {/*        <rect className="maskCircle" rx="20" mask={`url(#msk)${item}`}></rect>*/}
+                        {/*    )*/}
+                        {/*}*/}
 
                         <rect className="maskCircle" rx="20" mask="url(#msk1)"></rect>
                         <rect className="maskCircle" rx="20" mask="url(#msk2)"></rect>

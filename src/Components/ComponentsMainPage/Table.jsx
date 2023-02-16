@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
-import TableAirdropItem from "./TableAirdropItem";
-import TableAirdrop from "./TableAirdrop";
-import TableFight from "./TableFight";
+import {NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
 
-const Table = () => {
+const Table = ({ dataStats, person_id }) => {
+
+    const session = useSelector(state => state.reducerSession.session)
 
     useEffect(() => {
         for( let tab of document.querySelectorAll('.tabs li') ){
@@ -44,8 +45,79 @@ const Table = () => {
                 </li>
             </ul>
             <div className="tabs__block">
-                <TableAirdrop />
-                <TableFight />
+                {/*<TableAirdrop />*/}
+
+                <div className="tabs__item tabs__item_active">
+                    <big>Нет данных</big>
+                </div>
+
+                <div className="tabs__item tabs__item-fight">
+                    <div className="table">
+                        <div className="thead">
+                            <div className="tr">
+                                <div className="td">Дата</div>
+                                <div className="td">Соперник</div>
+                                <div className="td">Ставка</div>
+                                <div className="td">Банк</div>
+                                <div className="td">Исход</div>
+                            </div>
+                        </div>
+                        <div className="tbody">
+
+                            {
+                                dataStats?.fight_games?.map(item =>
+                                    <div key={item.id} className="tr">
+
+                                        <div className="td">
+                                            {item.created_at.slice(item.created_at.indexOf(' '))}
+                                            <span>
+                                                {item.created_at.slice(0, item.created_at.indexOf(' '))}
+                                            </span>
+                                        </div>
+
+                                        <div className="td">
+                                            <div className="list-players">
+                                                <ul>
+                                                    <li>
+                                                        <NavLink to={session?.id !== item.fight_players?.filter(item => item?.user?.id !== person_id?.id)[0].user.id ? "/user/"+item.fight_players?.filter(item => item?.user?.id !== person_id?.id)[0].user.id : "/profile"}>
+                                                            <img src={item.fight_players?.filter(item => item?.user?.id !== person_id?.id)[0].user.avatar} alt=""/>
+                                                        </NavLink>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div className="td">
+                                            <div className="td__coins">
+                                                <img src="../images/header__coins.svg" alt="Ico"/>
+                                                <span>
+                                            {item.fight_players?.filter(item => item?.user?.id !== person_id?.id)[0].coins}
+                                        </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="td">
+                                            <div className="td__coins">
+                                                <img src="../images/header__coins.svg" alt="Ico"/>
+                                                <span>
+                                                    {item.fight_players?.filter(item => item?.user?.id !== person_id?.id)[0].coins * 2}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="td">
+                                            {
+                                                item.winner.user.id === person_id?.id ? <img src="../images/victory.svg" alt="Shield" /> : <img src="../images/fail.svg" alt="Shield" />
+                                            }
+                                        </div>
+
+                                    </div>
+                                )
+                            }
+
+                        </div>
+                    </div>
+                </div>
                 <div className="tabs__item">
                     <big>Нет данных</big>
                 </div>

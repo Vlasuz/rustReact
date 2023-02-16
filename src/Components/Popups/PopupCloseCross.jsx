@@ -10,7 +10,7 @@ const PopupCloseCross = () => {
 
     return (
         <div className="popup__cross popup__close" onClick={closePopup}>
-            <img src="images/cross.svg" alt="Close"/>
+            <img src="../images/cross.svg" alt="Close"/>
         </div>
     );
 };

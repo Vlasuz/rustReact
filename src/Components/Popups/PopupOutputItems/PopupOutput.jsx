@@ -34,23 +34,23 @@ const PopupOutput = () => {
                     <div className="popup-pull__item">
                         <div className="item__top">
                             <div className="item__photo">
-                                <img src="images/robot.png" alt="Robot"/>
+                                <img src="../images/robot.png" alt="Robot"/>
                             </div>
                             <h3 className="item__name">Бот #6</h3>
                             <div className="item__status">
                                 <div className="img">
-                                    <img src="images/green-check.svg" alt="Ico"/>
+                                    <img src="../images/green-check.svg" alt="Ico"/>
                                 </div>
                             </div>
                             <button className="item__repeat">
-                                <img src="images/reload.svg" alt="Reload"/>
+                                <img src="../images/reload.svg" alt="Reload"/>
                                 <span>Повторить</span>
                             </button>
                             <button
                                 className="item__delete"
                                 onClick={e => deleteitem(e)}
                             >
-                                <img src="images/cross.svg" alt="Delete"/>
+                                <img src="../images/cross.svg" alt="Delete"/>
                             </button>
                         </div>
                         <div className="item__bottom">
@@ -59,7 +59,7 @@ const PopupOutput = () => {
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                     <div className="item__count">2</div>
                                 </li>
                             </ul>
@@ -68,7 +68,7 @@ const PopupOutput = () => {
                     <div className="popup-pull__item">
                         <div className="item__top">
                             <div className="item__photo">
-                                <img src="images/robot.png" alt="Robot"/>
+                                <img src="../images/robot.png" alt="Robot"/>
                             </div>
                             <h3 className="item__name">Бот #6</h3>
                             <div className="item__status">
@@ -85,14 +85,14 @@ const PopupOutput = () => {
                                 </div>
                             </div>
                             <button className="item__repeat">
-                                <img src="images/reload.svg" alt="Reload"/>
+                                <img src="../images/reload.svg" alt="Reload"/>
                                 <span>Повторить</span>
                             </button>
                             <button
                                 className="item__delete"
                                 onClick={e => deleteitem(e)}
                             >
-                                <img src="images/cross.svg" alt="Delete"/>
+                                <img src="../images/cross.svg" alt="Delete"/>
                             </button>
                         </div>
                         <div className="item__bottom">
@@ -101,7 +101,7 @@ const PopupOutput = () => {
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                     <div className="item__count">2</div>
                                 </li>
                             </ul>
@@ -110,21 +110,21 @@ const PopupOutput = () => {
                     <div className="popup-pull__item">
                         <div className="item__top">
                             <div className="item__photo">
-                                <img src="images/robot.png" alt="Robot"/>
+                                <img src="../images/robot.png" alt="Robot"/>
                             </div>
                             <h3 className="item__name">Бот #6</h3>
                             <div className="item__status">
-                                <img src="images/status-error.svg" alt="Fail"/>
+                                <img src="../images/status-error.svg" alt="Fail"/>
                             </div>
                             <button className="item__repeat item__repeat_active">
-                                <img src="images/reload.svg" alt="Reload"/>
+                                <img src="../images/reload.svg" alt="Reload"/>
                                 <span>Повторить</span>
                             </button>
                             <button
                                 className="item__delete"
                                 onClick={e => deleteitem(e)}
                             >
-                                <img src="images/cross.svg" alt="Delete"/>
+                                <img src="../images/cross.svg" alt="Delete"/>
                             </button>
                         </div>
                         <div className="item__bottom">
@@ -133,67 +133,67 @@ const PopupOutput = () => {
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                                 <li className="item__skin">
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                 </li>
                             </ul>
                         </div>
@@ -201,21 +201,21 @@ const PopupOutput = () => {
                     <div className="popup-pull__item">
                         <div className="item__top">
                             <div className="item__photo">
-                                <img src="images/robot.png" alt="Robot"/>
+                                <img src="../images/robot.png" alt="Robot"/>
                             </div>
                             <h3 className="item__name">Бот #6</h3>
                             <div className="item__status">
 
                             </div>
                             <button className="item__repeat item__repeat_active">
-                                <img src="images/reload.svg" alt="Reload"/>
+                                <img src="../images/reload.svg" alt="Reload"/>
                                 <span>Повторить</span>
                             </button>
                             <button
                                 className="item__delete"
                                 onClick={e => deleteitem(e)}
                             >
-                                <img src="images/cross.svg" alt="Delete"/>
+                                <img src="../images/cross.svg" alt="Delete"/>
                             </button>
                         </div>
                         <div className="item__bottom">
@@ -224,7 +224,7 @@ const PopupOutput = () => {
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                     <div className="item__count">2</div>
                                 </li>
                             </ul>
@@ -233,21 +233,21 @@ const PopupOutput = () => {
                     <div className="popup-pull__item">
                         <div className="item__top">
                             <div className="item__photo">
-                                <img src="images/robot.png" alt="Robot"/>
+                                <img src="../images/robot.png" alt="Robot"/>
                             </div>
                             <h3 className="item__name">Бот #6</h3>
                             <div className="item__status">
 
                             </div>
                             <button className="item__repeat item__repeat_active">
-                                <img src="images/reload.svg" alt="Reload"/>
+                                <img src="../images/reload.svg" alt="Reload"/>
                                 <span>Повторить</span>
                             </button>
                             <button
                                 className="item__delete"
                                 onClick={e => deleteitem(e)}
                             >
-                                <img src="images/cross.svg" alt="Delete"/>
+                                <img src="../images/cross.svg" alt="Delete"/>
                             </button>
                         </div>
                         <div className="item__bottom">
@@ -256,7 +256,7 @@ const PopupOutput = () => {
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                     <div className="item__count">2</div>
                                 </li>
                             </ul>
@@ -265,21 +265,21 @@ const PopupOutput = () => {
                     <div className="popup-pull__item">
                         <div className="item__top">
                             <div className="item__photo">
-                                <img src="images/robot.png" alt="Robot"/>
+                                <img src="../images/robot.png" alt="Robot"/>
                             </div>
                             <h3 className="item__name">Бот #6</h3>
                             <div className="item__status">
 
                             </div>
                             <button className="item__repeat item__repeat_active">
-                                <img src="images/reload.svg" alt="Reload"/>
+                                <img src="../images/reload.svg" alt="Reload"/>
                                 <span>Повторить</span>
                             </button>
                             <button
                                 className="item__delete"
                                 onClick={e => deleteitem(e)}
                             >
-                                <img src="images/cross.svg" alt="Delete"/>
+                                <img src="../images/cross.svg" alt="Delete"/>
                             </button>
                         </div>
                         <div className="item__bottom">
@@ -288,7 +288,7 @@ const PopupOutput = () => {
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                     <div className="item__count">2</div>
                                 </li>
                             </ul>
@@ -297,21 +297,21 @@ const PopupOutput = () => {
                     <div className="popup-pull__item">
                         <div className="item__top">
                             <div className="item__photo">
-                                <img src="images/robot.png" alt="Robot"/>
+                                <img src="../images/robot.png" alt="Robot"/>
                             </div>
                             <h3 className="item__name">Бот #6</h3>
                             <div className="item__status">
 
                             </div>
                             <button className="item__repeat item__repeat_active">
-                                <img src="images/reload.svg" alt="Reload"/>
+                                <img src="../images/reload.svg" alt="Reload"/>
                                 <span>Повторить</span>
                             </button>
                             <button
                                 className="item__delete"
                                 onClick={e => deleteitem(e)}
                             >
-                                <img src="images/cross.svg" alt="Delete"/>
+                                <img src="../images/cross.svg" alt="Delete"/>
                             </button>
                         </div>
                         <div className="item__bottom">
@@ -320,7 +320,7 @@ const PopupOutput = () => {
                                     <div className="clothes__cool clothes__cool_green">
 
                                     </div>
-                                    <img src="images/skin.png" alt="Skin"/>
+                                    <img src="../images/skin.png" alt="Skin"/>
                                     <div className="item__count">2</div>
                                 </li>
                             </ul>
@@ -334,7 +334,7 @@ const PopupOutput = () => {
                     </button>
                     <button className="steam">
                         <span>Через Steam</span>
-                        <img src="images/steam.svg" alt="Steam"/>
+                        <img src="../images/steam.svg" alt="Steam"/>
                     </button>
                 </div>
             </div>

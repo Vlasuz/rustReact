@@ -1,83 +1,73 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {airdropCountSleepers, airdropStepRights} from "../../../Redux/actions";
 
 const RightsAirdropSleepers = (props) => {
 
-    let chooseSleepers = function (e) {
-        for (let btn of document.querySelectorAll('.airdrop__sleepers li')) {
-            btn.querySelector('button').classList.remove('button_active')
-        }
+    const dispatch = useDispatch();
+    const costOneSleeper = 100;
+    const myCoins = 1000;
+    const sleeperNum = useSelector(state => state.reducerAirdropCountSleepers.sleepers)
 
-        props.states.setSleepersCount(+e.target.closest('li').querySelector('button').innerText);
+    let chooseSleepers = function (e, sleeper) {
+        dispatch(airdropCountSleepers(sleeper))
 
-        e.target.closest('li').querySelector('button').classList.add('button_active')
+        if (document.querySelector('.airdrop__sleepers .button_active'))
+            document.querySelector('.airdrop__sleepers .button_active').classList.remove('button_active')
 
-        props.states.setSleeperCost(+e.target.closest('li').querySelector('button').innerText * 100)
+        e.target.closest('li').classList.add('button_active')
     }
 
-    function countOfSleepers() {
-        let sleeper = 1
-        let sleepers = [];
-        while (sleeper <= 9) {
-            sleepers.push(
-                <li
-                    key={sleeper}
-                    onClick={chooseSleepers}
-                >
-                    <button>
-                        {sleeper}
-                    </button>
-                </li>
-            )
-            sleeper++
-        }
-        return sleepers
+
+    const sleepers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    const handleBuySleepers = () => {
+        // props.states.setCoins(prev => prev - props.states.sleeperCost);
+        dispatch(airdropStepRights(2))
     }
 
-    let isEnough = function () {
-
-        if (props.states.coins >= props.states.sleeperCost) {
-            return (
-                <button
-                    onClick={() => {
-                        props.states.setCoins(prev => prev - props.states.sleeperCost);
-                        return props.states.setNumSwitch(2)
-                    }}
-                    className="sleepers__buy"
-                >
-                    <span>Купить</span>
-                    <img src="images/header__coins.svg" alt="Coin"/>
-                    <span>{props.states.sleeperCost}</span>
-                </button>
-            )
-        } else {
-            return (
-                <button
-                    className="sleepers__buy"
-                >
-                    <span
-                        style={
-                            {color: '#777'}
-                        }
-                    >Недостаточно средств</span>
-                    <img src="images/header__coins.svg" alt="Coin"/>
-                    <span
-                        style={
-                            {color: '#777'}
-                        }
-                    >{props.states.sleeperCost}</span>
-                </button>
-            )
-        }
-
-    }
 
     return (
         <div className="airdrop__sleepers">
             <h3>Кол-во спальников:</h3>
             <ul>
-                {countOfSleepers()}
+                {
+                    sleepers.map((sleeper, sleeperNum) =>
+                        <li
+                            key={sleeperNum}
+                            onClick={e => chooseSleepers(e, sleeper)}>
+                            <button>
+                                {sleeper}
+                            </button>
+                        </li>
+                    )
+                }
             </ul>
-            {props.states.sleeperCost !== 0 && isEnough()}
+
+            {
+                sleeperNum === 0 ?
+                    <button className="sleepers__buy">
+                        <span style={{color: '#777'}}>Выберите кол-во спальников</span>
+                    </button>
+                    :
+                    myCoins >= props.states.sleeperCost ?
+                        <button onClick={handleBuySleepers} className="sleepers__buy">
+                            <span>Купить</span>
+                            <img src="../images/header__coins.svg" alt="Coin"/>
+                            <span>
+                                {sleeperNum * costOneSleeper}
+                            </span>
+                        </button>
+                        :
+                        <button className="sleepers__buy">
+                            <span style={{color: '#777'}}>Недостаточно средств</span>
+                            <img src="../images/header__coins.svg" alt="Coin"/>
+                            <span style={{color: '#777'}}>
+                                {sleeperNum * costOneSleeper}
+                            </span>
+                        </button>
+            }
+
         </div>
     );
 };

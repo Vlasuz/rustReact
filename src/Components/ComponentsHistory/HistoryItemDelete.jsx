@@ -24,7 +24,7 @@ const HistoryItemDelete = (props) => {
             className="item__delete"
             onClick={e => deleteItem(e)}
         >
-            <img src="images/cross.svg" alt="Coins"/>
+            <img src="../images/cross.svg" alt="Coins"/>
         </button>
     );
 };

@@ -6,20 +6,23 @@ const AsideMenu = (props) => {
     return (
         <ul className="aside__list">
             <AsideMenuItem
+                id={'1'}
                 className={"li_active"}
                 title={"Переработчик"}
                 linkTo={'pr'}
                 states={props.states}
             />
             <AsideMenuItem
-                states={props.states}
+                id={'2'}
                 title={"Хранилище"}
                 linkTo={'st'}
+                states={props.states}
             />
             <AsideMenuItem
-                states={props.states}
+                id={'3'}
                 title={"Магазин"}
                 linkTo={'sh'}
+                states={props.states}
             />
         </ul>
     );

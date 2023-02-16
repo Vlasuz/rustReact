@@ -106,7 +106,7 @@ const RightsAirdropMoveSleepers = (props) => {
         <div className="airdrop__move">
 
             <RightsAirdropSleepersList states={props.states}/>
-            <RightsAirdropSleepersButtons states={props.states}/>
+            <RightsAirdropSleepersButtons />
 
         </div>
     );

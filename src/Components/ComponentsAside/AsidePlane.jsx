@@ -1,8 +1,14 @@
 import React, {createElement, useEffect, useState} from 'react';
 import {NavLink} from "react-router-dom";
 import Timer from "../TimerForAirdrop/Timer";
+import {useDispatch, useSelector} from "react-redux";
+import {switcherRights} from "../../Redux/actions";
+import {reducerSwitcherRights} from "../../Redux/Reducers/reducerSwitcherRights";
 
 const AsidePlane = (props) => {
+
+    const dispatch = useDispatch()
+    const switcherRightsNow = useSelector(state => state.reducerSwitcherRights.data)
 
     const changeRightsBlock = (e) => {
 
@@ -10,7 +16,8 @@ const AsidePlane = (props) => {
         document.querySelector('.section-right__item').classList.add('section-right__item_hidden')
 
         setTimeout(() => {
-            props.states.setSwitcherRights('rights-airdrop')
+            dispatch(switcherRights('ra'))
+
             document.querySelector('.section-right__switcher').classList.add('section-right__switcher-airdrop')
         }, 300)
 
@@ -23,7 +30,7 @@ const AsidePlane = (props) => {
 
     useEffect(() => {
         document.querySelector('.aside__list li').classList.remove('active')
-        if(props.states.switcherRights === "rights-airdrop"){
+        if (switcherRightsNow === "ra") {
             document.querySelectorAll('.aside__list li').forEach(item => {
                 item.classList.remove('li_active')
             })
@@ -33,17 +40,13 @@ const AsidePlane = (props) => {
     })
 
     return (
-        <NavLink
-            to={props.to}
-            className={isActive => isActive ? 'aside__plane' : 'aside__plane aside__plane_active'}
-        >
+        <NavLink to={"/airdrop"} className={isActive => isActive ? 'aside__plane' : 'aside__plane aside__plane_active'}>
             <button
-                onClick={e => changeRightsBlock(e)}
-            >
-                <img src="images/plane.svg" alt="Plane"/>
+                onClick={e => changeRightsBlock(e)}>
+                <img src="../images/plane.svg" alt="Plane"/>
                 <Timer states={props.states}/>
                 <div className="timer-line">
-                    <img src="images/timer-line.svg" alt="Line"/>
+                    <img src="../images/timer-line.svg" alt="Line"/>
                     <div className="timer-line__line">
                         <div className="timer-line__line_done">
 
