@@ -1,20 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {airdropCountSleepers, airdropStepRights} from "../../../Redux/actions";
+import {buySleepers, setSleepers} from "../../../Redux/Reducers/reducerAirdropMySleepers";
+import {userBalanceRemoveCoins} from "../../../Redux/Reducers/reducerUserBalance";
+import Translate from "../../../Hooks/Translate";
+import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 
-const RightsAirdropSleepers = (props) => {
+const RightsAirdropSleepers = () => {
 
     const dispatch = useDispatch();
-    const costOneSleeper = 100;
-    const myCoins = 1000;
-    const sleeperNum = useSelector(state => state.reducerAirdropCountSleepers.sleepers)
+    const [countSleepers, setCountSleepers] = useState(0)
+    const balance = useSelector(state => state.reducerUserBalance.balance)
+    const settings = useSelector(state => state.reducerSettings.settings)
 
     let chooseSleepers = function (e, sleeper) {
-        dispatch(airdropCountSleepers(sleeper))
 
-        if (document.querySelector('.airdrop__sleepers .button_active'))
-            document.querySelector('.airdrop__sleepers .button_active').classList.remove('button_active')
+        setCountSleepers(sleeper)
 
+        document.querySelector('.airdrop__sleepers .button_active')?.classList.remove('button_active')
         e.target.closest('li').classList.add('button_active')
     }
 
@@ -22,14 +25,15 @@ const RightsAirdropSleepers = (props) => {
     const sleepers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const handleBuySleepers = () => {
-        // props.states.setCoins(prev => prev - props.states.sleeperCost);
         dispatch(airdropStepRights(2))
+        dispatch(buySleepers(countSleepers))
+        dispatch(setNotice("success_to_buy_bags"))
     }
 
 
     return (
         <div className="airdrop__sleepers">
-            <h3>Кол-во спальников:</h3>
+            <h3><Translate>count_of_bags</Translate>:</h3>
             <ul>
                 {
                     sleepers.map((sleeper, sleeperNum) =>
@@ -45,25 +49,31 @@ const RightsAirdropSleepers = (props) => {
             </ul>
 
             {
-                sleeperNum === 0 ?
+                countSleepers === 0 ?
                     <button className="sleepers__buy">
-                        <span style={{color: '#777'}}>Выберите кол-во спальников</span>
+                        <span style={{color: '#777'}}>
+                            <Translate>choose_count_of_bags</Translate>
+                        </span>
                     </button>
                     :
-                    myCoins >= props.states.sleeperCost ?
+                    balance >= countSleepers * settings.airdrop_bag_price ?
                         <button onClick={handleBuySleepers} className="sleepers__buy">
-                            <span>Купить</span>
+                            <span>
+                                <Translate>buy</Translate>
+                            </span>
                             <img src="../images/header__coins.svg" alt="Coin"/>
                             <span>
-                                {sleeperNum * costOneSleeper}
+                                {countSleepers * settings.airdrop_bag_price}
                             </span>
                         </button>
                         :
                         <button className="sleepers__buy">
-                            <span style={{color: '#777'}}>Недостаточно средств</span>
+                            <span style={{color: '#777'}}>
+                                <Translate>you_dont_have_enough_money_short</Translate>
+                            </span>
                             <img src="../images/header__coins.svg" alt="Coin"/>
                             <span style={{color: '#777'}}>
-                                {sleeperNum * costOneSleeper}
+                                {countSleepers * settings.airdrop_bag_price}
                             </span>
                         </button>
             }

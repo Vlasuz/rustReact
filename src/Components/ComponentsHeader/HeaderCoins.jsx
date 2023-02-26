@@ -1,8 +1,6 @@
 import React from 'react';
 import OpenPopup from "../../Hooks/OpenPopup";
 import {useSelector} from "react-redux";
-import {reducerUserData} from "../../Redux/Reducers/reducerUserData";
-import {reducerUserBalance} from "../../Redux/Reducers/reducerUserBalance";
 
 const HeaderCoins = () => {
 

@@ -27,11 +27,6 @@ const RightsShopRange = ({ setRangeValue }) => {
 
     return (
         <div className="postamat__range">
-            {/*<input*/}
-            {/*    type="range"*/}
-            {/*    value={valueRange}*/}
-            {/*    onChange={e => setValueRange(e.target.value)}*/}
-            {/*/>*/}
             {maxValue > 0 && <MultiRangeSlider
                 min={0}
                 max={maxValue}

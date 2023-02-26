@@ -8,7 +8,7 @@ import {reducerAirdropMembers} from "./reducerAirdropMembers";
 import {reducerAirdropTrajectoryPlane} from "./reducerAirdropTrajectoryPlane";
 import {reducerAirdropLengthPlane} from "./reducerAirdropLengthPlane";
 import {reducerAirdropStep} from "./reducerAirdropStep";
-import {reducerAirdropDropIsDown} from "./reducerAirdropDropIsDown";
+import {reducerAirdropDrop} from "./reducerAirdropDrop";
 import {reducerShopList} from "./reducerShopList";
 import {reducerShopListAdded} from "./reducerShopListAdded";
 import {reducerUserInventory} from "./reducerUserInventory";
@@ -28,6 +28,11 @@ import {reducerFightsAttack} from "./reducerFightsAttack";
 import {reducerFightsResponse} from "./reducerFightsResponse";
 import {reducerSettings} from "./reducerSettings";
 import {reducerFightsSkin} from "./reducerFightsSkin";
+import {reducerNotice} from "./reducerNotice";
+import {reducerSubmitAirdrop} from "./reducerSubmitAirdrop";
+import {reducerMySleepers} from "./reducerAirdropMySleepers";
+import {reducerAirdropSocket} from "./reducerAirdropSocket";
+import {reducerUserChat} from "./reducerUserChat";
 
 export const rootReducer = combineReducers({
     reducerSwitcherRights,
@@ -46,7 +51,7 @@ export const rootReducer = combineReducers({
     reducerAirdropTrajectoryPlane,
     reducerAirdropLengthPlane,
     reducerAirdropStep,
-    reducerAirdropDropIsDown,
+    reducerAirdropDrop,
     reducerShopList,
     reducerShopListAdded,
     reducerProcessorList,
@@ -59,4 +64,9 @@ export const rootReducer = combineReducers({
     reducerFightsAttack,
     reducerFightsSkin,
     reducerFightsResponse,
+    reducerNotice,
+    reducerSubmitAirdrop,
+    reducerMySleepers,
+    reducerAirdropSocket,
+    reducerUserChat,
 })

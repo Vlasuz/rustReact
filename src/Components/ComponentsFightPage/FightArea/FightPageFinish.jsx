@@ -5,14 +5,10 @@ import {logDOM} from "@testing-library/react";
 import {userBalanceAddCoins} from "../../../Redux/Reducers/reducerUserBalance";
 import {useNavigate} from "react-router-dom";
 import {userInventoryAdd, userInventoryRemove} from "../../../Redux/actions";
+import GlobalLink from "../../../Hooks/GlobalLink";
 
 const FightPageFinish = (props) => {
 
-    // const shieldOpponent = useSelector(state => state.reducerFightsDefense.array)
-    // const hitMeOpponents = useSelector(state => state.reducerFightsAttack.array)
-    // const [isWinLFT, setIsWinLFT] = useState(false)
-    // const [isWinRHT, setIsWinRHT] = useState(false)
-    // const [isFinishFight, setIsFinishFight] = useState(false)
     const userData = useSelector(state => state.reducerUserData.data)
     const response = useSelector(state => state.reducerFightsResponse.response)
     const dispatch = useDispatch()
@@ -22,33 +18,16 @@ const FightPageFinish = (props) => {
     const [isResults, setIsResults] = useState(false)
     const settings = useSelector(state => state.reducerSettings.settings);
 
-    const opponent = response.data.players[0].user.id === userData.id ? response.data.players[1] : response.data.players[0]
-    const myperson = response.data.players[0].user.id === userData.id ? response.data.players[0] : response.data.players[1]
+    console.log('finish', response)
+
+    const opponent = response.fight.first_player.user.id === userData.id ? response.fight.second_player : response.fight.first_player
+    const myperson = response.fight.first_player.user.id === userData.id ? response.fight.first_player : response.fight.second_player
 
 
     const countCoins = (player) => {
         let minusCoinsCount = +document.querySelector('.resources__coins_minus span')?.innerText
         let plusCoinsCount = +document.querySelector('.resources__coins_plus span')?.innerText;
 
-        // let minusCounts = setInterval(function () {
-        //     for (minusCoinsCount; minusCoinsCount >= 0;) {
-        //         if (document.querySelector('.resources__coins_minus span')){
-        //             document.querySelector('.resources__coins_minus span').innerText = minusCoinsCount--;
-        //         }
-        //         if(player[0].user.id !== userData.id) {
-        //             dispatch(userBalanceAddCoins(-1))
-        //         }
-        //         break;
-        //     }
-        //     if (minusCoinsCount === -1) {
-        //         if (document.querySelector('.resources__coins_minus')) document.querySelector('.resources__coins_minus').classList.add('resources__coins_none')
-        //         clearInterval(minusCounts)
-        //         dispatch(userBalanceAddCoins(1))
-        //         setTimeout(() => {
-        //             navigate('/')
-        //         }, 2000)
-        //     }
-        // }, 2)
 
         let coinsCounts = setInterval(function () {
 
@@ -88,24 +67,6 @@ const FightPageFinish = (props) => {
 
         }, 2)
 
-        // let plusCounts = setInterval(function () {
-        //     for (plusCoinsCount; plusCoinsCount >= 0;) {
-        //         if (document.querySelector('.resources__coins_plus span')){
-        //             document.querySelector('.resources__coins_plus span').innerText = plusCoinsCount++;
-        //         }
-        //         if(player[0].user.id === userData.id) {
-        //             dispatch(userBalanceAddCoins(1))
-        //         }
-        //         break;
-        //     }
-        //     if (minusCoinsCount === -1) {
-        //         clearInterval(plusCounts)
-        //         dispatch(userBalanceAddCoins(-1))
-        //         setTimeout(() => {
-        //             navigate('/')
-        //         }, 2000)
-        //     }
-        // }, 2)
     }
 
 
@@ -117,95 +78,46 @@ const FightPageFinish = (props) => {
             setOpponentWin(opponent.win)
         }, 3000)
 
-        if (response.data.result === 'end' && (opponetWin || mypersoneWin)) {
+        if (response.fight.result === 'end' && (opponetWin || mypersoneWin)) {
 
             document.querySelector('.section-fight__confetti_active').style.opacity = '1';
-            countCoins(response.data.players.filter(item => item.win))
+            countCoins(response.fight.players.filter(item => item.win))
 
         }
 
     }, [opponetWin, mypersoneWin])
 
 
-    // WHO WINNER
-    // let winnerLFT = true;
-    // let winnerRHT = true;
-
-    // hitMeOpponents.map((item, itemNum) => {
-    //     if (item !== '' && winnerLFT) {
-    //         if (item === props.states.fightsYourArmor[itemNum]) {
-    //             winnerLFT = true
-    //         } else {
-    //             winnerLFT = false
-    //         }
-    //     }
-    // })
-
-    // props.states.arrayForHit.map((item, itemNum) => {
-    //     if (item !== '' && winnerRHT) {
-    //         if (item === shieldOpponent[itemNum]) {
-    //             winnerRHT = true
-    //         } else {
-    //             winnerRHT = false
-    //         }
-    //     }
-    // })
-
-
-    // setTimeout(() => {
-    //     if (winnerLFT !== winnerRHT) {
+    // const opponentDefense = () => {
+    //     const armorHead = opponent.user.defense.head ? "x" : "i"
+    //     const armorBody = opponent.user.defense.body ? "x" : "i"
+    //     const armorLegs = opponent.user.defense.legs ? "x" : "i"
     //
-    //         setIsFinishFight(true)
-    //
-    //         if (winnerLFT) {
-    //             setIsWinLFT(true)
-    //         } else {
-    //             setIsWinLFT(false)
-    //         }
-    //
-    //         if (winnerRHT) {
-    //             setIsWinRHT(true)
-    //         } else {
-    //             setIsWinRHT(false)
-    //         }
-    //
+    //     if (opponent?.user?.skin?.gallery) {
+    //         let skinSrc = "https://"+GlobalLink()+"/" + opponent.user.skin.gallery[armorHead + armorBody + armorLegs]
+    //         return <img src={skinSrc} alt="Persone"/>
     //     } else {
-    //         // dispatch(fightRoomStatus('fighting'))
+    //         let skinSrc = "https://"+GlobalLink()+"/" + settings.default_fight_skin.gallery[armorHead + armorBody + armorLegs]
+    //         return <img src={skinSrc} alt="Persone"/>
     //     }
     //
-    //     if (document.querySelector('.section-fight__confetti_active')) document.querySelector('.section-fight__confetti_active').style.opacity = '1';
+    // }
+    // const mypersonDefense = () => {
+    //     const armorHead = myperson.user.defense.head ? "x" : "i"
+    //     const armorBody = myperson.user.defense.body ? "x" : "i"
+    //     const armorLegs = myperson.user.defense.legs ? "x" : "i"
     //
-    // }, 3000)
+    //
+    //     if(myperson?.user?.skin?.gallery){
+    //         let skinSrc = "https://"+GlobalLink()+"/" + myperson.user.skin.gallery[armorHead + armorBody + armorLegs]
+    //         return <img src={skinSrc} alt="Persone"/>
+    //     } else {
+    //         let skinSrc = "https://"+GlobalLink()+"/" + settings.default_fight_skin.gallery[armorHead + armorBody + armorLegs]
+    //         return <img src={skinSrc} alt="Persone"/>
+    //     }
+    // }
 
-    // WHO WINNER
-
-
-    const opponentDefense = () => {
-        const armorHead = opponent.user.defense.head ? "x" : "i"
-        const armorBody = opponent.user.defense.body ? "x" : "i"
-        const armorLegs = opponent.user.defense.legs ? "x" : "i"
-
-        if (opponent?.user?.skin?.gallery) {
-            return <img src={"https://rust.onefut.net/" + opponent.user.skin.gallery[armorHead + armorBody + armorLegs]}
-                        alt="Persone"/>
-        } else {
-            return <img src={"https://rust.onefut.net/" + settings.default_fight_skin.gallery[armorHead + armorBody + armorLegs]} alt="Persone"/>
-        }
-
-    }
-    const mypersonDefense = () => {
-        const armorHead = myperson.user.defense.head ? "x" : "i"
-        const armorBody = myperson.user.defense.body ? "x" : "i"
-        const armorLegs = myperson.user.defense.legs ? "x" : "i"
-
-
-        if(myperson?.user?.skin?.gallery){
-            return <img src={"https://rust.onefut.net/" + myperson.user.skin.gallery[armorHead + armorBody + armorLegs]}
-                        alt="Persone"/>
-        } else {
-            return <img src={"https://rust.onefut.net/" + settings.default_fight_skin.gallery[armorHead + armorBody + armorLegs]} alt="Persone"/>
-        }
-    }
+    console.log(opponent, myperson)
 
     return (
         <section className="section-fight">
@@ -214,15 +126,14 @@ const FightPageFinish = (props) => {
                     className={"section-fight__confetti " + (isResults && (mypersoneWin ? "section-fight__confetti_active" : ""))}>
                     <img src="../images/confetti-fight.gif" alt="Confetti"/>
                 </div>
-                {props.roomData.fight_players.length === 2 && <FightAreaTop
-                    userInfo={props.roomData.fight_players[0].user.id === userData.id ? props.roomData.fight_players[0] : props.roomData.fight_players[1]}/>}
+                {<FightAreaTop userInfo={response?.fight?.first_player?.user.id === userData.id ? response?.fight.first_player : response?.fight.second_player}/>}
                 <div className="section-fight__persone">
                     <div className="persone__attacked">
                         <div
                             className={
-                                (opponent.user.attack.head ? "attacked__bullet_active" : "") +
+                                (opponent.attack.includes('head') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((opponent.user.attack.head === myperson.user.defense.head) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent.attack.includes('head') === myperson.defense.includes('head')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -232,9 +143,9 @@ const FightPageFinish = (props) => {
                         </div>
                         <div
                             className={
-                                (opponent.user.attack.body ? "attacked__bullet_active" : "") +
+                                (opponent.attack.includes('body') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((opponent.user.attack.body === myperson.user.defense.body) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent.attack.includes('body') === myperson.defense.includes('body')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -244,9 +155,9 @@ const FightPageFinish = (props) => {
                         </div>
                         <div
                             className={
-                                (opponent.user.attack.legs ? "attacked__bullet_active" : "") +
+                                (opponent.attack.includes('legs') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((opponent.user.attack.legs === myperson.user.defense.legs) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent.attack.includes('legs') === myperson.defense.includes('legs')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -256,14 +167,14 @@ const FightPageFinish = (props) => {
                         </div>
                     </div>
                     <div className="persone__start">
-                        {mypersonDefense()}
+                        {/*{mypersonDefense()}*/}
                     </div>
                 </div>
                 <div className="section-fight__bottom section-fight__bottom_finish">
                     <div
                         className={"bottom__status " + (isResults && (mypersoneWin ? "bottom__status_winner" : "bottom__status_looser"))}
                     >
-                        {(isResults && response.data.result === 'end') &&
+                        {(isResults && response.fight.result === 'end') &&
                             <img
                                 src={"../images/" + (isResults && (mypersoneWin ? "victory-cup.svg" : "fight-looser.svg"))}
                                 alt="Win"/>}
@@ -347,15 +258,14 @@ const FightPageFinish = (props) => {
                     className={"section-fight__confetti " + (isResults && (opponetWin ? "section-fight__confetti_active" : ""))}>
                     <img src="../images/confetti-fight.gif" alt="Confetti"/>
                 </div>
-                {props.roomData.fight_players.length === 2 && <FightAreaTop
-                    userInfo={props.roomData.fight_players[0].user.id !== userData.id ? props.roomData.fight_players[0] : props.roomData.fight_players[1]}/>}
+                {<FightAreaTop userInfo={response?.fight?.first_player?.user.id !== userData.id ? response?.fight.first_player : response?.fight.second_player}/>}
                 <div className="section-fight__persone section-fight__persone-hit">
                     <div className="persone__attacked">
                         <div
                             className={
-                                (myperson.user.attack.head ? "attacked__bullet_active" : "") +
+                                (myperson.attack.includes('head') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((opponent.user.defense.head === myperson.user.attack.head) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent.defense.includes('head') === myperson.attack.includes('head')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -363,9 +273,9 @@ const FightPageFinish = (props) => {
                         </div>
                         <div
                             className={
-                                (myperson.user.attack.body ? "attacked__bullet_active" : "") +
+                                (myperson.attack.includes('body') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-body" +
-                                ((opponent.user.defense.body === myperson.user.attack.body) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent.defense.includes('body') === myperson.attack.includes('body')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -373,9 +283,9 @@ const FightPageFinish = (props) => {
                         </div>
                         <div
                             className={
-                                (myperson.user.attack.legs ? "attacked__bullet_active" : "") +
+                                (myperson.attack.includes('legs') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-legs" +
-                                ((opponent.user.defense.legs === myperson.user.attack.legs) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent.defense.includes('legs') === myperson.attack.includes('legs')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -388,13 +298,13 @@ const FightPageFinish = (props) => {
                         <img className="legs-hit" src="../images/legs-hit.png" alt="Photo" width="300"/>
                     </div>
                     <div className="persone__start">
-                        {opponentDefense()}
+                        {/*{opponentDefense()}*/}
                     </div>
                 </div>
                 <div className="section-fight__bottom section-fight__bottom_finish">
                     <div
                         className={"bottom__status " + (isResults && (opponetWin ? "bottom__status_winner" : "bottom__status_looser"))}>
-                        {(isResults && response.data.result === 'end') &&
+                        {(isResults && response.fight.result === 'end') &&
                             <img
                                 src={"../images/" + (isResults && (opponetWin ? "victory-cup.svg" : "fight-looser.svg"))}
                                 alt="Win"/>}

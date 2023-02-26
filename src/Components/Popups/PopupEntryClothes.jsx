@@ -8,13 +8,15 @@ import {setSocket} from "../../Redux/Reducers/reducerFightsSocketCreate";
 import {setResponse} from "../../Redux/Reducers/reducerFightsResponse";
 import {userInventoryRemove} from "../../Redux/actions";
 import {logDOM} from "@testing-library/react";
+import GlobalLink from "../../Hooks/GlobalLink";
+import {getCookie} from "../../Hooks/GetCookies";
+import Translate from "../../Hooks/Translate";
 
 const PopupEntryClothes = (props) => {
 
     const userInventory = useSelector(state => state.reducerUserInventory.list)
     const [summaryPrice, setSummaryPrice] = useState(0)
     const [listOnZone, setListOnZone] = useState([])
-    const userData = useSelector(state => state.reducerUserData.data)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -49,26 +51,18 @@ const PopupEntryClothes = (props) => {
         })
     }
 
-
-    function getCookie(name) {
-        let matches = document.cookie.match(new RegExp(
-            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-        ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
-
     const submitToGame = (e) => {
         e.preventDefault();
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.post(`https://rust.onefut.net/api/fight/room/join?game_id=${props.data.id}`, {
+        axios.post("https://" + GlobalLink() + `/api/fight/room/join?game_id=${props.data.id}`, {
             "items": listOnZone.map(item => item.id)
         }).then(res => {
 
             // console.log(listOnZone)
             dispatch(userInventoryRemove(listOnZone))
 
-            const sk = new WebSocket('wss://rust.onefut.net/ws/api/fight/game/' + props.data.id + "/")
+            const sk = new WebSocket("wss://" + GlobalLink() + '/ws/api/fight/game/' + props.data.id + "/")
             sk.onopen = function () {
                 sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
                 dispatch(setSocket(sk))
@@ -214,7 +208,9 @@ const PopupEntryClothes = (props) => {
 
             <div className="popup__content">
                 <div className="popup__content_lft">
-                    <h2>Новая комната</h2>
+                    <h2>
+                        <Translate>new_room</Translate>
+                    </h2>
 
                     <div className="popup__cross popup__close" onClick={closePopup}>
                         <img src="../images/cross.svg" alt="Close"/>
@@ -223,7 +219,9 @@ const PopupEntryClothes = (props) => {
                     <div className="popup__content-item popup__content-item_active popup__content-item-clothes">
                         <div className="popup-new-room__zone">
                             {
-                                !listOnZone.length && <p>Перетащите сюда скины для ставки</p>
+                                !listOnZone.length && <p>
+                                    <Translate>move_here_item_for_fight</Translate>
+                                </p>
                             }
                             <ul>
                                 {
@@ -260,7 +258,9 @@ const PopupEntryClothes = (props) => {
                         <form onSubmit={submitToGame}>
                             <div className="inputs">
                                 <div className="inputs__item inputs__item-sum">
-                                    <p>Сумма ставки:</p>
+                                    <p>
+                                        <Translate>summer_bid</Translate>
+                                    </p>
                                     <div className="input">
                                         <img src="../images/header__coins.svg" alt="Ico"/>
                                         <span className="input__sum">
@@ -269,7 +269,9 @@ const PopupEntryClothes = (props) => {
                                     </div>
                                 </div>
                                 <div className="inputs__item inputs__item-opp">
-                                    <p>Оппонент:</p>
+                                    <p>
+                                        <Translate>opponent</Translate>
+                                    </p>
                                     <div className="input">
                                         <div className="input__photo">
                                             <img src={props.data.fight_players[0].user.avatar} alt="User"/>
@@ -283,33 +285,39 @@ const PopupEntryClothes = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <button disabled={summaryPrice < props.price}>Внести ставку</button>
+                            <button disabled={summaryPrice < props.price}>
+                                <Translate>place_a_bet</Translate>
+                            </button>
                         </form>
                     </div>
                 </div>
                 <div className="popup__content_rht">
-                    <h2>Инвентарь сайта</h2>
+                    <h2>
+                        <Translate>inventory_site</Translate>
+                    </h2>
 
                     <div className="popup__cross popup__close" onClick={closePopup}>
                         <img src="../images/cross.svg" alt="Close"/>
                     </div>
 
                     <div className="popup-new-room__sort">
-                        <span>Сортировка</span>
+                        <span>
+                            <Translate>sorts</Translate>
+                        </span>
                         <div className={"select" + (isOpenSelect ? " select_open" : "")}>
                             <div className="select__head" onClick={e => setIsOpenSelect(prev => !prev)}>
                                 {
                                     sortBy === 'price' ?
-                                        <span>По цене</span> :
-                                        <span>По раритетности</span>
+                                        <span><Translate>sort_by_price</Translate></span> :
+                                        <span><Translate>sort_by_rarity</Translate></span>
                                 }
                             </div>
                             <div className="select__body">
                                 <div data-select={'price'} onClick={e => setSortBy('price')} className="select__item">
-                                    По цене
+                                    <Translate>sort_by_price</Translate>
                                 </div>
                                 <div data-select={'rarity'} onClick={e => setSortBy('rarity')} className="select__item">
-                                    По раритетности
+                                    <Translate>sort_by_rarity</Translate>
                                 </div>
                             </div>
                         </div>
@@ -318,40 +326,40 @@ const PopupEntryClothes = (props) => {
                         {
                             userInventory
                                 ?.sort((a, b) => {
-                                    if(sortBy === 'price') {
+                                    if (sortBy === 'price') {
                                         return a.price.value - b.price.value
-                                    } else if(sortBy === 'rarity') {
+                                    } else if (sortBy === 'rarity') {
                                         return a.rarity.color - b.rarity.color
                                     }
                                 })
                                 .map(item =>
-                                <li key={item.id} data-id={item.id} className="popup-new-room__item"
-                                    onMouseDown={e => itemMove(e, item)}>
-                                    <div className={
-                                        item.rarity.color === "3" ? "clothes__cool clothes__cool_red" :
-                                            item.rarity.color === "2" ? "clothes__cool clothes__cool_blue" :
-                                                item.rarity.color === "1" ? "clothes__cool clothes__cool_green" :
-                                                    "clothes__cool clothes__cool_grey"
-                                    }>
+                                    <li key={item.id} data-id={item.id} className="popup-new-room__item"
+                                        onMouseDown={e => itemMove(e, item)}>
+                                        <div className={
+                                            item.rarity.color === "3" ? "clothes__cool clothes__cool_red" :
+                                                item.rarity.color === "2" ? "clothes__cool clothes__cool_blue" :
+                                                    item.rarity.color === "1" ? "clothes__cool clothes__cool_green" :
+                                                        "clothes__cool clothes__cool_grey"
+                                        }>
 
-                                    </div>
-                                    <div className="li__delete">
-                                        <img src="../images/cross.svg" alt="Close"/>
-                                    </div>
-                                    <div className="item__check">
-                                        <img src="../images/green-check-sq.svg" alt="Check"/>
-                                    </div>
-                                    <div className="item__photo">
-                                        <img src={item.image} alt="Photo"/>
-                                    </div>
-                                    <div className="item__price">
-                                        <img src="../images/header__coins.svg" alt="Coin"/>
-                                        <span>
+                                        </div>
+                                        <div className="li__delete">
+                                            <img src="../images/cross.svg" alt="Close"/>
+                                        </div>
+                                        <div className="item__check">
+                                            <img src="../images/green-check-sq.svg" alt="Check"/>
+                                        </div>
+                                        <div className="item__photo">
+                                            <img src={item.image} alt="Photo"/>
+                                        </div>
+                                        <div className="item__price">
+                                            <img src="../images/header__coins.svg" alt="Coin"/>
+                                            <span>
                                             {item.price.value}
                                         </span>
-                                    </div>
-                                </li>
-                            )
+                                        </div>
+                                    </li>
+                                )
                         }
                     </ul>
                 </div>

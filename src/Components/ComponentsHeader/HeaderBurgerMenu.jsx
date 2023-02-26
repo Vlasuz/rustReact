@@ -1,11 +1,12 @@
-import React from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import React, {useState} from 'react';
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import states from "../../States";
 import {useDispatch, useSelector} from "react-redux";
 import {authAction, userData, userInventoryDelete} from "../../Redux/actions";
 import {reducerUserData} from "../../Redux/Reducers/reducerUserData";
 import {setSession} from "../../Redux/Reducers/reducerSession";
 import {userBalanceSetCoins} from "../../Redux/Reducers/reducerUserBalance";
+import Translate from "../../Hooks/Translate";
 
 const HeaderBurgerMenu = () => {
 
@@ -14,10 +15,14 @@ const HeaderBurgerMenu = () => {
     const balance = useSelector(state => state.reducerUserBalance.balance)
     const navigate = useNavigate()
     const socials = useSelector(state => state.reducerSettings.settings)
+    const [isOpenPopup, setIsOpenPopup] = useState(false)
 
-    const burgerClick = () => {
-        document.querySelector('.burger__menu').classList.toggle('burger__menu_active')
-    }
+
+    document.addEventListener('click', function (e) {
+        if (e.target.closest(".burger__menu") === null && e.target.closest(".header__burger") === null) {
+            setIsOpenPopup(false)
+        }
+    })
 
     const handleLogout = () => {
         dispatch(authAction(false))
@@ -27,28 +32,26 @@ const HeaderBurgerMenu = () => {
         dispatch(userBalanceSetCoins(0))
 
         navigate('/')
-
         document.cookie = 'access_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
     }
 
     return (
         <>
             <button
-                className="header__burger header__burger_notice"
-                onClick={burgerClick}
-            >
+                className="header__burger"
+                onClick={e => setIsOpenPopup(prev => !prev)}>
                 <img src="../images/burger.svg"/>
             </button>
-            <div className="burger__menu">
+            <div className={"burger__menu" + (isOpenPopup ? " burger__menu_active" : "")}>
                 <ul>
                     <li>
-                        <Link to={"/history"}>
-                            История баланса
-                        </Link>
+                        <NavLink to={"/history"}>
+                            <Translate>text_history_balance</Translate>
+                        </NavLink>
                     </li>
                     <li>
                         <button onClick={handleLogout}>
-                            Выйти с сайта
+                            <Translate>exit_from_site</Translate>
                         </button>
                     </li>
                 </ul>
@@ -63,7 +66,9 @@ const HeaderBurgerMenu = () => {
                 </div>
                 <button className="header__support">
                     <img src="../images/support.svg" alt="Ico"/>
-                    <span>Поддержка</span>
+                    <span>
+                        <Translate>header_support</Translate>
+                    </span>
                 </button>
                 <ul className="header__socials">
                     <li>

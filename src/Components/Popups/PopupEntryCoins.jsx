@@ -9,6 +9,9 @@ import {setSocket} from "../../Redux/Reducers/reducerFightsSocketCreate";
 import {setDuel, setResponse} from "../../Redux/Reducers/reducerFightsResponse";
 import {logDOM} from "@testing-library/react";
 import {setSkin} from "../../Redux/Reducers/reducerFightsSkin";
+import GlobalLink from "../../Hooks/GlobalLink";
+import Translate from "../../Hooks/Translate";
+import {getCookie} from "../../Hooks/GetCookies";
 
 const PopupEntryCoins = ({ data }) => {
 
@@ -18,21 +21,14 @@ const PopupEntryCoins = ({ data }) => {
     const dispatch = useDispatch()
     const settings = useSelector(state => state.reducerSettings.settings);
 
-    function getCookie(name) {
-        let matches = document.cookie.match(new RegExp(
-            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-        ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
-
     const handleStart = (e) => {
         e.preventDefault()
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.post(`https://rust.onefut.net/api/fight/room/join?game_id=${data.id}`, {
-            "coins": data.fight_players[0].coins
+        axios.post("https://"+GlobalLink()+`/api/fight/room/join?game_id=${data.id}`, {
+            "coins": data.first_player?.coins
         }).then(res => {
-            const sk = new WebSocket('wss://rust.onefut.net/ws/api/fight/game/' + data.id + "/")
+            const sk = new WebSocket("wss://"+GlobalLink()+'/ws/api/fight/game/' + data.id + "/")
             sk.onopen = function () {
                 sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
                 dispatch(setSocket(sk))
@@ -40,6 +36,8 @@ const PopupEntryCoins = ({ data }) => {
             sk.onmessage = e => {
                 let message = JSON.parse(JSON.parse(e.data))
                 dispatch(setResponse(message))
+
+                console.log('Entry coins', message)
 
                 switch(message.type){
                     case 'player_join_event':
@@ -57,33 +55,38 @@ const PopupEntryCoins = ({ data }) => {
         <div className={"popup popup-entry-coins popup-entry-coins-"+data.id}>
             <PopupCloseBackground />
             <div className="popup__content">
-                <h2>Комната</h2>
-                <p className="subtitle">Тип ставки: <span>Валютой</span>
+                <h2>
+                    <Translate>room</Translate>
+                </h2>
+                <p className="subtitle"><Translate>type_fight</Translate> <span><Translate>type_fight_coins</Translate></span>
                 </p>
                 <PopupCloseCross />
                 <div className="popup-entry-coins__info">
-                    <p>Ставка в этой комнате</p>
+                    <p>
+                        <Translate>bet_in_this_room</Translate>
+                    </p>
                     <div className="info__coins">
                         <img src="../images/header__coins.svg" alt="Ico"/>
                         <span>
                             {
-                                data.fight_players[0].coins
+                                data.first_player?.coins
                             }
                         </span>
                     </div>
                 </div>
 
                 {
-                    (!!Object.keys(userData).length && userData.id !== data.fight_players[0].user.id) && <>
+                    (!!Object.keys(userData).length && userData.id !== data.first_player?.user.id) && <>
                         {
-                            data.fight_players[0].coins <= balance ?
+                            data.first_player?.coins <= balance ?
                                 <form onSubmit={handleStart}>
                                     <button>
-                                        Внести ставку
+                                        <Translate>place_a_bet</Translate>
                                     </button>
                                 </form> :
-
-                                <button>Недостаточно средств</button>
+                                <button className={'grey'}>
+                                    <Translate>you_dont_have_enough_money_short</Translate>
+                                </button>
                         }
                     </>
                 }

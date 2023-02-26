@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {logDOM} from "@testing-library/react";
-import {userBalanceAddCoins} from "../../../Redux/Reducers/reducerUserBalance";
-import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const FightAreaTop = ({userInfo}) => {
 
@@ -22,6 +19,8 @@ const FightAreaTop = ({userInfo}) => {
 
     }, [response])
 
+    console.log("111", userInfo)
+
     return (
         <div className="section-fight__top">
 
@@ -30,9 +29,7 @@ const FightAreaTop = ({userInfo}) => {
                     <img src={userInfo.user.avatar} alt="User"/>
                 </div>
                 <div className="user__name">
-                    {
-                        userInfo.user.name
-                    }
+                    {userInfo.user.name}
                 </div>
             </div>
 
@@ -72,9 +69,7 @@ const FightAreaTop = ({userInfo}) => {
                 <div
                     className={"resources__coins " + (Object.keys(isEnded).length && (isEnded[0].user.id === userInfo.user.id ? " resources__coins_plus" : " resources__coins_minus"))}>
                     <img src="../images/header__coins.svg" alt="Ico"/>
-                    <span>
-                                {userInfo.coins}
-                            </span>
+                    <span>{userInfo.coins}</span>
                 </div>
 
 

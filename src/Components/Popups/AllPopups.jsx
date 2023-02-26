@@ -15,6 +15,7 @@ import PopupOutputSearch from "./PopupOutputItems/PopupOutputSearch";
 import PopupOutput from "./PopupOutputItems/PopupOutput";
 import States from "../../States";
 import PopupLogin from "./PopupAuth";
+import PopupChangeStatus from "./PopupChangeStatus";
 
 const AllPopups = (props) => {
 

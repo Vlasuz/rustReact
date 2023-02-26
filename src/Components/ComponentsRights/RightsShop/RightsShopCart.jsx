@@ -5,33 +5,28 @@ import {shopList, shopListAdd, shopListRemove, userInventoryAdd} from "../../../
 import axios from "axios";
 import {userBalanceAddCoins, userBalanceSetCoins} from "../../../Redux/Reducers/reducerUserBalance";
 import {Trans, useTranslation} from "react-i18next";
+import {getCookie} from "../../../Hooks/GetCookies";
+import GlobalLink from "../../../Hooks/GlobalLink";
+import Translate from "../../../Hooks/Translate";
 
 const RightsShopCart = (props) => {
-    const {t} = useTranslation();
 
     const listAdded = useSelector(state => state.reducerShopListAdded)
     const dispatch = useDispatch()
     const balance = useSelector(state => state.reducerUserBalance.balance)
-
-    function getCookie(name) {
-        let matches = document.cookie.match(new RegExp(
-            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-        ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
 
     const buyItemsButton = (e) => {
         dispatch(userInventoryAdd(listAdded.list))
         dispatch(shopListRemove('all'))
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.post('https://rust.onefut.net/api/basket/buy').then(res => {
+        axios.post("https://"+GlobalLink()+'/api/basket/buy').then(res => {
             dispatch(userBalanceSetCoins(res.data.balance))
             props.setIsOpenCart(false)
             props.setIsOpenThanks(true)
 
 
-            axios.get('https://rust.onefut.net/api/items/shop/').then(res => {
+            axios.get("https://"+GlobalLink()+'/api/items/shop/').then(res => {
                 dispatch(shopList(res.data))
             })
         })
@@ -39,13 +34,13 @@ const RightsShopCart = (props) => {
     }
 
     useEffect(() => {
-        axios.get('https://rust.onefut.net/api/basket/').then(res => dispatch(shopListAdd(res.data)))
+        axios.get("https://"+GlobalLink()+'/api/basket/').then(res => dispatch(shopListAdd(res.data)))
     }, [])
 
     return (
         <div className={props.isOpenCart ? "section-right__cart section-right__cart_active" : "section-right__cart"}>
             <h2>
-                <Trans t={t}>cart</Trans>
+                <Translate>cart</Translate>
             </h2>
             <div className="cart__list">
                 {
@@ -64,7 +59,7 @@ const RightsShopCart = (props) => {
                 >
                     <img src="../images/arr-td.svg" alt="Ico"/>
                     <span>
-                        <Trans t={t}>back</Trans>
+                        <Translate>back</Translate>
                     </span>
                 </button>
                 {
@@ -73,12 +68,12 @@ const RightsShopCart = (props) => {
                             className={"buttons__buy"}
                             onClick={buyItemsButton}>
                             <span>
-                                <Trans t={t}>buy</Trans>
+                                <Translate>buy</Translate>
                             </span>
                         </button> :
                         <button className={"buttons__back"} disabled>
                             <span>
-                                <Trans t={t}>buy</Trans>
+                                <Translate>buy</Translate>
                             </span>
                         </button>
                 }

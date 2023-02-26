@@ -1,7 +1,7 @@
 import {AIRDROP_STEP} from "../types";
 
 const initialState = {
-    step: 1
+    step: "waiting"
 }
 
 export const reducerAirdropStep = (state = initialState, action) => {

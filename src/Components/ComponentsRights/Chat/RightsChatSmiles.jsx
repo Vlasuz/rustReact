@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {useState} from "react";
 import axios from "axios";
+import GlobalLink from "../../../Hooks/GlobalLink";
+import {getCookie} from "../../../Hooks/GetCookies";
 
 const RightsChatSmiles = ({ websocket }) => {
 
@@ -20,14 +22,15 @@ const RightsChatSmiles = ({ websocket }) => {
     const sendSmile = (e, item) => {
 
         document.querySelector('.section-right__smiles_active').classList.remove('section-right__smiles_active')
-        websocket.send(JSON.stringify({"type": "send_message", "data": {"message": `https://rust.onefut.net/${item.image}`}}));
+        websocket.send(JSON.stringify({"type": "send_message", "data": {"message": "https://"+GlobalLink()+`/${item.image}`}}));
 
     }
 
 
     useEffect(() => {
 
-        axios.get('https://rust.onefut.net/api/chat/stickers/').then(res => setStickers(res.data))
+        axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
+        axios.get("https://"+GlobalLink()+'/api/chat/stickers/').then(res => setStickers(res.data))
 
     }, [])
 
@@ -40,7 +43,7 @@ const RightsChatSmiles = ({ websocket }) => {
                             stickers.length && stickers[stickerOrder].stickers.map((item, itemNum) =>
                                 <li key={item.id}>
                                     <button onClick={e => sendSmile(e, item)}>
-                                        <img src={"https://rust.onefut.net/" + item.image} alt="Smile"/>
+                                        <img src={"https://"+GlobalLink()+"/" + item.image} alt="Smile"/>
                                     </button>
                                 </li>
                             )

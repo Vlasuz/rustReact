@@ -11,30 +11,46 @@ import {chatAddMessages, chatAddOnline, chatDeleteMessages} from "../../../Redux
 import {setSession} from "../../../Redux/Reducers/reducerSession";
 import {logDOM} from "@testing-library/react";
 import useWebSocket from "react-use-websocket";
+import GlobalLink from "../../../Hooks/GlobalLink";
+import Translate from "../../../Hooks/Translate";
+import {getCookie} from "../../../Hooks/GetCookies";
+import {
+    actionBan,
+    actionBlock,
+    actionMutedAdd,
+    actionMutedRemove,
+    actionMutedSet
+} from "../../../Redux/Reducers/reducerUserChat";
 
 
-const websocket = new WebSocket(`wss://rust.onefut.net/ws/api/chat/`)
+const websocket = new WebSocket("wss://"+GlobalLink()+`/ws/api/chat/`)
 websocket.onopen = () => {
+    websocket.send(JSON.stringify({"type": "auth", "token": `${getCookie('access_token')}`}));
 }
 const RightsChat = () => {
 
 
     const messages = useSelector(state => state.reducerChat.messages)
     const dispatch = useDispatch()
-    const userData = useSelector(state => state.reducerUserData.data)
-    const [mutedUser, setMutedUser] = useState({})
-    const [bannedUser, setBannedUser] = useState(false)
-    const [blockedUser, setBlockedUser] = useState(false)
-    const [isNoticeActive, setIsNoticeActive] = useState(false)
+    const session = useSelector(state => state.reducerSession.session)
+    const userChat = useSelector(state => state.reducerUserChat)
 
 
     useEffect(() => {
 
-        !messages.length && axios.get('https://rust.onefut.net/api/chat/get/?amount=100').then(res => {
+        !messages.length && axios.get("https://"+GlobalLink()+'/api/chat/get/?amount=100').then(res => {
             dispatch(chatAddMessages(res.data.reverse()))
         })
 
     }, [])
+
+    useEffect(() => {
+        dispatch(actionBan(session?.ban_chat_permanent))
+
+        dispatch(actionBlock(!!session?.ban_chat_date?.length))
+
+        dispatch(actionMutedSet(session?.muted_users))
+    }, [session])
 
 
     useEffect(() => {
@@ -45,26 +61,6 @@ const RightsChat = () => {
         });
     }, [messages])
 
-    function getCookie(name) {
-        let matches = document.cookie.match(new RegExp(
-            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-        ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
-
-
-    useEffect(() => {
-        if (Object.keys(userData).length) {
-            axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-            axios.post('https://rust.onefut.net/api/auth/session/').then(res => {
-                dispatch(setSession(res.data))
-                websocket.send(JSON.stringify({"type": "auth", "token": `${getCookie('access_token')}`}));
-
-                setBannedUser(res.data.ban_chat_permanent)
-                setBlockedUser(res.data.ban_chat_date?.length)
-            })
-        }
-    }, [userData])
 
 
     websocket.onmessage = (e) => {
@@ -81,13 +77,20 @@ const RightsChat = () => {
                 dispatch(chatDeleteMessages(JSON.parse(JSON.parse(e.data)).data.id))
                 break;
             case 'mute_user':
-                setMutedUser(data_value.data)
+                dispatch(actionMutedAdd(data_value.data))
+                break;
+            case 'unmute_user':
+                dispatch(actionMutedRemove(data_value.data))
                 break;
             case 'ban_user':
-                setBannedUser(data_value.data.id === userData.id)
+                if(data_value.data.id === session.id) dispatch(actionBan(true))
+                break;
+            case 'unban_user':
+                if(data_value.data.id === session.id) dispatch(actionBan(false))
+                if(data_value.data.id === session.id) dispatch(actionBlock(false))
                 break;
             case 'block_user':
-                setBlockedUser(data_value.data.id === userData.id)
+                if(data_value.data.id === session.id) dispatch(actionBlock(true))
                 break;
         }
     }
@@ -99,7 +102,7 @@ const RightsChat = () => {
 
                 {
                     messages.length > 0 && messages.map(mes =>
-                        <RightsChatMessage key={mes.id} data={mes} mutedUser={mutedUser}/>
+                        <RightsChatMessage key={mes.id} data={mes} websocket={websocket}/>
                     )
                 }
 
@@ -109,22 +112,19 @@ const RightsChat = () => {
             <RightsChatResources/>
 
             {
-                bannedUser || blockedUser ?
-                    <div className="section-right__notice">
+                userChat.ban || userChat.block ?
+                    <div className="section-right__notice section-right__notice_active">
                         <div
                             className={"notice__item notice__block-chat notice__item_active"}>
-                            <span>Доступ к чату заблокирован </span>
+                            <span>
+                                <Translate>block_chat</Translate>
+                            </span>
                             <img src="../images/status-error.svg" alt="Ico"/>
                         </div>
                     </div>
-                    : <RightsChatTextarea setIsNoticeActive={setIsNoticeActive} websocket={websocket}/>
+                    : <RightsChatTextarea websocket={websocket}/>
             }
 
-            <div className={"section-right__notice" + (isNoticeActive ? " section-right__notice_active" : "")}>
-                <div className={"notice__item notice__add-cart" + (isNoticeActive ? " notice__item_active" : "")}><span>Для общения, автооризуйтесь</span>
-                    <img src="../images/status-error.svg" alt="Check"/>
-                </div>
-            </div>
         </div>
     );
 };

@@ -1,8 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import HistoryItemLeft from "./HistoryItemLeft";
-import HistoryItemDate from "./HistoryItemDate";
-import HistoryItemListClothes from "./HistoryItemListClothes";
-import HistoryItemCoins from "./HistoryItemCoins";
 import HistoryItemDelete from "./HistoryItemDelete";
 import HistoryItemStats from "./HistoryItemStats";
 
@@ -74,9 +70,7 @@ const HistoryItem = ({data}) => {
                 </span>
             </div>
 
-            {/*states={props.states} setHistoryList={props.setHistoryList} historyList={props.historyList}*/}
             <HistoryItemDelete />
-            {/*status={props.states.status}*/}
             <HistoryItemStats data={data} />
         </div>
     );

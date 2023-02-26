@@ -3,20 +3,16 @@ import ComponentMap from "../Components/ComponentsMap/ComponentMap";
 import {useEffect} from "react";
 import Loader from "../Hooks/Loader";
 import {useSelector} from "react-redux";
+import Translate from "../Hooks/Translate";
 
 const AirdropPage = (props) => {
     Loader();
 
     const [scale, setScale] = useState(0)
-    // const [isPlaneShow, setIsPlaneShow] = useState(true);
-    const drop_is_down = useSelector(state => state.reducerAirdropDropIsDown.isDropDown)
-
-    useEffect(() => {
-        document.querySelector('.trajectory').style.transition = 'width 0s linear';
-        setTimeout(() => {
-            document.querySelector('.trajectory').style.transition = 'width 1s linear';
-        }, 500)
-    }, [])
+    const step = useSelector(state => state.reducerAirdropStep.step)
+    const isDropDown = useSelector(state => state.reducerAirdropDrop.drop.isDropDown)
+    const response = useSelector(state => state.reducerAirdropSocket.response)
+    const session = useSelector(state => state.reducerSession.session)
 
     let sum = null
     let onWheelEvent = function (event) {
@@ -35,37 +31,43 @@ const AirdropPage = (props) => {
         return;
     }
 
+
     return (
-        <section
-            // className="section-map"
-            className={drop_is_down ? "section-map dropIsDown" : "section-map"}
-        >
+        <section className={isDropDown ? "section-map dropIsDown" : "section-map"}>
             <div className="section-map__top">
-                <div className="section-map__game-is">Игра #32875002</div>
+                <div className="section-map__game-is"><Translate>game</Translate> #{response?.airdrop?.game_id}</div>
                 <div className="section-map__code">
-                    <img src="../images/shield-map.svg" alt="Ico"/><span>E24n...84dke</span>
+                    <img src="../images/shield-map.svg" alt="Ico"/>
+                    <span className={'random_hash'}>
+                        {
+                            response?.airdrop?.random_hash.substr(0, 4) + "..." + response?.airdrop?.random_hash.substr(-4, 4)
+                        }
+                    </span>
                 </div>
             </div>
             <div className="map__container">
                 <div
-                    className="map__scale"
+                    className={"map__scale" + (step === "process" ? " map__scale_hidden" : "")}
                     onWheel={e => onWheelEvent(e)}
-                    style={
-                        {transform: `scale(${scale < 1 ? 1 : scale > 3 ? 3 : scale})`}
-                    }
-                >
-                    <ComponentMap states={props.states} />
+                    style={{zoom: `${scale < 1 ? 1 : scale > 3 ? 3 : scale}`}}>
+                    {/*>*/}
+                    <ComponentMap scale={scale} />
                 </div>
             </div>
 
-            {/*<div className="notice-bottom"><span>Проигрыш</span>*/}
-            {/*    <button*/}
-            {/*        className="notice-bottom__close"*/}
-            {/*        onClick={e => e.target.closest('.notice-bottom').classList.add('notice-bottom_remove')}*/}
-            {/*    >*/}
-            {/*        <img src="../images/close.svg" alt="Close"/>*/}
-            {/*    </button>*/}
-            {/*</div>*/}
+            {
+                response?.airdrop?.winner ?
+                    <div className="notice-bottom">
+                        <span>
+                            {response?.airdrop?.winner.user.id === session.id ? <Translate>you_winner</Translate> : <Translate>you_looser</Translate>}
+                        </span>
+                        <button
+                            className="notice-bottom__close"
+                            onClick={e => e.target.closest('.notice-bottom').classList.add('notice-bottom_remove')}>
+                            <img src="../images/close.svg" alt="Close"/>
+                        </button>
+                    </div> : ""
+            }
         </section>
     );
 };

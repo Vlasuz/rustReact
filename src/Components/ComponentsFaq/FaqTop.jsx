@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {useSelector} from "react-redux";
+import Translate from "../../Hooks/Translate";
 
 const FaqTop = () => {
 
@@ -9,17 +10,25 @@ const FaqTop = () => {
     return (
         <div className="section-faq__top">
             <div className="top__lft">
-                <h1>Трудный вопрос</h1>
-                <p>Если не нашли решения свой проблемы</p>
+                <h1>
+                    <Translate>hard_question</Translate>
+                </h1>
+                <p>
+                    <Translate>if_not_found_your_problem</Translate>
+                </p>
             </div>
             <div className="top__rht">
                 <a className="vk" href={socials.vkontakte} target={'_blank'}>
                     <img src="../images/vk-wh.svg" alt="Vk"/>
-                    <span>Чат</span>
+                    <span>
+                        <Translate>chat_title</Translate>
+                    </span>
                 </a>
                 <a className="dis" href={socials.discord} target={'_blank'}>
                     <img src="../images/discord-wh.svg" alt="discord"/>
-                    <span>Канал</span>
+                    <span>
+                        <Translate>telegram_channel</Translate>
+                    </span>
                 </a>
             </div>
         </div>

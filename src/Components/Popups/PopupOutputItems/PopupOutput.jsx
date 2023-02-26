@@ -16,7 +16,6 @@ const PopupOutput = () => {
 
         let th = e.target.closest('.popup-pull__item')
 
-        // console.log(closestItemClass)
         e.target.closest('.popup-pull__item').classList.add('popup-pull__item_deleted')
         setTimeout(function () {
             th.remove()

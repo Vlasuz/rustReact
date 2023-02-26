@@ -5,12 +5,12 @@ import ShopList from "../Components/ComponentsShop/ShopList";
 import Loader from "../Hooks/Loader";
 import {useSelector} from "react-redux";
 
-const ClothesShopPage = (props) => {
+const ClothesShopPage = () => {
     Loader()
 
     return (
         <section className="section-shop">
-            <FightTop states={props.states}/>
+            <FightTop/>
 
             <div className="section-shop__skins">
                 <ShopTop/>

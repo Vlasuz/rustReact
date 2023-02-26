@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from "../Hooks/Loader";
+import Translate from "../Hooks/Translate";
 
 const PolicyPage = () => {
     Loader()
@@ -7,7 +8,9 @@ const PolicyPage = () => {
     return (
         <section className="section-terms">
             <div className="section-terms__top">
-                <h1>Пользовательское соглашение</h1>
+                <h1>
+                    <Translate>chat_terms_of_use</Translate>
+                </h1>
                 <img src="../images/terms.png" alt="Photo" />
             </div>
             <div className="section-terms__content">

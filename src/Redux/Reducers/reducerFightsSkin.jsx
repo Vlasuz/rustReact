@@ -14,8 +14,8 @@ export const reducerFightsSkin = (state = initialState, action) => {
         case SET_SKIN:
             return {
                 ...state,
-                my_skin: action.whom === 'me' && action.skin,
-                op_skin: action.whom === 'opponent' && action.skin,
+                my_skin: action.skin && action.whom === 'me' && action.skin,
+                op_skin: action.skin && action.whom === 'opponent' && action.skin,
             }
         default:
             return state

@@ -9,8 +9,7 @@ const FaqItem = ({item}) => {
                     <div key={question.id} className="section-faq__item">
                         <div
                             className="item__head"
-                            onClick={e => e.target.closest('.section-faq__item').classList.toggle('section-faq__item_active')}
-                        >
+                            onClick={e => e.target.closest('.section-faq__item').classList.toggle('section-faq__item_active')}>
                             <h2>
                                 {question.title}
                             </h2>

@@ -10,14 +10,15 @@ import ClothesShopPage from "../pages/ClothesShopPage";
 import PersonPage from "../pages/PersonPage";
 import FaqPage from "../pages/FaqPage";
 import FightRoom from "../pages/FightRoom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import NotFound from "../pages/NotFound";
 import {logger} from "../middleware/logger";
+import {switcherRights} from "../Redux/actions";
 
 const MainRouters = (props) => {
     const location = useLocation()
     const auth = useSelector(state => state.reducerAuth.auth)
-
+    const dispatch = useDispatch()
 
     const Routers = [
         {
@@ -73,7 +74,7 @@ const MainRouters = (props) => {
                                     if(!auth) {
                                         if(router.path === '/profile'){
                                             router.element = <NotFound/>
-                                        } else if (router.path === '/history'){
+                                        } else if (router.path === '/history' || router.path === '/clothes-shop'){
                                             router.element =  <NotFound/>
                                         }
                                     }

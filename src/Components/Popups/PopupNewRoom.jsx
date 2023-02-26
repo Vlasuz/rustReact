@@ -12,8 +12,10 @@ import {setDuel, setResponse} from "../../Redux/Reducers/reducerFightsResponse";
 import {userInventoryAdd, userInventoryRemove} from "../../Redux/actions";
 import {setSkin} from "../../Redux/Reducers/reducerFightsSkin";
 import {getCookie} from "../../Hooks/GetCookies";
+import GlobalLink from "../../Hooks/GlobalLink";
+import Translate from "../../Hooks/Translate";
 
-const PopupNewRoom = (props) => {
+const PopupNewRoom = () => {
 
     const userInventory = useSelector(state => state.reducerUserInventory.list)
     const [listOnZone, setListOnZone] = useState([])
@@ -27,6 +29,7 @@ const PopupNewRoom = (props) => {
     const dispatch = useDispatch()
     const balance = useSelector(state => state.reducerUserBalance.balance)
     const settings = useSelector(state => state.reducerSettings.settings);
+    const rooms = useSelector(state => state.reducerFightsRooms.rooms)
 
     useEffect(() => {
         setIsOpenSelect(false)
@@ -36,14 +39,14 @@ const PopupNewRoom = (props) => {
         e.preventDefault();
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.post('https://rust.onefut.net/api/fight/room/create', {
+        axios.post("https://"+GlobalLink()+'/api/fight/room/create', {
             "coins": coinsBid,
             "items": listOnZone.map(item => item.id),
         }).then(res => {
 
             dispatch(userInventoryRemove(listOnZone))
 
-            const sk = new WebSocket('wss://rust.onefut.net/ws/api/fight/game/' + res.data.id + "/")
+            const sk = new WebSocket("wss://"+GlobalLink()+'/ws/api/fight/game/' + res.data.id + "/")
             sk.onopen = function () {
                 sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
                 dispatch(setSocket(sk))
@@ -52,30 +55,19 @@ const PopupNewRoom = (props) => {
                 let message = JSON.parse(JSON.parse(e.data))
                 dispatch(setResponse(message))
 
+                console.log('New room', message)
+
                 switch(message.type){
                     case 'player_join_event':
                         let skin = message.data[0].skin !== null ? message.data[0].skin?.gallery : settings.default_fight_skin?.gallery
                         dispatch(setSkin('me', skin))
+                        !window.location.href.includes(res.data.id) && navigate("/fight/"+res.data.id)
                         break;
                 }
             }
 
-            navigate("/fight/"+res.data.id)
         })
     }
-
-    // let changeSort = (e) => {
-    //
-    //     e.target.closest('.select').querySelector('.select__head span').innerText = e.target.textContent
-    //     e.target.closest('.select').classList.toggle('select_open')
-    //
-    //     document.querySelectorAll('.section-history__item').forEach(item => {
-    //         item.style.position = 'static'
-    //         item.style.zIndex = '1'
-    //         item.classList.remove('section-history__item_deleted')
-    //     })
-    //     // props.setChangeHistoryList({...props.changeHistoryList, switcher_sort: e.target.getAttribute('data-value')})
-    // }
 
     let switcherLi = function (e) {
 
@@ -122,7 +114,6 @@ const PopupNewRoom = (props) => {
 
             del.onclick = function () {
                 this.closest('.popup').querySelector('.popup-new-room__list').append(this.closest('li'))
-                // sumListItems()
                 checkListLi(container)
             }
 
@@ -273,7 +264,9 @@ const PopupNewRoom = (props) => {
 
             <div className="popup__content">
                 <div className="popup__content_lft">
-                    <h2>Новая комната</h2>
+                    <h2>
+                        <Translate>new_room</Translate>
+                    </h2>
 
                     <div className="popup__cross popup__close" onClick={closePopup}>
                         <img src="../images/cross.svg" alt="Close"/>
@@ -282,10 +275,14 @@ const PopupNewRoom = (props) => {
                     <div className="popup-new-room__switcher">
                         <ul>
                             <li className="li_active" onClick={switcherLi}>
-                                <a href="#" onClick={e => e.preventDefault()}>На валюту</a>
+                                <a href="#" onClick={e => e.preventDefault()}>
+                                    <Translate>fight_on_coins</Translate>
+                                </a>
                             </li>
                             <li onClick={switcherLi}>
-                                <a href="#" onClick={e => e.preventDefault()}>На скины</a>
+                                <a href="#" onClick={e => e.preventDefault()}>
+                                    <Translate>fight_on_skins</Translate>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -293,7 +290,9 @@ const PopupNewRoom = (props) => {
                         <form action="#" onSubmit={createGame}>
                             <div className="inputs">
                                 <div className="inputs__item inputs__item-sum">
-                                    <p>Сумма ставки:</p>
+                                    <p>
+                                        <Translate>summer_bid</Translate>
+                                    </p>
                                     <div className="input">
                                         <img src="../images/header__coins.svg" alt="Ico"/>
                                         <input
@@ -305,7 +304,9 @@ const PopupNewRoom = (props) => {
                                     </div>
                                 </div>
                                 <div className="inputs__item inputs__item-have">
-                                    <p>На балансе:</p>
+                                    <p>
+                                        <Translate>on_balance</Translate>
+                                    </p>
                                     <div className="input">
                                         <img src="../images/header__coins.svg" alt="Ico"/>
                                         <span>
@@ -314,14 +315,19 @@ const PopupNewRoom = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <button type={"submit"} disabled={!(coinsBid > 0)}>Создать игру</button>
+                            {
+                                !rooms?.some(item => item?.fight_players?.some(player => player.user.id === userData.id)) &&
+                                <button type={"submit"} disabled={!(coinsBid > 0)}>
+                                    <Translate>create_game</Translate>
+                                </button>
+                            }
                         </form>
                     </div>
                     <form className="popup__content-item popup__content-item-clothes" onSubmit={createGame}>
                         <Link className={"link-to-page"} to={'/fight-waiting'}/>
                         <div className="popup-new-room__zone">
                             {
-                                !listOnZone.length && <p>Перетащите сюда скины для ставки</p>
+                                !listOnZone.length && <p><Translate>move_here_item_for_fight</Translate></p>
                             }
                             <ul>
                                 {
@@ -356,7 +362,9 @@ const PopupNewRoom = (props) => {
                             </ul>
                         </div>
                         <div className="inputs__item inputs__item-have inputs__item_skins">
-                            <p>Итоговая сумма ставки:</p>
+                            <p>
+                                <Translate>summary_bet_coins_for_fight</Translate>
+                            </p>
                             <div className="input">
                                 <img src="../images/header__coins.svg" alt="Ico"/>
                                 <span>
@@ -364,32 +372,41 @@ const PopupNewRoom = (props) => {
                                 </span>
                             </div>
                         </div>
-                        <button type={"submit"} disabled={!!listOnZone.length ? false : true}>Создать игру</button>
+                        {
+                            !rooms?.some(item => item?.fight_players?.some(player => player.user.id === userData.id)) &&
+                            <button type={"submit"} disabled={!listOnZone.length}>
+                                <Translate>create_game</Translate>
+                            </button>
+                        }
                     </form>
                 </div>
                 <div className="popup__content_rht">
-                    <h2>Инвентарь сайта</h2>
+                    <h2>
+                        <Translate>inventory_site</Translate>
+                    </h2>
 
                     <div className="popup__cross popup__close" onClick={closePopup}>
                         <img src="../images/cross.svg" alt="Close"/>
                     </div>
 
                     <div className="popup-new-room__sort">
-                        <span>Сортировка</span>
+                        <span>
+                            <Translate>sorts</Translate>
+                        </span>
                         <div className={"select" + (isOpenSelect ? " select_open" : "")}>
                             <div className="select__head" onClick={e => setIsOpenSelect(prev => !prev)}>
                                 {
                                     sortBy === 'price' ?
-                                        <span>По цене</span> :
-                                        <span>По раритетности</span>
+                                        <span><Translate>sort_by_price</Translate></span> :
+                                        <span><Translate>sort_by_rarity</Translate></span>
                                 }
                             </div>
                             <div className="select__body">
                                 <div data-select={'price'} onClick={e => setSortBy('price')} className="select__item">
-                                    По цене
+                                    <Translate>sort_by_price</Translate>
                                 </div>
                                 <div data-select={'rarity'} onClick={e => setSortBy('rarity')} className="select__item">
-                                    По раритетности
+                                    <Translate>sort_by_rarity</Translate>
                                 </div>
                             </div>
                         </div>

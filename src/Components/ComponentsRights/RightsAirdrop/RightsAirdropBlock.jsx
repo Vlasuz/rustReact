@@ -1,28 +1,22 @@
 import TimerMilliseconds from "../../TimerForAirdrop/TimerMilliseconds";
 import {useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import Translate from "../../../Hooks/Translate";
 
 
-const RightsAirdropBlock = (props) => {
+const RightsAirdropBlock = () => {
 
     const seconds = useSelector(state => state.reducerAirdropTimerSecond.seconds)
-    const members = useSelector(state => state.reducerAirdropMembers.list)
-    const [summary, setSummary] = useState(0)
-
-    useEffect(() => {
-
-        members.forEach(item => setSummary(prev => prev + item.coins))
-
-    }, [members])
+    const step = useSelector(state => state.reducerAirdropStep.step)
+    const response = useSelector(state => state.reducerAirdropSocket.response)
 
     return (
         <div className="airdrop__block">
 
-            <div className={props.states.showTimerToFly ? "airdrop__fly" : "airdrop__timer-to-ready"}>
-                {/*<div className="airdrop__timer-to-ready">*/}
+            <div className={step === "waiting" ? "airdrop__fly" : "airdrop__timer-to-ready"}>
                 <div className="fly__top">
                     {
-                        props.states.showTimerToFly ? <p>До вылета:</p> : ""
+                        step === "waiting" ? <p><Translate>before_fly</Translate>:</p> : ""
                     }
                     <div className="timer">
                         <div className="min">
@@ -37,19 +31,25 @@ const RightsAirdropBlock = (props) => {
                     <div className="fly__timer">
                         <img src="../images/line-for-right.svg" alt="Ico"/>
                         <div className="line">
-                            <div className="line_done">
+                            {
+                                step === 'waiting' ?
+                                    <div className="line_done" style={{width: seconds * 100 / 60 + "%"}} /> :
+                                    step === "process" ? <div className="line_done" style={{width: -(seconds * 100 / 60) + 100 + "%"}} /> :
+                                        ""
+                            }
 
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="airdrop__bank">
-                <p>В банке</p>
+                <p>
+                    <Translate>in_bank</Translate>
+                </p>
                 <div className="coins">
                     <img src="../images/header__coins.svg" alt="Ico"/>
                     <span>
-                        {summary}
+                        {response?.airdrop?.bank}
                     </span>
                 </div>
             </div>

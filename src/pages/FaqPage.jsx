@@ -3,6 +3,7 @@ import FaqTop from "../Components/ComponentsFaq/FaqTop";
 import FaqCatalog from "../Components/ComponentsFaq/FaqCatalog";
 import FaqItem from "../Components/ComponentsFaq/FaqItem";
 import axios from "axios";
+import GlobalLink from "../Hooks/GlobalLink";
 
 const FaqPage = () => {
 
@@ -10,7 +11,7 @@ const FaqPage = () => {
     const [error, setError] = useState(false)
     useEffect(() => {
 
-        axios.get('https://rust.onefut.net/api/base/faq/').then(res => {
+        axios.get("https://"+GlobalLink()+'/api/base/faq/').then(res => {
             setFaq(res.data)
             setError(false)
         }).catch(error => setError(true))

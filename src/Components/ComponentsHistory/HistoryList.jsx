@@ -1,9 +1,4 @@
-import React, {useEffect, useState} from 'react';
 import HistoryItem from "./HistoryItem";
-import axios from "axios";
-import {useSelector} from "react-redux";
-import {reducerUserData} from "../../Redux/Reducers/reducerUserData";
-import {getCookie} from "../../Hooks/GetCookies";
 
 const HistoryList = ({ transactions, changeHistoryList }) => {
 

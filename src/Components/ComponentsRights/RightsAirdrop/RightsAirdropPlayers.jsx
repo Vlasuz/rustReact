@@ -2,14 +2,15 @@ import React, {useEffect, useState} from 'react';
 import PlayersAirdropPlayersTop from "./PlayersAirdropPlayersTop";
 import RightsAirdropPlayersItem from "./RightsAirdropPlayersItem";
 import {useSelector} from "react-redux";
+import Translate from "../../../Hooks/Translate";
 
-const RightsAirdropPlayers = (props) => {
+const RightsAirdropPlayers = () => {
 
     const members = useSelector(state => state.reducerAirdropMembers.list)
 
     let isHavePlayers = function () {
         if (!members.length) {
-            return <big>Ставок нет</big>
+            return <big><Translate>not_a_bid</Translate></big>
         }
         return <PlayersAirdropPlayersTop listAirdropsMembers={members}/>
     }
@@ -17,7 +18,7 @@ const RightsAirdropPlayers = (props) => {
     useEffect(() => {
         let rTopH = document.querySelector(".section-right__airdrop")?.clientHeight
         if(document.querySelector('.players__list')) document.querySelector('.players__list').style.height = `calc(100% - ${rTopH}px - 90px)`;
-    })
+    }, [])
 
     return (
         <div
@@ -27,11 +28,8 @@ const RightsAirdropPlayers = (props) => {
 
             <div className="players__list">
                 {
-                    members.map(player =>
-                        <RightsAirdropPlayersItem
-                            key={player.id}
-                            infoPlayer={player}
-                        />
+                    members.map(item =>
+                        <RightsAirdropPlayersItem key={item.user.id} data={item}/>
                     )
                 }
             </div>

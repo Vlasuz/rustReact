@@ -1,14 +1,10 @@
 import React, {useState} from 'react';
-import RightsNotice from "./RightsNotice";
 import RightsProcessor from "./RightsProcessor";
 import RightsChat from "./Chat/RightsChat";
-import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
 import RightsStorage from "./RightsStorage";
 import RightsShop from "./RightsShop/RightsShop";
 import RightsAirdrop from "./RightsAirdrop/RightsAirdrop";
-import RightsAirdropMoveSleepers from "./RightsAirdrop/RightsAirdropMoveSleepers";
 import {useSelector} from "react-redux";
-import {reducerSwitcherRights} from "../../Redux/Reducers/reducerSwitcherRights";
 
 const RightsSwitcher = (props) => {
 
@@ -16,9 +12,8 @@ const RightsSwitcher = (props) => {
 
     return (
         <div className="section-right__switcher">
-            <RightsNotice/>
 
-            <div className="section-right__item section-right_active">
+            <div className="section-right__item">
 
                 {
                     switcherRights === 'st' ? <RightsStorage states={props.states}/> :
@@ -29,7 +24,7 @@ const RightsSwitcher = (props) => {
 
             </div>
 
-            <div className="section-right__item">
+            <div className="section-right__item section-right_active section-right__item_change-show">
                 <RightsChat/>
             </div>
         </div>

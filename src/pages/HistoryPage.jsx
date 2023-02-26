@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import {reducerAuth} from "../Redux/Reducers/reducerAuth";
 import axios from "axios";
 import {getCookie} from "../Hooks/GetCookies";
+import GlobalLink from "../Hooks/GlobalLink";
 
 const HistoryPage = () => {
 
@@ -16,9 +17,8 @@ const HistoryPage = () => {
     useEffect(() => {
 
         axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie("access_token")}`;
-        axios.get('https://rust.onefut.net/api/user/transactions/').then(res => {
+        axios.get("https://"+GlobalLink()+'/api/user/transactions/').then(res => {
             setTransactions(res.data)
-            console.log(res.data)
         })
 
     }, [])

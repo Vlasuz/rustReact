@@ -5,6 +5,7 @@ import SelectFightOnButtonClick from "../../../Hooks/SelectFightOnButtonClick";
 import {useDispatch, useSelector} from "react-redux";
 import {setDefense} from "../../../Redux/Reducers/reducerFightsDefense";
 import {logDOM} from "@testing-library/react";
+import Translate from "../../../Hooks/Translate";
 
 const FightAreaBottom = (props) => {
 
@@ -12,37 +13,22 @@ const FightAreaBottom = (props) => {
     const [defBody, setDefBody] = useState(false)
     const [defLegs, setDefLegs] = useState(false)
     const dispatch = useDispatch()
-    const userData = useSelector(state => state.reducerUserData.data)
     const socket = useSelector(state => state.reducerFightsSocketCreate.socket)
     const response = useSelector(state => state.reducerFightsResponse.response)
-    const settings = useSelector(state => state.reducerSettings.settings);
 
     const skin = useSelector(state => state.reducerFightsSkin.my_skin)
 
-    // const opponent = response.data.players[0].user.id === userData.id ? response?.data?.players[1] : response.data.players[0]
-    // console.log(response, userData.id)
-    // const myperson = response.data.players[0].user.id === userData.id ? response.data.players[0] : response?.data?.players[1]
-
     useEffect(() => {
-
-        if(response.type === 'game_defense') {
-            setTimeout(() => {
-                if(!defHead) setDefHead(true)
-                if(!defLegs) setDefLegs(true)
-            }, 8500)
-        }
-
-    }, [response])
-
-    useEffect(() => {
-        socket.send(`{"type":"defense", "head": ${defHead}, "body": ${defBody}, "legs": ${defLegs}}`)
         dispatch(setDefense([defHead, defBody, defLegs]))
+        socket.send(`{"type":"defense", "head": ${defHead}, "body": ${defBody}, "legs": ${defLegs}}`)
     }, [defHead, defBody, defLegs])
 
     return (
         <div className="section-fight__bottom">
             <div className="bottom__info">
-                <p>Выберите 2 области защиты</p>
+                <p>
+                    <Translate>choose_two_defense</Translate>
+                </p>
             </div>
             <ul className="section-fight__select">
                 <li>
@@ -52,7 +38,9 @@ const FightAreaBottom = (props) => {
                         onMouseOut={e => SelectFightOnButtonMouseout(e)}
                         onClick={e => SelectFightOnButtonClick(e, skin, setDefHead)}
                     >
-                        <span>Голова</span>
+                        <span>
+                            <Translate>fight_head</Translate>
+                        </span>
                         <img src="../images/green-check.svg" alt="Ico"/>
                     </button>
                 </li>
@@ -63,7 +51,9 @@ const FightAreaBottom = (props) => {
                         onMouseOut={e => SelectFightOnButtonMouseout(e)}
                         onClick={e => SelectFightOnButtonClick(e, skin, setDefBody)}
                     >
-                        <span>Торс</span>
+                        <span>
+                            <Translate>fight_body</Translate>
+                        </span>
                         <img src="../images/green-check.svg" alt="Ico"/>
                     </button>
                 </li>
@@ -74,7 +64,9 @@ const FightAreaBottom = (props) => {
                         onMouseOut={e => SelectFightOnButtonMouseout(e)}
                         onClick={e => SelectFightOnButtonClick(e, skin, setDefLegs)}
                     >
-                        <span>Ноги</span>
+                        <span>
+                            <Translate>fight_legs</Translate>
+                        </span>
                         <img src="../images/green-check.svg" alt="Ico"/>
                     </button>
                 </li>

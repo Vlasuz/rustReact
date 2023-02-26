@@ -1,14 +1,26 @@
 import React from 'react';
-import RightsAirdropPlayersItemPhoto from "./RightsAirdropPlayersItemPhoto";
-import RightsAirdropPlayersItemInfo from "./RightsAirdropPlayersItemInfo";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
 
-const RightsAirdropPlayersItem = (props) => {
+const RightsAirdropPlayersItem = ({ data }) => {
+
+    const settings = useSelector(state => state.reducerSettings.settings)
+
     return (
-        <Link to={'/person'} className="players__item">
-            <RightsAirdropPlayersItemPhoto infoPlayer={props.infoPlayer} />
-            <RightsAirdropPlayersItemInfo infoPlayer={props.infoPlayer} />
-        </Link>
+        <div className="players__item">
+            <NavLink to={'/user/'+data.user.id} className="item__photo">
+                <img src={data.user.avatar} alt="User"/>
+            </NavLink>
+            <NavLink to={'/user/'+data.user.id} className="item__name">
+                {data.user.name}
+            </NavLink>
+            <div className="item__coins">
+                <img src="../images/header__coins.svg" alt="Coins"/>
+                <span>
+                    {data.bags.length * settings.airdrop_bag_price}
+                </span>
+            </div>
+        </div>
     );
 };
 

@@ -11,15 +11,16 @@ import axios from "axios";
 import {userBalanceSetCoins} from "../../Redux/Reducers/reducerUserBalance";
 import {getCookie} from "../../Hooks/GetCookies";
 import {Trans, useTranslation} from "react-i18next";
+import {setNotice} from "../../Redux/Reducers/reducerNotice";
+import GlobalLink from "../../Hooks/GlobalLink";
+import Translate from "../../Hooks/Translate";
 
 const RightsProcessor = (props) => {
-    const {t} = useTranslation();
 
     const processorList = useSelector(state => state.reducerProcessorList)
     const storageList = useSelector(state => state.reducerUserInventory.list)
     const dispatch = useDispatch()
     const auth = useSelector(state => state.reducerAuth.auth)
-    const [isNoticeActive, setIsNoticeActive] = useState(false)
     const [arrayToRecycle, setArrayToRecycle] = useState([])
     const [sortArray, setSortArray] = useState(
         {
@@ -161,16 +162,11 @@ const RightsProcessor = (props) => {
     const handleConvert = () => {
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.post(`https://rust.onefut.net/api/items/recycle/`, arrayToRecycle).then(res => {
+        axios.post("https://"+GlobalLink()+`/api/items/recycle/`, arrayToRecycle).then(res => {
 
             processorList.list.filter(item => dispatch(processorListRemove([item])))
             dispatch(userBalanceSetCoins(res.data.balance))
-
-            setIsNoticeActive(true)
-
-            setTimeout(() => {
-                setIsNoticeActive(false)
-            }, 1000)
+            dispatch(setNotice("processor_done"))
 
         })
 
@@ -203,27 +199,27 @@ const RightsProcessor = (props) => {
                             {auth ?
                                 <>
                                     <h3>
-                                        <Trans t={t}>storage_empty_title</Trans>
+                                        <Translate>storage_empty_title</Translate>
                                     </h3>
                                     <p>
-                                        <Trans t={t}>storage_empty_text</Trans>
+                                        <Translate>storage_empty_text</Translate>
                                     </p>
                                     <button onClick={handleGoToShop}>
-                                        <Trans t={t}>storage_empty_button</Trans>
+                                        <Translate>storage_empty_button</Translate>
                                     </button>
                                 </> :
                                 <>
                                     <h3>
-                                        <Trans t={t}>storage_empty_title_not_login</Trans>
+                                        <Translate>storage_empty_title_not_login</Translate>
                                     </h3>
                                     <p>
-                                        <Trans t={t}>storage_empty_text_not_login</Trans>
+                                        <Translate>storage_empty_text_not_login</Translate>
                                     </p>
                                     <a href={"https://steamcommunity.com/openid/login?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.mode=checkid_setup&openid.return_to=https%3A%2F%2Frust.webline.space%2F&openid.realm=ht\n" +
                                         "tps%3A%2F%2Frust.webline.space%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_\n" +
                                         "select"}>
 
-                                        <Trans t={t}>storage_empty_button_not_login</Trans>
+                                        <Translate>storage_empty_button_not_login</Translate>
                                         <img src="../images/steam.svg" alt="Login" />
                                     </a>
                                 </>}
@@ -240,7 +236,7 @@ const RightsProcessor = (props) => {
                     !!processorList.list.length ? "" :
                         <div className="zone__empty">
                             <p>
-                                <Trans t={t}>processor_zone_processor</Trans>
+                                <Translate>processor_zone_processor</Translate>
                             </p>
                             <img src="../images/pererab-ico.svg" alt="Ico"/>
                         </div>
@@ -282,7 +278,7 @@ const RightsProcessor = (props) => {
                     !!processorList.list.length ? "" :
                         <div className="zone__empty">
                             <p>
-                                <Trans t={t}>processor_zone_processor_end</Trans>
+                                <Translate>processor_zone_processor_end</Translate>
                             </p>
                         </div>
                 }
@@ -294,7 +290,7 @@ const RightsProcessor = (props) => {
                     <div className="lft">
                         <img src="../images/pererab-button.svg" alt="Ico"/>
                         <span>
-                            <Trans t={t}>process</Trans>
+                            <Translate>process</Translate>
                         </span>
                     </div>
                     <div className="rht">
@@ -306,14 +302,6 @@ const RightsProcessor = (props) => {
                 </button>
             </div>
 
-            <div className={"section-right__notice" + (isNoticeActive ? " section-right__notice_active" : "")}>
-                <div className={"notice__item notice__add-cart" + (isNoticeActive ? " notice__item_active" : "")}>
-                    <span>
-                        <Trans t={t}>processor_done</Trans>
-                    </span>
-                    <img src="../images/green-check.svg" alt="Check"/>
-                </div>
-            </div>
         </div>
     );
 };

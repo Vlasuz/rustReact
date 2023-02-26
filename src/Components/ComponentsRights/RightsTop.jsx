@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {chatAddMessages, chatAddOnline, reducerChat} from "../../Redux/Reducers/reducerChat";
 import {Trans, useTranslation} from "react-i18next";
+import Translate from "../../Hooks/Translate";
 
 const RightsTop = () => {
-    const {t} = useTranslation();
 
     const membersOnline = useSelector(state => state.reducerChat.online)
 
@@ -50,24 +50,23 @@ const RightsTop = () => {
     return (
         <div className="section-right__top">
             <button
-                className="top__item top__item_active"
-                onClick={switcherButtons}
-            >
+                className="top__item"
+                onClick={switcherButtons}>
                 <span>
                     {
-                        switcherRights === "st" ? <Trans t={t}>storage_title</Trans> :
-                            switcherRights === "sh" ? <Trans t={t}>shop_title</Trans> :
-                                switcherRights === "ra" ? <Trans t={t}>airdrop_title</Trans> :
-                                    <Trans t={t}>processor_title</Trans>
+                        switcherRights === "st" ? <Translate>storage_title</Translate> :
+                            switcherRights === "sh" ? <Translate>shop_title</Translate> :
+                                switcherRights === "ra" ? <Translate>airdrop_title</Translate> :
+                            <Translate>processor_title</Translate>
                     }
                 </span>
             </button>
             <button
-                className="top__item"
+                className="top__item top__item_active"
                 onClick={switcherButtons}
             >
                 <span>
-                    <Trans t={t}>chat_title</Trans>
+                    <Translate>chat_title</Translate>
                 </span>
                 <div className="people">
                     <img src="../images/users.svg" alt="Ico"/>

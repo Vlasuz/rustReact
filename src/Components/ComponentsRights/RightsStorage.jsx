@@ -8,9 +8,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {reducerUserInventory} from "../../Redux/Reducers/reducerUserInventory";
 import {switcherRights, userInventoryAdd} from "../../Redux/actions";
 import {Trans, useTranslation} from "react-i18next";
+import Translate from "../../Hooks/Translate";
 
 const RightsStorage = (props) => {
-    const {t} = useTranslation();
 
     const [sortArray, setSortArray] = useState(
         {
@@ -62,27 +62,27 @@ const RightsStorage = (props) => {
                             {auth ?
                                 <>
                                     <h3>
-                                        <Trans t={t}>storage_empty_title</Trans>
+                                        <Translate>storage_empty_title</Translate>
                                     </h3>
                                     <p>
-                                        <Trans t={t}>storage_empty_text</Trans>
+                                        <Translate>storage_empty_text</Translate>
                                     </p>
                                     <button onClick={handleGoToShop}>
-                                        <Trans t={t}>storage_empty_button</Trans>
+                                        <Translate>storage_empty_button</Translate>
                                     </button>
                                 </> :
                                 <>
                                     <h3>
-                                        <Trans t={t}>storage_empty_title_not_login</Trans>
+                                        <Translate>storage_empty_title_not_login</Translate>
                                     </h3>
                                     <p>
-                                        <Trans t={t}>storage_empty_text_not_login</Trans>
+                                        <Translate>storage_empty_text_not_login</Translate>
                                     </p>
                                     <a href={"https://steamcommunity.com/openid/login?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.mode=checkid_setup&openid.return_to=https%3A%2F%2Frust.webline.space%2F&openid.realm=ht\n" +
                                         "tps%3A%2F%2Frust.webline.space%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_\n" +
                                         "select"}>
 
-                                        <Trans t={t}>storage_empty_button_not_login</Trans>
+                                        <Translate>storage_empty_button_not_login</Translate>
                                         <img src="../images/steam.svg" alt="Login" />
                                     </a>
                                 </>}
@@ -99,7 +99,7 @@ const RightsStorage = (props) => {
                             onClick={() => OpenPopup('popup-pull')}>
                             <img src="../images/arr-r-t.svg" alt="Ico"/>
                             <span>
-                                <Trans t={t}>withdraw_items</Trans>
+                                <Translate>withdraw_items</Translate>
                             </span>
                             <div className="zone__count">
                                 {storageListWithdraw.length}
@@ -108,7 +108,7 @@ const RightsStorage = (props) => {
 
                         <div className="zone__empty">
                             <p>
-                                <Trans t={t}>select_item_for_withdraw</Trans>
+                                <Translate>select_item_for_withdraw</Translate>
                             </p>
                         </div>
                 }

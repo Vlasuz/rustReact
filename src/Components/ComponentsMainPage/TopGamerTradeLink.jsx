@@ -6,10 +6,10 @@ import {Trans, useTranslation} from "react-i18next";
 import OpenPopup from "../../Hooks/OpenPopup";
 import {useSelector} from "react-redux";
 import {reducerUserData} from "../../Redux/Reducers/reducerUserData";
+import Translate from "../../Hooks/Translate";
 
 const TopGamerTradeLink = () => {
 
-    const {t} = useTranslation();
     const userData = useSelector(state => state.reducerUserData.data)
 
     return (
@@ -25,38 +25,38 @@ const TopGamerTradeLink = () => {
 
                     <div className="trade-link__block">
                         <h3>
-                            <Trans t={t}>text_trade_link</Trans>
+                            <Translate>text_trade_link</Translate>
                         </h3>
                         <button
                             className="trade-link__button"
                             onClick={e => OpenPopup('popup-trade-link-change')}
                         >
-                            <Trans t={t}>text_change</Trans>
+                            <Translate>text_change</Translate>
                         </button>
                     </div>
                     <div className="trade-link__check">
                         <img src="../images/active.svg" alt="Photo"/>
                         <span>
-                            <Trans t={t}>text_trade_link_active</Trans>
+                            <Translate>text_trade_link_active</Translate>
                         </span>
                     </div>
                 </div> :
                 <div className="top-gamer__trade-link top-gamer__trade-link_nonactive">
                     <div className="trade-link__block">
                         <h3>
-                            <Trans t={t}>text_trade_link</Trans>
+                            <Translate>text_trade_link</Translate>
                         </h3>
                         <button
                             className="trade-link__button"
                             onClick={e => OpenPopup('popup-trade-link')}
                         >
-                            <Trans t={t}>text_trade_link_add</Trans>
+                            <Translate>text_trade_link_add</Translate>
                         </button>
                     </div>
                     <div className="trade-link__check">
                         <img src="../images/nonactive.svg" alt="Photo"/>
                         <span>
-                            <Trans t={t}>text_trade_link_non_active</Trans>
+                            <Translate>text_trade_link_non_active</Translate>
                         </span>
                     </div>
                 </div>

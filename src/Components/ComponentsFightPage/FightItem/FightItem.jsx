@@ -1,47 +1,67 @@
-import React, {useEffect, useState} from 'react';
-import PopupEntryCoins from "../../Popups/PopupEntryCoins";
-import PopupEntryClothes from "../../Popups/PopupEntryClothes";
-import {NavLink, useParams} from "react-router-dom";
-import OpenPopup from "../../../Hooks/OpenPopup";
-import {fightRoomAdd, fightRoomChange, fightRoomSet} from "../../../Redux/Reducers/reducerFightsRooms";
-import axios from "axios";
+import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {logDOM} from "@testing-library/react";
+import PopupEntryClothes from "../../Popups/PopupEntryClothes";
+import PopupEntryCoins from "../../Popups/PopupEntryCoins";
+import {NavLink, useNavigate} from "react-router-dom";
+import OpenPopup from "../../../Hooks/OpenPopup";
+import GlobalLink from "../../../Hooks/GlobalLink";
+import {getCookie} from "../../../Hooks/GetCookies";
+import {setSocket} from "../../../Redux/Reducers/reducerFightsSocketCreate";
+import {setResponse} from "../../../Redux/Reducers/reducerFightsResponse";
+import axios from "axios";
+import Translate from "../../../Hooks/Translate";
+import {setSkin} from "../../../Redux/Reducers/reducerFightsSkin";
+import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 
-const FightItem = ({ data }) => {
+const FightItem = ({data}) => {
 
     const [showItems, setShowItems] = useState(false)
     const [price, setPrice] = useState(0)
     const [load, setLoad] = useState(true)
+    const settings = useSelector(state => state.reducerSettings.settings);
     const userData = useSelector(state => state.reducerUserData.data)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     useEffect(() => {
-        load && data.fight_players[0].items.length > 0 ?
-            data.fight_players[0].items.forEach(item => setPrice(prev => prev + item.price.value)) :
-            setPrice(data.fight_players[0].coins)
+        load && data.first_player?.items.length > 0 ?
+            data.first_player?.items.forEach(item => setPrice(prev => prev + item.price.value)) :
+            setPrice(data.first_player?.coins)
 
         setLoad(false)
     }, [])
 
+    const handleJoin = () => {
+        if(!!Object.keys(userData).length){
+            (data.first_player?.items.length > 0 ?
+                OpenPopup('popup-entry-clothes-' + data.id) :
+                OpenPopup('popup-entry-coins-' + data.id))
+        } else {
+            dispatch(setNotice("auth_for_action"))
+        }
+    }
+
+    const handleEntry = (id) => {
+        navigate('/fight/' + id)
+    }
 
     return (
         <>
             {
-                data.game_state !== 'ended' &&
+                data?.game_state !== 'ended' &&
                 <div
                     className={
-                        (data.game_state === "process" ? "list-games__item list-games__item_running" :
-                            data.game_state === "ended" ? "list-games__item list-games__item_finish" :
+                        (data?.game_state === "process" ? "list-games__item list-games__item_running" :
+                            data?.game_state === "ended" ? "list-games__item list-games__item_finish" :
                                 "list-games__item") + (showItems ? " list-games__item_active" : "")
                     }>
 
-                    {data.fight_players[0].items.length > 0 ?
+                    {data?.fight_players?.items.length > 0 ?
                         <PopupEntryClothes data={data} price={price}/> :
                         <PopupEntryCoins data={data}/>}
 
                     {
-                        data.fight_players[0].items.length > 0 ?
+                        data.first_player?.items.length > 0 ?
                             <div className="item__type item__type_clothes" onClick={() => setShowItems(prev => !prev)}>
                                 <img src="../images/clothes.svg" alt="Ico"/>
                             </div> :
@@ -51,10 +71,10 @@ const FightItem = ({ data }) => {
                     }
 
                     {
-                        data.fight_players[0].items.length > 0 &&
+                        data.first_player?.items.length > 0 &&
                         <ul className="item__clothes">
                             {
-                                data.fight_players[0].items.map(item =>
+                                data.first_player?.items.map(item =>
                                     <li key={item.id}>
                                         <div
                                             className={
@@ -69,79 +89,82 @@ const FightItem = ({ data }) => {
                         </ul>
                     }
 
-                    <NavLink to={userData.id !== data.fight_players[0].user.id ?  "/user/"+data.fight_players[0].user.id : "/profile"} className={data.winner != null && (data.winner.user.id === data.fight_players[0].user.id) ? "item__user" : "item__user item__user_looser"}>
+                    <NavLink
+                        to={userData.id !== data.first_player?.user.id ? "/user/" + data.first_player?.user.id : "/profile"}
+                        className={data.winner != null && (data.winner.user.id === data.first_player?.user.id) ? "item__user" : "item__user item__user_looser"}>
                         <div className="user__photo">
-                            <img src={data.fight_players[0].user.avatar} alt="Photo"/>
+                            <img src={data.first_player?.user.avatar} alt="Photo"/>
                         </div>
                         <div className="user__name">
-                            {data.fight_players[0].user.name}
+                            {data.first_player?.user.name}
                         </div>
                     </NavLink>
 
                     {
-                        <>
-                            {
-                                data.game_state === "waiting" ?
-                                    <button className="item__button"
-                                            onClick={e => !!Object.keys(userData).length && (data.fight_players[0].items.length > 0 ?
-                                                OpenPopup('popup-entry-clothes-' + data.id) :
-                                                OpenPopup('popup-entry-coins-' + data.id))}>
-                                        {!!Object.keys(userData).length && <span>Играть за</span>}
-                                        <img src="../images/header__coins.svg" alt="Ico"/>
-                                        <span>{price}</span>
-                                    </button> :
-                                    data.game_state === "process" ?
-                                        <button className="item__button">
+                        !((data?.first_player?.user?.id === userData.id) || (data?.second_player?.user.id === userData.id)) ? <>
+                                {
+                                    data.game_state === "waiting" ?
+                                        <button className="item__button" onClick={handleJoin}>
+                                            {!!Object.keys(userData).length && <span>Играть за</span>}
                                             <img src="../images/header__coins.svg" alt="Ico"/>
                                             <span>{price}</span>
                                         </button> :
 
-                                        <button className="item__button">
-                                            <div className={
-                                                data.winner != null && (data.winner.user.id === data.fight_players[1].user.id) ? "winner" : "looser"
-                                            }>
-                                                {
-                                                    data.winner != null && (data.winner.user.id === data.fight_players[1].user.id) ?
-                                                        <>
-                                                            <img src="../images/header__coins.svg" alt="Ico"/>
-                                                            <span>{
-                                                                price
-                                                            }</span>
-                                                        </> :
-                                                        <img src="../images/looser.svg" alt="Ico"/>
-                                                }
-                                            </div>
-                                            <div className={
-                                                data.winner != null && (data.winner.user.id === data.fight_players[1].user.id) ? "looser" : "winner"
-                                            }>
-                                                {
-                                                    data.winner != null && (data.winner.user.id === data.fight_players[1].user.id) ?
-                                                        <img src="../images/looser.svg" alt="Ico"/> :
-                                                        <>
-                                                            <img src="../images/header__coins.svg" alt="Ico"/>
-                                                            <span>{
-                                                                price
-                                                            }</span>
-                                                        </>
-                                                }
-                                            </div>
-                                        </button>
-                            }
-                        </>
+                                        data.game_state === "process" ?
+                                            <button className="item__button">
+                                                <img src="../images/header__coins.svg" alt="Ico"/>
+                                                <span>{price}</span>
+                                            </button> :
+
+                                            <button className="item__button">
+                                                <div className={
+                                                    data.winner != null && (data.winner.user.id === data.second_player?.user.id) ? "winner" : "looser"
+                                                }>
+                                                    {
+                                                        data.winner != null && (data.winner.user.id === data.second_player?.user.id) ?
+                                                            <>
+                                                                <img src="../images/header__coins.svg" alt="Ico"/>
+                                                                <span>{price}</span>
+                                                            </> :
+                                                            <img src="../images/looser.svg" alt="Ico"/>
+                                                    }
+                                                </div>
+                                                <div className={
+                                                    data.winner != null && (data.winner.user.id === data.second_player?.user.id) ? "looser" : "winner"
+                                                }>
+                                                    {
+                                                        data.winner != null && (data.winner.user.id === data.second_player?.user.id) ?
+                                                            <img src="../images/looser.svg" alt="Ico"/> :
+                                                            <>
+                                                                <img src="../images/header__coins.svg" alt="Ico"/>
+                                                                <span>{price}</span>
+                                                            </>
+                                                    }
+                                                </div>
+                                            </button>
+                                }
+                            </> :
+                            <button className={"item__button"} onClick={e => handleEntry(data.id)}>
+                                <span>
+                                    <Translate>entry</Translate>
+                                </span>
+                            </button>
+
                     }
 
                     <div className={
-                        data.status === "waiting" ? "item__user item__user_load" : "item__user" + (data.winner != null && (data.winner.user.id === data.fight_players[0].user.id) ? " item__user_looser" : "")
+                        data.status === "waiting" ? "item__user item__user_load" : "item__user" + (data.winner != null && (data.winner.user.id === data.first_player?.user.id) ? " item__user_looser" : "")
                     }>
 
                         {
-                            data.fight_players[1] ?
-                                <NavLink to={userData.id !== data.fight_players[1].user.id ? "/user/"+data.fight_players[1].user.id : "/profile"}>
+                            data.second_player ?
+                                <NavLink
+                                    to={userData.id !== data.second_player?.user.id ? "/user/" + data.second_player?.user.id : "/profile"}>
                                     <div className="user__name">
-                                        {data.fight_players[1].user.name}
+                                        {data.second_player?.user.name}
                                     </div>
                                     <div className="user__photo">
-                                        <img src={data.fight_players[1].user.avatar} alt="Photo"/>
+                                        <img src={data.second_player?.user.avatar} alt="Photo"/>
                                     </div>
                                 </NavLink> :
                                 <div className="user__load">

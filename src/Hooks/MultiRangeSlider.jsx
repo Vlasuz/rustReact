@@ -8,6 +8,9 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
     const maxValRef = useRef(max);
     const range = useRef(null);
 
+    const [lftPoint, setLftPoint] = useState(0)
+    const [rhtPoint, setRhtPoint] = useState(0)
+
     // Convert to percentage
     const getPercent = useCallback(
         (value) => Math.round(((value - min) / (max - min)) * 100),
@@ -18,6 +21,8 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
     useEffect(() => {
         const minPercent = getPercent(minVal);
         const maxPercent = getPercent(maxValRef.current);
+
+        setLftPoint(-17 + minPercent / 2.94)
 
         if (range.current) {
             range.current.style.left = `${minPercent}%`;
@@ -30,8 +35,10 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
         const minPercent = getPercent(minValRef.current);
         const maxPercent = getPercent(maxVal);
 
+        setRhtPoint(-17 + maxPercent / 2.94)
+
         if (range.current) {
-            // range.current.style.width = `${maxPercent - minPercent}%`;
+            range.current.style.width = `${maxPercent - minPercent}%`;
         }
     }, [maxVal, getPercent]);
 
@@ -53,7 +60,7 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
                     minValRef.current = value;
                 }}
                 className="thumb thumb--left"
-                style={{ zIndex: minVal > max - 100 && "5" }}
+                style={{ zIndex: minVal > max - 100 && "5", left: lftPoint+"px"}}
             />
             <input
                 type="range"
@@ -65,6 +72,7 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
                     setMaxVal(value);
                     maxValRef.current = value;
                 }}
+                style={{left: rhtPoint+"px"}}
                 className="thumb thumb--right"
             />
 

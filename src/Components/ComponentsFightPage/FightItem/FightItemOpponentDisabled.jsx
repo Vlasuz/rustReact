@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import FightAreaTop from "../FightArea/FightAreaTop";
+import Translate from "../../../Hooks/Translate";
 
 const FightItemOpponentDisabled = ({ userInfo }) => {
 
@@ -12,7 +13,9 @@ const FightItemOpponentDisabled = ({ userInfo }) => {
                 </div>
             </div>
             <div className="section-fight__bottom">
-                <div className="section-fight__opponent-info">Выбор защиты</div>
+                <div className="section-fight__opponent-info">
+                    <Translate>choose_defense</Translate>
+                </div>
             </div>
         </div>
     );

@@ -3,15 +3,24 @@ import {Link} from "react-router-dom";
 import MessageDropdown from "./ChatMessage/MessageDropdown";
 import axios from "axios";
 import {useSelector} from "react-redux";
+import GlobalLink from "../../../Hooks/GlobalLink";
 
-const RightsChatMessage = ({ data, mutedUser }) => {
+const RightsChatMessage = ({ data, websocket }) => {
 
     const [openDropdown, setOpenDropdown] = useState(false)
     const session = useSelector(state => state.reducerSession.session)
+    const userChat = useSelector(state => state.reducerUserChat)
+
+    document.addEventListener('click', function (e) {
+        if (e.target.closest(".item__dropdown") === null && e.target.closest(".item__menu") === null) {
+            setOpenDropdown(false)
+        }
+    })
 
     return (
-        <div className={"chatting__item" + (mutedUser.id === data.user.id || session?.muted_users?.some(item => item.id === data.user.id) ? " chatting__item_muted" : "")}>
-            <Link to={session.id !== data.user.id ? "/user/"+data.user.id : "/profile"} className="item__photo">
+        <div
+            className={"chatting__item" + (userChat?.muted_users?.some(item => item?.id === data?.user?.id) ? " chatting__item_muted" : "")}>
+            <Link to={session.id !== data.user.id ? "/user/" + data.user.id : "/profile"} className="item__photo">
                 <div className="photo">
                     {
                         (data.user.role === 'moder' || data.user.role === 'admin') ?
@@ -19,9 +28,23 @@ const RightsChatMessage = ({ data, mutedUser }) => {
                             <img src={data.user.avatar} alt={data.user.name}/>
                     }
                 </div>
-                {/*<div className="mark">*/}
-                {/*    <img src="../images/twitch.svg" alt="Ico"/>*/}
-                {/*</div>*/}
+                {
+                    data.user.verify === "youtube" ?
+                        <div className="mark">
+                            <img src="../images/youtube.svg" alt="Ico"/>
+                        </div> :
+                        data.user.verify === "twitch" ?
+                            <div className="mark">
+                                <img src="../images/twitch.svg" alt="Ico"/>
+                            </div> :
+                            data.user.verify === "verified" ?
+                                <div className="mark">
+                                    <img src="../images/verified.svg" alt="Ico"/>
+                                </div> : ""
+
+
+                }
+
             </Link>
 
             <div className="item__inner">
@@ -29,7 +52,8 @@ const RightsChatMessage = ({ data, mutedUser }) => {
                     {
                         (data.user.role === 'moder' || data.user.role === 'admin') ?
                             <div className={'item__name'}>Система</div> :
-                            <Link to={session.id !== data.user.id ? "/user/"+data.user.id : "/profile"} className="item__name">
+                            <Link to={session.id !== data.user.id ? "/user/" + data.user.id : "/profile"}
+                                  className="item__name">
                                 {data.user.name}
                             </Link>
                     }
@@ -50,13 +74,15 @@ const RightsChatMessage = ({ data, mutedUser }) => {
                 <div className="item__text">
                     <p>
                         {
-                            data.text.includes('https://rust.onefut.net/media/stickers') ? <img src={data.text} alt="sticker"/> : data.text
+                            data.text.includes("https://"+GlobalLink()+'/media/stickers') ?
+                                <img src={data.text} alt="sticker"/> : data.text
                         }
                     </p>
                 </div>
                 <MessageDropdown
                     openDropdown={openDropdown}
                     messageData={data}
+                    websocket={websocket}
                 />
             </div>
         </div>

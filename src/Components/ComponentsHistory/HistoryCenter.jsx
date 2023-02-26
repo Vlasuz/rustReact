@@ -1,4 +1,5 @@
 import React from 'react';
+import Translate from "../../Hooks/Translate";
 
 const HistoryCenter = (props) => {
 
@@ -42,23 +43,31 @@ const HistoryCenter = (props) => {
         <div className="section-history__center">
             <ul className="section-history__switcher">
                 <li className="switcher-type__all li_active">
-                    <button onClick={e => switcherType(e)}>Все</button>
+                    <button onClick={e => switcherType(e)}>
+                        <Translate>all</Translate>
+                    </button>
                 </li>
                 <li>
-                    <button className="switcher-type__items" data-type={"items"} onClick={e => switcherType(e)}>Предметами</button>
+                    <button className="switcher-type__items" data-type={"items"} onClick={e => switcherType(e)}>
+                        <Translate>sort_by_items</Translate>
+                    </button>
                 </li>
                 <li>
-                    <button className="switcher-type__pin-codes" data-type={"pins"} onClick={e => switcherType(e)}>Пин-коды</button>
+                    <button className="switcher-type__pin-codes" data-type={"pins"} onClick={e => switcherType(e)}>
+                        <Translate>sort_by_pins</Translate>
+                    </button>
                 </li>
             </ul>
             <div className="section-history__sort">
-                <span>Сортировка:</span>
+                <span>
+                    <Translate>sorts</Translate>:
+                </span>
                 <div className="select">
                     <div
                         className="select__head"
                         onClick={e => openSelect(e)}>
                         <span>
-                            По цене
+                            <Translate>sort_by_price</Translate>
                         </span>
                     </div>
                     <div className="select__body">
@@ -66,13 +75,13 @@ const HistoryCenter = (props) => {
                             className="select__item"
                             data-value={"price"}
                             onClick={e => changeSort(e)}>
-                            По цене
+                            <Translate>sort_by_price</Translate>
                         </button>
                         <button
                             className="select__item"
                             data-value={"date"}
                             onClick={e => changeSort(e)}>
-                            По дате
+                            <Translate>sort_by_date</Translate>
                         </button>
                     </div>
                 </div>

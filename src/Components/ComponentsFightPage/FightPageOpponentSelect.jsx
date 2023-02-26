@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setDefense} from "../../Redux/Reducers/reducerFightsDefense";
 import {setAttack} from "../../Redux/Reducers/reducerFightsAttack";
 import SelectFightOnBody from "../../Hooks/SelectFightOnBody";
+import Translate from "../../Hooks/Translate";
 
 const FightPageOpponentSelect = (props) => {
 
@@ -25,7 +26,7 @@ const FightPageOpponentSelect = (props) => {
             setTimeout(() => {
                 if(!hitHead) setHitHead(true)
                 if(!hitLegs) setHitLegs(true)
-            }, 8500)
+            }, 9500)
         }
 
     }, [response])
@@ -54,7 +55,9 @@ const FightPageOpponentSelect = (props) => {
             </div>
             <div className="section-fight__bottom">
                 <div className="bottom__info">
-                    <p>Выберите 2 области атаки</p>
+                    <p>
+                        <Translate>choose_two_attack</Translate>
+                    </p>
                 </div>
                 <ul className="section-fight__select-hit">
                     <li>
@@ -64,7 +67,9 @@ const FightPageOpponentSelect = (props) => {
                             onMouseOut={e => SelectFightOnButtonMouseout(e)}
                             onClick={e => SelectFightOnButtonClick(e, skin, setHitHead)}
                         >
-                            <span>Голова</span>
+                            <span>
+                                <Translate>fight_head</Translate>
+                            </span>
                             <img src="../images/red-check.svg" alt="Ico"/>
                         </button>
                     </li>
@@ -75,7 +80,9 @@ const FightPageOpponentSelect = (props) => {
                             onMouseOut={e => SelectFightOnButtonMouseout(e)}
                             onClick={e => SelectFightOnButtonClick(e, skin, setHitBody)}
                         >
-                            <span>Торс</span>
+                            <span>
+                                <Translate>fight_body</Translate>
+                            </span>
                             <img src="../images/red-check.svg" alt="Ico"/>
                         </button>
                     </li>
@@ -86,7 +93,9 @@ const FightPageOpponentSelect = (props) => {
                             onMouseOut={e => SelectFightOnButtonMouseout(e)}
                             onClick={e => SelectFightOnButtonClick(e, skin, setHitLegs)}
                         >
-                            <span>Ноги</span>
+                            <span>
+                                <Translate>fight_legs</Translate>
+                            </span>
                             <img src="../images/red-check.svg" alt="Ico"/>
                         </button>
                     </li>

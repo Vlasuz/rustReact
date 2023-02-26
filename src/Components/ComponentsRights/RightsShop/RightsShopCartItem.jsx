@@ -2,22 +2,21 @@ import React from 'react';
 import {useDispatch} from "react-redux";
 import {shopListAdd, shopListRemove} from "../../../Redux/actions";
 import axios from "axios";
+import GlobalLink from "../../../Hooks/GlobalLink";
 
 const RightsShopCartItem = ({ item }) => {
 
     const dispatch = useDispatch()
 
     const removeItem = (e) => {
-        axios.post(`https://rust.onefut.net/api/basket/remove?item_id=${item.id}`).then(res => {
+        axios.post("https://"+GlobalLink()+`/api/basket/remove?item_id=${item.id}`).then(res => {
             dispatch(shopListAdd(res.data))
         })
     }
 
     return (
         <div className="cart__item">
-            <div className="clothes__cool clothes__cool_green">
-
-            </div>
+            <div className="clothes__cool clothes__cool_green"/>
             <div className="item__photo">
                 <img src={item.image} alt="Ico"/>
             </div>

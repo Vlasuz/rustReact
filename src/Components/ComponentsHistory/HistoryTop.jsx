@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Translate from "../../Hooks/Translate";
 
 const HistoryTop = (props) => {
 
@@ -33,15 +34,18 @@ const HistoryTop = (props) => {
         <div className="section-history__top">
             <button
                 className="section-history__all button_active"
-                onClick={e => changeHistory(e)}
-            >
-                <p>Все</p>
+                onClick={e => changeHistory(e)}>
+                <p>
+                    <Translate>all</Translate>
+                </p>
             </button>
             <button
                 className="section-history__push"
                 data-type={'withdraw'}
                 onClick={e => changeHistory(e)}>
-                <p>Пополнено</p>
+                <p>
+                    <Translate>history_type_pay</Translate>
+                </p>
                 <div className="cost">
                     $ {valuePay}<span>,00</span>
                 </div>
@@ -50,7 +54,9 @@ const HistoryTop = (props) => {
                 className="section-history__pull"
                 data-type={"pay"}
                 onClick={e => changeHistory(e)}>
-                <p>Выведено с сайта</p>
+                <p>
+                    <Translate>history_type_withdraw</Translate>
+                </p>
                 <div className="cost">
                     $ {valueWithdraw}<span>,00</span>
                 </div>

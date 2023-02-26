@@ -4,13 +4,15 @@ import {reducerUserSkins, userSkinAdd, userSkinSet} from "../../Redux/Reducers/r
 import axios from "axios";
 import {userBalanceAddCoins, userBalanceRemoveCoins} from "../../Redux/Reducers/reducerUserBalance";
 import {getCookie} from "../../Hooks/GetCookies";
+import GlobalLink from "../../Hooks/GlobalLink";
+import Translate from "../../Hooks/Translate";
+import AsyncImages from "../../Hooks/AsyncImages";
 
 const ShopItem = ({ data, list }) => {
 
     const balance = useSelector(state => state.reducerUserBalance.balance)
     const price = data.sale ? (data.price - (data.price * data.sale / 100)).toFixed() : data.price;
     const dispatch = useDispatch();
-    const userData = useSelector(state => state.reducerUserData.data)
     const [isBoughtSkin, setIsBoughtSkin] = useState(false)
     const [isEnoughCash, setIsEnoughCash] = useState(true);
     const enable_skin = useSelector(state => state.reducerUserSkins.skin)
@@ -22,7 +24,7 @@ const ShopItem = ({ data, list }) => {
         }
 
         axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.post('https://rust.onefut.net/api/fight/shop/buy?skin_id='+data.id).then(res => {
+        axios.post("https://"+GlobalLink()+'/api/fight/shop/buy?skin_id='+data.id).then(res => {
             dispatch(userBalanceRemoveCoins(price))
             setIsBoughtSkin(true)
         })
@@ -30,7 +32,8 @@ const ShopItem = ({ data, list }) => {
 
 
     const handleSetSkin = (e) => {
-        axios.post('https://rust.onefut.net/api/fight/shop/choose?skin_id='+data.id).then(res => {
+        axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
+        axios.post("https://"+GlobalLink()+'/api/fight/shop/choose?skin_id='+data.id).then(res => {
             dispatch(userSkinSet(data))
         })
     }
@@ -52,7 +55,8 @@ const ShopItem = ({ data, list }) => {
                 {data.sub_title}
             </p>
             <div className="item__skin">
-                <img src={"https://rust.onefut.net/"+data.image} alt="Skin"/>
+                {/*<AsyncImages src={"https://"+GlobalLink()+"/"+data.image} alt={"skin"}/>*/}
+                <img src={"https://"+GlobalLink()+"/"+data.image} alt="Skin"/>
             </div>
 
 
@@ -79,7 +83,7 @@ const ShopItem = ({ data, list }) => {
                         onClick={handleSetSkin}>
 
                         {
-                            enable_skin?.id === data.id ? <span>Одето</span> : <span>Одеть</span>
+                            enable_skin?.id === data.id ? <span><Translate>skin_current</Translate></span> : <span><Translate>skin_set</Translate></span>
                         }
 
                     </button>

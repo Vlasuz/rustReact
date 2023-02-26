@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import i18n from "i18next";
 import {useTranslation, initReactI18next} from "react-i18next";
 import Lang_EN from '../../Languages/en.json'
 import Lang_RU from '../../Languages/ru.json'
-import Lang_CH from '../../Languages/ch.json'
+import Lang_UK from '../../Languages/uk.json'
+import {getCookie} from "../../Hooks/GetCookies";
 
 const jsonLanguages = {
     ru: {translation: Lang_RU},
     en: {translation: Lang_EN},
-    china: {translation: Lang_CH},
+    uk: {translation: Lang_UK},
 }
 
 // Инициализация:
@@ -21,10 +22,16 @@ i18n.use(initReactI18next).init({
 const HeaderLanguages = () => {
     const {i18n} = useTranslation();
 
+    useEffect(() => {
+        getCookie("lang") ? i18n.changeLanguage(getCookie("lang")) : document.cookie = 'lang=ru';
+    }, [])
+
     const langChange = (e, lang) => {
-        e.target.closest('ul').querySelectorAll('li').forEach(li => li.classList.remove('lang_active'))
+        document.querySelector('li.lang_active').classList.remove('lang_active')
         e.target.closest('li').classList.add('lang_active')
         i18n.changeLanguage(lang)
+
+        document.cookie = 'lang='+lang;
     }
 
     return (
@@ -41,25 +48,19 @@ const HeaderLanguages = () => {
                 </svg>
             </div>
             <ul className="lang__list">
-                <li className={'lang_active'}>
-                    <button
-                        onClick={e => langChange(e, 'ru')}
-                    >
+                <li className={getCookie("lang") === "ru" ? "lang_active" : ""}>
+                    <button onClick={e => langChange(e, 'ru')}>
                         Русский
                     </button>
                 </li>
-                <li>
-                    <button
-                        onClick={e => langChange(e, 'en')}
-                    >
+                <li className={getCookie("lang") === "en" ? "lang_active" : ""}>
+                    <button onClick={e => langChange(e, 'en')}>
                         Английский
                     </button>
                 </li>
-                <li>
-                    <button
-                        onClick={e => langChange(e, 'china')}
-                    >
-                        Китайский
+                <li className={getCookie("lang") === "uk" ? "lang_active" : ""}>
+                    <button onClick={e => langChange(e, 'uk')}>
+                        Украинский
                     </button>
                 </li>
             </ul>

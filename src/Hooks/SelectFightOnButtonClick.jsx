@@ -1,4 +1,5 @@
 import React from 'react';
+import GlobalLink from "./GlobalLink";
 
 const SelectFightOnButtonClick = (e, skin, setting) => {
 
@@ -59,10 +60,10 @@ const SelectFightOnButtonClick = (e, skin, setting) => {
 
         setting(prev => !prev)
 
-        // console.log(skin)
-        // console.log(skin[nameOfImage])
-        // console.log(nameOfImage)
-        document.querySelector('.persone__start img').setAttribute('src', 'https://rust.onefut.net/' + skin[nameOfImage])
+        console.log(skin)
+        console.log(skin[nameOfImage])
+        console.log(nameOfImage)
+        document.querySelector('.persone__start img').setAttribute('src', "https://"+GlobalLink()+'/' + skin[nameOfImage])
     }
 };
 

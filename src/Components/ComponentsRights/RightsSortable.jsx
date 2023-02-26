@@ -1,8 +1,8 @@
 import React from 'react';
 import {Trans, useTranslation} from "react-i18next";
+import Translate from "../../Hooks/Translate";
 
 const RightsSortable = (props) => {
-    const {t} = useTranslation();
 
     let changeRatio = (e) => {
         props.setFilterRadio(e.target.checked ? e.target.id : '')
@@ -19,7 +19,7 @@ const RightsSortable = (props) => {
             />
             <label className="filter__item filter__price" htmlFor="filterPrice">
                 <span>
-                    <Trans t={t}>sort_by_price</Trans>
+                    <Translate>sort_by_price</Translate>
                 </span>
                 <input
                     type="checkbox"
@@ -37,7 +37,7 @@ const RightsSortable = (props) => {
             <label className="filter__item filter__item_active filter__cool"
                    htmlFor="filterCool">
                 <span>
-                    <Trans t={t}>sort_by_rarity</Trans>
+                    <Translate>sort_by_rarity</Translate>
                 </span>
                 <input
                     type="checkbox"
@@ -52,7 +52,7 @@ const RightsSortable = (props) => {
             >
                 <img src="../images/reload.svg" alt="filter"/>
                 <span>
-                    <Trans t={t}>sort_update</Trans>
+                    <Translate>sort_update</Translate>
                 </span>
             </button>
         </div>

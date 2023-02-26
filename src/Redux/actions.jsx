@@ -1,6 +1,6 @@
 import {
     AIRDROP_COUNT_SLEEPERS,
-    AIRDROP_DROP_IS_DOWN,
+    AIRDROP_DROP, AIRDROP_DROP_IS_DROP_DOWN, AIRDROP_DROP_SET_COODS,
     AIRDROP_LENGTH_PLANE,
     AIRDROP_MEMBERS_ADD,
     AIRDROP_STEP, AIRDROP_STEP_RIGHTS,
@@ -119,10 +119,16 @@ export function airdropCountSleepers(sleepers) {
         sleepers
     }
 }
-export function airdropDropIsDown(bool) {
+export function airdropDropSetCoods(data) {
     return {
-        type: AIRDROP_DROP_IS_DOWN,
-        bool
+        type: AIRDROP_DROP_SET_COODS,
+        data
+    }
+}
+export function airdropDropIsDropDown(data) {
+    return {
+        type: AIRDROP_DROP_IS_DROP_DOWN,
+        data
     }
 }
 

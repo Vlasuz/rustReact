@@ -1,9 +1,9 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 import {Trans, useTranslation} from "react-i18next";
+import Translate from "../../../Hooks/Translate";
 
 const RightsShopBottomFull = (props) => {
-    const {t} = useTranslation();
 
     const list = useSelector(state => state.reducerShopListAdded)
 
@@ -13,7 +13,7 @@ const RightsShopBottomFull = (props) => {
             onClick={() => props.setIsOpenCart(prev => !prev)}
         >
             <span>
-                {list.list.length} <Trans t={t}>shop_zone_added</Trans>
+                {list.list.length} <Translate>shop_zone_added</Translate>
             </span>
             <div className="sum">
                 <img src="../images/header__coins.svg" alt="Coins"/>

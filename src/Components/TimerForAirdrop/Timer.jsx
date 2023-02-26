@@ -5,7 +5,7 @@ const Timer = (props) => {
 
     return (
         <div className="timer">
-            <TimerSeconds states={props.states}/>
+            <TimerSeconds/>
             <TimerMilliseconds states={props.states}/>
         </div>
     );

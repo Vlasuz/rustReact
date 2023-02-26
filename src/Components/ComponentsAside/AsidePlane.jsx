@@ -8,7 +8,8 @@ import {reducerSwitcherRights} from "../../Redux/Reducers/reducerSwitcherRights"
 const AsidePlane = (props) => {
 
     const dispatch = useDispatch()
-    const switcherRightsNow = useSelector(state => state.reducerSwitcherRights.data)
+    const seconds = useSelector(state => state.reducerAirdropTimerSecond.seconds)
+    const step = useSelector(state => state.reducerAirdropStep.step)
 
     const changeRightsBlock = (e) => {
 
@@ -28,17 +29,6 @@ const AsidePlane = (props) => {
         e.target.closest('li')?.classList.add('li_active')
     }
 
-    useEffect(() => {
-        document.querySelector('.aside__list li').classList.remove('active')
-        if (switcherRightsNow === "ra") {
-            document.querySelectorAll('.aside__list li').forEach(item => {
-                item.classList.remove('li_active')
-            })
-        }
-        document.querySelector('.section-right__item').classList.remove('section-right__item_hidden')
-        document.querySelector('.section-right__item').classList.add('section-right__item_show')
-    })
-
     return (
         <NavLink to={"/airdrop"} className={isActive => isActive ? 'aside__plane' : 'aside__plane aside__plane_active'}>
             <button
@@ -48,9 +38,13 @@ const AsidePlane = (props) => {
                 <div className="timer-line">
                     <img src="../images/timer-line.svg" alt="Line"/>
                     <div className="timer-line__line">
-                        <div className="timer-line__line_done">
-
-                        </div>
+                        {
+                            step === 'waiting' ?
+                                <div className="timer-line__line_done" style={{width: seconds * 100 / 60 + "%"}} /> :
+                                step === "process" ?
+                                    <div className="timer-line__line_done" style={{width: -(seconds * 100 / 60) + 100 + "%"}} /> :
+                                    ""
+                        }
                     </div>
                 </div>
             </button>

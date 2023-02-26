@@ -4,14 +4,14 @@ import AsideFight from "./AsideFight";
 import AsideCenter from "./AsideCenter";
 import {
     processorListDelete,
-    processorListRemove, storageListDelete,
+    storageListDelete,
     switcherRights,
     userInventoryAdd,
     userInventoryUncheck
 } from "../../Redux/actions";
 import {useDispatch, useSelector} from "react-redux";
-import {useLocation, useNavigate} from "react-router-dom";
-import {reducerStorageWithdraw} from "../../Redux/Reducers/reducerStorageWithdraw";
+import {useLocation} from "react-router-dom";
+import {getCookie} from "../../Hooks/GetCookies";
 
 const Aside = (props) => {
 
@@ -29,14 +29,21 @@ const Aside = (props) => {
         !!withdraw.length && dispatch(storageListDelete())
     }, [switcher])
 
-    function getCookie(name) {
-        let matches = document.cookie.match(new RegExp(
-            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-        ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
-
     useEffect(() => {
+
+
+        if (window.innerWidth < 768){
+            console.log()
+            document.querySelectorAll('.aside__list li').forEach(item => {
+                item.onclick = function () {
+                    console.log(this)
+                    window.scrollTo({
+                        top: 1000,
+                        behavior: "smooth"
+                    })
+                }
+            })
+        }
 
         if(getCookie('prevPage') === 'airdrop' && !location.pathname.includes('airdrop')) {
             document.querySelector('.section-right__item')?.classList.remove('section-right__item_show')

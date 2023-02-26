@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {Trans, useTranslation} from "react-i18next";
+import Translate from "../../Hooks/Translate";
 
 const RightsSearch = (props) => {
-    const {t} = useTranslation();
-
-    const [placeholder, setPlaceholder] = useState(<Trans t={t}>search</Trans>)
 
     const submitFilter = (e) => {
         e.preventDefault()
@@ -25,7 +23,7 @@ const RightsSearch = (props) => {
             {
                 !props.inputSearch.length &&
                 <span className="placeholder-search">
-                    <Trans t={t}>search</Trans>
+                    <Translate>search</Translate>
                 </span>
             }
             <input

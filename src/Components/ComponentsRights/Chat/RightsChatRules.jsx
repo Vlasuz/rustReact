@@ -1,10 +1,13 @@
 import React from 'react';
+import Translate from "../../../Hooks/Translate";
 
 const RightsChatRules = () => {
     return (
         <div className="section-right__rules">
             <div className="rules__block">
-                <h2>Правила чата</h2>
+                <h2>
+                    <Translate>chat_rules</Translate>
+                </h2>
                 <h3>Запрещается:</h3>
                 <p>· Использовать в никнейме название или ссылки ведущие на сторонний сайт</p>
                 <br/>

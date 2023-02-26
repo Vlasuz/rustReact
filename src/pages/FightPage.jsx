@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import FightTop from "../Components/ComponentsFightPage/FightTop";
 import FightItem from "../Components/ComponentsFightPage/FightItem/FightItem";
 import Loader from "../Hooks/Loader";
@@ -8,17 +8,22 @@ import {fightRoomAdd, fightRoomChange, fightRoomRemove, fightRoomSet} from "../R
 import {setSkin} from "../Redux/Reducers/reducerFightsSkin";
 import {userInventoryAdd} from "../Redux/actions";
 import {useTranslation} from "react-i18next";
+import GlobalLink from "../Hooks/GlobalLink";
 
-let lobbysocket = new WebSocket(`wss://rust.onefut.net/ws/api/fight/lobby/`);
-const FightPage = (props) => {
+let lobbysocket = new WebSocket("wss://" + GlobalLink() + `/ws/api/fight/lobby/`);
+const FightPage = () => {
 
     const rooms = useSelector(state => state.reducerFightsRooms.rooms)
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        axios.get('https://rust.onefut.net/api/fight/room/list').then(res => {
+        axios.get("https://" + GlobalLink() + '/api/fight/room/list').then(res => {
             dispatch(fightRoomSet(res.data.reverse()))
+            setLoading(false)
         })
+
+
     }, [])
 
     lobbysocket.onmessage = (e) => {
@@ -29,10 +34,9 @@ const FightPage = (props) => {
                 dispatch(fightRoomAdd(message.data))
                 break;
             case "remove_room":
-                axios.get('https://rust.onefut.net/api/fight/room/list').then(res => {
+                axios.get("https://" + GlobalLink() + '/api/fight/room/list').then(res => {
                     dispatch(fightRoomSet(res.data.reverse()))
                     dispatch(setSkin('me', {}))
-                    dispatch(userInventoryAdd(message.data.fight_players[0].items))
                 })
                 break;
             case "change_room":
@@ -45,13 +49,16 @@ const FightPage = (props) => {
     return (
         <section className="section-shop">
 
-            <FightTop states={props.states}/>
+            <FightTop/>
 
             <div className="section-shop__list-games">
                 {
-                    !!rooms.length && rooms.map(item =>
-                        <FightItem key={item.id} data={item}/>
-                    )
+                    !loading ? rooms?.map(item =>
+                            <FightItem key={item.id} data={item}/>
+                        ) :
+                        <div className="waiting-for-list">
+                            <Loader/>
+                        </div>
                 }
             </div>
 

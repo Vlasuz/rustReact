@@ -8,6 +8,8 @@ import {authAction, userData} from "../../Redux/actions";
 import {reducerAuth} from "../../Redux/Reducers/reducerAuth";
 import Loader from "../../Hooks/Loader";
 import {userBalanceSetCoins} from "../../Redux/Reducers/reducerUserBalance";
+import GlobalLink from "../../Hooks/GlobalLink";
+import Translate from "../../Hooks/Translate";
 
 const PopupLogin = () => {
 
@@ -19,7 +21,7 @@ const PopupLogin = () => {
         e.preventDefault()
 
         setLoginStatus('loading')
-        axios.post(`https://rust.onefut.net/api/auth/login/?steam_id=${steamId}`).then(res => {
+        axios.post("https://"+GlobalLink()+`/api/auth/login/?steam_id=${steamId}`).then(res => {
             dispatch(userData(res.data))
             dispatch(authAction(true))
             dispatch(userBalanceSetCoins(res.data.user.balance))
@@ -52,7 +54,7 @@ const PopupLogin = () => {
                         <input type="text" className={loginStatus === 'error' ? '_error' : loginStatus === 'success' ? '_success' : ""} value={steamId} onChange={e => setSteamId(e.target.value)} required/>
                     </label>
                     <button>
-                        Вход
+                        <Translate>entry</Translate>
                     </button>
 
                 </form>

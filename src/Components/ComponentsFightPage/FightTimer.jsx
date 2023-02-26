@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import Timer from "../TimerForAirdrop/Timer";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
+import Translate from "../../Hooks/Translate";
 
 const FightTimer = (props) => {
 
@@ -16,12 +17,9 @@ const FightTimer = (props) => {
 
     if (bol) {
         setBol(false)
-
         let timeillisecond = setInterval(() => {
             setMillisec(prev => prev < 1 ? millisecondNum : prev - 1)
         }, 10)
-
-
     }
 
     useEffect(() => {
@@ -61,7 +59,7 @@ const FightTimer = (props) => {
                 <Link className={"link-to-finish"} to={'/fight-finish'}/>
                 <span>
                     {
-                        step === 1 ? "Защита" : step === 2 ? "Атака" : ""
+                        step === 1 ? <Translate>defense</Translate> : step === 2 ? <Translate>attack</Translate> : ""
                     }
                 </span>
                 <div className="timer">

@@ -1,4 +1,5 @@
 import React from 'react';
+import Translate from "../../Hooks/Translate";
 
 const RightsSortableSecond = (props) => {
 
@@ -16,7 +17,9 @@ const RightsSortableSecond = (props) => {
                 onChange={e => changeRatio(e)}
             />
             <label className="filter__item filter__price" htmlFor="filterPrice1">
-                <span>По цене</span>
+                <span>
+                    <Translate>sort_by_price</Translate>
+                </span>
                 <input
                     type="checkbox"
                     name="upDown"
@@ -32,7 +35,9 @@ const RightsSortableSecond = (props) => {
             />
             <label className="filter__item filter__item_active filter__cool"
                    htmlFor="filterCool1">
-                <span>По раритетности</span>
+                <span>
+                    <Translate>sort_by_rarity</Translate>
+                </span>
                 <input
                     type="checkbox"
                     name="upDown"
@@ -45,7 +50,9 @@ const RightsSortableSecond = (props) => {
                 className="filter__reload"
             >
                 <img src="../images/reload.svg" alt="filter"/>
-                <span>Обновить</span>
+                <span>
+                    <Translate>sort_update</Translate>
+                </span>
             </button>
         </div>
     );

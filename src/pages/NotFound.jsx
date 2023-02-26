@@ -1,13 +1,18 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
+import Translate from "../Hooks/Translate";
 
 const NotFound = () => {
     return (
         <section className={'page-not-found'}>
-            <h1>Этой страницы еще нет</h1>
-            <p>Возможно ты попал сюда случайно, но все же стоит вернуться обратно</p>
+            <h1>
+                <Translate>this_page_not_found</Translate>
+            </h1>
+            <p>
+                <Translate>this_page_not_found_text</Translate>
+            </p>
             <NavLink to={'/'}>
-                Вернутся на главную
+                <Translate>back_to_main_page</Translate>
             </NavLink>
         </section>
     );
