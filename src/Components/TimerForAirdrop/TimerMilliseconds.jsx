@@ -23,7 +23,7 @@ const TimerMilliseconds = () => {
             <small className="dot">.</small>
             <span>
                 {
-                    seconds <= 0 ? "00" : milliseconds < 10 ? "0" + milliseconds : milliseconds
+                    seconds < 0 ? "00" : milliseconds < 10 ? "0" + milliseconds : milliseconds
                 }
             </span>
         </div>

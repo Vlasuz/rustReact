@@ -7819,6 +7819,7 @@ section {
 .section-history__item:first-child .item__list .li__name {
     top: 100%;
     bottom: auto;
+    z-index: 2;
 }
 .section-history__item .item__list .li__name {
     position: absolute;

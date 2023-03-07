@@ -24,7 +24,7 @@ const RightsAirdropBlock = () => {
                     <div className="timer">
                         <div className="min">
                                 <span>
-                                    {seconds <= 0 ? '00' : seconds < 10 ? "0" + seconds : seconds}
+                                    {seconds < 0 ? '00' : seconds < 10 ? "0" + seconds : seconds}
                                 </span>
                         </div>
                         <TimerMilliseconds/>

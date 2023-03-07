@@ -52,7 +52,7 @@ const HistoryTop = (props) => {
                     <span>
                         .
                         {
-                            String((valuePay.toFixed(2) - valuePay.toFixed(0)).toFixed(2)).replace('0.', '')
+                            Math.abs(String((valuePay.toFixed(2) - valuePay.toFixed(0)).toFixed(2)).replace('0.', ''))
                         }
                     </span>
                 </div>
@@ -69,7 +69,7 @@ const HistoryTop = (props) => {
                     <span>
                         .
                         {
-                            String((valueWithdraw.toFixed(2) - valueWithdraw.toFixed(0)).toFixed(2)).replace('0.', '')
+                            Math.abs(String((valueWithdraw.toFixed(2) - valueWithdraw.toFixed(0)).toFixed(2)).replace('0.', ''))
                         }
                     </span>
                 </div>
