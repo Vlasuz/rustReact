@@ -6,7 +6,7 @@ import RightsShop from "./RightsShop/RightsShop";
 import RightsAirdrop from "./RightsAirdrop/RightsAirdrop";
 import {useSelector} from "react-redux";
 
-const RightsSwitcher = (props) => {
+const RightsSwitcher = () => {
 
     const switcherRights = useSelector(state => state.reducerSwitcherRights.data)
 
@@ -16,10 +16,10 @@ const RightsSwitcher = (props) => {
             <div className="section-right__item">
 
                 {
-                    switcherRights === 'st' ? <RightsStorage states={props.states}/> :
-                        switcherRights === 'sh' ? <RightsShop states={props.states}/> :
-                            switcherRights === 'ra' ? <RightsAirdrop states={props.states}/> :
-                                <RightsProcessor states={props.states}/>
+                    switcherRights === 'st' ? <RightsStorage/> :
+                        switcherRights === 'sh' ? <RightsShop/> :
+                            switcherRights === 'ra' ? <RightsAirdrop/> :
+                                <RightsProcessor/>
                 }
 
             </div>

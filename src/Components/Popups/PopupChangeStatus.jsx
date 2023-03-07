@@ -5,6 +5,7 @@ import PopupCloseBackground from "./PopupCloseBackground";
 import {useSelector} from "react-redux";
 import axios from "axios";
 import {getCookie} from "../../Hooks/GetCookies";
+import GlobalLink from "../../Hooks/GlobalLink";
 
 const PopupChangeStatus = ({ status, setStatus }) => {
 
@@ -14,11 +15,10 @@ const PopupChangeStatus = ({ status, setStatus }) => {
         e.preventDefault()
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie("access_token")}`;
-        axios.post("https://rust.onefut.net/api/user/change_status/?status=" + input).then(res => {
+        axios.post("https://"+GlobalLink()+"/api/user/change_status/?status=" + input).then(res => {
             document.querySelectorAll('.popup').forEach(function (pp) {
                 pp.classList.remove('popup_active')
                 setStatus(input)
-                setInput('')
             })
         })
 
@@ -32,7 +32,7 @@ const PopupChangeStatus = ({ status, setStatus }) => {
                     <Translate>change_status</Translate>
                 </h2>
                 <p>
-                    Измените свой статус в профиле. Максимальное количество символов 12
+                    <Translate>change_status_text</Translate>
                 </p>
                 <PopupCloseCross/>
                 <form onSubmit={handleSubmit}>

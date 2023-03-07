@@ -144,13 +144,34 @@
   "fair_game_check": "Проверить игру",
   "fair_game_jackpot": "Джекпот:",
   "create_game": "Создать игру",
-  "game": "Игра",
   "summary_bet_coins_for_fight": "Итоговая сумма ставки:",
   "on_balance": "На балансе:",
 
+  "game": "Игра",
   "you_are_only_member_airdrop": "Так как вы 1 участник в игре, выигрыш не будет получен.",
   "success_to_buy_bags": "Вы успешно купили спальники",
   "auth_for_action": "Для начала надо авторизоваться",
   "change_status": "Изменить статус",
-  "change_status_text": "Измените свой статус в профиле. Максимальное количество символов 12"
+  "change_status_text": "Измените свой статус в профиле. Максимальное количество символов 12",
+  "system": "Система",
+  "already_have_a_game": "У вас уже есть игра",
+  "steam_inventory": "Инвентарь Steam",
+  "choose_skin_for_payment": "Выберите скины для пополнения",
+  "added_for_balance": "Зачисление на баланс:",
+  "add_by_skins": "Пополнить скинами",
+  "bots_status": "Статус ботов",
+  "waiting_for_bots": "Подбираем ботов",
+  "by_browser": "Через браузер",
+  "by_steam_app": "Через Steam",
+  "entry_v2": "Вход",
+  "steam_id": "Steam ID:",
+  "copied": "Скопировано",
+  "add_balance": "Пополнение баланса",
+
+  "play_for_coins": "Играть за",
+  "select_winner": "Выбор победителя:",
+  "start_in": "Начало через:",
+  "duel": "Дуэль",
+
+  "error": "Ошибка"
 }

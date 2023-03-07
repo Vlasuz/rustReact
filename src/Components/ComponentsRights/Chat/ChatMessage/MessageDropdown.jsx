@@ -71,7 +71,7 @@ const MessageDropdown = ({openDropdown, messageData, websocket}) => {
             {
                 !!Object.keys(userData).length && <>
                     {
-                        messageData?.user?.id !== userData.id && (userData.role === 'admin' || userData.role) === 'moder' ?
+                        messageData?.user?.id !== userData.id && (userData.role === 'admin' || userData.role === 'moder') ?
                             <li>
                                 <button onClick={handleBlocked}>
                                     <Translate>chat_block</Translate>
@@ -84,7 +84,7 @@ const MessageDropdown = ({openDropdown, messageData, websocket}) => {
             {
                 !!Object.keys(userData).length && <>
                     {
-                        (messageData?.user?.id !== userData.id && (userData.role === 'admin' || userData.role) === 'moder') &&
+                        (messageData?.user?.id !== userData.id && (userData.role === 'admin' || userData.role === 'moder')) &&
                         <li>
                             {
                                 bannedUser ?

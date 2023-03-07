@@ -14,6 +14,7 @@ import {setSkin} from "../../Redux/Reducers/reducerFightsSkin";
 import {getCookie} from "../../Hooks/GetCookies";
 import GlobalLink from "../../Hooks/GlobalLink";
 import Translate from "../../Hooks/Translate";
+import {setNotice} from "../../Redux/Reducers/reducerNotice";
 
 const PopupNewRoom = () => {
 
@@ -37,6 +38,11 @@ const PopupNewRoom = () => {
 
     function createGame(e) {
         e.preventDefault();
+
+        if(rooms.some(item => item?.first_player?.user?.id === userData?.id || item?.second_player?.user?.id === userData?.id)){
+            dispatch(setNotice("already_have_a_game"))
+            return
+        }
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+'/api/fight/room/create', {
@@ -316,7 +322,6 @@ const PopupNewRoom = () => {
                                 </div>
                             </div>
                             {
-                                !rooms?.some(item => item?.fight_players?.some(player => player.user.id === userData.id)) &&
                                 <button type={"submit"} disabled={!(coinsBid > 0)}>
                                     <Translate>create_game</Translate>
                                 </button>

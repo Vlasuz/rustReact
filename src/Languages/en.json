@@ -145,6 +145,32 @@
   "fair_game_jackpot": "Jackpot:",
   "create_game": "Create game",
   "summary_bet_coins_for_fight": "Total bet amount:",
-  "on_balance": "On balance:"
+  "on_balance": "On balance:",
+
+  "game": "Game",
+  "you_are_only_member_airdrop": "Since you are the 1st player in the game, no winnings will be received.",
+  "success_to_buy_bags": "You have successfully bought sleeping bags",
+  "auth_for_action": "To get started, you need to log in",
+  "change_status": "Change status",
+  "change_status_text": "Change your profile status. Maximum number of characters 12",
+  "system": "System",
+  "already_have_a_game": "You already have a game",
+  "steam_inventory": "Steam Inventory",
+  "choose_skin_for_payment": "Select skins to download",
+  "added_for_balance": "Credit to balance:",
+  "add_by_skins": "Fill up with skins",
+  "bots_status": "Bot status",
+  "waiting_for_bots": "We select bots",
+  "by_browser": "Through the browser",
+  "by_steam_app": "Via Steam",
+  "entry_v2": "Entrance",
+  "steam_id": "Steam ID:",
+  "copied": "Copied",
+  "add_balance": "Replenishment of balance",
+
+  "play_for_coins": "Play as",
+  "select_winner": "Picking a Winner:",
+  "start_in": "Start through:",
+  "duel": "Duel"
 
 }

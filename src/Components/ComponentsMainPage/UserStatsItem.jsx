@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Translate from "../../Hooks/Translate";
+import {logger} from "../../middleware/logger";
 
 const UserStatsItem = ({  dataStats, person_id, title }) => {
 
@@ -13,7 +14,7 @@ const UserStatsItem = ({  dataStats, person_id, title }) => {
                 !!dataStats?.length ? <>
                     <p>{dataStats?.length}
                         <sup>
-                            {dataStats?.filter(item => item?.winner?.user.id === person_id.id ).length} победы
+                            {dataStats?.filter(item => item?.winner?.user?.id === person_id?.id )?.length} победы
                         </sup>
                     </p>
                     <div className="lines">

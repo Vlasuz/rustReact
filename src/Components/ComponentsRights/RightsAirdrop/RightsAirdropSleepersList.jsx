@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {
-    addMySleepers,
+    addMySleepers, clearSleeper,
     reducerMySleepers,
     removeBoughtSleeper,
     removeOneSetSleeper,
     setSleepers
 } from "../../../Redux/Reducers/reducerAirdropMySleepers";
 import Translate from "../../../Hooks/Translate";
+import {airdropStep, airdropStepRights} from "../../../Redux/actions";
 
 const RightsAirdropSleepersList = () => {
 
@@ -24,6 +25,8 @@ const RightsAirdropSleepersList = () => {
         let currentDroppable = null;
 
         let sleeper = e.closest('li')
+
+        sleeper.classList.add('li_moving')
 
         if (sleeper.classList.contains('sleepers__item_moved'))
             sleeper.classList.remove('sleepers__item_moved')
@@ -109,12 +112,14 @@ const RightsAirdropSleepersList = () => {
             document.removeEventListener('mousemove', onMouseMove);
             document.onmouseup = null;
 
-            let zoom = document.querySelector('.map__scale').style.zoom
+            let zoom = document.querySelector('.map__scale').style.transform.replace("scale(", "").replace(")", "")
+
 
             if (currentDroppable) {
 
-                sleeper.style.left = (cX / zoom) - currentDroppable?.getBoundingClientRect().left + 'px';
-                sleeper.style.top = (cY / zoom) - currentDroppable?.getBoundingClientRect().top + 'px';
+                sleeper.style.left = (cX / zoom) - (currentDroppable?.getBoundingClientRect().left) / zoom + 'px';
+                sleeper.style.top = (cY / zoom) - currentDroppable?.getBoundingClientRect().top / zoom + (20 / zoom) + 'px';
+
                 currentDroppable.append(sleeper);
 
                 if (!sleeper.classList.contains('sleepers__item_moved')) {
@@ -139,6 +144,8 @@ const RightsAirdropSleepersList = () => {
                 sleeper.style.top = "auto";
                 sleeper.style.position = "static";
 
+                sleeper.classList.remove('li_moving')
+
                 document.querySelector('.section-right__airdrop .airdrop__move ul').append(sleeper)
             }
 
@@ -149,10 +156,19 @@ const RightsAirdropSleepersList = () => {
         };
     }
 
+    const handleBack = () => {
+        dispatch(clearSleeper())
+        dispatch(airdropStepRights(1))
+        document.querySelectorAll('.map__points li').forEach(item => item.remove())
+    }
+
     return (
         <>
-            <h3>
+            <h3 className={"move-sleepers__title"}>
                 <Translate>move_your_bags</Translate>:
+                <span className="sleepers__back" onClick={handleBack}>
+                    <img src="../images/close-sleepers.svg" alt=""/>
+                </span>
             </h3>
             <ul>
                 {

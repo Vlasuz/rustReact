@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setNotice} from "../Redux/Reducers/reducerNotice";
 import {Trans, useTranslation} from "react-i18next";
@@ -56,11 +56,17 @@ const Notices = () => {
             "type": "success_to_buy_bags",
             "text": <Translate>success_to_buy_bags</Translate>,
             "icons": "../images/green-check.svg",
+        },
+        {
+            "type": "already_have_a_game",
+            "text": <Translate>already_have_a_game</Translate>,
+            "icons": "../images/error-red.svg",
         }
     ];
 
     const noticeActivated = useSelector(state => state.reducerNotice.notice)
     const dispatch = useDispatch()
+    const [oldNotice, setOldNotice] = useState("")
 
     document.querySelectorAll('.section-right__notice .notice__item').forEach(item => {
         item.onclick = () => {
@@ -70,10 +76,13 @@ const Notices = () => {
 
     useEffect(() => {
 
+        console.log(noticeActivated, oldNotice)
         if (!!noticeActivated.length) {
-            setTimeout(() => {
+            let timeout = setTimeout(() => {
+                setOldNotice(noticeActivated)
                 dispatch(setNotice(""))
             }, 3000)
+            // clearTimeout(timeout)
         }
 
     }, [noticeActivated])

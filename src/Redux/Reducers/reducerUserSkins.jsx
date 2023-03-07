@@ -1,7 +1,9 @@
 export const USER_SKIN_SET = 'USER_SKIN_SET'
+export const USER_SKIN_BOUGHT = 'USER_SKIN_BOUGHT'
 
 const initialState = {
-    skin: {}
+    skin: {},
+    bought_skins: []
 }
 
 export const reducerUserSkins = (state = initialState, action) => {
@@ -12,6 +14,11 @@ export const reducerUserSkins = (state = initialState, action) => {
                 ...state,
                 skin: action.skin
             }
+        case USER_SKIN_BOUGHT:
+            return {
+                ...state,
+                bought_skins: [...state.bought_skins, action.skin]
+            }
         default:
             return state
 
@@ -21,6 +28,12 @@ export const reducerUserSkins = (state = initialState, action) => {
 export function userSkinSet(skin) {
     return {
         type: USER_SKIN_SET,
+        skin
+    }
+}
+export function userSkinBought(skin) {
+    return {
+        type: USER_SKIN_BOUGHT,
         skin
     }
 }

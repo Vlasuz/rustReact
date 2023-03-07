@@ -12,6 +12,7 @@ import {setSkin} from "../../Redux/Reducers/reducerFightsSkin";
 import GlobalLink from "../../Hooks/GlobalLink";
 import Translate from "../../Hooks/Translate";
 import {getCookie} from "../../Hooks/GetCookies";
+import {setNotice} from "../../Redux/Reducers/reducerNotice";
 
 const PopupEntryCoins = ({ data }) => {
 
@@ -20,9 +21,17 @@ const PopupEntryCoins = ({ data }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const settings = useSelector(state => state.reducerSettings.settings);
+    const rooms = useSelector(state => state.reducerFightsRooms.rooms)
 
     const handleStart = (e) => {
         e.preventDefault()
+
+
+        if(rooms.some(item => item?.first_player?.user?.id === userData?.id || item?.second_player?.user?.id === userData?.id)){
+            dispatch(setNotice("already_have_a_game"))
+            return
+        }
+        console.log('data', "https://"+GlobalLink()+`/api/fight/room/join?game_id=${data.id}`)
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+`/api/fight/room/join?game_id=${data.id}`, {
@@ -32,12 +41,12 @@ const PopupEntryCoins = ({ data }) => {
             sk.onopen = function () {
                 sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
                 dispatch(setSocket(sk))
+                navigate("/fight/"+data.id)
             }
             sk.onmessage = e => {
                 let message = JSON.parse(JSON.parse(e.data))
                 dispatch(setResponse(message))
 
-                console.log('Entry coins', message)
 
                 switch(message.type){
                     case 'player_join_event':
@@ -46,8 +55,12 @@ const PopupEntryCoins = ({ data }) => {
                         break;
                 }
             }
-
-            navigate("/fight/"+res.data.id)
+            sk.onclose = () => {
+                console.log('FIGHT close')
+            }
+            sk.onerror = () => {
+                console.log('FIGHT error')
+            }
         })
     }
 

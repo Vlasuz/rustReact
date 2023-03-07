@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import GlobalLink from "../../Hooks/GlobalLink";
+import parse from "html-react-parser";
+import {useTranslation} from "react-i18next";
 
 const FaqCatalog = ({faq, error}) => {
+
+    const {i18n} = useTranslation();
 
     const switchCatalog = (e, itemNum) => {
 
@@ -26,16 +30,27 @@ const FaqCatalog = ({faq, error}) => {
         <div className="section-faq__catalog">
 
             {
-                !error ? faq.map((item, itemNum) =>
-                    <button
-                        key={itemNum}
-                        className={itemNum === 0 ? "catalog__item catalog__item_active" : "catalog__item"}
-                        onClick={e => switchCatalog(e, itemNum)}>
-                        <img src={"https://"+GlobalLink()+"/"+item.image} alt="Ico"/>
-                        <h2>
-                            {item.title}
-                        </h2>
-                    </button>
+                !error ? faq.map((item, itemNum) => {
+
+                    const title = {
+                        'ru': item?.title && item?.title,
+                        'uk': item?.ua_title && item?.ua_title,
+                        'en': item?.en_title && item?.en_title,
+                    }
+
+                        return (
+                            <button
+                                key={itemNum}
+                                className={itemNum === 0 ? "catalog__item catalog__item_active" : "catalog__item"}
+                                onClick={e => switchCatalog(e, itemNum)}>
+                                <img src={"https://" + GlobalLink() + "/" + item.image} alt="Ico"/>
+                                <h2>
+                                    {/*{item.title}*/}
+                                    {title[i18n.language]}
+                                </h2>
+                            </button>
+                        )
+                    }
                 ) : <div style={{color: 'red'}}>Ошибка в соединении: 500</div>
             }
 

@@ -17,7 +17,7 @@ const RightsAirdropPlayersItem = ({ data }) => {
             <div className="item__coins">
                 <img src="../images/header__coins.svg" alt="Coins"/>
                 <span>
-                    {data.bags.length * settings.airdrop_bag_price}
+                    {data?.bags?.length && settings?.airdrop_bag_price && data?.bags?.length * settings?.airdrop_bag_price}
                 </span>
             </div>
         </div>

@@ -33,6 +33,9 @@ import {reducerSubmitAirdrop} from "./reducerSubmitAirdrop";
 import {reducerMySleepers} from "./reducerAirdropMySleepers";
 import {reducerAirdropSocket} from "./reducerAirdropSocket";
 import {reducerUserChat} from "./reducerUserChat";
+import {reducerOpenPopup} from "./reducerOpenPopup";
+import {reducerWithdrawItems} from "./reducerWithdrawItems";
+import {reducerPages} from "./reducerPages";
 
 export const rootReducer = combineReducers({
     reducerSwitcherRights,
@@ -69,4 +72,7 @@ export const rootReducer = combineReducers({
     reducerMySleepers,
     reducerAirdropSocket,
     reducerUserChat,
+    reducerOpenPopup,
+    reducerWithdrawItems,
+    reducerPages
 })

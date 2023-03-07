@@ -5,6 +5,9 @@ import Lang_EN from '../../Languages/en.json'
 import Lang_RU from '../../Languages/ru.json'
 import Lang_UK from '../../Languages/uk.json'
 import {getCookie} from "../../Hooks/GetCookies";
+import axios from "axios";
+import {setPages} from "../../Redux/Reducers/reducerPages";
+import {useDispatch} from "react-redux";
 
 const jsonLanguages = {
     ru: {translation: Lang_RU},
@@ -21,6 +24,7 @@ i18n.use(initReactI18next).init({
 
 const HeaderLanguages = () => {
     const {i18n} = useTranslation();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         getCookie("lang") ? i18n.changeLanguage(getCookie("lang")) : document.cookie = 'lang=ru';

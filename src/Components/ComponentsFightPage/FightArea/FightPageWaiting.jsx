@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import FightAreaTop from "./FightAreaTop";
@@ -9,11 +9,14 @@ import GlobalLink from "../../../Hooks/GlobalLink";
 import Translate from "../../../Hooks/Translate";
 import {getCookie} from "../../../Hooks/GetCookies";
 import {userInventoryAdd} from "../../../Redux/actions";
+import FightAreaBottom from "./FightAreaBottom";
 
 const FightPageWaiting = ({ roomData }) => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const response = useSelector(state => state.reducerFightsResponse.response)
+    const [isActivePage, setIsActivePage] = useState('')
 
     const handleCancel = () => {
         axios.defaults.headers.delete['Authorization'] = `Bearer ${getCookie('access_token')}`;
@@ -23,8 +26,20 @@ const FightPageWaiting = ({ roomData }) => {
         })
     }
 
+    useEffect(() => {
+        setTimeout(() => {
+            setIsActivePage(((response?.type === "player_join_event") || response?.type === "waiting" ? " section-fight_active" : ""))
+        }, 500)
+    }, [])
+
+    if(response?.data?.length === 2){
+        setTimeout(() => {
+            setIsActivePage(" section-fight_hide")
+        }, 500)
+    }
+
     return (
-        <section className="section-fight">
+        <section className={"section-fight" + isActivePage}>
             <div className="section-fight__lft">
                 {(roomData && roomData.first_player) && <FightAreaTop userInfo={roomData.first_player} />}
                 <div className="section-fight__persone">
@@ -37,6 +52,7 @@ const FightPageWaiting = ({ roomData }) => {
                         <Translate>cancel_fight</Translate>
                     </button>
                 </div>
+                {/*<FightAreaBottom />*/}
             </div>
             <div className="section-fight__center">
                 <div className="center__loading">
@@ -62,7 +78,7 @@ const FightPageWaiting = ({ roomData }) => {
                         <img src="../images/persone-siluete.png" alt="Persone"/>
                     </div>
                 </div>
-                <div className="section-fight__bottom">
+                <div className="section-fight__bottom section-fight__bottom_active">
                     <div className="section-fight__opponent-info">
                         <Translate>not_found_player</Translate>
                     </div>

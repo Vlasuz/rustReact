@@ -2,14 +2,12 @@ import React from 'react';
 import RightsTop from "./RightsTop";
 import RightsSwitcher from "./RightsSwitcher";
 
-const RightsContainer = (props) => {
-
-
+const RightsContainer = () => {
 
     return (
         <section className="section-right">
-            <RightsTop states={props.states}/>
-            <RightsSwitcher states={props.states}/>
+            <RightsTop/>
+            <RightsSwitcher/>
         </section>
     );
 };

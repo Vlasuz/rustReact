@@ -56,7 +56,7 @@ const FightItem = ({data}) => {
                                 "list-games__item") + (showItems ? " list-games__item_active" : "")
                     }>
 
-                    {data?.fight_players?.items.length > 0 ?
+                    {data.first_player?.items.length > 0 ?
                         <PopupEntryClothes data={data} price={price}/> :
                         <PopupEntryCoins data={data}/>}
 
@@ -100,56 +100,65 @@ const FightItem = ({data}) => {
                         </div>
                     </NavLink>
 
-                    {
-                        !((data?.first_player?.user?.id === userData.id) || (data?.second_player?.user.id === userData.id)) ? <>
-                                {
-                                    data.game_state === "waiting" ?
-                                        <button className="item__button" onClick={handleJoin}>
-                                            {!!Object.keys(userData).length && <span>Играть за</span>}
-                                            <img src="../images/header__coins.svg" alt="Ico"/>
-                                            <span>{price}</span>
-                                        </button> :
+                    {!!Object.keys(userData).length ? <>
+                            {
+                                !((data?.first_player?.user?.id === userData.id) || (data?.second_player?.user.id === userData.id)) ? <>
+                                        {
+                                            data.game_state === "waiting" ?
+                                                <button className="item__button" onClick={handleJoin}>
+                                                    {!!Object.keys(userData).length && <span>
+                                                        <Translate>play_for_coins</Translate>
+                                                    </span>}
+                                                    <img src="../images/header__coins.svg" alt="Ico"/>
+                                                    <span>{price}</span>
+                                                </button> :
 
-                                        data.game_state === "process" ?
-                                            <button className="item__button">
-                                                <img src="../images/header__coins.svg" alt="Ico"/>
-                                                <span>{price}</span>
-                                            </button> :
+                                                data.game_state === "process" ?
+                                                    <button className="item__button">
+                                                        <img src="../images/header__coins.svg" alt="Ico"/>
+                                                        <span>{price}</span>
+                                                    </button> :
 
-                                            <button className="item__button">
-                                                <div className={
-                                                    data.winner != null && (data.winner.user.id === data.second_player?.user.id) ? "winner" : "looser"
-                                                }>
-                                                    {
-                                                        data.winner != null && (data.winner.user.id === data.second_player?.user.id) ?
-                                                            <>
-                                                                <img src="../images/header__coins.svg" alt="Ico"/>
-                                                                <span>{price}</span>
-                                                            </> :
-                                                            <img src="../images/looser.svg" alt="Ico"/>
-                                                    }
-                                                </div>
-                                                <div className={
-                                                    data.winner != null && (data.winner.user.id === data.second_player?.user.id) ? "looser" : "winner"
-                                                }>
-                                                    {
-                                                        data.winner != null && (data.winner.user.id === data.second_player?.user.id) ?
-                                                            <img src="../images/looser.svg" alt="Ico"/> :
-                                                            <>
-                                                                <img src="../images/header__coins.svg" alt="Ico"/>
-                                                                <span>{price}</span>
-                                                            </>
-                                                    }
-                                                </div>
-                                            </button>
-                                }
-                            </> :
-                            <button className={"item__button"} onClick={e => handleEntry(data.id)}>
-                                <span>
-                                    <Translate>entry</Translate>
-                                </span>
-                            </button>
+                                                    <button className="item__button">
+                                                        <div className={
+                                                            data.winner != null && (data.winner.user.id === data.second_player?.user.id) ? "winner" : "looser"
+                                                        }>
+                                                            {
+                                                                data.winner != null && (data.winner.user.id === data.second_player?.user.id) ?
+                                                                    <>
+                                                                        <img src="../images/header__coins.svg" alt="Ico"/>
+                                                                        <span>{price}</span>
+                                                                    </> :
+                                                                    <img src="../images/looser.svg" alt="Ico"/>
+                                                            }
+                                                        </div>
+                                                        <div className={
+                                                            data.winner != null && (data.winner.user.id === data.second_player?.user.id) ? "looser" : "winner"
+                                                        }>
+                                                            {
+                                                                data.winner != null && (data.winner.user.id === data.second_player?.user.id) ?
+                                                                    <img src="../images/looser.svg" alt="Ico"/> :
+                                                                    <>
+                                                                        <img src="../images/header__coins.svg" alt="Ico"/>
+                                                                        <span>{price}</span>
+                                                                    </>
+                                                            }
+                                                        </div>
+                                                    </button>
+                                        }
+                                    </> :
+                                    <button className={"item__button"} onClick={e => handleEntry(data.id)}>
+                                        <span>
+                                            <Translate>entry</Translate>
+                                        </span>
+                                    </button>
 
+                            }
+                        </> :
+                        <button className="item__button" onClick={handleJoin}>
+                            <img src="../images/header__coins.svg" alt="Ico"/>
+                            <span>{price}</span>
+                        </button>
                     }
 
                     <div className={

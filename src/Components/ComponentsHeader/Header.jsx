@@ -17,7 +17,7 @@ const Header = () => {
                 <div className="header__inner">
                     <HeaderLogo />
                     <HeaderLanguages />
-                    {/*<HeaderVolume />*/}
+                    <HeaderVolume />
 
                     <div className="header__lowright">
                         <HeaderSupport />

@@ -26,8 +26,9 @@ const HistoryTop = (props) => {
         e.target.closest('button').classList.add('button_active')
     }
     useEffect(() => {
-        props.transactions.map(item => item.type === "withdraw" && setValueWithdraw(prev => prev + item.value))
-        props.transactions.map(item => item.type === "pay" && setValuePay(prev => prev + item.value))
+        props.transactions.map(item => item.type === "withdraw" && setValueWithdraw(prev => prev + +item.price))
+        props.transactions.map(item => item.type === "pay" && setValuePay(prev => prev + +item.price))
+        console.log(props.transactions)
     }, [props.transactions])
 
     return (
@@ -47,7 +48,13 @@ const HistoryTop = (props) => {
                     <Translate>history_type_pay</Translate>
                 </p>
                 <div className="cost">
-                    $ {valuePay}<span>,00</span>
+                    $ {valuePay.toFixed(0)}
+                    <span>
+                        .
+                        {
+                            String((valuePay.toFixed(2) - valuePay.toFixed(0)).toFixed(2)).replace('0.', '')
+                        }
+                    </span>
                 </div>
             </button>
             <button
@@ -58,7 +65,13 @@ const HistoryTop = (props) => {
                     <Translate>history_type_withdraw</Translate>
                 </p>
                 <div className="cost">
-                    $ {valueWithdraw}<span>,00</span>
+                    $ {valueWithdraw.toFixed(0)}
+                    <span>
+                        .
+                        {
+                            String((valueWithdraw.toFixed(2) - valueWithdraw.toFixed(0)).toFixed(2)).replace('0.', '')
+                        }
+                    </span>
                 </div>
             </button>
         </div>

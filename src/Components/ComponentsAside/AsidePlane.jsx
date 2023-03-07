@@ -40,9 +40,9 @@ const AsidePlane = (props) => {
                     <div className="timer-line__line">
                         {
                             step === 'waiting' ?
-                                <div className="timer-line__line_done" style={{width: seconds * 100 / 60 + "%"}} /> :
+                                <div className="timer-line__line_done" style={{width: seconds * 100 / 30 + "%"}} /> :
                                 step === "process" ?
-                                    <div className="timer-line__line_done" style={{width: -(seconds * 100 / 60) + 100 + "%"}} /> :
+                                    <div className="timer-line__line_done" style={{width: -(seconds * 100 / 30) + 100 + "%"}} /> :
                                     ""
                         }
                     </div>

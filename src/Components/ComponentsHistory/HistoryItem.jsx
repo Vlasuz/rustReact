@@ -6,6 +6,9 @@ const HistoryItem = ({data}) => {
 
     const [showAllItems, setShowAllItems] = useState(4)
 
+
+    console.log(data)
+
     useEffect(() => {
         document.querySelectorAll('.section-history__item').forEach(item => {
             setTimeout(() => {
@@ -36,13 +39,7 @@ const HistoryItem = ({data}) => {
                         {
                             data.items.map((item, itemNum) => itemNum < showAllItems &&
                                 <li key={item.id}>
-                                    <div
-                                        className={
-                                            item.rarity.color === "3" ? "clothes__cool clothes__cool_red" :
-                                                item.rarity.color === "2" ? "clothes__cool clothes__cool_blue" :
-                                                    item.rarity.color === "1" ? "clothes__cool clothes__cool_green" : "clothes__cool clothes__cool_grey"
-                                        }
-                                    >
+                                    <div className={"clothes__cool"} style={{background: item.rarity.color}}>
 
                                     </div>
                                     <img src={item.image} alt="Skin"/>
@@ -70,7 +67,7 @@ const HistoryItem = ({data}) => {
                 </span>
             </div>
 
-            <HistoryItemDelete />
+            {/*<HistoryItemDelete />*/}
             <HistoryItemStats data={data} />
         </div>
     );

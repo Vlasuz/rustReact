@@ -6,8 +6,9 @@ const Technical = ({ technicalDate }) => {
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
 
+
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const deadline = `${monthNames[Number(technicalDate.slice(3, 5) - 1)]}, ${technicalDate.slice(0, 2)}, ${technicalDate.slice(6, 10)}`;
+    const deadline = `${monthNames[Number(technicalDate?.slice(3, 5) - 1)]}, ${technicalDate?.slice(0, 2)}, ${technicalDate?.slice(6, 10)}`;
 
     const getTime = () => {
         const time = Date.parse(deadline) - Date.now();
@@ -22,7 +23,7 @@ const Technical = ({ technicalDate }) => {
         const interval = setInterval(() => getTime(deadline), 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [deadline]);
 
     return (
         <main className="tech-work">
@@ -34,16 +35,32 @@ const Technical = ({ technicalDate }) => {
                 <br/>Сайт заработает через:</p>
             <time>
                 <span className="day">
-                    <span>{days < 10 ? "0" + days : days}</span>
+                    <span>
+                        {
+                            days ? (days < 10 ? "0" + days : days) : "00"
+                        }
+                    </span>
                 </span>
                 <span className="hour">:
-                    <span>{hours < 10 ? "0" + hours : hours}</span>
+                    <span>
+                        {
+                            hours ? (hours < 10 ? "0" + hours : hours) : "00"
+                        }
+                    </span>
                 </span>
                 <span className="min">:
-                    <span>{minutes < 10 ? "0" + minutes : minutes}</span>
+                    <span>
+                        {
+                            minutes ? (minutes < 10 ? "0" + minutes : minutes) : "00"
+                        }
+                    </span>
                 </span>
                 <span className="sec">:
-                    <span>{seconds < 10 ? "0" + seconds : seconds}</span>
+                    <span>
+                        {
+                            seconds ? (seconds < 10 ? "0" + seconds : seconds) : "00"
+                        }
+                    </span>
                 </span>
             </time>
         </main>

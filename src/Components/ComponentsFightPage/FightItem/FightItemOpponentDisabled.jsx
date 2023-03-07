@@ -12,7 +12,7 @@ const FightItemOpponentDisabled = ({ userInfo }) => {
                     <img src="../images/persone-siluete.png" alt="Persone"/>
                 </div>
             </div>
-            <div className="section-fight__bottom">
+            <div className="section-fight__bottom section-fight__bottom_active">
                 <div className="section-fight__opponent-info">
                     <Translate>choose_defense</Translate>
                 </div>

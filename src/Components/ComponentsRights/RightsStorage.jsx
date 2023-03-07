@@ -9,6 +9,7 @@ import {reducerUserInventory} from "../../Redux/Reducers/reducerUserInventory";
 import {switcherRights, userInventoryAdd} from "../../Redux/actions";
 import {Trans, useTranslation} from "react-i18next";
 import Translate from "../../Hooks/Translate";
+import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
 
 const RightsStorage = (props) => {
 
@@ -49,9 +50,46 @@ const RightsStorage = (props) => {
                 {
                     !!storageList.length ? storageList
                             ?.filter(item => item.title.toLowerCase().includes(sortArray.search.toLowerCase()))
-                            ?.sort((a, b) => (!sortArray.filterCheckbox) ?
-                                ((sortArray.filterRadio === "filterPrice") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice" ? b.cost : b.rarity) :
-                                ((sortArray.filterRadio === "filterPrice") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice" ? a.cost : a.rarity))
+                            ?.sort((a, b) => {
+                                    let rarA, rarB;
+                                    switch(a.rarity.color) {
+                                        case "#a7ec2e":
+                                            rarA = 2;
+                                            break;
+                                        case "#dddddd":
+                                            rarA = 1;
+                                            break;
+                                        case "#35a3f1":
+                                            rarA = 3;
+                                            break;
+                                        case "#f15840":
+                                            rarA = 4;
+                                            break;
+                                    }
+                                    switch(b.rarity.color) {
+                                        case "#a7ec2e":
+                                            rarB = 2;
+                                            break;
+                                        case "#dddddd":
+                                            rarB = 1;
+                                            break;
+                                        case "#35a3f1":
+                                            rarB = 3;
+                                            break;
+                                        case "#f15840":
+                                            rarB = 4;
+                                            break;
+                                    }
+
+                                    if (!sortArray.filterCheckbox) {
+                                        return ((sortArray.filterRadio === "filterPrice") ? a.price.value : rarA) -
+                                            ((sortArray.filterRadio) === "filterPrice" ? b.price.value : rarB)
+                                    } else {
+                                        return ((sortArray.filterRadio === "filterPrice") ? b.price.value : rarB) -
+                                            ((sortArray.filterRadio) === "filterPrice" ? a.price.value : rarA)
+                                    }
+                                }
+                            )
                             .map((item, itemNum) =>
                                 <RightsItemStorage
                                     key={itemNum}
@@ -78,10 +116,7 @@ const RightsStorage = (props) => {
                                     <p>
                                         <Translate>storage_empty_text_not_login</Translate>
                                     </p>
-                                    <a href={"https://steamcommunity.com/openid/login?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.mode=checkid_setup&openid.return_to=https%3A%2F%2Frust.webline.space%2F&openid.realm=ht\n" +
-                                        "tps%3A%2F%2Frust.webline.space%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_\n" +
-                                        "select"}>
-
+                                    <a href={"https://steamcommunity.com/openid/login?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.mode=checkid_setup&openid.return_to=https%3A%2F%2Fwww.smallstash.gg&openid.realm=https%3A%2F%2Fwww.smallstash.gg&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select"}>
                                         <Translate>storage_empty_button_not_login</Translate>
                                         <img src="../images/steam.svg" alt="Login" />
                                     </a>
@@ -96,7 +131,8 @@ const RightsStorage = (props) => {
                     !!storageListWithdraw.length ?
                         <button
                             className="zone__button"
-                            onClick={() => OpenPopup('popup-pull')}>
+                            // onClick={() => OpenPopup('popup-pull-search')}>
+                            onClick={() => dispatch(setOpenPopup('popup-pull-search', {type: "withdraw"}))}>
                             <img src="../images/arr-r-t.svg" alt="Ico"/>
                             <span>
                                 <Translate>withdraw_items</Translate>

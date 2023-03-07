@@ -4,13 +4,9 @@ import RightsShopBottomFull from "./RightsShopBottomFull";
 import RightsShopBottomEmpty from "./RightsShopBottomEmpty";
 import RightsShopItem from "./RightsShopItem";
 import RightsFilterForm from "../RightsFilterForm";
-import States from "../../../States";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {reducerShopList} from "../../../Redux/Reducers/reducerShopList";
 import {shopList} from "../../../Redux/actions";
-import {Trans, useTranslation} from "react-i18next";
-import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 import GlobalLink from "../../../Hooks/GlobalLink";
 import Translate from "../../../Hooks/Translate";
 
@@ -91,9 +87,46 @@ const RightsShop = (props) => {
                         shopListReducer
                             ?.filter(item => item.title.toLowerCase().includes(sortArray.search.toLowerCase()))
                             ?.filter(item => item.price.value <= sortArray?.rangePrice?.max && item.price.value >= sortArray?.rangePrice?.min)
-                            ?.sort((a, b) => (!sortArray.filterCheckbox) ?
-                                ((sortArray.filterRadio === "filterPrice") ? a.price.value : a.rarity.color) - ((sortArray.filterRadio) === "filterPrice" ? b.price.value : b.rarity.color) :
-                                ((sortArray.filterRadio === "filterPrice") ? b.price.value : b.rarity.color) - ((sortArray.filterRadio) === "filterPrice" ? a.price.value : a.rarity.color))
+                            ?.sort((a, b) => {
+                                let rarA, rarB;
+                                switch(a.rarity.color) {
+                                    case "#a7ec2e":
+                                        rarA = 2;
+                                        break;
+                                    case "#dddddd":
+                                        rarA = 1;
+                                        break;
+                                    case "#35a3f1":
+                                        rarA = 3;
+                                        break;
+                                    case "#f15840":
+                                        rarA = 4;
+                                        break;
+                                }
+                                switch(b.rarity.color) {
+                                    case "#a7ec2e":
+                                        rarB = 2;
+                                        break;
+                                    case "#dddddd":
+                                        rarB = 1;
+                                        break;
+                                    case "#35a3f1":
+                                        rarB = 3;
+                                        break;
+                                    case "#f15840":
+                                        rarB = 4;
+                                        break;
+                                }
+
+                                    if (!sortArray.filterCheckbox) {
+                                        return ((sortArray.filterRadio === "filterPrice") ? a.price.value : rarA) -
+                                            ((sortArray.filterRadio) === "filterPrice" ? b.price.value : rarB)
+                                    } else {
+                                        return ((sortArray.filterRadio === "filterPrice") ? b.price.value : rarB) -
+                                            ((sortArray.filterRadio) === "filterPrice" ? a.price.value : rarA)
+                                    }
+                                }
+                            )
                             .map(item =>
                                 <RightsShopItem
                                     key={item.id}

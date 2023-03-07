@@ -11,6 +11,7 @@ import {logDOM} from "@testing-library/react";
 import GlobalLink from "../../Hooks/GlobalLink";
 import {getCookie} from "../../Hooks/GetCookies";
 import Translate from "../../Hooks/Translate";
+import {setNotice} from "../../Redux/Reducers/reducerNotice";
 
 const PopupEntryClothes = (props) => {
 
@@ -19,6 +20,8 @@ const PopupEntryClothes = (props) => {
     const [listOnZone, setListOnZone] = useState([])
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const userData = useSelector(state => state.reducerUserData.data)
+    const rooms = useSelector(state => state.reducerFightsRooms.rooms)
 
     const [sortBy, setSortBy] = useState('')
     const [isOpenSelect, setIsOpenSelect] = useState(false)
@@ -53,6 +56,11 @@ const PopupEntryClothes = (props) => {
 
     const submitToGame = (e) => {
         e.preventDefault();
+
+        if(rooms.some(item => item?.first_player?.user?.id === userData?.id || item?.second_player?.user?.id === userData?.id)){
+            dispatch(setNotice("already_have_a_game"))
+            return
+        }
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://" + GlobalLink() + `/api/fight/room/join?game_id=${props.data.id}`, {
@@ -201,6 +209,8 @@ const PopupEntryClothes = (props) => {
 
     }
 
+    console.log(props)
+
     return (
         <div className={"popup popup-entry-clothes popup-entry-clothes-" + props.data.id}>
 
@@ -274,7 +284,7 @@ const PopupEntryClothes = (props) => {
                                     </p>
                                     <div className="input">
                                         <div className="input__photo">
-                                            <img src={props.data.fight_players[0].user.avatar} alt="User"/>
+                                            <img src={props.data.first_player.user.avatar} alt="User"/>
                                         </div>
                                         <div className="input__coins">
                                             <img src="../images/header__coins.svg" alt="Ico"/>

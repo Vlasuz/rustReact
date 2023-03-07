@@ -6,134 +6,86 @@ import {userBalanceAddCoins} from "../../../Redux/Reducers/reducerUserBalance";
 import {useNavigate} from "react-router-dom";
 import {userInventoryAdd, userInventoryRemove} from "../../../Redux/actions";
 import GlobalLink from "../../../Hooks/GlobalLink";
+import Translate from "../../../Hooks/Translate";
 
 const FightPageFinish = (props) => {
 
     const userData = useSelector(state => state.reducerUserData.data)
     const response = useSelector(state => state.reducerFightsResponse.response)
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const [mypersoneWin, setMypersoneWin] = useState(false)
-    const [opponetWin, setOpponentWin] = useState(false)
     const [isResults, setIsResults] = useState(false)
     const settings = useSelector(state => state.reducerSettings.settings);
+    const [isActivePage, setIsActivePage] = useState('')
+    const dispatch = useDispatch()
 
-    console.log('finish', response)
-
-    const opponent = response.fight.first_player.user.id === userData.id ? response.fight.second_player : response.fight.first_player
-    const myperson = response.fight.first_player.user.id === userData.id ? response.fight.first_player : response.fight.second_player
-
-
-    const countCoins = (player) => {
-        let minusCoinsCount = +document.querySelector('.resources__coins_minus span')?.innerText
-        let plusCoinsCount = +document.querySelector('.resources__coins_plus span')?.innerText;
+    const opponent = response?.fight?.first_player?.user.id === userData?.id ? response?.fight?.second_player : response?.fight?.first_player
+    const myperson = response?.fight?.first_player?.user.id === userData?.id ? response?.fight?.first_player : response?.fight?.second_player
 
 
-        let coinsCounts = setInterval(function () {
+    const opponentDefense = () => {
+        const armorHead = opponent?.defense.includes("head") ? "x" : "i"
+        const armorBody = opponent?.defense.includes("body") ? "x" : "i"
+        const armorLegs = opponent?.defense.includes("legs") ? "x" : "i"
 
-            let itemsLooserPerson = props.roomData.fight_players.filter(item => item.user.id === player[0].user.id)[0].items
-            let itemsWinnerPerson = props.roomData.fight_players.filter(item => item.user.id !== player[0].user.id)[0].items
+        const skin = opponent?.user?.chosen_skin?.gallery ?
+            "https://" + GlobalLink() + "/" + opponent?.user?.chosen_skin?.gallery[armorHead + armorBody + armorLegs] :
+            "https://" + GlobalLink() + "/" + settings?.default_fight_skin?.gallery[armorHead + armorBody + armorLegs];
 
-            if (minusCoinsCount === -1) {
-                clearInterval(coinsCounts)
+        return <img src={skin} alt="Persone"/>
 
-                if (player[0].user.id === userData.id) {
-                    !itemsWinnerPerson.length && dispatch(userBalanceAddCoins(-1))
-                    dispatch(userInventoryAdd([...itemsWinnerPerson, ...itemsLooserPerson]))
-                } else {
-                    !itemsWinnerPerson.length && dispatch(userBalanceAddCoins(1))
-                }
+    }
+    const mypersonDefense = () => {
+        const armorHead = myperson?.defense.includes("head") ? "x" : "i"
+        const armorBody = myperson?.defense.includes("body") ? "x" : "i"
+        const armorLegs = myperson?.defense.includes("legs") ? "x" : "i"
 
-                setTimeout(() => {
-                    navigate('/')
-                }, 2000)
-            } else {
+        const skin = myperson?.user?.chosen_skin?.gallery ?
+            "https://" + GlobalLink() + "/" + myperson?.user?.chosen_skin?.gallery[armorHead + armorBody + armorLegs] :
+            "https://" + GlobalLink() + "/" + settings?.default_fight_skin?.gallery[armorHead + armorBody + armorLegs];
 
-                if (document.querySelector('.resources__coins_minus span')) {
-
-                    document.querySelector('.resources__coins_minus span').innerText = minusCoinsCount--;
-                    document.querySelector('.resources__coins_plus span').innerText = plusCoinsCount++;
-
-                    if (!itemsWinnerPerson.length) {
-                        if (player[0].user.id === userData.id) {
-                            dispatch(userBalanceAddCoins(1))
-                        } else {
-                            dispatch(userBalanceAddCoins(-1))
-                        }
-                    }
-                }
-
-            }
-
-        }, 2)
-
+        return <img src={skin} alt="Persone"/>
     }
 
 
     useEffect(() => {
 
-        setTimeout(() => {
-            setIsResults(true)
-            setMypersoneWin(myperson.win)
-            setOpponentWin(opponent.win)
-        }, 3000)
+        if(response?.fight?.first_player?.hit !== response?.fight?.second_player.hit) {
 
-        if (response.fight.result === 'end' && (opponetWin || mypersoneWin)) {
+            if(response?.fight.game_state === 'ended'){
+                setIsResults(true)
+                console.log('ended')
 
-            document.querySelector('.section-fight__confetti_active').style.opacity = '1';
-            countCoins(response.fight.players.filter(item => item.win))
+                if(userData.id === response.fight.winner.user.id) {
+                    console.log('clothes winner')
+                    console.log(response?.fight?.first_player)
+                    !!response?.fight?.first_player?.items?.length && dispatch(userInventoryAdd([...response?.fight?.first_player.items, ...response?.fight?.second_player.items]))
+                }
 
+            }
+
+        } else {
+            setTimeout(() => {
+                setIsActivePage(' section-fight_hide')
+            }, 6500)
         }
 
-    }, [opponetWin, mypersoneWin])
-
-
-    // const opponentDefense = () => {
-    //     const armorHead = opponent.user.defense.head ? "x" : "i"
-    //     const armorBody = opponent.user.defense.body ? "x" : "i"
-    //     const armorLegs = opponent.user.defense.legs ? "x" : "i"
-    //
-    //     if (opponent?.user?.skin?.gallery) {
-    //         let skinSrc = "https://"+GlobalLink()+"/" + opponent.user.skin.gallery[armorHead + armorBody + armorLegs]
-    //         return <img src={skinSrc} alt="Persone"/>
-    //     } else {
-    //         let skinSrc = "https://"+GlobalLink()+"/" + settings.default_fight_skin.gallery[armorHead + armorBody + armorLegs]
-    //         return <img src={skinSrc} alt="Persone"/>
-    //     }
-    //
-    // }
-    // const mypersonDefense = () => {
-    //     const armorHead = myperson.user.defense.head ? "x" : "i"
-    //     const armorBody = myperson.user.defense.body ? "x" : "i"
-    //     const armorLegs = myperson.user.defense.legs ? "x" : "i"
-    //
-    //
-    //     if(myperson?.user?.skin?.gallery){
-    //         let skinSrc = "https://"+GlobalLink()+"/" + myperson.user.skin.gallery[armorHead + armorBody + armorLegs]
-    //         return <img src={skinSrc} alt="Persone"/>
-    //     } else {
-    //         let skinSrc = "https://"+GlobalLink()+"/" + settings.default_fight_skin.gallery[armorHead + armorBody + armorLegs]
-    //         return <img src={skinSrc} alt="Persone"/>
-    //     }
-    // }
-
-    console.log(opponent, myperson)
+    }, [response])
 
     return (
-        <section className="section-fight">
+        <section className={"section-fight" + isActivePage}>
             <div className="section-fight__lft">
                 <div
-                    className={"section-fight__confetti " + (isResults && (mypersoneWin ? "section-fight__confetti_active" : ""))}>
+                    className={"section-fight__confetti " + (isResults && response?.fight?.winner?.user?.id === userData?.id ? "section-fight__confetti_active" : "")}>
                     <img src="../images/confetti-fight.gif" alt="Confetti"/>
                 </div>
-                {<FightAreaTop userInfo={response?.fight?.first_player?.user.id === userData.id ? response?.fight.first_player : response?.fight.second_player}/>}
+                {<FightAreaTop
+                    userInfo={response?.fight?.first_player?.user.id === userData?.id ? response?.fight?.first_player : response?.fight?.second_player}/>}
                 <div className="section-fight__persone">
                     <div className="persone__attacked">
                         <div
                             className={
-                                (opponent.attack.includes('head') ? "attacked__bullet_active" : "") +
+                                (opponent?.attack.includes('head') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((opponent.attack.includes('head') === myperson.defense.includes('head')) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent?.attack.includes('head') === myperson?.defense.includes('head')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -143,9 +95,9 @@ const FightPageFinish = (props) => {
                         </div>
                         <div
                             className={
-                                (opponent.attack.includes('body') ? "attacked__bullet_active" : "") +
+                                (opponent?.attack.includes('body') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((opponent.attack.includes('body') === myperson.defense.includes('body')) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent?.attack.includes('body') === myperson?.defense.includes('body')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -155,9 +107,9 @@ const FightPageFinish = (props) => {
                         </div>
                         <div
                             className={
-                                (opponent.attack.includes('legs') ? "attacked__bullet_active" : "") +
+                                (opponent?.attack.includes('legs') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((opponent.attack.includes('legs') === myperson.defense.includes('legs')) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent?.attack.includes('legs') === myperson?.defense.includes('legs')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -167,18 +119,18 @@ const FightPageFinish = (props) => {
                         </div>
                     </div>
                     <div className="persone__start">
-                        {/*{mypersonDefense()}*/}
+                        {mypersonDefense()}
                     </div>
                 </div>
                 <div className="section-fight__bottom section-fight__bottom_finish">
-                    <div
-                        className={"bottom__status " + (isResults && (mypersoneWin ? "bottom__status_winner" : "bottom__status_looser"))}
-                    >
-                        {(isResults && response.fight.result === 'end') &&
+                    {
+                        isResults &&
+                        <div className={"bottom__status " + (response?.fight?.winner?.user?.id === userData?.id ? "bottom__status_winner" : "bottom__status_looser")}>
                             <img
-                                src={"../images/" + (isResults && (mypersoneWin ? "victory-cup.svg" : "fight-looser.svg"))}
-                                alt="Win"/>}
-                    </div>
+                                src={"../images/" + (response?.fight?.winner?.user?.id === userData?.id ? "victory-cup.svg" : "fight-looser.svg")}
+                                alt="Win"/>
+                        </div>
+                    }
                 </div>
             </div>
             <div className="section-fight__center">
@@ -250,22 +202,25 @@ const FightPageFinish = (props) => {
 
                     </svg>
                     <img src="../images/fight-finish-icon.svg" alt="Ico"/>
-                    <p>Дуэль</p>
+                    <p>
+                        <Translate>duel</Translate>
+                    </p>
                 </div>
             </div>
             <div className="section-fight__rht">
                 <div
-                    className={"section-fight__confetti " + (isResults && (opponetWin ? "section-fight__confetti_active" : ""))}>
+                    className={"section-fight__confetti " + (isResults && response?.fight?.winner?.user?.id !== userData?.id ? " section-fight__confetti_active" : "")}>
                     <img src="../images/confetti-fight.gif" alt="Confetti"/>
                 </div>
-                {<FightAreaTop userInfo={response?.fight?.first_player?.user.id !== userData.id ? response?.fight.first_player : response?.fight.second_player}/>}
+                {<FightAreaTop
+                    userInfo={response?.fight?.first_player?.user.id !== userData?.id ? response?.fight?.first_player : response?.fight?.second_player}/>}
                 <div className="section-fight__persone section-fight__persone-hit">
                     <div className="persone__attacked">
                         <div
                             className={
-                                (myperson.attack.includes('head') ? "attacked__bullet_active" : "") +
+                                (myperson?.attack.includes('head') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-head" +
-                                ((opponent.defense.includes('head') === myperson.attack.includes('head')) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent?.defense.includes('head') === myperson?.attack.includes('head')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -273,9 +228,9 @@ const FightPageFinish = (props) => {
                         </div>
                         <div
                             className={
-                                (myperson.attack.includes('body') ? "attacked__bullet_active" : "") +
+                                (myperson?.attack.includes('body') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-body" +
-                                ((opponent.defense.includes('body') === myperson.attack.includes('body')) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent?.defense.includes('body') === myperson?.attack.includes('body')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -283,9 +238,9 @@ const FightPageFinish = (props) => {
                         </div>
                         <div
                             className={
-                                (myperson.attack.includes('legs') ? "attacked__bullet_active" : "") +
+                                (myperson?.attack.includes('legs') ? "attacked__bullet_active" : "") +
                                 " attacked__bullet attacked__bullet-legs" +
-                                ((opponent.defense.includes('legs') === myperson.attack.includes('legs')) ? " attacked__bullet_good" : " attacked__bullet_bad")
+                                ((opponent?.defense.includes('legs') === myperson?.attack.includes('legs')) ? " attacked__bullet_good" : " attacked__bullet_bad")
                             }
                         >
                             <img src="../images/bullet.svg" alt="Ico"/>
@@ -298,17 +253,18 @@ const FightPageFinish = (props) => {
                         <img className="legs-hit" src="../images/legs-hit.png" alt="Photo" width="300"/>
                     </div>
                     <div className="persone__start">
-                        {/*{opponentDefense()}*/}
+                        {opponentDefense()}
                     </div>
                 </div>
                 <div className="section-fight__bottom section-fight__bottom_finish">
-                    <div
-                        className={"bottom__status " + (isResults && (opponetWin ? "bottom__status_winner" : "bottom__status_looser"))}>
-                        {(isResults && response.fight.result === 'end') &&
+                    {
+                        isResults &&
+                        <div className={"bottom__status " + (response?.fight?.winner?.user?.id !== userData?.id ? "bottom__status_winner" : "bottom__status_looser")}>
                             <img
-                                src={"../images/" + (isResults && (opponetWin ? "victory-cup.svg" : "fight-looser.svg"))}
-                                alt="Win"/>}
-                    </div>
+                                src={"../images/" + (response?.fight?.winner?.user?.id !== userData?.id ? "victory-cup.svg" : "fight-looser.svg")}
+                                alt="Win"/>
+                        </div>
+                    }
                 </div>
             </div>
         </section>

@@ -1,16 +1,21 @@
 import React from 'react';
 import Translate from "../../Hooks/Translate";
+import {logger} from "../../middleware/logger";
+import {useLocation} from "react-router-dom";
 
 const HeaderLoginButton = () => {
 
-    // http://localhost:3000/
+    // http://localhost:3000
     // https://www.smallstash.gg
+
+    let location = useLocation()
+
 
     const auth_params = {
         'openid.ns': 'http://specs.openid.net/auth/2.0',
         'openid.mode': 'checkid_setup',
-        'openid.return_to': 'http://localhost:3000/',
-        'openid.realm': 'http://localhost:3000/',
+        'openid.return_to': 'http://localhost:3000' + location.pathname,
+        'openid.realm': 'http://localhost:3000' + location.pathname,
         'openid.identity': 'http://specs.openid.net/auth/2.0/identifier_select',
         'openid.claimed_id': 'http://specs.openid.net/auth/2.0/identifier_select'
     }

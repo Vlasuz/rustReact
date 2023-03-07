@@ -4,8 +4,9 @@ import MessageDropdown from "./ChatMessage/MessageDropdown";
 import axios from "axios";
 import {useSelector} from "react-redux";
 import GlobalLink from "../../../Hooks/GlobalLink";
+import Translate from "../../../Hooks/Translate";
 
-const RightsChatMessage = ({ data, websocket }) => {
+const RightsChatMessage = ({data, websocket}) => {
 
     const [openDropdown, setOpenDropdown] = useState(false)
     const session = useSelector(state => state.reducerSession.session)
@@ -19,39 +20,46 @@ const RightsChatMessage = ({ data, websocket }) => {
 
     return (
         <div
-            className={"chatting__item" + (userChat?.muted_users?.some(item => item?.id === data?.user?.id) ? " chatting__item_muted" : "")}>
-            <Link to={session.id !== data.user.id ? "/user/" + data.user.id : "/profile"} className="item__photo">
-                <div className="photo">
-                    {
-                        (data.user.role === 'moder' || data.user.role === 'admin') ?
-                            <div className={'system-photo'}></div> :
+            className={"chatting__item" + (userChat?.muted_users?.some(item => item?.id === data?.user?.id) ? " chatting__item_muted" : (data.user.role === 'moder' || data.user.role === 'admin') ? " chatting__item_system" : "")}>
+
+            {
+                (data.user.role === 'moder' || data.user.role === 'admin') ?
+                    <div className="item__photo">
+                        <div className="photo">
+                            <div className={'system-photo'}></div>
+                        </div>
+                    </div>
+                    :
+                    <Link to={session.id !== data.user.id ? "/user/" + data.user.id : "/profile"}
+                          className="item__photo">
+                        <div className="photo">
                             <img src={data.user.avatar} alt={data.user.name}/>
-                    }
-                </div>
-                {
-                    data.user.verify === "youtube" ?
-                        <div className="mark">
-                            <img src="../images/youtube.svg" alt="Ico"/>
-                        </div> :
-                        data.user.verify === "twitch" ?
-                            <div className="mark">
-                                <img src="../images/twitch.svg" alt="Ico"/>
-                            </div> :
-                            data.user.verify === "verified" ?
+                        </div>
+                        {
+                            data.user.verify === "youtube" ?
                                 <div className="mark">
-                                    <img src="../images/verified.svg" alt="Ico"/>
-                                </div> : ""
+                                    <img src="../images/youtube.svg" alt="Ico"/>
+                                </div> :
+                                data.user.verify === "twitch" ?
+                                    <div className="mark">
+                                        <img src="../images/twitch.svg" alt="Ico"/>
+                                    </div> :
+                                    data.user.verify === "verified" ?
+                                        <div className="mark">
+                                            <img src="../images/verified.svg" alt="Ico"/>
+                                        </div> : ""
+                        }
 
-
-                }
-
-            </Link>
+                    </Link>
+            }
 
             <div className="item__inner">
                 <div className="item__top">
                     {
                         (data.user.role === 'moder' || data.user.role === 'admin') ?
-                            <div className={'item__name'}>Система</div> :
+                            <div className={'item__name'}>
+                                <Translate>system</Translate>
+                            </div> :
                             <Link to={session.id !== data.user.id ? "/user/" + data.user.id : "/profile"}
                                   className="item__name">
                                 {data.user.name}
@@ -60,12 +68,15 @@ const RightsChatMessage = ({ data, websocket }) => {
                     <div className="item__muted">
                         <img src="../images/muted.svg" alt="Menu"/>
                     </div>
-                    <button
-                        className="item__menu"
-                        onClick={e => setOpenDropdown(prev => !prev)}
-                    >
-                        <img src="../images/chat-menu.svg" alt="Menu"/>
-                    </button>
+                    {
+                        !!Object.keys(session).length && !(data.user.role === 'moder' || data.user.role === 'admin') || (session.role === 'moder' || session.role === 'admin') ?
+                            <button
+                                className="item__menu"
+                                onClick={e => setOpenDropdown(prev => !prev)}>
+                                <img src="../images/chat-menu.svg" alt="Menu"/>
+                            </button>
+                            : ""
+                    }
                     <time className="item__time">
                         {data.created_at}
                     </time>
@@ -74,16 +85,18 @@ const RightsChatMessage = ({ data, websocket }) => {
                 <div className="item__text">
                     <p>
                         {
-                            data.text.includes("https://"+GlobalLink()+'/media/stickers') ?
+                            data.text.includes("https://" + GlobalLink() + '/media/stickers') ?
                                 <img src={data.text} alt="sticker"/> : data.text
                         }
                     </p>
                 </div>
+
                 <MessageDropdown
                     openDropdown={openDropdown}
                     messageData={data}
                     websocket={websocket}
                 />
+
             </div>
         </div>
     );

@@ -16,12 +16,15 @@ const RightsAirdropBlock = () => {
             <div className={step === "waiting" ? "airdrop__fly" : "airdrop__timer-to-ready"}>
                 <div className="fly__top">
                     {
-                        step === "waiting" ? <p><Translate>before_fly</Translate>:</p> : ""
+                        step === "waiting" ? <p><Translate>before_fly</Translate>:</p> :
+                            step === "ended" || step === 'skipped' ? <p><Translate>select_winner</Translate></p> :
+                                step === "prepare" ? <p><Translate>start_in</Translate></p>
+                                    : ""
                     }
                     <div className="timer">
                         <div className="min">
                                 <span>
-                                    {seconds < 10 ? "0" + seconds : seconds}
+                                    {seconds <= 0 ? '00' : seconds < 10 ? "0" + seconds : seconds}
                                 </span>
                         </div>
                         <TimerMilliseconds/>
@@ -33,8 +36,9 @@ const RightsAirdropBlock = () => {
                         <div className="line">
                             {
                                 step === 'waiting' ?
-                                    <div className="line_done" style={{width: seconds * 100 / 60 + "%"}} /> :
-                                    step === "process" ? <div className="line_done" style={{width: -(seconds * 100 / 60) + 100 + "%"}} /> :
+                                    <div className="line_done" style={{width: seconds * 100 / 30 + "%"}}/> :
+                                    step === "process" ? <div className="line_done"
+                                                              style={{width: -(seconds * 100 / 30) + 100 + "%"}}/> :
                                         ""
                             }
 

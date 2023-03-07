@@ -25,11 +25,7 @@ const RightsChatTextarea = ({websocket}) => {
 
 
     let smilesOpen = function () {
-        if (auth) {
-            document.querySelector('.section-right__smiles').classList.toggle('section-right__smiles_active')
-        } else {
-            dispatch(setNotice("auth_for_messages"))
-        }
+        document.querySelector('.section-right__smiles').classList.toggle('section-right__smiles_active')
     }
 
     useEffect(() => {
@@ -47,6 +43,7 @@ const RightsChatTextarea = ({websocket}) => {
                 "data": {"message": textMessage}
             }));
             setTextMessage('')
+            setError(false)
         } else {
             dispatch(setNotice("auth_for_messages"))
         }
@@ -72,7 +69,6 @@ const RightsChatTextarea = ({websocket}) => {
                     maxLength={MaxLengthForChat()}
                     onChange={handleChange}
                     value={textMessage}
-                    disabled={!auth}
                 />
                 <span className={"maxl" + (error ? " maxl_error" : "")}>{textMessage.length}/{MaxLengthForChat()}</span>
             </label>

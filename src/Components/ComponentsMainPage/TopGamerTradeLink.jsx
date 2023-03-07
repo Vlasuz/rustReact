@@ -4,24 +4,26 @@ import PopupSuccessAddedTradeLink from "../Popups/PopupTradeLink/PopupSuccessAdd
 import PopupChangeTradeLink from "../Popups/PopupTradeLink/PopupChangeTradeLink";
 import {Trans, useTranslation} from "react-i18next";
 import OpenPopup from "../../Hooks/OpenPopup";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {reducerUserData} from "../../Redux/Reducers/reducerUserData";
 import Translate from "../../Hooks/Translate";
+import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
 
 const TopGamerTradeLink = () => {
 
     const userData = useSelector(state => state.reducerUserData.data)
+    const dispatch = useDispatch()
 
     return (
         <>
 
-            <PopupSuccessAddedTradeLink/>
-            <PopupAddTradeLink/>
+            {/*<PopupSuccessAddedTradeLink/>*/}
+            {/*<PopupAddTradeLink/>*/}
 
             {userData.trade_link ?
 
                 <div className="top-gamer__trade-link">
-                    <PopupChangeTradeLink />
+                    {/*<PopupChangeTradeLink />*/}
 
                     <div className="trade-link__block">
                         <h3>
@@ -29,7 +31,8 @@ const TopGamerTradeLink = () => {
                         </h3>
                         <button
                             className="trade-link__button"
-                            onClick={e => OpenPopup('popup-trade-link-change')}
+                            // onClick={e => OpenPopup('popup-trade-link-change')}
+                            onClick={e => dispatch(setOpenPopup('popup-trade-link-change'))}
                         >
                             <Translate>text_change</Translate>
                         </button>
@@ -48,7 +51,7 @@ const TopGamerTradeLink = () => {
                         </h3>
                         <button
                             className="trade-link__button"
-                            onClick={e => OpenPopup('popup-trade-link')}
+                            onClick={e => dispatch(setOpenPopup('popup-trade-link'))}
                         >
                             <Translate>text_trade_link_add</Translate>
                         </button>

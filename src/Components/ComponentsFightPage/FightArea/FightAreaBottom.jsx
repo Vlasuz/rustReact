@@ -7,7 +7,7 @@ import {setDefense} from "../../../Redux/Reducers/reducerFightsDefense";
 import {logDOM} from "@testing-library/react";
 import Translate from "../../../Hooks/Translate";
 
-const FightAreaBottom = (props) => {
+const FightAreaBottom = () => {
 
     const [defHead, setDefHead] = useState(false)
     const [defBody, setDefBody] = useState(false)
@@ -15,8 +15,8 @@ const FightAreaBottom = (props) => {
     const dispatch = useDispatch()
     const socket = useSelector(state => state.reducerFightsSocketCreate.socket)
     const response = useSelector(state => state.reducerFightsResponse.response)
+    const skin = useSelector(state => state.reducerUserSkins.skin)
 
-    const skin = useSelector(state => state.reducerFightsSkin.my_skin)
 
     useEffect(() => {
         dispatch(setDefense([defHead, defBody, defLegs]))
@@ -25,11 +25,15 @@ const FightAreaBottom = (props) => {
 
     return (
         <div className="section-fight__bottom">
-            <div className="bottom__info">
-                <p>
-                    <Translate>choose_two_defense</Translate>
-                </p>
-            </div>
+            {
+                response?.fight?.game_state === "defense" || response?.type === "defense" ?
+                    <div className="bottom__info">
+                        <p>
+                            <Translate>choose_two_defense</Translate>
+                        </p>
+                    </div>
+                    : ""
+            }
             <ul className="section-fight__select">
                 <li>
                     <button

@@ -26,6 +26,7 @@ const MainPage = () => {
 
     useEffect(() => {
 
+
         axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.get("https://" + GlobalLink() + '/api/user/games/?id=' + session.id).then(res => {
             setDataStats(res.data)
@@ -34,7 +35,7 @@ const MainPage = () => {
             setError(true)
         })
 
-    }, [])
+    }, [session])
 
     return (
         <section className="section-blocks">
@@ -66,14 +67,14 @@ const MainPage = () => {
                     error ?
                         <div className={"stats stats_disabled"}>
                             <h3>
-                                <Translate>airdrop_title</Translate>
+                                <Translate>fight_title</Translate>
                             </h3>
                             <p style={{color: "#DB4752"}}>Ошибка подключения</p>
                         </div>
                         :
                     <div className={"stats stats_disabled"}>
                         <h3>
-                            <Translate>airdrop_title</Translate>
+                            <Translate>fight_title</Translate>
                         </h3>
                         <Loader/>
                     </div>

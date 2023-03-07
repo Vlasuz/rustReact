@@ -145,6 +145,32 @@
   "fair_game_jackpot": "Джекпот:",
   "create_game": "Створити гру",
   "summary_bet_coins_for_fight": "Загальна сума ставки:",
-  "on_balance": "На балансі:"
+  "on_balance": "На балансі:",
+
+  "game": "Гра",
+  "you_are_only_member_airdrop": "Так як ви 1 учасник у грі, виграш не буде отримано.",
+  "success_to_buy_bags": "Ви успішно купили спальники",
+  "auth_for_action": "Для початку треба авторизуватися",
+  "change_status": "Змінити статус",
+  "change_status_text": "Змініть свій статус у профілі. Максимальна кількість символів 12",
+  "system": "Система",
+  "already_have_a_game": "У вас вже є гра",
+  "steam_inventory": "Інвентар Steam",
+  "choose_skin_for_payment": "Виберіть скіни для завантаження",
+  "added_for_balance": "Зарахування на баланс:",
+  "add_by_skins": "Поповнити скінами",
+  "bots_status": "Статус ботів",
+  "waiting_for_bots": "Підбираємо ботів",
+  "by_browser": "Через браузер",
+  "by_steam_app": "Через Steam",
+  "entry_v2": "Вхід",
+  "steam_id": "Ідентифікатор Steam:",
+  "copied": "Скопійовано",
+  "add_balance": "Поповнення балансу",
+
+  "play_for_coins": "Грати за",
+  "select_winner": "Вибір переможця",
+  "start_in": "Початок через",
+  "duel": "Дуель"
 
 }

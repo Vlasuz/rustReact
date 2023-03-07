@@ -3,12 +3,9 @@ import RightsAirdropBlock from "./RightsAirdropBlock";
 import RightsAirdropSleepers from "./RightsAirdropSleepers";
 import RightsAirdropMoveSleepers from "./RightsAirdropMoveSleepers";
 import RightsAirdropMember from "./RightsAirdropMember";
-import {useState} from "react";
-import States from "../../../States";
 import {useSelector} from "react-redux";
-import {reducerAirdropStepRights} from "../../../Redux/Reducers/reducerAirdropStepRights";
 
-const RightsAirdropSection = (props) => {
+const RightsAirdropSection = () => {
 
     const switcherRightsStep = useSelector(state => state.reducerAirdropStepRights.step)
     const stepAirdrop = useSelector(state => state.reducerAirdropStep.step)
@@ -17,7 +14,7 @@ const RightsAirdropSection = (props) => {
 
     return (
         <div className="section-right__airdrop">
-            <RightsAirdropBlock states={props.states}/>
+            <RightsAirdropBlock/>
             {
                 (auth && stepAirdrop === "waiting") || isPlayerMember ?
                     <>

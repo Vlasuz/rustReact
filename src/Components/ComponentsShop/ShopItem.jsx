@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {reducerUserSkins, userSkinAdd, userSkinSet} from "../../Redux/Reducers/reducerUserSkins";
+import {reducerUserSkins, userSkinAdd, userSkinBought, userSkinSet} from "../../Redux/Reducers/reducerUserSkins";
 import axios from "axios";
 import {userBalanceAddCoins, userBalanceRemoveCoins} from "../../Redux/Reducers/reducerUserBalance";
 import {getCookie} from "../../Hooks/GetCookies";
@@ -16,6 +16,7 @@ const ShopItem = ({ data, list }) => {
     const [isBoughtSkin, setIsBoughtSkin] = useState(false)
     const [isEnoughCash, setIsEnoughCash] = useState(true);
     const enable_skin = useSelector(state => state.reducerUserSkins.skin)
+    const bought_skin = useSelector(state => state.reducerUserSkins.bought_skins)
 
     const buyTheClothes = (e) => {
         setIsEnoughCash(true)
@@ -26,6 +27,7 @@ const ShopItem = ({ data, list }) => {
         axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+'/api/fight/shop/buy?skin_id='+data.id).then(res => {
             dispatch(userBalanceRemoveCoins(price))
+            dispatch(userSkinBought(data))
             setIsBoughtSkin(true)
         })
     }
@@ -61,7 +63,7 @@ const ShopItem = ({ data, list }) => {
 
 
             <div className="item__buy">
-                {!isBoughtSkin ?
+                {!(isBoughtSkin || bought_skin.some(item => item.id === data.id)) ?
                     <button
                         className={ "buy__price" + (isEnoughCash ? "" : ' item__buy_not-enough')}
                         onClick={buyTheClothes}>

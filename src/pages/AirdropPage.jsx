@@ -13,11 +13,16 @@ const AirdropPage = (props) => {
     const isDropDown = useSelector(state => state.reducerAirdropDrop.drop.isDropDown)
     const response = useSelector(state => state.reducerAirdropSocket.response)
     const session = useSelector(state => state.reducerSession.session)
+    const [scaleToLeft, setScaleToLeft] = useState(0)
+    const [scaleToTop, setScaleToTop] = useState(0)
 
     let sum = null
     let onWheelEvent = function (event) {
         let count = event.deltaY / 2000;
         sum -= count;
+
+        setScaleToLeft(event.clientX)
+        setScaleToTop(event.clientY)
 
         setScale(sum => sum - count);
 
@@ -31,6 +36,7 @@ const AirdropPage = (props) => {
         return;
     }
 
+    console.log('rr AirPage:', response)
 
     return (
         <section className={isDropDown ? "section-map dropIsDown" : "section-map"}>
@@ -49,14 +55,14 @@ const AirdropPage = (props) => {
                 <div
                     className={"map__scale" + (step === "process" ? " map__scale_hidden" : "")}
                     onWheel={e => onWheelEvent(e)}
-                    style={{zoom: `${scale < 1 ? 1 : scale > 3 ? 3 : scale}`}}>
-                    {/*>*/}
+                    // style={{zoom: `${scale < 1 ? 1 : scale > 3 ? 3 : scale}`}}>
+                    style={{transform: `scale(${scale < 1 ? 1 : scale > 3 ? 3 : scale})`, transformOrigin: `50% 50%`}}>
                     <ComponentMap scale={scale} />
                 </div>
             </div>
 
             {
-                response?.airdrop?.winner ?
+                response?.airdrop?.players.length > 1 && response?.airdrop?.winner ?
                     <div className="notice-bottom">
                         <span>
                             {response?.airdrop?.winner.user.id === session.id ? <Translate>you_winner</Translate> : <Translate>you_looser</Translate>}

@@ -8,23 +8,24 @@ import FightAreaBottom from "./FightAreaBottom";
 import {useSelector} from "react-redux";
 
 const FightPageRunning = (props) => {
-
-    console.log('props',props)
-
-    const [loading, setLoading] = useState(true)
+    
     const userData = useSelector(state => state.reducerUserData.data)
     const response = useSelector(state => state.reducerFightsResponse.response)
     const [timeAttack, setTimeAttack] = useState(false)
+    const [time, setTime] = useState(response.timer - 1)
 
     useEffect(() => {
+        if(!timeAttack) {
+            setTimeAttack(response?.fight?.game_state === 'attack' || response?.type === 'attack')
+            document.querySelector('.section-fight__lft')?.classList.remove('section-fight__lft_disabled')
+        }
 
-        document.querySelector('.section-fight__lft')?.classList.remove('section-fight__lft_disabled')
-        setLoading(false)
-
-    }, [loading])
-
-    useEffect(() => {
-        if(!timeAttack) setTimeAttack(response?.fight?.game_state === 'attack' || response?.type === 'attack')
+        if(response?.fight?.game_state === 'attack') {
+            document.querySelector('.section-fight__rht .section-fight__bottom')?.classList.add('section-fight__bottom_hide')
+        } else {
+            document.querySelector('.section-fight__rht .section-fight__bottom')?.classList.add('section-fight__bottom_active')
+            document.querySelector('.section-fight__rht .section-fight__bottom')?.classList.remove('section-fight__bottom_hide')
+        }
     }, [response])
 
     useEffect(() => {
@@ -32,10 +33,10 @@ const FightPageRunning = (props) => {
     }, [])
 
     return (
-        <section className="section-fight">
+        <section className={"section-fight"}>
 
             <div className={timeAttack ? "section-fight__lft section-fight__lft_disabled" : "section-fight__lft"}>
-                <FightAreaTop userInfo={props.roomData.first_player.user.id === userData.id ? props.roomData.first_player : props.roomData.second_player}/>
+                <FightAreaTop userInfo={props?.roomData?.first_player?.user?.id === userData?.id ? props?.roomData?.first_player : props?.roomData?.second_player}/>
                 <div className="section-fight__persone">
                     <div className="persone__green">
                         <img className="head" src="../images/head.png" alt="Photo"/>
@@ -46,14 +47,16 @@ const FightPageRunning = (props) => {
                         <img src="../images/persone-nnn.png" alt="Persone"/>
                     </div>
                 </div>
-                <FightAreaBottom states={props.states}/>
+                {
+                    <FightAreaBottom/>
+                }
             </div>
 
-            <FightTimer states={props.states}/>
+            <FightTimer time={time} setTime={setTime}/>
 
-            {timeAttack ?
-                <FightPageOpponentSelect userInfo={props.roomData.first_player.user.id !== userData.id ? props.roomData.first_player : props.roomData.second_player} states={props.states}/> :
-                <FightItemOpponentDisabled userInfo={props.roomData.first_player.user.id !== userData.id ? props.roomData.first_player : props.roomData.second_player}/>}
+            {timeAttack && time <= 10 ?
+                <FightPageOpponentSelect userInfo={props?.roomData?.first_player.user.id !== userData?.id ? props?.roomData?.first_player : props?.roomData?.second_player} states={props.states}/> :
+                <FightItemOpponentDisabled userInfo={props?.roomData?.first_player.user.id !== userData?.id ? props?.roomData?.first_player : props?.roomData?.second_player}/>}
         </section>
     );
 };

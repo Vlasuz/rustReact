@@ -21,22 +21,31 @@ export const reducerUserInventory = (state = initialState, action) => {
             }
         case USER_INVENTORY_REMOVE:
 
-            let oldArray = state.list
-            let num = 0;
-            let indexItem;
+            // let oldArray = state.list
+            // let num = 0;
+            // let indexItem;
+            //
+            // while (action.item.length - 1 >= num) {
+            //     if (action.item[num]) {
+            //         indexItem = state.list.indexOf(action.item[num])
+            //     }
+            //     oldArray.splice(indexItem, 1)
+            //     num++;
+            // }
 
-            while (action.item.length - 1 >= num) {
-                if (action.item[num]) {
-                    indexItem = state.list.indexOf(action.item[num])
+            console.log(action)
+
+            const newArray = state.list.filter(item => {
+                if(action.item.some(oldItem => oldItem.id !== item.id)){
+                    return item
                 }
-                oldArray.splice(indexItem, 1)
-                num++;
-            }
+            })
 
 
             return {
                 ...state,
-                list: [...oldArray]
+                list: newArray
+                // list: [...oldArray]
             }
         case USER_INVENTORY_CHECK:
             let index = state.list.indexOf(action.item)

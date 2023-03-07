@@ -1,13 +1,16 @@
 import React, {useEffect} from 'react';
 import {NavLink} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import OpenPopup from "../../Hooks/OpenPopup";
 import Translate from "../../Hooks/Translate";
+import {logger} from "../../middleware/logger";
+import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
 
 const Table = ({dataStats, person_id}) => {
 
     const session = useSelector(state => state.reducerSession.session)
     const settings = useSelector(state => state.reducerSettings.settings)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         for (let tab of document.querySelectorAll('.tabs li')) {
@@ -33,22 +36,9 @@ const Table = ({dataStats, person_id}) => {
         }
     })
 
-    const handleOpenFairGame = (e) => {
-        const bankCountInfo = e.target.closest('.tr').querySelector('.games-bank').textContent
-        const HashInfo = e.target.closest('.tr').querySelector('.hash-info-table').getAttribute("data-hash")
-        const idInfo = e.target.closest('.tr').querySelector('.hash-info-table').getAttribute("data-signature")
-
-        document.querySelector('.bank-coins-info span').textContent = bankCountInfo
-
-        document.querySelector('.hash-info span').textContent = idInfo
-        document.querySelector('.hash-info input').value = idInfo
-
-        document.querySelector('.id-info span').textContent = HashInfo
-        document.querySelector('.id-info input').value = HashInfo
-        OpenPopup("popup-fair-game")
+    const handleOpenFairGame = (hash, data, jackpot) => {
+        dispatch(setOpenPopup("popup-fair-game", {hash, data, jackpot}))
     }
-
-    console.log(dataStats?.fight_games)
 
     return (
         <div className="section-block">
@@ -151,9 +141,9 @@ const Table = ({dataStats, person_id}) => {
                                         </div>
 
                                         <div className="td">
-                                            <div className="shield hash-info-table" data-hash={item?.random_hash} data-signature={item.random_data}>
+                                            <div className="shield hash-info-table" data-hash={item?.random_hash} data-signature={item?.random_data}>
                                                 <img src="../images/shield.svg" alt="Shield"/>
-                                                <button onClick={handleOpenFairGame}>
+                                                <button onClick={e => handleOpenFairGame(item?.random_hash, item?.random_data, item?.bank)}>
                                                     <span>
                                                         {item?.random_hash.substr(0, 5) + "..." + item?.random_hash.substr(-4, 4)}
                                                     </span>
@@ -163,7 +153,7 @@ const Table = ({dataStats, person_id}) => {
 
                                         <div className="td">
                                             {
-                                                item?.winner?.user.id === person_id?.id ?
+                                                item?.winner?.user?.id === person_id?.id ?
                                                     <img src="../images/victory.svg" alt="Shield"/> :
                                                     <img src="../images/fail.svg" alt="Shield"/>
                                             }
@@ -224,9 +214,9 @@ const Table = ({dataStats, person_id}) => {
                                                     <ul>
                                                         <li>
                                                             {<NavLink
-                                                                to={session?.id !== item?.first_player?.user.id ? "/user/" + item?.first_player?.user.id : "/profile"}>
+                                                                to={session?.id !== item?.first_player?.user?.id ? "/user/" + item?.first_player?.user?.id : "/profile"}>
                                                                 <img
-                                                                    src={session?.id !== item?.first_player?.user.id ? item?.first_player?.user.avatar : item?.second_player?.user.avatar}
+                                                                    src={session?.id !== item?.first_player?.user?.id ? item?.first_player?.user?.avatar : item?.second_player?.user.avatar}
                                                                     alt=""/>
                                                             </NavLink>}
                                                         </li>

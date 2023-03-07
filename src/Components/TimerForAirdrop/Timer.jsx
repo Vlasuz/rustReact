@@ -1,12 +1,12 @@
 import TimerSeconds from "./TimerSeconds";
 import TimerMilliseconds from "./TimerMilliseconds";
+import {useSelector} from "react-redux";
 
-const Timer = (props) => {
-
+const Timer = () => {
     return (
         <div className="timer">
             <TimerSeconds/>
-            <TimerMilliseconds states={props.states}/>
+            <TimerMilliseconds/>
         </div>
     );
 };

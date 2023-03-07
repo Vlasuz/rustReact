@@ -144,12 +144,7 @@ const RightsItem = (props) => {
                 </div>
             }
 
-            <div className={
-                props.item.rarity.color === "1" ? 'item__cool clothes__cool_green' :
-                    props.item.rarity.color === "2" ? 'item__cool clothes__cool_blue' :
-                        props.item.rarity.color === "3" ? 'item__cool clothes__cool_red' :
-                            'item__cool clothes__cool_grey'
-            }>
+            <div className={"item__cool"} style={{background: props.item.rarity.color}}>
 
             </div>
             <div className="item__photo">

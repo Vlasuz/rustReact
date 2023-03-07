@@ -43,14 +43,18 @@ const PopupLogin = () => {
         <div className="popup popup-login">
             <PopupCloseBackground/>
             <div className="popup__content">
-                <h2>Вход</h2>
+                <h2>
+                    <Translate>entry_v2</Translate>
+                </h2>
                 <PopupCloseCross/>
                 <form onSubmit={handleLogin}>
                     {
                         loginStatus === 'loading' ? <Loader/> : ""
                     }
                     <label className="popup-add-coins-pin-code__input input-login">
-                        <span>Steam ID:</span>
+                        <span>
+                            <Translate>steam_id</Translate>
+                        </span>
                         <input type="text" className={loginStatus === 'error' ? '_error' : loginStatus === 'success' ? '_success' : ""} value={steamId} onChange={e => setSteamId(e.target.value)} required/>
                     </label>
                     <button>

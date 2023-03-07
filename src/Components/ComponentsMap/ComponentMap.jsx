@@ -25,7 +25,7 @@ const ComponentMap = ({ scale }) => {
     const drop = useSelector(state => state.reducerAirdropDrop.drop)
     const members = useSelector(state => state.reducerAirdropMembers.list)
     const response = useSelector(state => state.reducerAirdropSocket.response)
-
+    const session = useSelector(state => state.reducerSession.session)
 
     return (
         // , zoom: `${scale < 1 ? 1 : scale > 3 ? 3 : scale}`
@@ -52,7 +52,7 @@ const ComponentMap = ({ scale }) => {
                                 item.bags.map((bag, bagNum) =>
 
                                     <li key={item.user.id + bagNum} data-bag={bag.map_pos} data-x={bag.x_pos}
-                                        data-y={bag.y_pos} className="point"
+                                        data-y={bag.y_pos} className={"point" + (item.user.id === session.id ? " my_point" : "")}
                                         style={{left: (bag.x_pos * 1500) + 'px', top: (bag.y_pos * 1500) + 'px'}}>
                                         <div className="point__group">
                                             <div className="point__photo">
@@ -61,15 +61,16 @@ const ComponentMap = ({ scale }) => {
                                                      xmlns="http://www.w3.org/2000/svg">
                                                     <path
                                                         d="M7.08361 7.08363C15.4141 -1.24683 28.9204 -1.24683 37.2509 7.08363C45.5813 15.4141 45.5813 28.9204 37.2509 37.2509L26.4099 48.0919C24.0667 50.435 20.2677 50.435 17.9246 48.0919L7.08361 37.2509C-1.24685 28.9204 -1.24685 15.4141 7.08361 7.08363Z"
-                                                        fill="#F5AD57"/>
+                                                        fill={item.user.id !== session.id ? "#CD402A" : "#92C145"}/>
                                                 </svg>
                                             </div>
                                             <div className="point__winner-table">
                                                 <img className={'confetti-image'} src="../images/confetti-map.gif"
                                                      alt="Ico"/>
-                                                <div className="table__left">
+                                                <div className="table__left" style={{background: item.user.id !== session.id ? "linear-gradient(89.07deg, #CD402A 0.69%, #371414 99.35%)" : "linear-gradient(89.07deg, #92C145 0.69%, #546742 99.35%)" }}>
                                                     <img src={item.user.avatar} alt="Photo"/>
                                                     <span>{item.user.name}</span>
+                                                    <div className="line" style={{background: item.user.id !== session.id ? "#CD402A" : "#92C145"}}></div>
                                                 </div>
                                                 <div className="table__right">
                                                     <p>
@@ -84,8 +85,8 @@ const ComponentMap = ({ scale }) => {
                                                 </div>
                                             </div>
                                             <div className="point__dot">
-                                                <div className="line" style={{background: '#F5AD57'}}/>
-                                                <div className="dot" style={{background: '#F5AD57'}}/>
+                                                <div className="line" style={{background: item.user.id !== session.id ? '#CD402A' : "#92C145"}}/>
+                                                <div className="dot" style={{background: item.user.id !== session.id ? '#CD402A' : "#92C145"}}/>
                                             </div>
                                         </div>
                                     </li>
@@ -100,13 +101,13 @@ const ComponentMap = ({ scale }) => {
                 className={step === "process" ? "trajectory trajectory_active" : "trajectory"}
                 style={
                     {
-                        width: (step === "process" ? -((seconds * 25) - 1500) : "0") + "px",
+                        width: (step === "process" ? -((seconds * 50) - 1500) : "0") + "px",
                         transition: step === "process" ? "width 1s linear" : "",
                         top: coodsPlane + "px"
                     }
                 }>
                 <div className="plane">
-                    <img src="../images/plane.png" alt="Plane" width="54"/>
+                    <img src="../images/plane_new.svg" alt="Plane" width="54"/>
                 </div>
             </div>
             <div className="hide-map"/>

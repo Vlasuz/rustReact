@@ -63,7 +63,7 @@ const SelectFightOnButtonClick = (e, skin, setting) => {
         console.log(skin)
         console.log(skin[nameOfImage])
         console.log(nameOfImage)
-        document.querySelector('.persone__start img').setAttribute('src', "https://"+GlobalLink()+'/' + skin[nameOfImage])
+        document.querySelector('.persone__start img').setAttribute('src', "https://"+GlobalLink()+'/' + skin.gallery[nameOfImage])
     }
 };
 

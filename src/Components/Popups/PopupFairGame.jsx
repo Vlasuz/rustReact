@@ -35,13 +35,16 @@ const PopupFairGame = () => {
                     <ul>
                         <li className={'bank-coins-info'}>
                             <p>
-                                <Translate>fair_game_jackpot</Translate> <span>235900</span></p>
+                                <Translate>fair_game_jackpot</Translate> <span>235900</span>
+                            </p>
                         </li>
                         <li className={'hash-info'}>
                             <input type="text" id="hash-info-copy" />
                             <p>Random: <span>fb433ac0c175de6ce49105ae6f8b2050bcc7b17deaf41af83a1</span></p>
                             <div onClick={handleCopy} className="copy">
-                                <span>Скопировано</span>
+                                <span>
+                                    <Translate>copied</Translate>
+                                </span>
                                 <img src="../images/copy-icon.svg" alt=""/>
                             </div>
                         </li>
@@ -49,7 +52,9 @@ const PopupFairGame = () => {
                             <input type="text" id="id-info-copy" />
                             <p>Signature: <span>51df3b21ac453da53820hfcb7m</span></p>
                             <div onClick={handleCopy} className="copy">
-                                <span>Скопировано</span>
+                                <span>
+                                    <Translate>copied</Translate>
+                                </span>
                                 <img src="../images/copy-icon.svg" alt=""/>
                             </div>
                         </li>

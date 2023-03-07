@@ -1,14 +1,15 @@
 import React, {createElement, useEffect, useState} from 'react';
-import audio from '../../audio/muz.mp3'
+import audio from '../../audio/audio-rust.mp3'
 
 const HeaderVolume = () => {
 
     let changeVolume = (e) => {
+        setVolme(e.target.value)
         document.querySelector('#musicOnSite').volume = e.target.value / 100
     }
 
     const [muted, isMuted] = useState(true)
-
+    const [volume, setVolme] = useState(100)
 
     const handlePlay = () => {
         muted ? document.querySelector('#musicOnSite').play() : document.querySelector('#musicOnSite').pause()
@@ -33,6 +34,7 @@ const HeaderVolume = () => {
                 }
                 <input
                     type="range"
+                    value={volume}
                     onChange={e => changeVolume(e)}
                 />
             </div>

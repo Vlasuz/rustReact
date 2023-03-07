@@ -15,39 +15,38 @@ import NotFound from "../pages/NotFound";
 import {logger} from "../middleware/logger";
 import {switcherRights} from "../Redux/actions";
 
-const MainRouters = (props) => {
+const MainRouters = () => {
     const location = useLocation()
     const auth = useSelector(state => state.reducerAuth.auth)
-    const dispatch = useDispatch()
 
     const Routers = [
         {
             path: "/",
-            element: <FightPage states={props.states}/>,
+            element: <FightPage/>,
         },
         {
             path: "/fight/:id",
-            element: <FightRoom states={props.states}/>,
+            element: <FightRoom/>,
         },
         {
             path: "/profile",
-            element: <MainPage states={props.states}/>,
+            element: <MainPage/>,
         },
         {
             path: "/airdrop",
-            element: <AirdropPage states={props.states}/>,
+            element: <AirdropPage/>,
         },
         {
             path: "/history",
-            element: <HistoryPage states={props.states}/>,
+            element: <HistoryPage/>,
         },
         {
             path: "/policy",
-            element: <PolicyPage states={props.states}/>,
+            element: <PolicyPage/>,
         },
         {
             path: "/clothes-shop",
-            element: <ClothesShopPage states={props.states}/>,
+            element: <ClothesShopPage/>,
         },
         {
             path: "/user/:id",
@@ -55,7 +54,7 @@ const MainRouters = (props) => {
         },
         {
             path: "/faq",
-            element: <FaqPage states={props.states}/>,
+            element: <FaqPage/>,
         },
         {
             path: "*",

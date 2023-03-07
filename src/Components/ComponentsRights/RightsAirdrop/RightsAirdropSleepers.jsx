@@ -33,7 +33,9 @@ const RightsAirdropSleepers = () => {
 
     return (
         <div className="airdrop__sleepers">
-            <h3><Translate>count_of_bags</Translate>:</h3>
+            <h3>
+                <Translate>count_of_bags</Translate>:
+            </h3>
             <ul>
                 {
                     sleepers.map((sleeper, sleeperNum) =>

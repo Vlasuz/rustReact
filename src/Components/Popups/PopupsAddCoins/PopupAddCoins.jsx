@@ -1,24 +1,26 @@
 import React from 'react';
 import PopupCloseBackground from "../PopupCloseBackground";
 import PopupCloseCross from "../PopupCloseCross";
+import {useDispatch, useSelector} from "react-redux";
+import {setOpenPopup} from "../../../Redux/Reducers/reducerOpenPopup";
+import Translate from "../../../Hooks/Translate";
 
 const PopupAddCoins = () => {
 
-    let openPopup = function (nextPopup) {
-        document.querySelector('.popup_active').classList.remove('popup_active')
-        document.querySelector('.'+nextPopup).classList.add('popup_active')
-    }
+    const dispatch = useDispatch()
 
     return (
         <div className="popup popup-add-coins">
             <PopupCloseBackground />
             <div className="popup__content">
-                <h2>Пополнение баланса</h2>
+                <h2>
+                    <Translate>add_balance</Translate>
+                </h2>
                 <PopupCloseCross />
                 <div className="popup-add-coins__var">
                     <button
                         className="var__item"
-                        onClick={() => openPopup('popup-add-coins-pin-code')}
+                        onClick={() => dispatch(setOpenPopup('popup-add-coins-pin-code'))}
                     >
                         Eu PinCode
 
@@ -26,15 +28,12 @@ const PopupAddCoins = () => {
 
                     <button
                         className="var__item"
-                        onClick={() => openPopup('popup-add-coins-balance')}
+                        onClick={() => dispatch(setOpenPopup('popup-add-coins-balance'))}
                     >
                         Eu Gift
                     </button>
 
-                    <button
-                        className="var__item"
-                        onClick={() => openPopup('popup-add-coins-skins')}
-                    >
+                    <button className="var__item">
                         Eu Gift
                     </button>
                 </div>
@@ -42,7 +41,7 @@ const PopupAddCoins = () => {
                     <button className="game__item">
                         <img src="../images/dota.png" alt="Game"/>
                     </button>
-                    <button className="game__item">
+                    <button className="game__item" onClick={() => dispatch(setOpenPopup('popup-add-coins-skins'))}>
                         <img src="../images/rust.png" alt="Game"/>
                     </button>
                     <button className="game__item">

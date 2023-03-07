@@ -21,7 +21,7 @@ const RightsShopItem = ({ data }) => {
             axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
             axios.post("https://"+GlobalLink()+`/api/basket/add?item_id=${data.id}`).then(res => {
                 dispatch(shopListAdd(res.data))
-                dispatch(setNotice("added_to_cart"))
+                // dispatch(setNotice("added_to_cart"))
             })
 
         } else {
@@ -38,12 +38,7 @@ const RightsShopItem = ({ data }) => {
                 <img src="../images/basket.svg" alt="Basket"/>
             </div>}
             {data.count && <div className="item__count"> {data.count} </div>}
-            <div className={
-                data.rarity.color === "1" ? 'item__cool clothes__cool_green' :
-                    data.rarity.color === "2" ? 'item__cool clothes__cool_blue' :
-                        data.rarity.color === "3" ? 'item__cool clothes__cool_red' :
-                            'item__cool clothes__cool_grey'
-            }>
+            <div className={"item__cool"} style={{background: data.rarity.color}}>
 
             </div>
             <div className="item__photo">
