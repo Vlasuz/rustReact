@@ -54,11 +54,16 @@ function App() {
                     setIsLoad(true)
                 }, 600)
 
-                // http://localhost:3000
-                // https://www.smallstash.gg
             } else if (!isLoad && window.location.href.includes('openid')) {
                 let steamData = window.location.href.replace('https://www.smallstash.gg', '').replace(location.pathname, '')
                 let urlAxios = "https://" + GlobalLink() + `/api/auth/login/${steamData}`;
+
+                // DELETE !!!!!
+                if(window.location.href.includes('localhost')) {
+                    steamData = window.location.href.replace('http://localhost:3000', '').replace(location.pathname, '')
+                    urlAxios = "https://" + GlobalLink() + `/api/auth/login/${steamData}`;
+                }
+                // DELETE !!!!!
 
                 axios.post(urlAxios).then(res => {
 

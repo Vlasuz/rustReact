@@ -36,7 +36,7 @@ const Popup = () => {
         "popup-pull": <TradingBots data={isPopup?.props?.data} />,
         "popup-trade-waiting": <TradingWaiting data={isPopup?.props} />,
         "popup-trade-good": <TradingSuccess />,
-        "popup-trade-error-cancel": <TradingError message={isPopup?.props?.response?.message} />,
+        "popup-trade-error-cancel": <TradingError props={isPopup?.props} />,
     }
 
     const handleClose = () => {

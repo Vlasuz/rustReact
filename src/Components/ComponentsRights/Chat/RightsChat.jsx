@@ -21,6 +21,7 @@ import {
     actionMutedRemove,
     actionMutedSet
 } from "../../../Redux/Reducers/reducerUserChat";
+import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 
 
 const websocket = new WebSocket("wss://"+GlobalLink()+`/ws/api/chat/`)
@@ -29,40 +30,34 @@ websocket.onopen = () => {
 }
 const RightsChat = () => {
 
-
     const messages = useSelector(state => state.reducerChat.messages)
     const dispatch = useDispatch()
     const session = useSelector(state => state.reducerSession.session)
     const userChat = useSelector(state => state.reducerUserChat)
 
-
     useEffect(() => {
-
         !messages.length && axios.get("https://"+GlobalLink()+'/api/chat/get/?amount=100').then(res => {
             dispatch(chatAddMessages(res.data.reverse()))
         })
-
     }, [])
 
     useEffect(() => {
         dispatch(actionBan(session?.ban_chat_permanent))
-
         dispatch(actionBlock(!!session?.ban_chat_date?.length))
-
         dispatch(actionMutedSet(session?.muted_users))
+
+        let chatBlock = document.querySelector('.section-right__chatting')
+        setTimeout(() => {
+            chatBlock.scrollTo({
+                top: chatBlock.scrollHeight,
+                behavior: "smooth"
+            });
+        }, 10)
     }, [session])
 
 
-    useEffect(() => {
-        let chatBlock = document.querySelector('.section-right__chatting')
-        chatBlock.scrollTo({
-            top: chatBlock.scrollHeight,
-            behavior: "smooth"
-        });
-    }, [messages])
-
-
-
+    websocket.onclose = () => console.log('CHAT close')
+    websocket.onerror = () => console.log('CHAT error')
     websocket.onmessage = (e) => {
         let data_value = JSON.parse(JSON.parse(e.data))
 
@@ -71,7 +66,15 @@ const RightsChat = () => {
                 dispatch(chatAddOnline(JSON.parse(JSON.parse(JSON.parse(e.data)).data).online))
                 break;
             case 'send_message':
+                let chatBlock = document.querySelector('.section-right__chatting')
                 dispatch(chatAddMessages([data_value.data]))
+                setTimeout(() => {
+                    chatBlock.scrollTo({
+                        top: chatBlock.scrollHeight,
+                        left: 0,
+                        behavior: "smooth"
+                    });
+                }, 10)
                 break;
             case 'delete_message':
                 dispatch(chatDeleteMessages(JSON.parse(JSON.parse(e.data)).data.id))
@@ -83,14 +86,20 @@ const RightsChat = () => {
                 dispatch(actionMutedRemove(data_value.data))
                 break;
             case 'ban_user':
-                if(data_value.data.id === session.id) dispatch(actionBan(true))
+                if(data_value.data.id === session.id){
+                    dispatch(setNotice("you_are_banned"))
+                    dispatch(actionBan(true))
+                }
                 break;
             case 'unban_user':
                 if(data_value.data.id === session.id) dispatch(actionBan(false))
                 if(data_value.data.id === session.id) dispatch(actionBlock(false))
                 break;
             case 'block_user':
-                if(data_value.data.id === session.id) dispatch(actionBlock(true))
+                if(data_value.data.id === session.id){
+                    dispatch(setNotice("you_are_banned"))
+                    dispatch(actionBlock(true))
+                }
                 break;
         }
     }
@@ -107,23 +116,11 @@ const RightsChat = () => {
                 }
 
             </div>
-            <RightsChatSmiles websocket={websocket}/>
+            <RightsChatSmiles websocket={websocket} userChat={userChat}/>
             <RightsChatRules/>
             <RightsChatResources/>
 
-            {
-                userChat.ban || userChat.block ?
-                    <div className="section-right__notice section-right__notice_active">
-                        <div
-                            className={"notice__item notice__block-chat notice__item_active"}>
-                            <span>
-                                <Translate>block_chat</Translate>
-                            </span>
-                            <img src="../images/status-error.svg" alt="Ico"/>
-                        </div>
-                    </div>
-                    : <RightsChatTextarea websocket={websocket}/>
-            }
+            <RightsChatTextarea websocket={websocket} userChat={userChat}/>
 
         </div>
     );

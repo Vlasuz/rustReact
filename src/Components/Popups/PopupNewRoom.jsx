@@ -52,6 +52,8 @@ const PopupNewRoom = () => {
 
             dispatch(userInventoryRemove(listOnZone))
 
+            console.log("listOnZone", listOnZone)
+
             const sk = new WebSocket("wss://"+GlobalLink()+'/ws/api/fight/game/' + res.data.id + "/")
             sk.onopen = function () {
                 sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
@@ -339,12 +341,7 @@ const PopupNewRoom = () => {
                                     listOnZone.map(item =>
                                         <li key={item.id} className="popup-new-room__item popup-new-room__item_moved" onMouseDown={e => itemMove(e, item)}>
 
-                                            <div className={
-                                                item.rarity.color === "3" ? "clothes__cool clothes__cool_red" :
-                                                    item.rarity.color === "2" ? "clothes__cool clothes__cool_blue" :
-                                                        item.rarity.color === "1" ? "clothes__cool clothes__cool_green" :
-                                                            "clothes__cool clothes__cool_grey"
-                                            }/>
+                                            <div className={"clothes__cool"} style={{background: item.rarity.color}} />
                                             <div className="li__delete" onClick={e => itemZoneDelete(e, item)}>
                                                 <img src="../images/cross.svg" alt="Close"/>
                                             </div>
@@ -430,13 +427,7 @@ const PopupNewRoom = () => {
                                 })
                                 .map(item =>
                                 <li key={item.id} data-id={item.id} className="popup-new-room__item" onMouseDown={e => itemMove(e, item)}>
-                                    <div className={
-                                        item.rarity.color === "3" ? "clothes__cool clothes__cool_red" :
-                                            item.rarity.color === "2" ? "clothes__cool clothes__cool_blue" :
-                                                item.rarity.color === "1" ? "clothes__cool clothes__cool_green" : "clothes__cool clothes__cool_grey"
-                                    }>
-
-                                    </div>
+                                    <div className={"clothes__cool"} style={{background: item.rarity.color}} />
                                     <div className="li__delete">
                                         <img src="../images/cross.svg" alt="Close"/>
                                     </div>

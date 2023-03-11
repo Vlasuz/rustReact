@@ -21,7 +21,21 @@ const AsyncImages = (props) => {
             <img {...props} />
         );
     }
-    return null;
+    return (
+        <div className={"loading-skin"}>
+            <div className="load">
+                <div className="load__line">
+
+                </div>
+                <div className="load__line">
+
+                </div>
+                <div className="load__line">
+
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default AsyncImages;

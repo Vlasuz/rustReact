@@ -14,6 +14,7 @@ const MessageDropdown = ({openDropdown, messageData, websocket}) => {
 
     const mm = useSelector(state => state.reducerUserChat.muted_users)
     const [bannedUser, setBannedUser] = useState(messageData.user.ban_chat_permanent)
+    const [blockedUser, setBlockedUser] = useState(messageData.user.ban_chat_permanent)
 
     const handleHide = (e) => {
         dispatch(chatDeleteMessages(messageData.id))
@@ -23,6 +24,7 @@ const MessageDropdown = ({openDropdown, messageData, websocket}) => {
     }
     const handleBlocked = (e) => {
         websocket.send(JSON.stringify({"type": "block_user", "data": {"user": messageData.user.id}}));
+        setBlockedUser(prev => !prev)
     }
     const handleBanned = (e) => {
         websocket.send(JSON.stringify({"type": "ban_user", "data": {"user": messageData.user.id}}));
@@ -36,7 +38,8 @@ const MessageDropdown = ({openDropdown, messageData, websocket}) => {
     const handleUnbanned = (e) => {
         websocket.send(JSON.stringify({"type": "unban_user", "data": {"user": messageData.user.id}}));
 
-        setBannedUser(prev => !prev)
+        setBlockedUser(false)
+        setBannedUser(false)
     }
     const handleUnmuted = (e) => {
         websocket.send(JSON.stringify({"type": "unmute_user", "data": {"user": messageData.user.id}}));
@@ -71,12 +74,24 @@ const MessageDropdown = ({openDropdown, messageData, websocket}) => {
             {
                 !!Object.keys(userData).length && <>
                     {
-                        messageData?.user?.id !== userData.id && (userData.role === 'admin' || userData.role === 'moder') ?
+                        messageData?.user?.id !== userData.id && (userData.role === 'admin' || userData.role === 'moder') &&
+                            // <li>
+                            //     <button onClick={handleBlocked}>
+                            //         <Translate>chat_block</Translate>
+                            //     </button>
+                            // </li> : ""
+
                             <li>
-                                <button onClick={handleBlocked}>
-                                    <Translate>chat_block</Translate>
-                                </button>
-                            </li> : ""
+                                {
+                                    blockedUser ?
+                                        <button onClick={handleUnbanned}>
+                                            <Translate>chat_unblock</Translate>
+                                        </button> :
+                                        <button onClick={handleBlocked}>
+                                            <Translate>chat_block</Translate>
+                                        </button>
+                                }
+                            </li>
                     }
                 </>
             }

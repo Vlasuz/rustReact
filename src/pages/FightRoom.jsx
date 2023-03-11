@@ -162,7 +162,7 @@ const FightRoom = (props) => {
 
                 if (player?.fight?.first_player?.user?.id === session?.id) {
                     !itemsWinnerPerson.length && dispatch(userBalanceAddCoins(-1))
-                    dispatch(userInventoryAdd([...itemsWinnerPerson, ...itemsLooserPerson]))
+                    // dispatch(userInventoryAdd([...itemsWinnerPerson, ...itemsLooserPerson]))
                 } else {
                     !itemsWinnerPerson.length && dispatch(userBalanceAddCoins(1))
                 }

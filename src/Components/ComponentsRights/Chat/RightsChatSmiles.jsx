@@ -6,7 +6,7 @@ import {getCookie} from "../../../Hooks/GetCookies";
 import {useDispatch, useSelector} from "react-redux";
 import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 
-const RightsChatSmiles = ({websocket}) => {
+const RightsChatSmiles = ({ websocket, userChat }) => {
 
     const [stickers, setStickers] = useState([])
     const [stickerOrder, setStickerOrder] = useState(0)
@@ -25,12 +25,14 @@ const RightsChatSmiles = ({websocket}) => {
 
     const sendSmile = (e, item) => {
 
-        if (auth) {
+        if (auth && !(userChat.ban || userChat.block)) {
             document.querySelector('.section-right__smiles_active').classList.remove('section-right__smiles_active')
             websocket.send(JSON.stringify({
                 "type": "send_message",
                 "data": {"message": "https://" + GlobalLink() + `/${item.image}`}
             }));
+        } else if(userChat.ban || userChat.block) {
+            dispatch(setNotice("you_are_banned"))
         } else {
             dispatch(setNotice("auth_for_messages"))
         }

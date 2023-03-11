@@ -6,6 +6,7 @@ import {setSession} from "../../Redux/Reducers/reducerSession";
 import {userBalanceSetCoins} from "../../Redux/Reducers/reducerUserBalance";
 import Translate from "../../Hooks/Translate";
 import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
+import audio from "../../audio/audio-rust.mp3";
 
 const HeaderBurgerMenu = () => {
 
@@ -34,6 +35,20 @@ const HeaderBurgerMenu = () => {
         document.cookie = 'access_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
     }
 
+
+    let changeVolume = (e) => {
+        setVolme(e.target.value)
+        document.querySelector('#musicOnSite').volume = e.target.value / 100
+    }
+
+    const [muted, isMuted] = useState(true)
+    const [volume, setVolme] = useState(100)
+
+    const handlePlay = () => {
+        muted ? document.querySelector('#musicOnSite').play() : document.querySelector('#musicOnSite').pause()
+        isMuted(prev => !prev)
+    }
+
     return (
         <>
             <button
@@ -55,12 +70,25 @@ const HeaderBurgerMenu = () => {
                     </li>
                 </ul>
                 <div className="header__volume">
-                    <button>
-                        <img src="../images/mute.svg" alt="Ico"/>
-                    </button>
-                    <div className="volume__block">
-                        <img src="../images/music.svg" alt="Ico"/>
-                        <input type="range"/>
+                    <audio id="musicOnSite" src={audio} controls loop></audio>
+                    {/*<button >*/}
+                    {/*    {*/}
+                    {/*        muted ?*/}
+                    {/*            <img src="../images/mute.svg" alt="Ico" />:*/}
+                    {/*            <img src="../images/music.svg" alt="Ico" />*/}
+                    {/*    }*/}
+                    {/*</button>*/}
+                    <div className="volume__block" onClick={() => handlePlay()}>
+                        {
+                            muted ?
+                                <img src="../images/mute.svg" alt="Ico" />:
+                                <img src="../images/music.svg" alt="Ico" />
+                        }
+                        <input
+                            type="range"
+                            value={volume}
+                            onChange={e => changeVolume(e)}
+                        />
                     </div>
                 </div>
                 <button className="header__support">

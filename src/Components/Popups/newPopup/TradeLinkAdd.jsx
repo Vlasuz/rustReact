@@ -27,8 +27,13 @@ const TradeLinkAdd = () => {
             axios.post("https://"+GlobalLink()+`/api/user/change_trade_link/`, {
                 "trade_link": tradeLink
             }).then(res => {
-                dispatch(addTradeLink(res.data))
-                dispatch(setOpenPopup('popup-trade-link-success'))
+                if(res.data.message === 'Trade-link is not valid') {
+                    setIsError(true)
+                    dispatch(setNotice("not_good_trade_link"))
+                } else {
+                    dispatch(addTradeLink(res.data))
+                    dispatch(setOpenPopup('popup-trade-link-success'))
+                }
             })
         } else {
             setIsError(true)

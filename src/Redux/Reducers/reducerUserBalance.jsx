@@ -40,8 +40,6 @@ export function userBalanceSetCoins(coins) {
     }
 }
 export function userBalanceAddCoins(coins) {
-
-    console.log("coins bank", coins)
     return {
         type: USER_BALANCE_ADD_COINS,
         coins

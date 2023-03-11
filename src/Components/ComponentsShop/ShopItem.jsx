@@ -57,8 +57,8 @@ const ShopItem = ({ data, list }) => {
                 {data.sub_title}
             </p>
             <div className="item__skin">
-                {/*<AsyncImages src={"https://"+GlobalLink()+"/"+data.image} alt={"skin"}/>*/}
-                <img src={"https://"+GlobalLink()+"/"+data.image} alt="Skin"/>
+                <AsyncImages src={"https://"+GlobalLink()+"/"+data.image} alt={"skin"}/>
+                {/*<img src={"https://"+GlobalLink()+"/"+data.image} alt="Skin"/>*/}
             </div>
 
 

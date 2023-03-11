@@ -44,8 +44,11 @@ const AddCoinsBySkin = () => {
     const addCoinsFunction = () => {
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie("access_token")}`;
         axios.post('https://'+GlobalLink()+'/api/trade/create/pay/', items.map(item => item.id)).then(res => {
-            console.log('ADD COINS POPUP', res.data)
-            dispatch(setOpenPopup("popup-pull-search", {type: "pay", data: res.data, items}))
+            if(res.data.message === 'Trade-link is empty'){
+                dispatch(setOpenPopup("popup-trade-error-cancel", {type: "pay", data: res.data}))
+            } else {
+                dispatch(setOpenPopup("popup-pull-search", {type: "pay", data: res.data, items}))
+            }
         })
     }
     const handleClosePopup = () => {
@@ -53,6 +56,7 @@ const AddCoinsBySkin = () => {
     }
     const handleUpdate = () => {
         setResponse([])
+        setLoad(true)
         axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.get('https://'+GlobalLink()+'/api/trade/inventory/refresh/').then(res => {
             setResponse(res.data)
@@ -103,7 +107,7 @@ const AddCoinsBySkin = () => {
                 <div className="skins__block">
 
                     {
-                        response
+                        !load ? response
                             ?.filter(item => item?.title?.toLowerCase()?.includes(sortArray?.search?.toLowerCase()))
                             ?.sort((a, b) => (!sortArray.filterCheckbox) ?
                                 ((sortArray.filterRadio === "filterPrice1") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice1" ? b.cost : b.rarity) :
@@ -131,8 +135,20 @@ const AddCoinsBySkin = () => {
                                         <span>{item.price.value}</span>
                                     </div>
                                 </li>
+                            ) :
+                            <div className={"loading"}>
+                                <div className="load">
+                                    <div className="load__line">
 
-                            )
+                                    </div>
+                                    <div className="load__line">
+
+                                    </div>
+                                    <div className="load__line">
+
+                                    </div>
+                                </div>
+                            </div>
                     }
 
                 </div>

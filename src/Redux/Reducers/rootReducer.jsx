@@ -36,6 +36,7 @@ import {reducerUserChat} from "./reducerUserChat";
 import {reducerOpenPopup} from "./reducerOpenPopup";
 import {reducerWithdrawItems} from "./reducerWithdrawItems";
 import {reducerPages} from "./reducerPages";
+import {reducerCoodsSwipeMap} from "./reducerCoodsSwipeMap";
 
 export const rootReducer = combineReducers({
     reducerSwitcherRights,
@@ -74,5 +75,6 @@ export const rootReducer = combineReducers({
     reducerUserChat,
     reducerOpenPopup,
     reducerWithdrawItems,
-    reducerPages
+    reducerPages,
+    reducerCoodsSwipeMap
 })

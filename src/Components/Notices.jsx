@@ -61,6 +61,11 @@ const Notices = () => {
             "type": "already_have_a_game",
             "text": <Translate>already_have_a_game</Translate>,
             "icons": "../images/error-red.svg",
+        },
+        {
+            "type": "you_are_banned",
+            "text": <Translate>block_chat</Translate>,
+            "icons": "../images/status-error.svg",
         }
     ];
 

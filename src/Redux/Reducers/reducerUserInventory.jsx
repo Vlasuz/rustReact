@@ -33,10 +33,9 @@ export const reducerUserInventory = (state = initialState, action) => {
             //     num++;
             // }
 
-            console.log(action)
-
             const newArray = state.list.filter(item => {
-                if(action.item.some(oldItem => oldItem.id !== item.id)){
+                console.log(action.item.some(oldItem => oldItem.id !== item.id))
+                if(!action.item.some(oldItem => oldItem.id === item.id)){
                     return item
                 }
             })
