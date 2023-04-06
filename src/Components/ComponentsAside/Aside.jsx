@@ -33,10 +33,8 @@ const Aside = (props) => {
 
 
         if (window.innerWidth < 768){
-            console.log()
             document.querySelectorAll('.aside__list li').forEach(item => {
                 item.onclick = function () {
-                    console.log(this)
                     window.scrollTo({
                         top: 1000,
                         behavior: "smooth"
@@ -45,11 +43,11 @@ const Aside = (props) => {
             })
         }
 
-        if(getCookie('prevPage') === 'airdrop' && !location.pathname.includes('airdrop')) {
+        if(!location.pathname.includes('airdrop')) {
             document.querySelector('.section-right__item')?.classList.remove('section-right__item_show')
             document.querySelector('.section-right__item').classList.add('section-right__item_hidden')
 
-            document.cookie = 'prevPage= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
+            // document.cookie = 'prevPage= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
 
             setTimeout(() => {
                 dispatch(switcherRights('pr'))
@@ -60,7 +58,7 @@ const Aside = (props) => {
             document.querySelectorAll('.aside__list li').forEach(item => {
                 item.classList.remove('li_active')
             })
-            document.querySelector('.section-right__top .top__item:first-child').click()
+            // document.querySelector('.section-right__top .top__item:first-child').click()
             document.querySelector('.aside__list li:first-child').classList.add('li_active')
         }
 

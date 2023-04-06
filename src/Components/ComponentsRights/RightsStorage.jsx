@@ -10,6 +10,7 @@ import {switcherRights, userInventoryAdd} from "../../Redux/actions";
 import {Trans, useTranslation} from "react-i18next";
 import Translate from "../../Hooks/Translate";
 import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
+import {setSound} from "../../Redux/Reducers/reducerSound";
 
 const RightsStorage = (props) => {
 
@@ -27,6 +28,12 @@ const RightsStorage = (props) => {
     const auth = useSelector(state => state.reducerAuth.auth)
 
     const handleGoToShop = () => {
+
+        dispatch(setSound(''))
+        setTimeout(() => {
+            dispatch(setSound('sound3'))
+        }, 10)
+
         setTimeout(() => {
             dispatch(switcherRights('sh'))
         }, 300)
@@ -131,7 +138,6 @@ const RightsStorage = (props) => {
                     !!storageListWithdraw.length ?
                         <button
                             className="zone__button"
-                            // onClick={() => OpenPopup('popup-pull-search')}>
                             onClick={() => dispatch(setOpenPopup('popup-pull-search', {type: "withdraw"}))}>
                             <img src="../images/arr-r-t.svg" alt="Ico"/>
                             <span>

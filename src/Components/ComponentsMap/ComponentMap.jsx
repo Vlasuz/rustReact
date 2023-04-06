@@ -23,20 +23,7 @@ const ComponentMap = () => {
         y: 0
     }))
 
-    if (step === 'ended' || step === 'skipped') {
-        api({
-            x: newCoods.x,
-            y: newCoods.y,
-        })
-    } else {
-        api({
-            x: off[0],
-            y: off[1],
-        })
-    }
-
-    const bindDrag = useDrag(({offset}) => {
-        setOff(offset)
+    useEffect(() => {
         if (step === 'ended' || step === 'skipped') {
             api({
                 x: newCoods.x,
@@ -44,10 +31,22 @@ const ComponentMap = () => {
             })
         } else {
             api({
-                x: offset[0],
-                y: offset[1],
+                x: off[0],
+                y: off[1],
             })
         }
+    }, [step])
+
+    const bindDrag = useDrag(({offset}) => {
+        setOff(offset)
+
+        document.querySelector('.section-map__map_disabled')?.classList.remove('section-map__map_disabled')
+        document.querySelector('.lock-map')?.classList.add('lock-map_hidden')
+
+        api({
+            x: offset[0],
+            y: offset[1],
+        })
 
     });
 
@@ -55,21 +54,17 @@ const ComponentMap = () => {
     const el = document?.querySelector('.map__container')
 
     el?.addEventListener('touchstart', () => {
-        console.log('start')
-        document.querySelector('body').classList.add('disabled_touch')
-    }); // el.ontouchstart = () => { console.log('start') };
+        document.querySelector('body')?.classList.add('disabled_touch')
+    });
     el?.addEventListener('touchend', () => {
-        console.log('end')
         setTimeout(() => {
-            document.querySelector('body').classList.remove('disabled_touch')
+            document.querySelector('body')?.classList.remove('disabled_touch')
         }, 500)
-    }); // el.ontouchstart = () => { console.log('start') };
+    });
     el?.addEventListener('touchmove', () => {
-        console.log('move')
         document.querySelector('body').classList.add('disabled_touch')
-    }); // el.ontouchstart = () => { console.log('start') };
+    });
     el?.addEventListener('touchcancel', () => {
-        console.log('cancel')
     });
 
     return (
@@ -90,8 +85,8 @@ const ComponentMap = () => {
             <ul className="map__points">
 
                 {
-                    members.map((item, itemNum) =>
-                        item.bags.map((bag, bagNum) =>
+                    members?.map((item, itemNum) =>
+                        item?.bags?.map((bag, bagNum) =>
 
                             <li key={item.user.id + bagNum} data-bag={bag.map_pos} data-x={bag.x_pos}
                                 data-y={bag.y_pos}

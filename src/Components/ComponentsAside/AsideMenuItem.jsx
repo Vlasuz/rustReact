@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import {Link, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {switcherRights} from "../../Redux/actions";
+import PlaySound from "../../Hooks/PlaySound";
+import {setSound} from "../../Redux/Reducers/reducerSound";
 
 const AsideMenuItem = (props) => {
 
@@ -30,6 +32,9 @@ const AsideMenuItem = (props) => {
         document.querySelector('.aside__list .li_active')?.classList.remove('li_active')
         document.querySelector('.section-right__top .top__item:first-child').click()
         e.target.closest('li').classList.add('li_active')
+
+        dispatch(setSound(props.sound))
+
     }
 
     return (
@@ -37,9 +42,7 @@ const AsideMenuItem = (props) => {
             onClick={e => switcherLi(e)}
             className={props.linkTo === switcher ? "li_active" : ""}>
             <button>
-                {
-                    icon(props.id)
-                }
+                {icon(props.id)}
                 <span className="absolute-span">
                     {props.title}
                 </span>

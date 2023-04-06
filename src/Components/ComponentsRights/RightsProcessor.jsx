@@ -14,6 +14,8 @@ import {Trans, useTranslation} from "react-i18next";
 import {setNotice} from "../../Redux/Reducers/reducerNotice";
 import GlobalLink from "../../Hooks/GlobalLink";
 import Translate from "../../Hooks/Translate";
+import {setSound} from "../../Redux/Reducers/reducerSound";
+import {logDOM} from "@testing-library/react";
 
 const RightsProcessor = (props) => {
 
@@ -32,6 +34,12 @@ const RightsProcessor = (props) => {
 
 
     const handleGoToShop = () => {
+
+        dispatch(setSound(''))
+        setTimeout(() => {
+            dispatch(setSound('sound3'))
+        }, 10)
+
         setTimeout(() => {
             dispatch(switcherRights('sh'))
         }, 300)
@@ -164,9 +172,15 @@ const RightsProcessor = (props) => {
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+`/api/items/recycle/`, arrayToRecycle).then(res => {
 
-            processorList.list.filter(item => dispatch(processorListRemove([item])))
-            dispatch(userBalanceSetCoins(res.data.balance))
-            dispatch(setNotice("processor_done"))
+            console.log('recycle', res.data)
+
+            setArrayToRecycle([])
+            dispatch(setSound('sound4'))
+            // setTimeout(() => {
+                processorList.list.filter(item => dispatch(processorListRemove([item])))
+                dispatch(userBalanceSetCoins(res.data.balance))
+                dispatch(setNotice("processor_done"))
+            // }, 1000)
 
         })
 

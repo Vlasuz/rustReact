@@ -7,6 +7,7 @@ import {getCookie} from "../../Hooks/GetCookies";
 import GlobalLink from "../../Hooks/GlobalLink";
 import Translate from "../../Hooks/Translate";
 import AsyncImages from "../../Hooks/AsyncImages";
+import {skinsShop} from "../../Redux/Reducers/reducerShopSkins";
 
 const ShopItem = ({ data, list }) => {
 
@@ -29,6 +30,12 @@ const ShopItem = ({ data, list }) => {
             dispatch(userBalanceRemoveCoins(price))
             dispatch(userSkinBought(data))
             setIsBoughtSkin(true)
+
+            axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
+            axios.get("https://"+GlobalLink()+'/api/fight/shop/').then(res => {
+                dispatch(skinsShop(res.data))
+                dispatch(userSkinSet(res.data.chosen))
+            })
         })
     }
 
@@ -37,6 +44,12 @@ const ShopItem = ({ data, list }) => {
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+'/api/fight/shop/choose?skin_id='+data.id).then(res => {
             dispatch(userSkinSet(data))
+
+            axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
+            axios.get("https://"+GlobalLink()+'/api/fight/shop/').then(res => {
+                dispatch(skinsShop(res.data))
+                dispatch(userSkinSet(res.data.chosen))
+            })
         })
     }
 

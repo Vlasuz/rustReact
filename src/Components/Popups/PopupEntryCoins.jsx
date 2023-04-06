@@ -31,7 +31,6 @@ const PopupEntryCoins = ({ data }) => {
             dispatch(setNotice("already_have_a_game"))
             return
         }
-        console.log('data', "https://"+GlobalLink()+`/api/fight/room/join?game_id=${data.id}`)
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+`/api/fight/room/join?game_id=${data.id}`, {
@@ -55,12 +54,8 @@ const PopupEntryCoins = ({ data }) => {
                         break;
                 }
             }
-            sk.onclose = () => {
-                console.log('FIGHT close')
-            }
-            sk.onerror = () => {
-                console.log('FIGHT error')
-            }
+            sk.onclose = () => console.log('FIGHT close')
+            sk.onerror = () => console.log('FIGHT error')
         })
     }
 

@@ -37,6 +37,7 @@ import {reducerOpenPopup} from "./reducerOpenPopup";
 import {reducerWithdrawItems} from "./reducerWithdrawItems";
 import {reducerPages} from "./reducerPages";
 import {reducerCoodsSwipeMap} from "./reducerCoodsSwipeMap";
+import {reducerSound} from "./reducerSound";
 
 export const rootReducer = combineReducers({
     reducerSwitcherRights,
@@ -76,5 +77,6 @@ export const rootReducer = combineReducers({
     reducerOpenPopup,
     reducerWithdrawItems,
     reducerPages,
-    reducerCoodsSwipeMap
+    reducerCoodsSwipeMap,
+    reducerSound,
 })

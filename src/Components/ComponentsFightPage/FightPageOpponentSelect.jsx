@@ -8,6 +8,7 @@ import {setDefense} from "../../Redux/Reducers/reducerFightsDefense";
 import {setAttack} from "../../Redux/Reducers/reducerFightsAttack";
 import SelectFightOnBody from "../../Hooks/SelectFightOnBody";
 import Translate from "../../Hooks/Translate";
+import {setSound} from "../../Redux/Reducers/reducerSound";
 
 const FightPageOpponentSelect = (props) => {
 
@@ -17,15 +18,15 @@ const FightPageOpponentSelect = (props) => {
     const dispatch = useDispatch()
     const socket = useSelector(state => state.reducerFightsSocketCreate.socket)
     const response = useSelector(state => state.reducerFightsResponse.response)
-
-    const skin = useSelector(state => state.reducerFightsSkin.my_skin)
+    const skin = useSelector(state => state.reducerShopSkins.skins).chosen;
+    const defaultSkin = useSelector(state => state.reducerSettings.settings).default_fight_skin;
 
     useEffect(() => {
 
-        if(response.type === 'game_attack') {
+        if (response.type === 'game_attack') {
             setTimeout(() => {
-                if(!hitHead) setHitHead(true)
-                if(!hitLegs) setHitLegs(true)
+                if (!hitHead) setHitHead(true)
+                if (!hitLegs) setHitLegs(true)
             }, 9500)
         }
 
@@ -34,7 +35,34 @@ const FightPageOpponentSelect = (props) => {
     useEffect(() => {
         socket.send(`{"type":"attack", "head": ${hitHead}, "body": ${hitBody}, "legs": ${hitLegs}}`)
         dispatch(setAttack([hitHead, hitBody, hitLegs]))
-    }, [hitHead, hitBody, hitLegs])
+
+        dispatch(setSound(''))
+        setTimeout(() => {
+            if (hitHead) dispatch(setSound('sound8'))
+        }, 10)
+    }, [hitHead])
+
+    useEffect(() => {
+        socket.send(`{"type":"attack", "head": ${hitHead}, "body": ${hitBody}, "legs": ${hitLegs}}`)
+        dispatch(setAttack([hitHead, hitBody, hitLegs]))
+
+        dispatch(setSound(''))
+        setTimeout(() => {
+            if (hitBody) dispatch(setSound('sound7'))
+        }, 10)
+    }, [hitBody])
+
+    useEffect(() => {
+        socket.send(`{"type":"attack", "head": ${hitHead}, "body": ${hitBody}, "legs": ${hitLegs}}`)
+        dispatch(setAttack([hitHead, hitBody, hitLegs]))
+
+        dispatch(setSound(''))
+        setTimeout(() => {
+            if (hitLegs) dispatch(setSound('sound7'))
+        }, 10)
+    }, [hitLegs])
+
+
 
     useEffect(() => {
         SelectFightOnBody()
@@ -65,7 +93,7 @@ const FightPageOpponentSelect = (props) => {
                             data-persone="head-hit"
                             onMouseMove={e => SelectFightOnButtonMousemove(e)}
                             onMouseOut={e => SelectFightOnButtonMouseout(e)}
-                            onClick={e => SelectFightOnButtonClick(e, skin, setHitHead)}
+                            onClick={e => SelectFightOnButtonClick(e, skin, setHitHead, defaultSkin)}
                         >
                             <span>
                                 <Translate>fight_head</Translate>
@@ -78,7 +106,7 @@ const FightPageOpponentSelect = (props) => {
                             data-persone="body-hit"
                             onMouseMove={e => SelectFightOnButtonMousemove(e)}
                             onMouseOut={e => SelectFightOnButtonMouseout(e)}
-                            onClick={e => SelectFightOnButtonClick(e, skin, setHitBody)}
+                            onClick={e => SelectFightOnButtonClick(e, skin, setHitBody, defaultSkin)}
                         >
                             <span>
                                 <Translate>fight_body</Translate>
@@ -91,7 +119,7 @@ const FightPageOpponentSelect = (props) => {
                             data-persone="legs-hit"
                             onMouseMove={e => SelectFightOnButtonMousemove(e)}
                             onMouseOut={e => SelectFightOnButtonMouseout(e)}
-                            onClick={e => SelectFightOnButtonClick(e, skin, setHitLegs)}
+                            onClick={e => SelectFightOnButtonClick(e, skin, setHitLegs, defaultSkin)}
                         >
                             <span>
                                 <Translate>fight_legs</Translate>

@@ -14,6 +14,9 @@ import {useDispatch, useSelector} from "react-redux";
 import NotFound from "../pages/NotFound";
 import {logger} from "../middleware/logger";
 import {switcherRights} from "../Redux/actions";
+import DocsRules from "../pages/DocsRules";
+import DocsPolicy from "../pages/DocsPolicy";
+import DocsContacts from "../pages/DocsContacts";
 
 const MainRouters = () => {
     const location = useLocation()
@@ -57,6 +60,10 @@ const MainRouters = () => {
             element: <FaqPage/>,
         },
         {
+            path: "/docs/:id",
+            element: <PolicyPage/>,
+        },
+        {
             path: "*",
             element: <NotFound/>,
         },
@@ -68,7 +75,7 @@ const MainRouters = () => {
                 <CSSTransition key={location.key} classNames={'fade'} timeout={300}>
                     <Routes location={location}>
                         {
-                            Routers.map((router, routerId) =>
+                            Routers?.map((router, routerId) =>
                                 {
                                     if(!auth) {
                                         if(router.path === '/profile'){

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const GlobalLink = () => {
-    return "rust.onefut.net";
+    return "api.onefut.net";
 };
 
 export default GlobalLink;

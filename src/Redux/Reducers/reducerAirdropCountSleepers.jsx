@@ -6,8 +6,6 @@ const initialState = {
 
 export const reducerAirdropCountSleepers = (state = initialState, action) => {
 
-    // console.log(action)
-
     switch(action.type) {
 
         case AIRDROP_COUNT_SLEEPERS:

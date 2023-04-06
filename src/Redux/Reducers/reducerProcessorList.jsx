@@ -18,7 +18,6 @@ export const reducerProcessorList = (state = initialState, action) => {
         case PROCESSOR_LIST_REMOVE:
             let newArray = state.list.filter(item => item.id !== action.item[0].id)
 
-            console.log(action)
             return {
                 ...state,
                 list: newArray,

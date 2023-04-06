@@ -28,7 +28,6 @@ const HistoryTop = (props) => {
     useEffect(() => {
         props.transactions.map(item => item.type === "withdraw" && setValueWithdraw(prev => prev + +item.price))
         props.transactions.map(item => item.type === "pay" && setValuePay(prev => prev + +item.price))
-        console.log(props.transactions)
     }, [props.transactions])
 
     return (

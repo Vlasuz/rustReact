@@ -50,10 +50,13 @@ const PopupAddCoinsBySkins = () => {
         }
     )
 
+    useEffect(() => {
+
+    }, [])
+
     const addCoinsFunction = () => {
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie("access_token")}`;
         axios.post('https://'+GlobalLink()+'/api/trade/create/pay/', items.map(item => item.id)).then(res => {
-            console.log('ADD COINS POPUP', res.data)
             dispatch(setOpenPopup("popup-pull-search", {type: "pay", data: res.data, items}))
         })
     }

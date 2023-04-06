@@ -7,8 +7,6 @@ const HistoryItem = ({data}) => {
     const [showAllItems, setShowAllItems] = useState(4)
 
 
-    console.log(data)
-
     useEffect(() => {
         document.querySelectorAll('.section-history__item').forEach(item => {
             setTimeout(() => {

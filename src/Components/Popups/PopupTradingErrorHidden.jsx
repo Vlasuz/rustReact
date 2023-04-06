@@ -1,6 +1,7 @@
 import React from 'react';
 import PopupCloseBackground from "./PopupCloseBackground";
 import PopupCloseCross from "./PopupCloseCross";
+import Translate from "../../Hooks/Translate";
 
 const PopupTradingErrorHidden = () => {
     return (
@@ -18,10 +19,10 @@ const PopupTradingErrorHidden = () => {
                 <PopupCloseCross />
                 <div className="trade__buttons">
                     <button className="grey">
-                        <span>Через браузер</span>
+                        <span><Translate>by_browser</Translate></span>
                     </button>
                     <button className="steam">
-                        <span>Через Steam</span>
+                        <span><Translate>by_steam_app</Translate></span>
                         <img src="../images/steam.svg" alt="Steam"/>
                     </button>
                 </div>

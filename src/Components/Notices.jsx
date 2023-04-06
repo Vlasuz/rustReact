@@ -81,7 +81,6 @@ const Notices = () => {
 
     useEffect(() => {
 
-        console.log(noticeActivated, oldNotice)
         if (!!noticeActivated.length) {
             let timeout = setTimeout(() => {
                 setOldNotice(noticeActivated)

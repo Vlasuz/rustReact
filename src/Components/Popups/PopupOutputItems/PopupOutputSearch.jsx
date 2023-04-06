@@ -40,8 +40,6 @@ const PopupOutputSearch = () => {
                         dispatch(setOpenPopup("popup-pull", {socket, items: inventory.filter(item => item.isCheck).map(item => item), data}))
                     }
 
-                    console.log('data wth', data)
-
                     switch (data?.bot?.status) {
                         case "waiting":
                             dispatch(setOpenPopup("popup-trade-waiting", {response: data, type: "withdraw"}))
@@ -53,12 +51,8 @@ const PopupOutputSearch = () => {
                             break;
                     }
                 }
-                socket.onerror = () => {
-                    console.log('error')
-                }
-                socket.onclose = () => {
-                    console.log('close')
-                }
+                socket.onerror = () => console.log('error')
+                socket.onclose = () => console.log('close')
 
                 dispatch(setOpenPopup("popup-pull", {type: "withdraw", socket, items: inventory.filter(item => item.isCheck).map(item => item)}))
 
@@ -79,8 +73,6 @@ const PopupOutputSearch = () => {
                     dispatch(setOpenPopup("popup-pull", {data}))
                 }
 
-                console.log('data pay', data)
-
                 switch (data?.status) {
                     case "waiting":
                         dispatch(setOpenPopup("popup-trade-waiting", {response: data, type: "pay"}))
@@ -95,21 +87,15 @@ const PopupOutputSearch = () => {
                         break;
                 }
             }
-            socket.onerror = () => {
-                console.log('error')
-            }
-            socket.onclose = () => {
-                console.log('close')
-            }
+            socket.onerror = () => console.log('error')
+            socket.onclose = () => console.log('close')
         }
 
     }, [isPopup])
 
     const handleClosePopup = () => {
         dispatch(setOpenPopup(""))
-        websocket.onclose = () => {
-            console.log('Close')
-        }
+        websocket.onclose = () => console.log('Close')
     }
 
     return (

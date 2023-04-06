@@ -4,6 +4,7 @@ import Timer from "../TimerForAirdrop/Timer";
 import {useDispatch, useSelector} from "react-redux";
 import {switcherRights} from "../../Redux/actions";
 import {reducerSwitcherRights} from "../../Redux/Reducers/reducerSwitcherRights";
+import {setSound} from "../../Redux/Reducers/reducerSound";
 
 const AsidePlane = (props) => {
 
@@ -11,10 +12,11 @@ const AsidePlane = (props) => {
     const seconds = useSelector(state => state.reducerAirdropTimerSecond.seconds)
     const step = useSelector(state => state.reducerAirdropStep.step)
 
-    const changeRightsBlock = (e) => {
+    const linkToGame = (e) => {
+        dispatch(setSound(''))
 
         document.querySelector('.section-right__item')?.classList.remove('section-right__item_show')
-        document.querySelector('.section-right__item').classList.add('section-right__item_hidden')
+        document.querySelector('.section-right__item')?.classList.add('section-right__item_hidden')
 
         setTimeout(() => {
             dispatch(switcherRights('ra'))
@@ -23,16 +25,20 @@ const AsidePlane = (props) => {
         }, 300)
 
         document.querySelectorAll('.aside__list li').forEach(item => {
-            item.classList.remove('li_active')
+            item?.classList.remove('li_active')
         })
         document.querySelector('.section-right__top .top__item:first-child').click()
         e.target.closest('li')?.classList.add('li_active')
+
+        setTimeout(() => {
+            dispatch(setSound('sound12'))
+        }, 10)
+
     }
 
     return (
-        <NavLink to={"/airdrop"} className={isActive => isActive ? 'aside__plane' : 'aside__plane aside__plane_active'}>
-            <button
-                onClick={e => changeRightsBlock(e)}>
+        <NavLink onClick={linkToGame} to={"/airdrop"} className={isActive => isActive ? 'aside__plane' : 'aside__plane aside__plane_active'}>
+            <button>
                 <img src="../images/plane.svg" alt="Plane"/>
                 <Timer states={props.states}/>
                 <div className="timer-line">

@@ -15,6 +15,7 @@ import {getCookie} from "../../Hooks/GetCookies";
 import GlobalLink from "../../Hooks/GlobalLink";
 import Translate from "../../Hooks/Translate";
 import {setNotice} from "../../Redux/Reducers/reducerNotice";
+import {setSound} from "../../Redux/Reducers/reducerSound";
 
 const PopupNewRoom = () => {
 
@@ -39,42 +40,49 @@ const PopupNewRoom = () => {
     function createGame(e) {
         e.preventDefault();
 
-        if(rooms.some(item => item?.first_player?.user?.id === userData?.id || item?.second_player?.user?.id === userData?.id)){
-            dispatch(setNotice("already_have_a_game"))
-            return
+        if(balance < +coinsBid){
+            dispatch(setNotice("not_enough_money"))
+        } else {
+
+            if(rooms.some(item => item?.first_player?.user?.id === userData?.id || item?.second_player?.user?.id === userData?.id)){
+                dispatch(setNotice("already_have_a_game"))
+                return
+            }
+
+            axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
+            axios.post("https://"+GlobalLink()+'/api/fight/room/create', {
+                "coins": coinsBid,
+                "items": listOnZone.map(item => item.id),
+            }).then(res => {
+
+                dispatch(userInventoryRemove(listOnZone))
+
+                const sk = new WebSocket("wss://"+GlobalLink()+'/ws/api/fight/game/' + res.data.id + "/")
+                sk.onopen = function () {
+                    sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
+                    dispatch(setSocket(sk))
+                }
+                sk.onmessage = e => {
+                    let message = JSON.parse(JSON.parse(e.data))
+                    dispatch(setResponse(message))
+
+                    if(message.type === 'player_join_event' && message.data.length === 2){
+                        dispatch(setSound('sound15'))
+                    }
+
+                    switch(message.type){
+                        case 'player_join_event':
+                            let skin = message.data[0].skin !== null ? message.data[0].skin?.gallery : settings.default_fight_skin?.gallery
+                            dispatch(setSkin('me', skin))
+                            !window.location.href.includes(res.data.id) && navigate("/fight/"+res.data.id)
+                            break;
+                    }
+                }
+
+            })
+
         }
 
-        axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.post("https://"+GlobalLink()+'/api/fight/room/create', {
-            "coins": coinsBid,
-            "items": listOnZone.map(item => item.id),
-        }).then(res => {
-
-            dispatch(userInventoryRemove(listOnZone))
-
-            console.log("listOnZone", listOnZone)
-
-            const sk = new WebSocket("wss://"+GlobalLink()+'/ws/api/fight/game/' + res.data.id + "/")
-            sk.onopen = function () {
-                sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
-                dispatch(setSocket(sk))
-            }
-            sk.onmessage = e => {
-                let message = JSON.parse(JSON.parse(e.data))
-                dispatch(setResponse(message))
-
-                console.log('New room', message)
-
-                switch(message.type){
-                    case 'player_join_event':
-                        let skin = message.data[0].skin !== null ? message.data[0].skin?.gallery : settings.default_fight_skin?.gallery
-                        dispatch(setSkin('me', skin))
-                        !window.location.href.includes(res.data.id) && navigate("/fight/"+res.data.id)
-                        break;
-                }
-            }
-
-        })
     }
 
     let switcherLi = function (e) {

@@ -15,9 +15,6 @@ const RightsChatResources = () => {
             <button className="resources__button" onClick={openChatRules}>
                 <Translate>chat_rules</Translate>
             </button>
-            <Link to={"policy"} className="resources__button">
-                <Translate>chat_terms_of_use</Translate>
-            </Link>
         </div>
     );
 };

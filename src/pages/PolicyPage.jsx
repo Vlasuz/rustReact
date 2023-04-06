@@ -4,10 +4,13 @@ import Translate from "../Hooks/Translate";
 import {useSelector} from "react-redux";
 import parse from "html-react-parser";
 import {useTranslation} from "react-i18next";
+import {useParams} from "react-router-dom";
 
 const PolicyPage = () => {
+    const {id} = useParams()
 
-    const page = useSelector(state => state.reducerPages.pages)[1]
+    const page = useSelector(state => state.reducerPages.pages).filter(item => item.id === id)[0]
+
     const {i18n} = useTranslation();
 
     const title = {

@@ -12,6 +12,7 @@ import axios from "axios";
 import Translate from "../../../Hooks/Translate";
 import {setSkin} from "../../../Redux/Reducers/reducerFightsSkin";
 import {setNotice} from "../../../Redux/Reducers/reducerNotice";
+import 'jquery'
 
 const FightItem = ({data}) => {
 
@@ -32,7 +33,7 @@ const FightItem = ({data}) => {
     }, [])
 
     const handleJoin = () => {
-        if(!!Object.keys(userData).length){
+        if (!!Object.keys(userData).length) {
             (data.first_player?.items.length > 0 ?
                 OpenPopup('popup-entry-clothes-' + data.id) :
                 OpenPopup('popup-entry-coins-' + data.id))
@@ -45,6 +46,7 @@ const FightItem = ({data}) => {
         navigate('/fight/' + id)
     }
 
+
     return (
         <>
             {
@@ -55,6 +57,7 @@ const FightItem = ({data}) => {
                             data?.game_state === "ended" ? "list-games__item list-games__item_finish" :
                                 "list-games__item") + (showItems ? " list-games__item_active" : "")
                     }>
+
 
                     {data.first_player?.items.length > 0 ?
                         <PopupEntryClothes data={data} price={price}/> :
@@ -76,7 +79,7 @@ const FightItem = ({data}) => {
                             {
                                 data.first_player?.items.map(item =>
                                     <li key={item.id}>
-                                        <div className={"clothes__cool"} style={{background: item.rarity.color}} />
+                                        <div className={"clothes__cool"} style={{background: item.rarity.color}}/>
                                         <img src={item.image} alt="Photo"/>
                                     </li>
                                 )
@@ -99,7 +102,7 @@ const FightItem = ({data}) => {
                             {
                                 !((data?.first_player?.user?.id === userData.id) || (data?.second_player?.user.id === userData.id)) ? <>
                                         {
-                                            data.game_state === "waiting" ?
+                                            data.game_state === "waiting" && !(data?.first_player && data?.second_player) ?
                                                 <button className="item__button" onClick={handleJoin}>
                                                     {!!Object.keys(userData).length && <span>
                                                         <Translate>play_for_coins</Translate>
@@ -108,7 +111,7 @@ const FightItem = ({data}) => {
                                                     <span>{price}</span>
                                                 </button> :
 
-                                                data.game_state === "process" ?
+                                                data.game_state === "process" || (data?.first_player && data?.second_player) ?
                                                     <button className="item__button">
                                                         <img src="../images/header__coins.svg" alt="Ico"/>
                                                         <span>{price}</span>

@@ -25,26 +25,29 @@ const AddCoinsBySkin = () => {
 
         if (isOpen) {
             axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
-            axios.get('https://'+GlobalLink()+'/api/trade/inventory/').then(res => {
+            axios.get('https://' + GlobalLink() + '/api/trade/inventory/').then(res => {
                 setResponse(res.data)
                 setLoad(false)
+
+                if (res.data.message === 'hidden_inventory') {
+                    dispatch(setOpenPopup("popup-trade-error-cancel", {type: "pay", data: res.data}))
+                }
+
             })
         }
 
     }, [isOpen])
 
-    const [sortArray, setSortArray] = useState(
-        {
-            search: '',
-            filterRadio: '',
-            filterCheckbox: false,
-        }
-    )
+    const [sortArray, setSortArray] = useState({
+        search: '',
+        filterRadio: '',
+        filterCheckbox: false,
+    })
 
     const addCoinsFunction = () => {
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie("access_token")}`;
-        axios.post('https://'+GlobalLink()+'/api/trade/create/pay/', items.map(item => item.id)).then(res => {
-            if(res.data.message === 'Trade-link is empty'){
+        axios.post('https://' + GlobalLink() + '/api/trade/create/pay/', items.map(item => item.id)).then(res => {
+            if (res.data.message === 'Trade-link is empty') {
                 dispatch(setOpenPopup("popup-trade-error-cancel", {type: "pay", data: res.data}))
             } else {
                 dispatch(setOpenPopup("popup-pull-search", {type: "pay", data: res.data, items}))
@@ -58,7 +61,7 @@ const AddCoinsBySkin = () => {
         setResponse([])
         setLoad(true)
         axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.get('https://'+GlobalLink()+'/api/trade/inventory/refresh/').then(res => {
+        axios.get('https://' + GlobalLink() + '/api/trade/inventory/refresh/').then(res => {
             setResponse(res.data)
             setLoad(false)
         })
@@ -66,7 +69,7 @@ const AddCoinsBySkin = () => {
 
     const handleSelect = (item) => {
         setItems(prev => {
-            if(!prev?.some(itemOld => item.id === itemOld.id)) {
+            if (!prev?.some(itemOld => item.id === itemOld.id)) {
                 setPrice({
                     value: price.value + item.price.value,
                     steam_price: +price.steam_price + +item.price.steam_price.toFixed(2)
@@ -107,35 +110,72 @@ const AddCoinsBySkin = () => {
                 <div className="skins__block">
 
                     {
-                        !load ? response
-                            ?.filter(item => item?.title?.toLowerCase()?.includes(sortArray?.search?.toLowerCase()))
-                            ?.sort((a, b) => (!sortArray.filterCheckbox) ?
-                                ((sortArray.filterRadio === "filterPrice1") ? a.cost : a.rarity) - ((sortArray.filterRadio) === "filterPrice1" ? b.cost : b.rarity) :
-                                ((sortArray.filterRadio === "filterPrice1") ? b.cost : b.rarity) - ((sortArray.filterRadio) === "filterPrice1" ? a.cost : a.rarity))
-                            ?.map(item =>
-                                <li
-                                    className={items.some(itemOld => itemOld.id === item.id) ? "postamat__item postamat__item_active skins__item_active" : "postamat__item"}
-                                    onClick={e => handleSelect(item)}
-                                    key={item.id}
-                                >
-                                    <div className="item__check">
-                                        <img src="../images/green-check.svg" alt="Check"/>
-                                    </div>
-                                    {item.count &&
-                                        <div className="item__count">
-                                            {item.count}
-                                        </div>
+                        !load && response.length ? response
+                                ?.filter(item => item?.title?.toLowerCase()?.includes(sortArray?.search?.toLowerCase()))
+                                ?.sort((a, b) => {
+                                        let rarA, rarB;
+                                        switch(a.rarity.color) {
+                                            case "#a7ec2e":
+                                                rarA = 2;
+                                                break;
+                                            case "#dddddd":
+                                                rarA = 1;
+                                                break;
+                                            case "#35a3f1":
+                                                rarA = 3;
+                                                break;
+                                            case "#f15840":
+                                                rarA = 4;
+                                                break;
+                                        }
+                                        switch(b.rarity.color) {
+                                            case "#a7ec2e":
+                                                rarB = 2;
+                                                break;
+                                            case "#dddddd":
+                                                rarB = 1;
+                                                break;
+                                            case "#35a3f1":
+                                                rarB = 3;
+                                                break;
+                                            case "#f15840":
+                                                rarB = 4;
+                                                break;
+                                        }
+
+                                        if (!sortArray.filterCheckbox) {
+                                            return ((sortArray.filterRadio === "filterPrice1") ? a.price.value : rarA) -
+                                                ((sortArray.filterRadio) === "filterPrice1" ? b.price.value : rarB)
+                                        } else {
+                                            return ((sortArray.filterRadio === "filterPrice1") ? b.price.value : rarB) -
+                                                ((sortArray.filterRadio) === "filterPrice1" ? a.price.value : rarA)
+                                        }
                                     }
-                                    <div className="item__cool" style={{background: item.rarity.color}} />
-                                    <div className="item__photo">
-                                        <img src={item.image} alt="Skin"/>
-                                    </div>
-                                    <div className="item__price">
-                                        <img src="../images/header__coins.svg" alt="Ico"/>
-                                        <span>{item.price.value}</span>
-                                    </div>
-                                </li>
-                            ) :
+                                )
+                                ?.map(item =>
+                                    <li
+                                        className={items.some(itemOld => itemOld.id === item.id) ? "postamat__item postamat__item_active skins__item_active" : "postamat__item"}
+                                        onClick={e => handleSelect(item)}
+                                        key={item.id}
+                                    >
+                                        <div className="item__check">
+                                            <img src="../images/green-check.svg" alt="Check"/>
+                                        </div>
+                                        {item.count &&
+                                            <div className="item__count">
+                                                {item.count}
+                                            </div>
+                                        }
+                                        <div className="item__cool" style={{background: item.rarity.color}}/>
+                                        <div className="item__photo">
+                                            <img src={item.image} alt="Skin"/>
+                                        </div>
+                                        <div className="item__price">
+                                            <img src="../images/header__coins.svg" alt="Ico"/>
+                                            <span>{item.price.value}</span>
+                                        </div>
+                                    </li>
+                                ) :
                             <div className={"loading"}>
                                 <div className="load">
                                     <div className="load__line">

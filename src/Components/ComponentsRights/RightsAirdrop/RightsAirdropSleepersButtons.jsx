@@ -15,6 +15,7 @@ import {userBalanceRemoveCoins} from "../../../Redux/Reducers/reducerUserBalance
 import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 import GlobalLink from "../../../Hooks/GlobalLink";
 import Translate from "../../../Hooks/Translate";
+import {setSound} from "../../../Redux/Reducers/reducerSound";
 
 const RightsAirdropSleepersButtons = () => {
 
@@ -32,12 +33,19 @@ const RightsAirdropSleepersButtons = () => {
             dispatch(handleSubmitAirdrop(true))
             dispatch(userBalanceRemoveCoins(sleepers.setSleepers.length * settings.airdrop_bag_price))
             document.querySelectorAll('.sleepers__item')?.forEach(item => item?.remove())
+
+            dispatch(setSound('sound6'))
         })
     }
 
 
     const randomMove = () => {
         dispatch(removeSetSleeper())
+        dispatch(setSound(''))
+
+        setTimeout(() => {
+            dispatch(setSound('sound16'))
+        }, 10)
 
         document.querySelectorAll('.sleepers__item').forEach((item, itemNum) => {
 
@@ -47,6 +55,7 @@ const RightsAirdropSleepersButtons = () => {
             let randomX = Math.floor(Math.random() * (maxX - 150) + 150);
             let randomY = Math.floor(Math.random() * (maxY - 150) + 150);
 
+            item.style.position = 'absolute';
             item.style.left = randomX + 'px';
             item.style.top = randomY + 'px';
 

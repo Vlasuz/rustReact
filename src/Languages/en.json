@@ -185,6 +185,9 @@
   "trade_error_10": "Either party canceled the offer via email/mobile. The offer is visible to both parties, even if the sender canceled it before it was sent.",
   "trade_error_11": "The trade has been placed on hold. The items involved in the trade have all been removed from both parties' inventories and will be automatically delivered in the future.",
   "Trade-link is empty": "Your trade link is empty. Please, write your trade link on your profile page.",
-  "else-error": "Unknown error"
+  "else-error": "Unknown error",
+  "hidden_inventory": "Your steam inventory is hidden, open it in your settings",
+
+  "to_profile": "To profile"
 
 }

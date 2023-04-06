@@ -67,7 +67,6 @@ const PopupEntryClothes = (props) => {
             "items": listOnZone.map(item => item.id)
         }).then(res => {
 
-            // console.log(listOnZone)
             dispatch(userInventoryRemove(listOnZone))
 
             const sk = new WebSocket("wss://" + GlobalLink() + '/ws/api/fight/game/' + props.data.id + "/")
@@ -208,8 +207,6 @@ const PopupEntryClothes = (props) => {
         };
 
     }
-
-    console.log(props)
 
     return (
         <div className={"popup popup-entry-clothes popup-entry-clothes-" + props.data.id}>

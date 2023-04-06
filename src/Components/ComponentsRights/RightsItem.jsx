@@ -94,7 +94,6 @@ const RightsItem = (props) => {
                         postItem.style.display = 'block'
                         document.querySelector('.pererab__item_delete').remove()
 
-                        // console.log(props.item)
                         dispatch(processorListAdd([props.item]))
                         dispatch(userInventoryRemove([props.item]))
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import RightsSearch from "./RightsSearch";
 import {useState} from "react";
 import RightsSortable from "./RightsSortable";
@@ -10,31 +10,22 @@ const RightsFilterForm = (props) => {
     const [filterRadio, setFilterRadio] = useState('')
     const [filterCheckbox, setFilterCheckbox] = useState(false)
 
-    const submitFilter = (e) => {
-        e.preventDefault()
-
-        props.setSortArray(
-            {
+    useEffect(() => {
+        props.setSortArray({
                 search: inputSearch,
                 filterRadio: filterRadio,
                 filterCheckbox: filterCheckbox
-            }
-        )
-
-    }
+            })
+    }, [filterCheckbox, inputSearch, filterCheckbox])
 
     return (
         <>
-
             <RightsSearch
                 inputSearch={inputSearch}
                 setInputSearch={setInputSearch}
                 setSortArray={props.setSortArray}
             />
-            <form
-                action="#"
-                onSubmit={e => submitFilter(e)}
-            >
+            <form action="#">
                 <RightsSortableSecond
                     filterRadio={filterRadio}
                     setFilterRadio={setFilterRadio}

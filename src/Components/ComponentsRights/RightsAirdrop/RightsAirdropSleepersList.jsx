@@ -9,6 +9,7 @@ import {
 } from "../../../Redux/Reducers/reducerAirdropMySleepers";
 import Translate from "../../../Hooks/Translate";
 import {airdropStep, airdropStepRights} from "../../../Redux/actions";
+import {setSound} from "../../../Redux/Reducers/reducerSound";
 
 const RightsAirdropSleepersList = () => {
 
@@ -97,7 +98,6 @@ const RightsAirdropSleepersList = () => {
 
         function leaveMap(item) {
             currentDroppable.classList.remove('point-inner')
-            console.log('leave')
         }
 
         function overMap(item) {
@@ -117,6 +117,7 @@ const RightsAirdropSleepersList = () => {
 
             if (currentDroppable) {
 
+                sleeper.style.position = "absolute";
                 sleeper.style.left = (cX / zoom) - (currentDroppable?.getBoundingClientRect().left) / zoom + 'px';
                 sleeper.style.top = (cY / zoom) - currentDroppable?.getBoundingClientRect().top / zoom + (20 / zoom) + 'px';
 
@@ -157,6 +158,7 @@ const RightsAirdropSleepersList = () => {
     }
 
     const handleBack = () => {
+        dispatch(setSound('sound18'))
         dispatch(clearSleeper())
         dispatch(airdropStepRights(1))
         document.querySelectorAll('.map__points li').forEach(item => item.remove())

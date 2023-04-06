@@ -8,6 +8,8 @@ import {Trans, useTranslation} from "react-i18next";
 import {getCookie} from "../../../Hooks/GetCookies";
 import GlobalLink from "../../../Hooks/GlobalLink";
 import Translate from "../../../Hooks/Translate";
+import {setSound} from "../../../Redux/Reducers/reducerSound";
+import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 
 const RightsShopCart = (props) => {
 
@@ -16,14 +18,23 @@ const RightsShopCart = (props) => {
     const balance = useSelector(state => state.reducerUserBalance.balance)
 
     const buyItemsButton = (e) => {
+
+        if(!!listAdded.list.length && balance < listAdded.summary) {
+            dispatch(setNotice("not_enough_money"))
+            return null;
+        }
+
         dispatch(userInventoryAdd(listAdded.list))
         dispatch(shopListRemove('all'))
+        dispatch(setSound(''))
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+'/api/basket/buy').then(res => {
             dispatch(userBalanceSetCoins(res.data.balance))
             props.setIsOpenCart(false)
             props.setIsOpenThanks(true)
+
+            dispatch(setSound('sound5'))
 
 
             axios.get("https://"+GlobalLink()+'/api/items/shop/').then(res => {
@@ -71,7 +82,7 @@ const RightsShopCart = (props) => {
                                 <Translate>buy</Translate>
                             </span>
                         </button> :
-                        <button className={"buttons__back"} disabled>
+                        <button className={"buttons__back"} onClick={buyItemsButton}>
                             <span>
                                 <Translate>buy</Translate>
                             </span>

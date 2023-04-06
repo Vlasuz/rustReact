@@ -1,0 +1,37 @@
+import React from 'react';
+import {useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
+import parse from "html-react-parser";
+
+const DocsPolicy = () => {
+    const page = useSelector(state => state.reducerPages.pages)[1]
+    const {i18n} = useTranslation();
+
+    const title = {
+        'ru': page?.title && parse(page?.title),
+        'uk': page?.ua_title && parse(page?.ua_title),
+        'en': page?.en_title && parse(page?.en_title),
+    }
+
+    const text = {
+        'ru': page?.text && parse(page?.text),
+        'uk': page?.ua_text && parse(page?.ua_text),
+        'en': page?.en_text && parse(page?.en_text),
+    }
+
+    return (
+        <section className="section-terms">
+            <div className="section-terms__top">
+                <h1>
+                    {title[i18n.language]}
+                </h1>
+                <img src="../images/terms.png" alt="Photo" />
+            </div>
+            <div className="section-terms__content">
+                {text[i18n.language]}
+            </div>
+        </section>
+    );
+};
+
+export default DocsPolicy;

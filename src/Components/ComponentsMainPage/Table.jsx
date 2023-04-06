@@ -214,9 +214,9 @@ const Table = ({dataStats, person_id}) => {
                                                     <ul>
                                                         <li>
                                                             {<NavLink
-                                                                to={session?.id !== item?.first_player?.user?.id ? "/user/" + item?.first_player?.user?.id : "/profile"}>
+                                                                to={person_id?.id !== item?.first_player?.user?.id ? "/user/" + item?.first_player?.user?.id : "/user/" + item?.second_player?.user?.id}>
                                                                 <img
-                                                                    src={session?.id !== item?.first_player?.user?.id ? item?.first_player?.user?.avatar : item?.second_player?.user.avatar}
+                                                                    src={person_id?.id !== item?.first_player?.user?.id ? item?.first_player?.user?.avatar : item?.second_player?.user.avatar}
                                                                     alt=""/>
                                                             </NavLink>}
                                                         </li>

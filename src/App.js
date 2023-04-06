@@ -48,6 +48,8 @@ function App() {
                     dispatch(userBalanceSetCoins(res.data.balance))
                     dispatch(setSession(res.data))
 
+                }).catch(error => {
+                    document.cookie = 'access_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
                 })
 
                 setTimeout(() => {
@@ -109,7 +111,7 @@ function App() {
             }
         }
 
-        axios.get('https://rust.onefut.net/api/base/pages/').then(res => {
+        axios.get('https://'+GlobalLink()+'/api/base/pages/').then(res => {
             dispatch(setPages(res.data))
         })
         axios.get("https://" + GlobalLink() + '/api/base/settings/').then(res => {

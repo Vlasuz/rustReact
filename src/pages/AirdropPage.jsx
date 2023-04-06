@@ -13,6 +13,7 @@ const AirdropPage = (props) => {
     const isDropDown = useSelector(state => state.reducerAirdropDrop.drop.isDropDown)
     const response = useSelector(state => state.reducerAirdropSocket.response)
     const session = useSelector(state => state.reducerSession.session)
+    const [isDisabled, setIsDisabled] = useState(false)
 
     let sum = null
     let onWheelEvent = function (event) {
@@ -31,8 +32,16 @@ const AirdropPage = (props) => {
         return;
     }
 
+    useEffect(() => {
+        if(step === "skipped" || step === "ended" || step === "prepare") {
+            setIsDisabled(true)
+        } else {
+            setIsDisabled(false)
+        }
+    }, [step])
+
     return (
-        <section className={isDropDown ? "section-map dropIsDown" : "section-map"}>
+        <section className={isDropDown ? "section-map dropIsDown" : "section-map"} onClick={() => setIsDisabled(false)}>
             <div className="section-map__top">
                 {step === "skipped" || step === "ended" || step === "prepare" ? <div className="lock-map">
                     <img src="../images/lock-map.svg" width={'22'} alt=""/>
@@ -52,7 +61,7 @@ const AirdropPage = (props) => {
             </div>
             <div className="map__container">
                 <div
-                    className={"map__scale" + (step === "process" ? " map__scale_hidden" : step === "skipped" || step === "ended" || step === "prepare" ? " map__scale_disabled" : "")}
+                    className={"map__scale" + (step === "process" ? " map__scale_hidden" : isDisabled ? " map__scale_disabled" : "")}
                     onWheel={e => onWheelEvent(e)}
                     // style={{zoom: `${scale < 1 ? 1 : scale > 3 ? 3 : scale}`}}>
                     style={{transform: `scale(${scale < 1 ? 1 : scale > 3 ? 3 : scale})`, transformOrigin: `50% 50%`}}>

@@ -1,7 +1,10 @@
 import React from 'react';
 import GlobalLink from "./GlobalLink";
+import {useSelector} from "react-redux";
 
-const SelectFightOnButtonClick = (e, skin, setting) => {
+const SelectFightOnButtonClick = (e, skin, setting, defaultSkin) => {
+
+    const choseSkin = skin ? skin : defaultSkin;
 
     let attr = e.target.closest('button').getAttribute('data-persone')
     document.querySelector('.' + attr).classList.toggle('img_clicked');
@@ -60,10 +63,7 @@ const SelectFightOnButtonClick = (e, skin, setting) => {
 
         setting(prev => !prev)
 
-        console.log(skin)
-        console.log(skin[nameOfImage])
-        console.log(nameOfImage)
-        document.querySelector('.persone__start img').setAttribute('src', "https://"+GlobalLink()+'/' + skin.gallery[nameOfImage])
+        document.querySelector('.persone__start img').setAttribute('src', "https://"+GlobalLink()+'/' + choseSkin.gallery[nameOfImage])
     }
 };
 

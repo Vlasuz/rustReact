@@ -5,6 +5,7 @@ import {buySleepers, setSleepers} from "../../../Redux/Reducers/reducerAirdropMy
 import {userBalanceRemoveCoins} from "../../../Redux/Reducers/reducerUserBalance";
 import Translate from "../../../Hooks/Translate";
 import {setNotice} from "../../../Redux/Reducers/reducerNotice";
+import {setSound} from "../../../Redux/Reducers/reducerSound";
 
 const RightsAirdropSleepers = () => {
 
@@ -14,6 +15,11 @@ const RightsAirdropSleepers = () => {
     const settings = useSelector(state => state.reducerSettings.settings)
 
     let chooseSleepers = function (e, sleeper) {
+
+        dispatch(setSound(''))
+        setTimeout(() => {
+            dispatch(setSound('sound18'))
+        }, 10)
 
         setCountSleepers(sleeper)
 
@@ -25,6 +31,7 @@ const RightsAirdropSleepers = () => {
     const sleepers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const handleBuySleepers = () => {
+        dispatch(setSound('sound19'))
         dispatch(airdropStepRights(2))
         dispatch(buySleepers(countSleepers))
         dispatch(setNotice("success_to_buy_bags"))

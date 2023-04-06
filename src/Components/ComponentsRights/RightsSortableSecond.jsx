@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Translate from "../../Hooks/Translate";
 
 const RightsSortableSecond = (props) => {
@@ -6,45 +6,46 @@ const RightsSortableSecond = (props) => {
     let changeRatio = (e) => {
         props.setFilterRadio(e.target.checked ? e.target.id : '')
         props.setFilterCheckbox(e.target.nextSibling.querySelector('input').checked)
+
+        const checkbox = e.target.closest('.label-changed').querySelector('input[type="checkbox"]')
+
+        checkbox.checked = !checkbox.checked
+        props.setFilterCheckbox(checkbox.checked)
     }
 
     return (
         <div className="postamat__filter">
-            <input
-                type="radio"
-                name="filter"
-                id="filterPrice1"
-                onChange={e => changeRatio(e)}
-            />
-            <label className="filter__item filter__price" htmlFor="filterPrice1">
-                <span>
-                    <Translate>sort_by_price</Translate>
-                </span>
+            <div className="label-changed">
                 <input
-                    type="checkbox"
-                    name="upDown"
-                    onChange={e => props.filterRadio == e.target.closest('label').getAttribute('for') ? props.setFilterCheckbox(e.target.checked) : ''}
+                    type="radio"
+                    name="filter"
+                    id="filterPrice1"
+                    onClick={e => changeRatio(e)}
                 />
-                <img src="../images/filter.svg" alt="filter"/>
-            </label>
-            <input
-                type="radio"
-                name="filter"
-                id="filterCool1"
-                onChange={e => changeRatio(e)}
-            />
-            <label className="filter__item filter__item_active filter__cool"
-                   htmlFor="filterCool1">
-                <span>
-                    <Translate>sort_by_rarity</Translate>
-                </span>
+                <label className="filter__item filter__price" htmlFor="filterPrice1">
+                    <span>
+                        <Translate>sort_by_price</Translate>
+                    </span>
+                    <input type="checkbox" name="upDown"/>
+                    <img src="../images/filter.svg" alt="filter"/>
+                </label>
+            </div>
+            <div className="label-changed">
                 <input
-                    type="checkbox"
-                    name="upDown"
-                    onChange={e => props.filterRadio == e.target.closest('label').getAttribute('for') ? props.setFilterCheckbox(e.target.checked) : ''}
+                    type="radio"
+                    name="filter"
+                    id="filterCool1"
+                    onClick={e => changeRatio(e)}
                 />
-                <img src="../images/filter.svg" alt="filter"/>
-            </label>
+                <label className="filter__item filter__item_active filter__cool"
+                       htmlFor="filterCool1">
+                    <span>
+                        <Translate>sort_by_rarity</Translate>
+                    </span>
+                    <input type="checkbox" name="upDown"/>
+                    <img src="../images/filter.svg" alt="filter"/>
+                </label>
+            </div>
             <button
                 type={"submit"}
                 className="filter__reload"

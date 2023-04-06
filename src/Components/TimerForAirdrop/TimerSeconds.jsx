@@ -17,6 +17,7 @@ import GlobalLink from "../../Hooks/GlobalLink";
 import {logger} from "../../middleware/logger";
 import {useLocation} from "react-router-dom";
 import {setCoods} from "../../Redux/Reducers/reducerCoodsSwipeMap";
+import {reducerSound, setSound} from "../../Redux/Reducers/reducerSound";
 
 let socket = new WebSocket("wss://" + GlobalLink() + '/ws/api/airdrop/')
 const TimerSeconds = () => {
@@ -29,20 +30,15 @@ const TimerSeconds = () => {
     const submitToGame = useSelector(state => state.reducerSubmitAirdrop.data)
     const session = useSelector(state => state.reducerSession.session)
     const [response, setResponse] = useState({})
+    const track = useSelector(state => state.reducerSound.sound)
 
     useEffect(() => {
 
         dispatch(setSocketAirdrop(socket))
 
-        socket.onopen = () => {
-            console.log('AIRDROP open')
-        }
-        socket.onerror = () => {
-            console.log('AIRDROP error')
-        }
-        socket.onclose = () => {
-            console.log('AIRDROP close')
-        }
+        socket.onopen = () => console.log('AIRDROP open')
+        socket.onerror = () => console.log('AIRDROP error')
+        socket.onclose = () => console.log('AIRDROP close')
     }, [])
 
     socket.onmessage = (e) => {
@@ -51,7 +47,6 @@ const TimerSeconds = () => {
 
         setResponse(data)
 
-        console.log(data)
         dispatch(setSocketAirdropResponse(data))
         dispatch(airdropStep(data.airdrop.game_state))
         dispatch(airdropTimerSeconds(data.timer))
@@ -67,15 +62,50 @@ const TimerSeconds = () => {
         }
     }, [session, response])
 
-    const ChooseSleepers = () => {
-        document.querySelector('.section-map__map')?.classList.remove('section-map__map_disabled')
-        document.querySelector(".map__container")?.classList.remove('map__container_dark')
+    const ChooseSleepers = (data, session) => {
+
+        if (document.querySelector('.section-map .trajectory')) {
+            document.querySelector('.section-map .trajectory').style.transform = `rotate(0deg)`;
+            document.querySelector('.section-map .trajectory').style.transformOrigin = `0px 0px`;
+        }
+
+        if (document.querySelector('.section-map__map') && data.timer > 29) {
+            dispatch(setSound(''))
+            setTimeout(() => {
+                dispatch(setSound('sound14'))
+            }, 10)
+        }
+
+        if (document.querySelector('.section-map__map')) {
+            document.querySelector('.section-map__map')?.classList.remove('section-map__map_disabled')
+        }
+
+        if (document.querySelector(".map__container")) {
+            document.querySelector(".map__container")?.classList.remove('map__container_dark')
+        }
     }
 
     const FlyPlane = (data) => {
+
+        if (document.querySelector('.section-map .trajectory')) {
+
+            const mLeft = data.airdrop.x_pos < 0.5 ? `-${(data.airdrop.x_pos * 1500)}px` : `${data.airdrop.x_pos * 1500}px`
+
+            // document.querySelector('.section-map .trajectory').style.marginLeft = mLeft;
+            // document.querySelector('.section-map .trajectory').style.transform = `rotate(${data.airdrop.degree}deg)`;
+            // document.querySelector('.section-map .trajectory').style.transformOrigin = `${data.airdrop.x_pos * 1500}px 0px`;
+        }
+
+
+        if (document.querySelector('.section-map__map')) {
+            dispatch(setSound('sound11'))
+        }
+
         document.querySelector('.section-map__map')?.classList.remove('section-map__map_disabled')
         document.querySelector(".map__container")?.classList.remove('map__container_dark')
-        document.querySelectorAll('.sleepers__item')?.forEach(item => item?.remove())
+        if (document.querySelector('.sleepers__item')) {
+            document.querySelectorAll('.sleepers__item')?.forEach(item => item?.remove())
+        }
 
         if (!submitToGame) {
             dispatch(clearSleeper())
@@ -86,6 +116,10 @@ const TimerSeconds = () => {
 
         setTimeout(() => {
             dispatch(airdropDropIsDropDown(true))
+
+            if (document.querySelector('.section-map__map')) {
+                dispatch(setSound('sound10'))
+            }
         }, timerForDrop)
 
     }
@@ -95,9 +129,9 @@ const TimerSeconds = () => {
 
         let array = [];
 
-        if(!!data.airdrop.players.length){
+        if (!!data.airdrop.players.length) {
 
-            document.querySelectorAll('.point').forEach(bag => {
+            document.querySelectorAll('.point')?.forEach(bag => {
                 let dropX = +getComputedStyle(document.querySelector('.airdrop-drop-sent'))?.left.replace('px', '') + 1
                 let dropY = +getComputedStyle(document.querySelector('.airdrop-drop-sent'))?.top.replace('px', '') + 1
                 let bagX = +getComputedStyle(bag).left.replace('px', '')
@@ -123,13 +157,13 @@ const TimerSeconds = () => {
                 return cur.result < prev.result ? cur : prev
             });
 
-            document.querySelectorAll('.point').forEach((bag, index) => {
+            document.querySelectorAll('.point')?.forEach((bag, index) => {
                 let dropX = +getComputedStyle(document.querySelector('.airdrop-drop-sent')).left.replace('px', '') + 1
                 let dropY = +getComputedStyle(document.querySelector('.airdrop-drop-sent')).top.replace('px', '') + 1
                 let bagX = +getComputedStyle(bag).left.replace('px', '')
                 let bagY = +getComputedStyle(bag).top.replace('px', '')
 
-                if(pointWinner.bagY === bagY && pointWinner.bagX === bagX){
+                if (pointWinner.bagY === bagY && pointWinner.bagX === bagX) {
                     bag.classList.add('sleepers__item_winner')
                     bagX = +getComputedStyle(document.querySelectorAll('.point')[index]).left.replace('px', '')
                     bagY = +getComputedStyle(document.querySelectorAll('.point')[index]).top.replace('px', '')
@@ -140,7 +174,7 @@ const TimerSeconds = () => {
                     bagY -= dropY;
 
                     let result = +Math.sqrt(Math.pow(bagX, 2) + Math.pow(bagY, 2)).toFixed(2)
-                    document.querySelector('.line-to-winner').style.width = result+"px"
+                    document.querySelector('.line-to-winner').style.width = result + "px"
                     document.querySelector('.line-to-winner')?.classList.add('line-to-winner_active')
 
                     let radius = Math.asin(Math.abs(bagY) / result) * (180 / Math.PI).toFixed(2)
@@ -150,13 +184,10 @@ const TimerSeconds = () => {
                     bagY = +getComputedStyle(document.querySelectorAll('.point')[index]).top.replace('px', '')
 
                     if (bagX >= dropX && bagY >= dropY) {
-                        console.log(4, radius)
                         radius = 360 - radius
                     } else if (bagX <= dropX && bagY >= dropY) {
-                        console.log(3, radius)
                         radius = 180 + radius
                     } else if (bagX <= dropX && bagY <= dropY) {
-                        console.log(2, radius)
                         radius = 180 - radius
                     }
                     document.querySelector('.line-to-winner').style.transform = `rotate(-${radius}deg)`;
@@ -184,6 +215,14 @@ const TimerSeconds = () => {
 
         winnerLogic(data, true)
 
+        if (document.querySelector('.section-map__map')) {
+            if (data.airdrop?.winner && (session?.id === data.airdrop?.winner?.user?.id)) {
+                dispatch(setSound('sound13_1'))
+            } else {
+                dispatch(setSound('sound17'))
+            }
+        }
+
         setTimeout(() => {
 
             document.querySelectorAll(".map__points li")?.forEach(item => item.classList.add('li_hide'))
@@ -198,10 +237,10 @@ const TimerSeconds = () => {
                 dispatch(clearSleeper())
                 dispatch(handleSubmitAirdrop(false))
                 if (data.airdrop?.winner && (session?.id === data.airdrop?.winner?.user?.id)) {
-                    for(let i = 0; i < +data.airdrop.bank; i++){
+                    for (let i = 0; i < +data.airdrop.bank; i++) {
                         let adding = setInterval(() => {
                             dispatch(userBalanceAddCoins(1))
-                            if(data.airdrop.bank >= i){
+                            if (data.airdrop.bank >= i) {
                                 clearInterval(adding)
                             }
                         }, 1)
@@ -219,6 +258,14 @@ const TimerSeconds = () => {
 
         winnerLogic(data, false)
 
+        if (document.querySelector('.section-map__map')) {
+            if (data.airdrop?.winner && (session?.id === data.airdrop?.winner?.user?.id)) {
+                dispatch(setSound('sound13_1'))
+            } else {
+                dispatch(setSound('sound17'))
+            }
+        }
+
         setTimeout(() => {
 
             document.querySelectorAll(".map__points li")?.forEach(item => item.classList.add('li_hide'))
@@ -233,10 +280,10 @@ const TimerSeconds = () => {
                 dispatch(clearSleeper())
                 dispatch(handleSubmitAirdrop(false))
                 if (data.airdrop?.winner && (session?.id === data.airdrop?.winner?.user?.id)) {
-                    for(let i = 0; i < +data.airdrop.bank; i++){
+                    for (let i = 0; i < +data.airdrop.bank; i++) {
                         let adding = setInterval(() => {
                             dispatch(userBalanceAddCoins(1))
-                            if(data.airdrop.bank >= i){
+                            if (data.airdrop.bank >= i) {
                                 clearInterval(adding)
                             }
                         }, 1)
@@ -249,6 +296,14 @@ const TimerSeconds = () => {
     }
 
     const PrepareGame = () => {
+
+        if (document.querySelector('.section-map__map')) {
+            dispatch(setSound(''))
+            setTimeout(() => {
+                dispatch(setSound('sound14'))
+            }, 10)
+        }
+
         document.querySelector(".map__container")?.classList.add('map__container_dark')
     }
 
@@ -273,16 +328,7 @@ const TimerSeconds = () => {
     )
 
     useEffect(() => {
-
         const time = setInterval(() => dispatch(airdropTimerSeconds()), 1000)
-
-        // if(seconds < 0) {
-        //     dispatch(airdropTimerSeconds(0))
-        //     socket.onopen = () => {
-        //         console.log('open again')
-        //     }
-        // }
-
         return () => clearInterval(time);
     }, [seconds]);
 

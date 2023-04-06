@@ -6,8 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {fightRoomAdd, fightRoomChange, fightRoomRemove, fightRoomSet} from "../Redux/Reducers/reducerFightsRooms";
 import {setSkin} from "../Redux/Reducers/reducerFightsSkin";
-import {userInventoryAdd} from "../Redux/actions";
-import {useTranslation} from "react-i18next";
 import GlobalLink from "../Hooks/GlobalLink";
 
 let lobbysocket = new WebSocket("wss://" + GlobalLink() + `/ws/api/fight/lobby/`);
@@ -22,8 +20,6 @@ const FightPage = () => {
             dispatch(fightRoomSet(res.data.reverse()))
             setLoading(false)
         })
-
-
     }, [])
 
     lobbysocket.onmessage = (e) => {

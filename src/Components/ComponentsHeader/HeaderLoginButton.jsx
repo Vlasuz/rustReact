@@ -34,7 +34,7 @@ const HeaderLoginButton = () => {
     // DELETE !!!!!
 
     return (
-        <a href={"https://steamcommunity.com/openid/login?"+new URLSearchParams(auth_params).toString()} className={"buttonToLogin"}>
+        <a href={"http://steamcommunity.com/openid/login?"+new URLSearchParams(auth_params).toString()} className={"buttonToLogin"}>
             <span>
                 <Translate>entry</Translate>
             </span>

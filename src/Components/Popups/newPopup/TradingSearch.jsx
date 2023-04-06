@@ -16,6 +16,7 @@ const TradingSearch = () => {
     const dispatch = useDispatch()
     const isOpen = isPopup.popup === "popup-pull-search";
     const inventory = useSelector(state => state.reducerUserInventory.list)
+    const [isSuccess, setIsSuccess] = useState(false)
 
     useEffect(() => {
 
@@ -50,10 +51,9 @@ const TradingSearch = () => {
                                 dispatch(setOpenPopup("popup-trade-error-cancel", {response: data?.bot, type: "withdraw"}))
                         }
                     }
-                    socket.onerror = () => {console.log('TRADE withdraw error')}
+                    socket.onerror = () => console.log('TRADE withdraw error')
                     socket.onclose = () => {
-                        console.log('TRADE withdraw close')
-                        dispatch(setOpenPopup("popup-trade-error-cancel", {response: {message: "else-error"}}))
+                        // dispatch(setOpenPopup("popup-trade-error-cancel", {response: {message: "else-error"}}))
                     }
 
                     dispatch(setOpenPopup("popup-pull", {type: "withdraw", socket, items: inventory.filter(item => item.isCheck).map(item => item)}))
@@ -85,18 +85,18 @@ const TradingSearch = () => {
                     case "success":
                         dispatch(setOpenPopup("popup-trade-good", {response: data, type: "pay"}))
                         dispatch(userBalanceSetCoins(+data.user.balance))
+                        setIsSuccess(true)
                         break;
                     case "error":
                         dispatch(setOpenPopup("popup-trade-error-cancel", {response: data, type: "pay"}))
                         break;
                 }
             }
-            socket.onerror = () => {
-                console.log('TRADE pay error')
-            }
-            socket.onclose = () => {
-                console.log('TRADE pay close')
-                dispatch(setOpenPopup("popup-trade-error-cancel", {response: {message: "else-error"}}))
+            socket.onerror = () => console.log('TRADE pay error')
+            socket.onclose = (e) => {
+                // if(!isSuccess){
+                //     dispatch(setOpenPopup("popup-trade-error-cancel", {response: {message: "else-error"}}))
+                // }
             }
         }
 
