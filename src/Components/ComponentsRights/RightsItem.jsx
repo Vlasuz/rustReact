@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {
     dragAndDrop,
@@ -7,6 +7,7 @@ import {
     userInventoryAdd,
     userInventoryRemove
 } from "../../Redux/actions";
+import TradeBanTimer from "../TradeBanTimer";
 
 const RightsItem = (props) => {
 
@@ -14,6 +15,16 @@ const RightsItem = (props) => {
     const dispatch = useDispatch()
 
     let mouseActiveDrag = function (event) {
+
+        if(event.target.closest('li')?.querySelector('.item__is-lock_true')) {
+            setTimeout(() => {
+                event.target.closest('li').classList.add('item-is-lock')
+            }, 50)
+            setTimeout(() => {
+                event.target.closest('li')?.classList.remove('item-is-lock')
+            }, 500)
+            return null;
+        }
 
         let postItem = event.target.closest('.pererab__item');
         let postItemThis = postItem.cloneNode(true);
@@ -131,7 +142,6 @@ const RightsItem = (props) => {
 
     }
 
-
     return (
         <li
             className="postamat__item pererab__item"
@@ -143,8 +153,9 @@ const RightsItem = (props) => {
                 </div>
             }
 
-            <div className={"item__cool"} style={{background: props.item.rarity.color}}>
-
+            <div className={"item__is-lock item__is-lock_true"}>
+                <img src="../images/lock-map.svg" width={'11'} alt=""/>
+                <p><TradeBanTimer time={new Date('Wed, 5 Oct 2024 00:00:00')}/></p>
             </div>
             <div className="item__photo">
                 <img src={props.item.image} alt="Skin"/>

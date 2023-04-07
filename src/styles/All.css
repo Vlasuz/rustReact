@@ -6551,34 +6551,42 @@ section {
 .section-shop{
     height: 87vh;
 }
+.postamat__block li.item-is-lock,
 .section-shop__skins .skins__item .buy__price.item__buy_not-enough {
     animation: trigger .5s ease;
     transition: all .3s ease;
 }
+.postamat__block li.item-is-lock:active{
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+}
 @keyframes trigger {
     0%{
-        margin-left: 0;
+        left: 0;
     }
     15%{
-        margin-left: -15px;
+        left: -15px;
     }
     30%{
-        margin-left: 15px;
+        left: 15px;
     }
     45%{
-        margin-left: -10px;
+        left: -10px;
     }
     60%{
-        margin-left: 10px;
+        left: 10px;
     }
     75%{
-        margin-left: -5px;
+        left: -5px;
     }
     90%{
-        margin-left: 5px;
+        left: 5px;
     }
     100%{
-        margin-left: 0px;
+        left: 0px;
     }
 }
 
@@ -7178,7 +7186,8 @@ section {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
     grid-gap: 6px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: calc(100vh - 420px)
 }
 
@@ -7309,13 +7318,53 @@ section {
     -ms-flex-pack: center;
     justify-content: center
 }
+.postamat__item .item__is-lock{
+    display: flex;
+    align-items: center;
+}
+.postamat__item .item__is-lock img,
+.postamat__item .item__is-lock p{
+    display: none;
+}
+.postamat__item .item__is-lock,
 .postamat__item .item__cool {
     width: 10px;
     height: 10px;
     top: 8px;
     left: 8px;
     position: absolute;
-    border-radius: 50%
+    border-radius: 50%;
+    background: #92c145;
+}
+.postamat__item .item__is-lock_true img{
+    display: block;
+}
+.postamat__item .item__is-lock_true p{
+    font-size: 11px;
+    color: #a2abc5;
+    font-weight: 500;
+    margin-left: 8px;
+    display: none;
+}
+.postamat__item .item__is-lock_true:hover{
+    width: 100%;
+}
+.postamat__item .item__is-lock_true:hover p{
+    display: flex;
+    justify-content: space-between;
+}
+.postamat__item .item__is-lock_true{
+    background: rgba(119, 119, 139, 0.1);
+    backdrop-filter: blur(2px);
+    border-radius: 5px;
+    width: 25px;
+    height: 25px;
+    top: 0;
+    left: 0;
+    padding-left: 7px;
+    padding-right: 7px;
+    display: flex;
+    align-items: center;
 }
 .postamat__item .item__price {
     display: -webkit-box;
@@ -7387,7 +7436,7 @@ section {
     cursor: pointer
 }
 .postamat__filter .filter__item img {
-    opacity: .5
+    /*opacity: .5*/
 }
 .postamat__filter .filter__item input[type=checkbox]:checked + img {
     -webkit-transform: scaleY(-1);
@@ -7410,14 +7459,23 @@ section {
     font-size: 13px;
     line-height: 12px;
     color: rgba(162,171,197,.5);
-    margin-right: 10px
-}
-.postamat__filter input:checked + .filter__item img {
-    opacity: 1
-}
-.postamat__filter input:checked + .filter__item span {
+    margin-right: 10px;
+
     color: #a2abc5
 }
+
+
+.label-changed:nth-child(2) .filter__item img:nth-child(2){
+    margin-right: 5px;
+}
+.label-changed:nth-child(2) .filter__item img:last-child{
+    margin-right: 0;
+}
+.label-changed:nth-child(2) .filter__item{
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
 .postamat__filter .filter__reload {
     margin-left: auto;
     background: #2e3145;
@@ -10375,10 +10433,16 @@ section {
     align-items: center;
 }
 
+.point__winner-table canvas,
 .point__winner-table .confetti-image{
     width: 200px;
     position: absolute;
-    bottom: 0;
+    bottom: -150px;
+}
+.section-map canvas{
+    /*width: 200px !important;*/
+    /*height: 100px !important;*/
+    /*bottom: 100% !important;*/
 }
 .point__winner-table .table__left span{
     font-weight: 500;

@@ -188,6 +188,7 @@
   "else-error": "Unknown error",
   "hidden_inventory": "Your steam inventory is hidden, open it in your settings",
 
-  "to_profile": "To profile"
+  "to_profile": "To profile",
 
+  "sort_by_games": "By game"
 }

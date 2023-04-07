@@ -7,16 +7,16 @@ import RightsSortableSecond from "./RightsSortableSecond";
 const RightsFilterForm = (props) => {
 
     const [inputSearch, setInputSearch] = useState('')
-    const [filterRadio, setFilterRadio] = useState('')
-    const [filterCheckbox, setFilterCheckbox] = useState(false)
+    const [sortByGame, setSortByGame] = useState(false);
+    const [sortByPrice, setSortByPrice] = useState(false);
 
     useEffect(() => {
         props.setSortArray({
-                search: inputSearch,
-                filterRadio: filterRadio,
-                filterCheckbox: filterCheckbox
-            })
-    }, [filterCheckbox, inputSearch, filterCheckbox])
+            search: inputSearch,
+            byPrice: sortByPrice,
+            byGame: sortByGame
+        })
+    }, [inputSearch, sortByPrice, sortByGame])
 
     return (
         <>
@@ -27,9 +27,8 @@ const RightsFilterForm = (props) => {
             />
             <form action="#">
                 <RightsSortableSecond
-                    filterRadio={filterRadio}
-                    setFilterRadio={setFilterRadio}
-                    setFilterCheckbox={setFilterCheckbox}
+                    setSortByGame={setSortByGame}
+                    setSortByPrice={setSortByPrice}
                 />
             </form>
         </>

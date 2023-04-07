@@ -34,7 +34,7 @@ const PopupAddCoinsBySkins = () => {
 
         if (isOpen) {
             axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
-            axios.get('https://'+GlobalLink()+'/api/trade/inventory/').then(res => {
+            axios.get('https://' + GlobalLink() + '/api/trade/inventory/').then(res => {
                 setResponse(res.data)
                 setLoad(false)
             })
@@ -56,7 +56,7 @@ const PopupAddCoinsBySkins = () => {
 
     const addCoinsFunction = () => {
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie("access_token")}`;
-        axios.post('https://'+GlobalLink()+'/api/trade/create/pay/', items.map(item => item.id)).then(res => {
+        axios.post('https://' + GlobalLink() + '/api/trade/create/pay/', items.map(item => item.id)).then(res => {
             dispatch(setOpenPopup("popup-pull-search", {type: "pay", data: res.data, items}))
         })
     }
@@ -66,7 +66,7 @@ const PopupAddCoinsBySkins = () => {
     const handleUpdate = () => {
         setResponse([])
         axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.get('https://'+GlobalLink()+'/api/trade/inventory/refresh/').then(res => {
+        axios.get('https://' + GlobalLink() + '/api/trade/inventory/refresh/').then(res => {
             setResponse(res.data)
             setLoad(false)
         })
@@ -74,7 +74,7 @@ const PopupAddCoinsBySkins = () => {
 
     const handleSelect = (item) => {
         setItems(prev => {
-            if(!prev?.some(itemOld => item.id === itemOld.id)) {
+            if (!prev?.some(itemOld => item.id === itemOld.id)) {
                 setPrice({
                     value: price.value + item.price.value,
                     steam_price: +price.steam_price + +item.price.steam_price.toFixed(2)
@@ -136,7 +136,7 @@ const PopupAddCoinsBySkins = () => {
                                                 {item.count}
                                             </div>
                                         }
-                                        <div className="item__cool" style={{background: item.rarity.color}} />
+                                        <div className="item__cool" style={{background: item.rarity.color}}/>
                                         <div className="item__photo">
                                             <img src={item.image} alt="Skin"/>
                                         </div>
@@ -145,7 +145,6 @@ const PopupAddCoinsBySkins = () => {
                                             <span>{item.price.value}</span>
                                         </div>
                                     </li>
-
                                 )
                         }
 

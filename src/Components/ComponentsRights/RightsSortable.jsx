@@ -1,62 +1,63 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Trans, useTranslation} from "react-i18next";
 import Translate from "../../Hooks/Translate";
 
-const RightsSortable = (props) => {
+const RightsSortable = ({setSortByGame, setSortByPrice}) => {
 
-    // let changeRatio = (e) => {
-    //     props.setFilterRadio(e.target.checked ? e.target.id : '')
-    //     props.setFilterCheckbox(e.target.nextSibling.querySelector('input').checked)
-    // }
+    const [whichGame, setWhichGame] = useState('ALL')
+    const [whichPrice, setWhichPrice] = useState(false)
 
-    const changeRatio = (e) => {
-        props.setFilterRadio(e.target.checked ? e.target.id : '')
-        props.setFilterCheckbox(e.target.nextSibling.querySelector('input').checked)
+    useEffect(() => {
+        setSortByGame(whichGame)
+        setSortByPrice(whichPrice)
+    }, [whichGame, whichPrice])
 
-        const checkbox = e.target.closest('.label-changed').querySelector('input[type="checkbox"]')
-
-        checkbox.checked = !checkbox.checked
-        props.setFilterCheckbox(checkbox.checked)
+    const sortByGames = {
+        'ALL': 'CSGO',
+        'CSGO': 'RUST',
+        'RUST': 'ALL',
     }
 
+    const handleGame = () => {
+        setWhichGame(sortByGames[whichGame])
+    };
     return (
         <div className="postamat__filter">
             <div className="label-changed">
-                <input
-                    type="radio"
-                    name="filter"
-                    id="filterPrice"
-                    onClick={e => changeRatio(e)}
-                />
-                <label className="filter__item filter__price" htmlFor="filterPrice">
+                <label className="filter__item filter__price">
                     <span>
                         <Translate>sort_by_price</Translate>
                     </span>
                     <input
                         type="checkbox"
-                        name="upDown"
+                        checked={whichPrice}
+                        onChange={_ => setWhichPrice(prev => !prev)}
                     />
                     <img src="../images/filter.svg" alt="filter"/>
                 </label>
             </div>
             <div className="label-changed">
-                <input
-                    type="radio"
-                    name="filter"
-                    id="filterCool"
-                    onClick={e => changeRatio(e)}
-                />
-                <label className="filter__item filter__item_active filter__cool"
-                       htmlFor="filterCool">
+                <div className="filter__item filter__item_active filter__cool" onClick={handleGame}>
                     <span>
-                        <Translate>sort_by_rarity</Translate>
+                        <Translate>sort_by_games</Translate>
                     </span>
-                    <input
-                        type="checkbox"
-                        name="upDown"
-                    />
-                    <img src="../images/filter.svg" alt="filter"/>
-                </label>
+                    {
+                        whichGame === "RUST"
+                         ? <img src="../images/rust.png" alt="Game" width={'20px'}/> : whichGame === "CSGO" ?
+                            <img src="../images/csgo.png" alt="Game" width={'20px'}/> :
+                            <>
+                                <img src="../images/csgo.png" alt="Game" width={'20px'}/>
+                                <img src="../images/rust.png" alt="Game" width={'20px'}/>
+                            </>
+                    }
+                    {/*<input*/}
+                    {/*    type="checkbox"*/}
+                    {/*    id={"whichGame"}*/}
+                    {/*    checked={whichGame}*/}
+                    {/*    onChange={_ => setWhichGame(prev => !prev)}*/}
+                    {/*/>*/}
+
+                </div>
             </div>
             <button
                 type={"submit"}

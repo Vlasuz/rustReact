@@ -172,8 +172,6 @@ const RightsProcessor = (props) => {
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+`/api/items/recycle/`, arrayToRecycle).then(res => {
 
-            console.log('recycle', res.data)
-
             setArrayToRecycle([])
             dispatch(setSound('sound4'))
             // setTimeout(() => {
@@ -199,46 +197,8 @@ const RightsProcessor = (props) => {
                 {
                     (!!storageList.length || !!processorList.list.length) ? storageList
                             ?.filter(item => item.title.toLowerCase().includes(sortArray.search.toLowerCase()))
-                            ?.sort((a, b) => {
-                                    let rarA, rarB;
-                                    switch(a.rarity.color) {
-                                        case "#a7ec2e":
-                                            rarA = 2;
-                                            break;
-                                        case "#dddddd":
-                                            rarA = 1;
-                                            break;
-                                        case "#35a3f1":
-                                            rarA = 3;
-                                            break;
-                                        case "#f15840":
-                                            rarA = 4;
-                                            break;
-                                    }
-                                    switch(b.rarity.color) {
-                                        case "#a7ec2e":
-                                            rarB = 2;
-                                            break;
-                                        case "#dddddd":
-                                            rarB = 1;
-                                            break;
-                                        case "#35a3f1":
-                                            rarB = 3;
-                                            break;
-                                        case "#f15840":
-                                            rarB = 4;
-                                            break;
-                                    }
-
-                                    if (!sortArray.filterCheckbox) {
-                                        return ((sortArray.filterRadio === "filterPrice") ? a.price.value : rarA) -
-                                            ((sortArray.filterRadio) === "filterPrice" ? b.price.value : rarB)
-                                    } else {
-                                        return ((sortArray.filterRadio === "filterPrice") ? b.price.value : rarB) -
-                                            ((sortArray.filterRadio) === "filterPrice" ? a.price.value : rarA)
-                                    }
-                                }
-                            )
+                            ?.filter(item => sortArray.byGame ? 'rust' : 'cs')
+                            ?.sort((a, b) => sortArray.byPrice ? b.price.value - a.price.value : a.price.value - b.price.value)
                             .map(item =>
                                 <RightsItem
                                     key={item.id}

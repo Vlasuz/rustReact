@@ -8,9 +8,9 @@ import {logger} from "../../middleware/logger";
 
 const RightsFilterForm = (props) => {
 
+    const [sortByGame, setSortByGame] = useState(false);
+    const [sortByPrice, setSortByPrice] = useState(false);
     const [inputSearch, setInputSearch] = useState('')
-    const [filterRadio, setFilterRadio] = useState('')
-    const [filterCheckbox, setFilterCheckbox] = useState(false)
     const [rangeValue, setRangeValue] = useState(0)
     const isActiveRange = useSelector(state => state.reducerSwitcherRights.data) === 'sh'
 
@@ -20,9 +20,9 @@ const RightsFilterForm = (props) => {
         props.setSortArray(
             {
                 search: inputSearch,
-                filterRadio: filterRadio,
-                filterCheckbox: filterCheckbox,
-                rangePrice: rangeValue
+                rangePrice: rangeValue,
+                byPrice: sortByPrice,
+                byGame: sortByGame
             }
         )
 
@@ -33,13 +33,13 @@ const RightsFilterForm = (props) => {
         props.setSortArray(
             {
                 search: inputSearch,
-                filterRadio: filterRadio,
-                filterCheckbox: filterCheckbox,
-                rangePrice: rangeValue
+                rangePrice: rangeValue,
+                byPrice: sortByPrice,
+                byGame: sortByGame
             }
         )
 
-    }, [rangeValue, inputSearch, filterRadio, filterCheckbox])
+    }, [rangeValue, inputSearch, sortByGame, sortByPrice])
 
     return (
         <>
@@ -53,9 +53,8 @@ const RightsFilterForm = (props) => {
                 <RightsShopRange setRangeValue={setRangeValue}/>}
             <form action="#" onSubmit={e => submitFilter(e)}>
                 <RightsSortable
-                    filterRadio={filterRadio}
-                    setFilterRadio={setFilterRadio}
-                    setFilterCheckbox={setFilterCheckbox}
+                    setSortByGame={setSortByGame}
+                    setSortByPrice={setSortByPrice}
                 />
             </form>
         </>
