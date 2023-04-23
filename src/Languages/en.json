@@ -190,5 +190,9 @@
 
   "to_profile": "To profile",
 
-  "sort_by_games": "By game"
+  "sort_by_games": "By game",
+
+  "methods_payment": "Payment Methods",
+  "go_to_payment": "Go to the payment",
+  "redirection": "Redirect"
 }

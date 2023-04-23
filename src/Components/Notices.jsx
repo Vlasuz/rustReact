@@ -66,6 +66,11 @@ const Notices = () => {
             "type": "you_are_banned",
             "text": <Translate>block_chat</Translate>,
             "icons": "../images/status-error.svg",
+        },
+        {
+            "type": "its_to_low_for_pay",
+            "text": 'Минимальное значение = 8',
+            "icons": "../images/status-error.svg",
         }
     ];
 

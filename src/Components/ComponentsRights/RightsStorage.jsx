@@ -57,7 +57,7 @@ const RightsStorage = (props) => {
                 {
                     !!storageList.length ? storageList
                             ?.filter(item => item.title.toLowerCase().includes(sortArray.search.toLowerCase()))
-                            ?.filter(item => sortArray.byGame ? 'rust' : 'cs')
+                            ?.filter(item => sortArray.byGame === 'RUST' ? item.game === "252490" : sortArray.byGame === 'CSGO' ? item.game === "730" : item.game === "252490" || item.game === "730")
                             ?.sort((a, b) => sortArray.byPrice ? b.price.value - a.price.value : a.price.value - b.price.value)
                             .map((item, itemNum) =>
                                 <RightsItemStorage

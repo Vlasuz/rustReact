@@ -84,7 +84,13 @@ const TradingSearch = () => {
                         break;
                     case "success":
                         dispatch(setOpenPopup("popup-trade-good", {response: data, type: "pay"}))
-                        dispatch(userBalanceSetCoins(+data.user.balance))
+
+
+                        // console.log('success data', data.items)
+                        dispatch(userInventoryAdd(data.items))
+                        // dispatch(userBalanceSetCoins(+data.user.balance))
+
+
                         setIsSuccess(true)
                         break;
                     case "error":

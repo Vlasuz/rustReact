@@ -349,11 +349,11 @@ const ComponentMap = () => {
 
             </ul>
             <div
-                className={step === "process" ? "trajectory trajectory_active" : "trajectory"}
+                className={step === "process" || step === "drop" ? "trajectory trajectory_active" : "trajectory"}
                 style={
                     {
-                        width: (step === "process" ? -((seconds * 50) - 1500) : "0") + "px",
-                        transition: step === "process" ? "width 1s linear" : "",
+                        width: (step === "process" ? -((seconds * 50) - 1500) : step === "drop" ? "1500" : "0") + "px",
+                        transition: step === "process" ? "width 1s linear" : step === "drop" ? "width 5s linear" : "",
                         top: coodsPlane + "px"
                     }
                 }>

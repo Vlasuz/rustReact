@@ -20,7 +20,7 @@ const AddCoinsMenu = () => {
                     className="var__item"
                     onClick={() => {dispatch(setOpenPopup('')); OpenPopup('popup-add-coins-pin-code')}}
                 >
-                    СНГ 1
+                    PIN CODE
 
                 </button>
 
@@ -28,7 +28,7 @@ const AddCoinsMenu = () => {
                     className="var__item"
                     onClick={() => {dispatch(setOpenPopup('')); OpenPopup('popup-add-coins-balance')}}
                 >
-                    add by Cash
+                    SKYCRYPTO
                 </button>
 
                 <button className="game__item" onClick={() => dispatch(setOpenPopup('popup-add-coins-skins'))}>

@@ -1,91 +1,83 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PopupCloseBackground from "../PopupCloseBackground";
 import PopupCloseCross from "../PopupCloseCross";
+import OpenPopup from "../../../Hooks/OpenPopup";
+import {useDispatch, useSelector} from "react-redux";
+import {setNotice} from "../../../Redux/Reducers/reducerNotice";
+import axios from "axios";
+import GlobalLink from "../../../Hooks/GlobalLink";
+import Translate from "../../../Hooks/Translate";
 
 const PopupAddCoinsByDollars = () => {
 
-    let openPopup = function (nextPopup) {
-        if(document.querySelector('.popup_active')){
-            document.querySelector('.popup_active').classList.remove('popup_active')
+    const [input, setInput] = useState(0)
+    const [scrap, setScrap] = useState(0)
+    const dispatch = useDispatch()
+
+    const commission = useSelector(state => state.reducerSettings.settings).pay_skin_commission
+    const fast_number = [8, 10, 20, 30, 50, 60]
+
+    const handlePay = () => {
+
+        if (input >= 8) {
+            OpenPopup('popup-add-coins-balance-linking')
+
+            console.log('input', input)
+            axios.post(`https://${GlobalLink()}/api/payment/skycrypto/?amount=${input}`).then(res => {
+                window.location.href = res.data.message
+            }).catch(er => {
+                console.log(er)
+            })
+        } else {
+            dispatch(setNotice('its_to_low_for_pay'))
         }
-        document.querySelector('.'+nextPopup).classList.add('popup_active')
-    }
 
-    let chooseSum = function (e) {
+    };
 
-        for( let a of document.querySelectorAll('.balance__cost li') ){
-            a.classList.remove('li_active')
-        }
+    useEffect(() => {
+        setScrap(+input * (commission !== 0 ? commission : 1))
+    }, [input])
 
-        e.target.closest('li').classList.toggle('li_active')
-    }
 
     return (
         <div className="popup popup-add-coins-balance">
-            <PopupCloseBackground />
+            <PopupCloseBackground/>
             <div className="popup__content">
-                <h2>Пополнение баланса</h2>
+                <h2><Translate>add_balance</Translate></h2>
                 <a
                     className="back"
                     href="#"
-                    onClick={() => openPopup('popup-add-coins')}
+                    onClick={() => OpenPopup('popup-add-coins')}
                 >
-                    <img src="../images/arr-td.svg" alt="Arr" />
-                    <span>Способы оплаты</span>
+                    <img src="../images/arr-td.svg" alt="Arr"/>
+                    <span><Translate>methods_payment</Translate></span>
                 </a>
-                <PopupCloseCross />
+                <PopupCloseCross/>
                 <ul className="balance__cost">
-                    <li>
-                        <button
-                            onClick={e => chooseSum(e)}
-                        >
-                            $1
-                        </button>
-                    </li>
-                    <li>
-                        <button
-                            onClick={e => chooseSum(e)}
-                        >
-                            $5
-                        </button>
-                    </li>
-                    <li>
-                        <button
-                            onClick={e => chooseSum(e)}
-                        >
-                            $10
-                        </button>
-                    </li>
-                    <li>
-                        <button
-                            onClick={e => chooseSum(e)}
-                        >
-                            $20
-                        </button>
-                    </li>
-                    <li>
-                        <button
-                            onClick={e => chooseSum(e)}
-                        >
-                            $40
-                        </button>
-                    </li>
-                    <li>
-                        <button
-                            onClick={e => chooseSum(e)}
-                        >
-                            $60
-                        </button>
-                    </li>
+
+                    {
+                        fast_number.map((item, index) =>
+                            <li key={index}>
+                                <button onClick={_ => setInput(item)}>
+                                    ${item}
+                                </button>
+                            </li>
+                        )
+                    }
+
                 </ul>
                 <div className="balance__sum">
-                    <p>Зачисление на баланс:</p>
+                    <p><Translate>added_for_balance</Translate></p>
+                    <input type="text" pattern="[0-9]*" placeholder={"8"} value={input}
+                           onChange={e => e.target.validity.valid ? setInput(e.target.value) : e.target.validity.valid}/>
                     <div className="sum">
-                        <img src="../images/header__coins.svg" alt="Ico" />
-                        <span>800</span>
+                        <img src="../images/header__coins.svg" alt="Ico"/>
+                        <span>{scrap.toFixed(2)}</span>
                     </div>
                 </div>
-                <button onClick={() => openPopup('popup-add-coins-balance-linking')}>Перейти к оплате</button>
+                <button onClick={handlePay}>
+                    <Translate>go_to_payment</Translate>
+                </button>
             </div>
         </div>
     );

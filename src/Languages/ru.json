@@ -190,5 +190,9 @@
 
   "to_profile": "К профилю",
 
-  "sort_by_games": "По игре"
+  "sort_by_games": "По игре",
+
+  "methods_payment": "Способы оплаты",
+  "go_to_payment": "Перейти к оплате",
+  "redirection": "Перенаправление"
 }

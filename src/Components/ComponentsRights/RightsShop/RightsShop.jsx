@@ -10,7 +10,7 @@ import {shopList} from "../../../Redux/actions";
 import GlobalLink from "../../../Hooks/GlobalLink";
 import Translate from "../../../Hooks/Translate";
 
-const RightsShop = (props) => {
+const RightsShop = () => {
 
     const [isOpenCart, setIsOpenCart] = useState(false)
     const [isOpenThanks, setIsOpenThanks] = useState(false)
@@ -86,7 +86,7 @@ const RightsShop = (props) => {
                     {
                         shopListReducer
                             ?.filter(item => item.title.toLowerCase().includes(sortArray.search.toLowerCase()))
-                            ?.filter(item => sortArray.byGame ? 'rust' : 'cs')
+                            ?.filter(item => sortArray.byGame === 'RUST' ? item.game === "252490" : sortArray.byGame === 'CSGO' ? item.game === "730" : item.game === "252490" || item.game === "730")
                             ?.filter(item => item.price.value <= sortArray?.rangePrice?.max && item.price.value >= sortArray?.rangePrice?.min)
                             ?.sort((a, b) => sortArray.byPrice ? b.price.value - a.price.value : a.price.value - b.price.value)
                             .map(item =>

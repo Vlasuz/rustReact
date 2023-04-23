@@ -6551,11 +6551,13 @@ section {
 .section-shop{
     height: 87vh;
 }
+.skins__block .postamat__item.item-is-lock,
 .postamat__block li.item-is-lock,
 .section-shop__skins .skins__item .buy__price.item__buy_not-enough {
     animation: trigger .5s ease;
     transition: all .3s ease;
 }
+.skins__block .postamat__item.item-is-lock:active,
 .postamat__block li.item-is-lock:active{
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
@@ -11603,5 +11605,22 @@ body .particletext.sunbeams > .particle {
     6%, 15%, 24%, 28%, 48%, 55%, 78%, 82%, 99% {
         opacity: 1;
     }
+}
+
+
+.balance__sum input{
+    background: transparent;
+    outline: none;
+    border: none;
+    height: 30px;
+    margin: -15px 0;
+    margin-left: auto;
+    border-right: 1px solid #2e3145;
+    padding-right: 10px;
+    margin-right: 10px;
+    color: #fff;
+    text-align: right;
+    appearance: none;
+    font-weight: 600;
 }
 

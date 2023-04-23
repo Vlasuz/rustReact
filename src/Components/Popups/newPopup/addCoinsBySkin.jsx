@@ -6,6 +6,8 @@ import axios from "axios";
 import {getCookie} from "../../../Hooks/GetCookies";
 import GlobalLink from "../../../Hooks/GlobalLink";
 import {setOpenPopup} from "../../../Redux/Reducers/reducerOpenPopup";
+import {logger} from "../../../middleware/logger";
+import TradeBanTimer from "../../TradeBanTimer";
 
 const AddCoinsBySkin = () => {
 
@@ -28,6 +30,7 @@ const AddCoinsBySkin = () => {
             axios.get('https://' + GlobalLink() + '/api/trade/inventory/').then(res => {
                 setResponse(res.data)
                 setLoad(false)
+                console.log('asd1')
 
                 if (res.data.message === 'hidden_inventory') {
                     dispatch(setOpenPopup("popup-trade-error-cancel", {type: "pay", data: res.data}))
@@ -67,23 +70,37 @@ const AddCoinsBySkin = () => {
         })
     }
 
-    const handleSelect = (item) => {
-        setItems(prev => {
-            if (!prev?.some(itemOld => item.id === itemOld.id)) {
-                setPrice({
-                    value: price.value + item.price.value,
-                    steam_price: +price.steam_price + +item.price.steam_price.toFixed(2)
-                })
-                return [...prev, item];
-            } else {
-                const newArray = prev.filter(itemOld => itemOld.id !== item.id)
-                setPrice({
-                    value: price.value - item.price.value,
-                    steam_price: +price.steam_price - +item.price.steam_price.toFixed(2)
-                })
-                return newArray;
+    const handleSelect = (item, tradeBan, e) => {
+
+        if (tradeBan === null) {
+            setItems(prev => {
+                if (!prev?.some(itemOld => item.id === itemOld.id)) {
+                    setPrice({
+                        value: price.value + item.price.value,
+                        steam_price: +price.steam_price + +item.price.steam_price.toFixed(2)
+                    })
+                    return [...prev, item];
+                } else {
+                    const newArray = prev.filter(itemOld => itemOld.id !== item.id)
+                    setPrice({
+                        value: price.value - item.price.value,
+                        steam_price: +price.steam_price - +item.price.steam_price.toFixed(2)
+                    })
+                    return newArray;
+                }
+            });
+        } else {
+            if (e.target.closest('li')?.querySelector('.item__is-lock_true')) {
+                setTimeout(() => {
+                    e.target.closest('li').classList.add('item-is-lock')
+                }, 50)
+                setTimeout(() => {
+                    e.target.closest('li')?.classList.remove('item-is-lock')
+                }, 500)
+                return null;
             }
-        });
+        }
+
 
         // setIsCheck(prev => !prev)
     }
@@ -111,33 +128,42 @@ const AddCoinsBySkin = () => {
 
                     {
                         !load && response.length ? response
-                                ?.filter(item => item.title.toLowerCase().includes(sortArray.search.toLowerCase()))
-                                ?.filter(item => sortArray.byGame ? 'rust' : 'cs')
-                                ?.sort((a, b) => sortArray.byPrice ? b.price.value - a.price.value : a.price.value - b.price.value)
-                                ?.map(item =>
-                                    <li
-                                        className={items.some(itemOld => itemOld.id === item.id) ? "postamat__item postamat__item_active skins__item_active" : "postamat__item"}
-                                        onClick={e => handleSelect(item)}
-                                        key={item.id}
-                                    >
-                                        <div className="item__check">
-                                            <img src="../images/green-check.svg" alt="Check"/>
+                            ?.filter(item => item.title.toLowerCase().includes(sortArray.search.toLowerCase()))
+                            ?.filter(item => sortArray.byGame === 'RUST' ? item.game === "252490" : sortArray.byGame === 'CSGO' ? item.game === "730" : item.game === "252490" || item.game === "730")
+                            ?.sort((a, b) => sortArray.byPrice ? b.price.value - a.price.value : a.price.value - b.price.value)
+                            ?.map(item =>
+                                <li
+                                    className={items.some(itemOld => itemOld.id === item.id) ? "postamat__item postamat__item_active skins__item_active" : "postamat__item"}
+                                    onClick={e => handleSelect(item, item.trade_ban, e)}
+                                    key={item.id}
+                                >
+                                    <div className="item__check">
+                                        <img src="../images/green-check.svg" alt="Check"/>
+                                    </div>
+                                    {item.count &&
+                                        <div className="item__count">
+                                            {item.count}
                                         </div>
-                                        {item.count &&
-                                            <div className="item__count">
-                                                {item.count}
-                                            </div>
-                                        }
-                                        <div className="item__cool" style={{background: item.rarity.color}}/>
-                                        <div className="item__photo">
-                                            <img src={item.image} alt="Skin"/>
-                                        </div>
-                                        <div className="item__price">
-                                            <img src="../images/header__coins.svg" alt="Ico"/>
-                                            <span>{item.price.value}</span>
-                                        </div>
-                                    </li>
-                                ) :
+                                    }
+                                    <div
+                                        className={"item__is-lock" + (item.trade_ban !== null ? " item__is-lock_true" : "")}>
+                                        <img src="../images/lock-map.svg" width={'11'} alt=""/>
+                                        <p><TradeBanTimer time={new Date('Wed, 5 Oct 2024 00:00:00')}/></p>
+                                    </div>
+                                    <div className="item__photo">
+                                        <img src={item.image} alt="Skin"/>
+                                    </div>
+                                    <div className="item__price">
+                                        <img src="../images/header__coins.svg" alt="Ico"/>
+                                        <span>{item.price.value}</span>
+                                    </div>
+                                </li>
+                            ) : response.length === 0 && !load ?
+                            <div className={"loading"}>
+                                <div className="load">
+                                    <Translate>storage_empty_title</Translate>
+                                </div>
+                            </div> :
                             <div className={"loading"}>
                                 <div className="load">
                                     <div className="load__line">

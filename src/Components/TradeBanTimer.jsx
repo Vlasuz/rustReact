@@ -22,7 +22,7 @@ const TradeBanTimer = ({ time }) => {
         return () => clearInterval(timerID);
     }, [tick])
 
-    return `${diffH.toString().padStart(2, '0')}:${diffM.toString().padStart(2, '0')}:${diffS.toString().padStart(2, '0')}`
+    return `${diffDays}:${diffH.toString().padStart(2, '0')}:${diffM.toString().padStart(2, '0')}:${diffS.toString().padStart(2, '0')}`
 };
 
 export default TradeBanTimer;

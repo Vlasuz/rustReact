@@ -42,7 +42,7 @@ const RightsItemStorage = (props) => {
                     {props.item.count}
                 </div>
             }
-            <div className={"item__is-lock item__is-lock_true"}>
+            <div className={"item__is-lock" + (props.item.trade_ban !== null ? " item__is-lock_true" : "")}>
                 <img src="../images/lock-map.svg" width={'11'} alt=""/>
                 <p><TradeBanTimer time={new Date('Wed, 5 Oct 2024 00:00:00')}/></p>
             </div>

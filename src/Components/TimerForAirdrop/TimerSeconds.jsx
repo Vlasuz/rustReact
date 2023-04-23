@@ -46,6 +46,7 @@ const TimerSeconds = () => {
         steps[data.airdrop.game_state]?.func(data, session)
 
         setResponse(data)
+        console.log(data)
 
         dispatch(setSocketAirdropResponse(data))
         dispatch(airdropStep(data.airdrop.game_state))
@@ -111,16 +112,15 @@ const TimerSeconds = () => {
             dispatch(clearSleeper())
         }
 
-        let timerForDrop = Math.floor(((data.airdrop.x_pos * 1500 / 50) * 1000) + 1500) - ((30 - data.timer) * 1000)
+        // let timerForDrop = Math.floor(((data.airdrop.x_pos * 1500 / 50) * 1000) + 1500) - ((30 - data.timer) * 1000)
 
-
-        setTimeout(() => {
-            dispatch(airdropDropIsDropDown(true))
-
-            if (document.querySelector('.section-map__map')) {
-                dispatch(setSound('sound10'))
-            }
-        }, timerForDrop)
+        // setTimeout(() => {
+        //     dispatch(airdropDropIsDropDown(true))
+        //
+        //     if (document.querySelector('.section-map__map')) {
+        //         dispatch(setSound('sound10'))
+        //     }
+        // }, timerForDrop)
 
     }
 
@@ -307,6 +307,15 @@ const TimerSeconds = () => {
         document.querySelector(".map__container")?.classList.add('map__container_dark')
     }
 
+    const dropIsDow = () => {
+        dispatch(airdropDropIsDropDown(true))
+
+        if (document.querySelector('.section-map__map')) {
+            dispatch(setSound('sound10'))
+        }
+    };
+
+
     const [steps, setSteps] = useState(
         {
             "waiting": {
@@ -317,6 +326,9 @@ const TimerSeconds = () => {
             },
             "skipped": {
                 func: SkipGame
+            },
+            "drop": {
+                func: dropIsDow
             },
             "ended": {
                 func: ChooseWinner

@@ -43,8 +43,7 @@ const PopupAddCoinsByCode = ({setPincode, isCheckingCode}) => {
         <div className="popup popup-add-coins-pin-code">
             <PopupCloseBackground/>
             <div className="popup__content">
-                <h2>Пин-код <sub>(пин код для удачи 1111 - 1111 - 1111)</sub>
-                </h2>
+                <h2>Пин-код</h2>
                 <PopupCloseCross/>
                 <form
                     className={"form"}
