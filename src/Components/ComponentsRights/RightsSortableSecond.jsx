@@ -59,15 +59,15 @@ const RightsSortableSecond = ({setSortByGame, setSortByPrice}) => {
 
                 </div>
             </div>
-            <button
-                type={"submit"}
-                className="filter__reload"
-            >
-                <img src="../images/reload.svg" alt="filter"/>
-                <span>
-                    <Translate>sort_update</Translate>
-                </span>
-            </button>
+            {/*<button*/}
+            {/*    type={"submit"}*/}
+            {/*    className="filter__reload"*/}
+            {/*>*/}
+            {/*    <img src="../images/reload.svg" alt="filter"/>*/}
+            {/*    <span>*/}
+            {/*        <Translate>sort_update</Translate>*/}
+            {/*    </span>*/}
+            {/*</button>*/}
         </div>
     );
 };

@@ -36,7 +36,7 @@ const PopupAddCoinsByDollars = () => {
 
     useEffect(() => {
         setScrap(+input * (commission !== 0 ? commission : 1))
-    }, [input])
+    }, [input, commission])
 
 
     return (
