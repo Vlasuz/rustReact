@@ -28,6 +28,31 @@ const RightsItemStorage = (props) => {
         }
     }
 
+    var weekday = new Array(7);
+    weekday[0] = "Mon";
+    weekday[1] = "Tues";
+    weekday[2] = "Wed";
+    weekday[3] = "Thurs";
+    weekday[4] = "Fri";
+    weekday[5] = "Sat";
+    weekday[6] = "Sun";
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const setTrueTime = (data) => {
+        const tradeBan = data.trade_ban;
+
+        const day = tradeBan?.substr(0, 2);
+        const month = monthNames[+tradeBan?.substr(3, 2) - 1];
+        const year = tradeBan?.substr(6, 4);
+        const time = tradeBan?.slice(tradeBan?.indexOf(' ') + 1);
+
+        const getDayNum = new Date(`${month} ${day}, ${year} ${time}`).getDay()
+        const weekdayString = weekday[+getDayNum - 1];
+
+
+        return new Date(`${weekdayString}, ${day} ${month} ${year} ${time}`)
+    }
+
     return (
         <li
             className={props.item.isCheck ? "postamat__item postamat__item_active skins__item_active" : "postamat__item"}
@@ -44,7 +69,9 @@ const RightsItemStorage = (props) => {
             }
             <div className={"item__is-lock" + (props.item.trade_ban !== null ? " item__is-lock_true" : "")}>
                 <img src="../images/lock-map.svg" width={'11'} alt=""/>
-                <p><TradeBanTimer time={new Date('Wed, 5 Oct 2024 00:00:00')}/></p>
+                <p><TradeBanTimer
+                    time={setTrueTime(props.item)}/>
+                </p>
             </div>
             <div className="item__photo">
                 <img src={props.item.image} alt="Skin"/>

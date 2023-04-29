@@ -439,10 +439,12 @@ const PopupOutput = () => {
                 </div>
                 <hr/>
                 <div className="popup-pull__buttons">
-                    <a target={"_blank"} href={`${userData.profile}tradeoffers/`} className="grey">
+                    {/*<a target={"_blank"} href={`${userData.profile}tradeoffers/`} className="grey">*/}
+                    <a target={"_blank"}  href={`https://steamcommunity.com/profiles/${userData.steam_id}/tradeoffers`} className="grey">
                         <span><Translate>by_browser</Translate></span>
                     </a>
-                    <a href={`steam://openurl/${userData.profile}tradeoffers/`} className="steam">
+                    {/*<a href={`steam://openurl/${userData.profile}tradeoffers/`} className="steam">*/}
+                    <a href={`https://steamcommunity.com/profiles/${userData.steam_id}/tradeoffers`} className="steam">
                         <span><Translate>by_steam_app</Translate></span>
                         <img src="../images/steam.svg" alt="Steam"/>
                     </a>

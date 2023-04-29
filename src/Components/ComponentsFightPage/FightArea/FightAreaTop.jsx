@@ -68,7 +68,10 @@ const FightAreaTop = ({ userInfo }) => {
                                     {
                                         userInfo?.items.map(item =>
                                             <li key={item.id}>
-                                                <div className={"clothes__cool"} style={{background: item.rarity.color}} />
+                                                {/*<div className={"clothes__cool"} style={{background: item.rarity.color}} />*/}
+                                                <div className={"item__is-lock" + (item.trade_ban !== null ? " item__is-lock_true" : "")}>
+                                                    <img src="../images/lock-map.svg" width={'11'} alt=""/>
+                                                </div>
 
                                                 <img src={item.image} alt="Photo"/>
                                             </li>

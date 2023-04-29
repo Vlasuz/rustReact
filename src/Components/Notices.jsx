@@ -68,8 +68,13 @@ const Notices = () => {
             "icons": "../images/status-error.svg",
         },
         {
-            "type": "its_to_low_for_pay",
-            "text": 'Минимальное значение = 8',
+            "type": "amount_smaller",
+            "text": 'Слишком маленькое значение',
+            "icons": "../images/status-error.svg",
+        },
+        {
+            "type": "amount_larger",
+            "text": 'Слишком большое значение',
             "icons": "../images/status-error.svg",
         }
     ];

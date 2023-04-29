@@ -47,7 +47,7 @@ const AllPopups = () => {
                 isCheckingCode={isCheckingCode}
                 setPincode={setPincode}
             />
-            <PopupAddCoinsByDollars/>
+            {/*<PopupAddCoinsByDollars/>*/}
             <PopupAddCoinsByCodeChecking
                 checkingCode={checkingCode}
                 isCheckingCode={isCheckingCode}

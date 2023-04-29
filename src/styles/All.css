@@ -764,7 +764,6 @@ main {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    margin-bottom: 30px
 }
 .popup-add-coins-balance .back img {
     -webkit-transform: scaleX(-1);
@@ -6384,7 +6383,8 @@ section {
 }
 .section-shop__list-games .item__clothes img {
     width: 36px;
-    height: 36px
+    height: 36px;
+    object-fit: contain;
 }
 .section-shop__list-games .list-games__item {
     background: #26293b;
@@ -7324,10 +7324,16 @@ section {
     display: flex;
     align-items: center;
 }
+.item__clothes .item__is-lock img,
+.popup-new-room__item .item__is-lock img,
+.popup-new-room__item .item__is-lock p,
 .postamat__item .item__is-lock img,
 .postamat__item .item__is-lock p{
     display: none;
 }
+.item__clothes .item__is-lock,
+.section-fight__resources .clothes__body .item__is-lock,
+.popup-new-room__item .item__is-lock,
 .postamat__item .item__is-lock,
 .postamat__item .item__cool {
     width: 10px;
@@ -7338,9 +7344,19 @@ section {
     border-radius: 50%;
     background: #92c145;
 }
+.item__clothes .item__is-lock{
+    width: 8px;
+    height: 8px;
+    top: 5px;
+    left: 5px;
+}
+.item__clothes .item__is-lock_true img,
+.popup-new-room__item .item__is-lock_true img,
 .postamat__item .item__is-lock_true img{
     display: block;
 }
+.item__clothes .item__is-lock_true p,
+.popup-new-room__item .item__is-lock_true p,
 .postamat__item .item__is-lock_true p{
     font-size: 11px;
     color: #a2abc5;
@@ -7348,13 +7364,16 @@ section {
     margin-left: 8px;
     display: none;
 }
+.popup-new-room__item .item__is-lock_true:hover,
 .postamat__item .item__is-lock_true:hover{
     width: 100%;
 }
+.popup-new-room__item .item__is-lock_true:hover p,
 .postamat__item .item__is-lock_true:hover p{
     display: flex;
     justify-content: space-between;
 }
+.popup-new-room__item .item__is-lock_true,
 .postamat__item .item__is-lock_true{
     background: rgba(119, 119, 139, 0.1);
     backdrop-filter: blur(2px);
@@ -7367,6 +7386,50 @@ section {
     padding-right: 7px;
     display: flex;
     align-items: center;
+}
+.popup-new-room__zone .item__is-lock.item__is-lock_true{
+    width: auto;
+    height: auto;
+    padding: 3px;
+    top: 0;
+    left: 0;
+}
+.section-fight__resources .clothes__body .item__is-lock img{
+    display: none;
+}
+.section-fight__resources .clothes__body .item__is-lock{
+    width: 7px;
+    height: 7px;
+    top: 5px;
+    left: 5px;
+}
+.section-fight__resources .clothes__body .item__is-lock_true{
+    background: transparent;
+    top: 0;
+    left: 0;
+}
+.item__clothes .item__is-lock_true img,
+.section-fight__resources .clothes__body .item__is-lock_true img{
+    width: 7px;
+    height: auto;
+    position: absolute;
+    display: block;
+    top: 4px;
+    left: 4px;
+}
+.item__clothes .item__is-lock_true{
+    background: transparent;
+    left: 2px;
+    top: 2px;
+}
+.popup-new-room__zone .item__is-lock.item__is-lock_true img{
+    width: 7px;
+}
+.popup-new-room__zone .item__is-lock{
+    width: 7px;
+    height: 7px;
+    top: 5px;
+    left: 5px;
 }
 .postamat__item .item__price {
     display: -webkit-box;
@@ -11624,3 +11687,18 @@ body .particletext.sunbeams > .particle {
     font-weight: 600;
 }
 
+.popup-new-room__sort .select{
+    white-space: nowrap;
+}
+
+
+.top__coins{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px
+}
+
+.top__coins .select{
+    text-transform: uppercase;
+}

@@ -15,6 +15,10 @@ import TradingBots from "./TradingBots";
 import TradingWaiting from "./TradingWaiting";
 import TradingSuccess from "./TradingSuccess";
 import TradingError from "./TradingError";
+import PopupAddCoinsByDollars from "../PopupsAddCoins/PopupAddCoinsByDollars";
+import AddCoinsByRub from "./addCoinsByRub";
+import AddCoinsByUah from "./addCoinsByUah";
+import AddCoinsByKzt from "./addCoinsByKzt";
 
 const Popup = () => {
 
@@ -37,6 +41,10 @@ const Popup = () => {
         "popup-trade-waiting": <TradingWaiting data={isPopup?.props} />,
         "popup-trade-good": <TradingSuccess />,
         "popup-trade-error-cancel": <TradingError props={isPopup?.props} />,
+
+        "popup-add-coins-balance popup-add-coins-balance-rub": <AddCoinsByRub/>,
+        "popup-add-coins-balance popup-add-coins-balance-uah": <AddCoinsByUah/>,
+        "popup-add-coins-balance popup-add-coins-balance-kzt": <AddCoinsByKzt/>,
     }
 
     const handleClose = () => {

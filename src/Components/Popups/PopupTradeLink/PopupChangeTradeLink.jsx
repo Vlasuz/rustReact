@@ -32,7 +32,9 @@ const PopupChangeTradeLink = () => {
                     <button className="grey" onClick={() => OpenPopup('popup-trade-link')}>
                         <Translate>text_change</Translate>
                     </button>
-                    <a target={"_blank"} href={userData.profile + "tradeoffers/privacy"}>
+                    {/*<a target={"_blank"} href={userData.profile + "tradeoffers/privacy"}>*/}
+                    {/*<a target={"_blank"} href={`https://steamcommunity.com/profiles/${userData.steam_id}/tradeoffers/privacy`}>*/}
+                    <a target={"_blank"} href={`https://steamcommunity.com/id/me/tradeoffers/privacy#trade_offer_access_url`}>
                         <Translate>where_trade_link_get</Translate>
                     </a>
                 </div>

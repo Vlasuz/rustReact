@@ -16,6 +16,7 @@ import GlobalLink from "../../Hooks/GlobalLink";
 import Translate from "../../Hooks/Translate";
 import {setNotice} from "../../Redux/Reducers/reducerNotice";
 import {setSound} from "../../Redux/Reducers/reducerSound";
+import TradeBanTimer from "../TradeBanTimer";
 
 const PopupNewRoom = () => {
 
@@ -24,7 +25,7 @@ const PopupNewRoom = () => {
     const [summaryPrice, setSummaryPrice] = useState(0)
     const [coinsBid, setCoinsBid] = useState(0)
     const [isOpenSelect, setIsOpenSelect] = useState(false)
-    const [sortBy, setSortBy] = useState('')
+    const [sortBy, setSortBy] = useState('all')
 
     const userData = useSelector(state => state.reducerUserData.data)
     const navigate = useNavigate();
@@ -40,24 +41,24 @@ const PopupNewRoom = () => {
     function createGame(e) {
         e.preventDefault();
 
-        if(balance < +coinsBid){
+        if (balance < +coinsBid) {
             dispatch(setNotice("not_enough_money"))
         } else {
 
-            if(rooms.some(item => item?.first_player?.user?.id === userData?.id || item?.second_player?.user?.id === userData?.id)){
+            if (rooms.some(item => item?.first_player?.user?.id === userData?.id || item?.second_player?.user?.id === userData?.id)) {
                 dispatch(setNotice("already_have_a_game"))
                 return
             }
 
             axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-            axios.post("https://"+GlobalLink()+'/api/fight/room/create', {
+            axios.post("https://" + GlobalLink() + '/api/fight/room/create', {
                 "coins": coinsBid,
                 "items": listOnZone.map(item => item.id),
             }).then(res => {
 
                 dispatch(userInventoryRemove(listOnZone))
 
-                const sk = new WebSocket("wss://"+GlobalLink()+'/ws/api/fight/game/' + res.data.id + "/")
+                const sk = new WebSocket("wss://" + GlobalLink() + '/ws/api/fight/game/' + res.data.id + "/")
                 sk.onopen = function () {
                     sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
                     dispatch(setSocket(sk))
@@ -66,15 +67,15 @@ const PopupNewRoom = () => {
                     let message = JSON.parse(JSON.parse(e.data))
                     dispatch(setResponse(message))
 
-                    if(message.type === 'player_join_event' && message.data.length === 2){
+                    if (message.type === 'player_join_event' && message.data.length === 2) {
                         dispatch(setSound('sound15'))
                     }
 
-                    switch(message.type){
+                    switch (message.type) {
                         case 'player_join_event':
                             let skin = message.data[0].skin !== null ? message.data[0].skin?.gallery : settings.default_fight_skin?.gallery
                             dispatch(setSkin('me', skin))
-                            !window.location.href.includes(res.data.id) && navigate("/fight/"+res.data.id)
+                            !window.location.href.includes(res.data.id) && navigate("/fight/" + res.data.id)
                             break;
                     }
                 }
@@ -174,10 +175,20 @@ const PopupNewRoom = () => {
 
                     postItem.style.display = 'flex';
                     postItemCopy.remove()
-                    document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+
+                    // ПОМЕНЯТЬ НЕ НА ФЛЕКС, А НА УБАЛЕНИЕ ИЗ СПИСКА В ЗОНЕ
+
+                    // setListOnZone(prev => [...prev.id !== item.id])
+
                     setListOnZone(prev => prev.filter(itemAll => itemAll.id !== item.id))
 
-                    if(listOnZone.some(itemAll => itemAll.id === item.id)){
+                    if (listOnZone.some(itemAll => itemAll.id === item.id)) {
                         setSummaryPrice(prev => prev - item.price.value)
                     }
                 }
@@ -202,7 +213,7 @@ const PopupNewRoom = () => {
                         document.removeEventListener('mousemove', onMouseMove);
                         document.onmouseup = null;
 
-                        if(!e.target.closest('.popup-new-room__item_moved')){
+                        if (!e.target.closest('.popup-new-room__item_moved')) {
                             postItemCopy.remove()
                             setListOnZone(prev => [...prev, item])
                             setSummaryPrice(prev => prev + item.price.value)
@@ -243,10 +254,18 @@ const PopupNewRoom = () => {
 
             } else {
                 postItem.style.display = 'flex';
-                document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+
+                // setListOnZone(prev => [...prev.id !== item.id])
+
                 setListOnZone(prev => prev.filter(itemAll => itemAll.id !== item.id))
 
-                if(listOnZone.some(itemAll => itemAll.id === item.id)){
+                if (listOnZone.some(itemAll => itemAll.id === item.id)) {
                     setSummaryPrice(prev => prev - item.price.value)
                 }
             }
@@ -273,10 +292,35 @@ const PopupNewRoom = () => {
     }
 
 
+    var weekday = new Array(7);
+    weekday[0] = "Mon";
+    weekday[1] = "Tues";
+    weekday[2] = "Wed";
+    weekday[3] = "Thurs";
+    weekday[4] = "Fri";
+    weekday[5] = "Sat";
+    weekday[6] = "Sun";
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const setTrueTime = (data) => {
+        const tradeBan = data.trade_ban;
+
+        const day = tradeBan?.substr(0, 2);
+        const month = monthNames[+tradeBan?.substr(3, 2) - 1];
+        const year = tradeBan?.substr(6, 4);
+        const time = tradeBan?.slice(tradeBan?.indexOf(' ') + 1);
+
+        const getDayNum = new Date(`${month} ${day}, ${year} ${time}`).getDay()
+        const weekdayString = weekday[+getDayNum - 1];
+
+
+        return new Date(`${weekdayString}, ${day} ${month} ${year} ${time}`)
+    }
+
     return (
         <div className="popup popup-new-room">
 
-            <div className="popup__bgd" onClick={closePopup} />
+            <div className="popup__bgd" onClick={closePopup}/>
 
             <div className="popup__content">
                 <div className="popup__content_lft">
@@ -347,9 +391,15 @@ const PopupNewRoom = () => {
                             <ul>
                                 {
                                     listOnZone.map(item =>
-                                        <li key={item.id} className="popup-new-room__item popup-new-room__item_moved" onMouseDown={e => itemMove(e, item)}>
+                                        <li key={item.id} className="popup-new-room__item popup-new-room__item_moved"
+                                            onMouseDown={e => itemMove(e, item)}>
 
-                                            <div className={"clothes__cool"} style={{background: item.rarity.color}} />
+                                            <div
+                                                className={"item__is-lock" + (item.trade_ban !== null ? " item__is-lock_true" : "")}>
+                                                <img src="../images/lock-map.svg" width={'11'} alt=""/>
+
+                                            </div>
+
                                             <div className="li__delete" onClick={e => itemZoneDelete(e, item)}>
                                                 <img src="../images/cross.svg" alt="Close"/>
                                             </div>
@@ -366,7 +416,6 @@ const PopupNewRoom = () => {
                                                 </span>
                                             </div>
                                         </li>
-
                                     )
                                 }
                             </ul>
@@ -405,54 +454,64 @@ const PopupNewRoom = () => {
                         </span>
                         <div className={"select" + (isOpenSelect ? " select_open" : "")}>
                             <div className="select__head" onClick={e => setIsOpenSelect(prev => !prev)}>
-                                {
-                                    sortBy === 'price' ?
-                                        <span><Translate>sort_by_price</Translate></span> :
-                                        <span><Translate>sort_by_rarity</Translate></span>
-                                }
+                                <span>
+                                    {
+                                        sortBy === "730" ? "CSGO" : sortBy === "252490" ? "RUST" : "Все игры"
+                                    }
+                                </span>
                             </div>
                             <div className="select__body">
-                                <div data-select={'price'} onClick={e => setSortBy('price')} className="select__item">
-                                    <Translate>sort_by_price</Translate>
+                                <div onClick={e => setSortBy('all')} className="select__item">
+                                    Все игры
                                 </div>
-                                <div data-select={'rarity'} onClick={e => setSortBy('rarity')} className="select__item">
-                                    <Translate>sort_by_rarity</Translate>
+                                <div onClick={e => setSortBy('730')} className="select__item">
+                                    CSGO
+                                </div>
+                                <div onClick={e => setSortBy('252490')} className="select__item">
+                                    RUST
                                 </div>
                             </div>
                         </div>
                     </div>
                     <ul className="popup-new-room__list">
 
-
                         {
                             userInventory
-                                ?.sort((a, b) => {
-                                    if(sortBy === 'price') {
-                                        return a.price.value - b.price.value
-                                    } else if(sortBy === 'rarity') {
-                                        return a.rarity.color - b.rarity.color
-                                    }
+                                ?.filter(item => sortBy !== "all" ? item.game === sortBy : item)
+                                ?.filter((item, index) => {
+                                    return !listOnZone.some(listItem => {
+                                        return listItem.id === item.id
+                                    })
                                 })
                                 .map(item =>
-                                <li key={item.id} data-id={item.id} className="popup-new-room__item" onMouseDown={e => itemMove(e, item)}>
-                                    <div className={"clothes__cool"} style={{background: item.rarity.color}} />
-                                    <div className="li__delete">
-                                        <img src="../images/cross.svg" alt="Close"/>
-                                    </div>
-                                    <div className="item__check">
-                                        <img src="../images/green-check-sq.svg" alt="Check"/>
-                                    </div>
-                                    <div className="item__photo">
-                                        <img src={item.image} alt="Photo"/>
-                                    </div>
-                                    <div className="item__price">
-                                        <img src="../images/header__coins.svg" alt="Coin"/>
-                                        <span>
+                                    <li key={item.id} data-id={item.id} className="popup-new-room__item"
+                                        onMouseDown={e => itemMove(e, item)}>
+
+                                        <div
+                                            className={"item__is-lock" + (item.trade_ban !== null ? " item__is-lock_true" : "")}>
+                                            <img src="../images/lock-map.svg" width={'11'} alt=""/>
+                                            <p><TradeBanTimer
+                                                time={setTrueTime(item)}/>
+                                            </p>
+                                        </div>
+
+                                        <div className="li__delete">
+                                            <img src="../images/cross.svg" alt="Close"/>
+                                        </div>
+                                        <div className="item__check">
+                                            <img src="../images/green-check-sq.svg" alt="Check"/>
+                                        </div>
+                                        <div className="item__photo">
+                                            <img src={item.image} alt="Photo"/>
+                                        </div>
+                                        <div className="item__price">
+                                            <img src="../images/header__coins.svg" alt="Coin"/>
+                                            <span>
                                             {item.price.value}
                                         </span>
-                                    </div>
-                                </li>
-                            )
+                                        </div>
+                                    </li>
+                                )
                         }
 
                     </ul>

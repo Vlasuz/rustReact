@@ -43,6 +43,7 @@ function App() {
             if (getCookie('access_token')) {
                 axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
                 axios.post("https://" + GlobalLink() + '/api/auth/session/').then(res => {
+
                     dispatch(userData(res.data))
                     dispatch(authAction(true))
                     dispatch(userBalanceSetCoins(res.data.balance))

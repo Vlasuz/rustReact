@@ -62,7 +62,7 @@ const TradeLinkAdd = () => {
                     <button>
                         <Translate>save</Translate>
                     </button>
-                    <a target={"_blank"} href={session.profile + "tradeoffers/privacy"}>
+                    <a target={"_blank"} href={'https://steamcommunity.com/id/me/tradeoffers/privacy#trade_offer_access_url'}>
                         <Translate>where_trade_link_get</Translate>
                     </a>
                 </div>

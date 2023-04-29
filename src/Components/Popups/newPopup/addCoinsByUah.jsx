@@ -8,8 +8,9 @@ import axios from "axios";
 import GlobalLink from "../../../Hooks/GlobalLink";
 import Translate from "../../../Hooks/Translate";
 import {logDOM} from "@testing-library/react";
+import {setOpenPopup} from "../../../Redux/Reducers/reducerOpenPopup";
 
-const PopupAddCoinsByDollars = () => {
+const AddCoinsByRub = () => {
 
     const [input, setInput] = useState(0)
     const [scrap, setScrap] = useState(0)
@@ -47,8 +48,8 @@ const PopupAddCoinsByDollars = () => {
 
     const allCurrencies = [
         // {'usd': "$"},
-        {'rub': "₽"},
         {'uah': "₴"},
+        {'rub': "₽"},
         {'kzt': "₸"},
     ];
     const [currency, setCurrency] = useState(allCurrencies[0]);
@@ -98,7 +99,7 @@ const PopupAddCoinsByDollars = () => {
             <a
                 className="back"
                 href="#"
-                onClick={() => OpenPopup('popup-add-coins')}
+                onClick={() => dispatch(setOpenPopup('popup-add-coins'))}
             >
                 <img src="../images/arr-td.svg" alt="Arr"/>
                 <span><Translate>methods_payment</Translate></span>
@@ -135,4 +136,4 @@ const PopupAddCoinsByDollars = () => {
     );
 };
 
-export default PopupAddCoinsByDollars;
+export default AddCoinsByRub;

@@ -44,10 +44,10 @@ const TradingError = ({ props }) => {
 
             {
                 props?.data?.message === 'hidden_inventory' ? <div className="trade__buttons">
-                    <a target={"_blank"} href={`${userData.profile}edit/settings/`} className="grey">
+                    <a target={"_blank"} href={`https://steamcommunity.com/profiles/${userData.steam_id}/edit/settings`} className="grey">
                         <span><Translate>by_browser</Translate></span>
                     </a>
-                    <a href={`steam://openurl/${userData.profile}edit/settings/`} className="steam">
+                    <a href={`steam://openurl/https://steamcommunity.com/profiles/${userData.steam_id}/edit/settings`} className="steam">
                         <span><Translate>by_steam_app</Translate></span>
                         <img src="../images/steam.svg" alt="Steam"/>
                     </a>

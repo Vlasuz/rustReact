@@ -13,6 +13,7 @@ import Translate from "../../../Hooks/Translate";
 import {setSkin} from "../../../Redux/Reducers/reducerFightsSkin";
 import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 import 'jquery'
+import TradeBanTimer from "../../TradeBanTimer";
 
 const FightItem = ({data}) => {
 
@@ -79,7 +80,10 @@ const FightItem = ({data}) => {
                             {
                                 data.first_player?.items.map(item =>
                                     <li key={item.id}>
-                                        <div className={"clothes__cool"} style={{background: item.rarity.color}}/>
+                                        <div
+                                            className={"item__is-lock" + (item.trade_ban !== null ? " item__is-lock_true" : "")}>
+                                            <img src="../images/lock-map.svg" width={'11'} alt=""/>
+                                        </div>
                                         <img src={item.image} alt="Photo"/>
                                     </li>
                                 )

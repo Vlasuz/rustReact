@@ -16,9 +16,9 @@ const RightsShopItem = ({data}) => {
 
     const addItem = function (e) {
 
-        if (e.target.closest('li')?.querySelector('.item__is-lock_true')) {
-            return null;
-        }
+        // if (e.target.closest('li')?.querySelector('.item__is-lock_true')) {
+        //     return null;
+        // }
 
         let sameItems = listAdded.some(item => item.id === data.id)
 
@@ -36,15 +36,15 @@ const RightsShopItem = ({data}) => {
     }
 
     function handleMouseDown(e) {
-        if (e.target.closest('li')?.querySelector('.item__is-lock_true')) {
-            setTimeout(() => {
-                e.target.closest('li').classList.add('item-is-lock')
-            }, 50)
-            setTimeout(() => {
-                e.target.closest('li')?.classList.remove('item-is-lock')
-            }, 500)
-            return null;
-        }
+        // if (e.target.closest('li')?.querySelector('.item__is-lock_true')) {
+        //     setTimeout(() => {
+        //         e.target.closest('li').classList.add('item-is-lock')
+        //     }, 50)
+        //     setTimeout(() => {
+        //         e.target.closest('li')?.classList.remove('item-is-lock')
+        //     }, 500)
+        //     return null;
+        // }
     }
 
     var weekday = new Array(7);

@@ -12,6 +12,7 @@ import GlobalLink from "../../Hooks/GlobalLink";
 import {getCookie} from "../../Hooks/GetCookies";
 import Translate from "../../Hooks/Translate";
 import {setNotice} from "../../Redux/Reducers/reducerNotice";
+import TradeBanTimer from "../TradeBanTimer";
 
 const PopupEntryClothes = (props) => {
 
@@ -23,7 +24,7 @@ const PopupEntryClothes = (props) => {
     const userData = useSelector(state => state.reducerUserData.data)
     const rooms = useSelector(state => state.reducerFightsRooms.rooms)
 
-    const [sortBy, setSortBy] = useState('')
+    const [sortBy, setSortBy] = useState('all')
     const [isOpenSelect, setIsOpenSelect] = useState(false)
 
     useEffect(() => {
@@ -208,6 +209,31 @@ const PopupEntryClothes = (props) => {
 
     }
 
+
+    var weekday = new Array(7);
+    weekday[0] = "Mon";
+    weekday[1] = "Tues";
+    weekday[2] = "Wed";
+    weekday[3] = "Thurs";
+    weekday[4] = "Fri";
+    weekday[5] = "Sat";
+    weekday[6] = "Sun";
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const setTrueTime = (data) => {
+        const tradeBan = data.trade_ban;
+
+        const day = tradeBan?.substr(0, 2);
+        const month = monthNames[+tradeBan?.substr(3, 2) - 1];
+        const year = tradeBan?.substr(6, 4);
+        const time = tradeBan?.slice(tradeBan?.indexOf(' ') + 1);
+
+        const getDayNum = new Date(`${month} ${day}, ${year} ${time}`).getDay()
+        const weekdayString = weekday[+getDayNum - 1];
+
+
+        return new Date(`${weekdayString}, ${day} ${month} ${year} ${time}`)
+    }
+
     return (
         <div className={"popup popup-entry-clothes popup-entry-clothes-" + props.data.id}>
 
@@ -236,7 +262,11 @@ const PopupEntryClothes = (props) => {
                                         <li key={item.id} className="popup-new-room__item popup-new-room__item_moved"
                                             onMouseDown={e => itemMove(e, item)}>
 
-                                            <div className={"clothes__cool"} style={{background: item.rarity.color}}/>
+                                            <div className={"item__is-lock" + (item.trade_ban !== null ? " item__is-lock_true" : "")}>
+                                                <img src="../images/lock-map.svg" width={'11'} alt=""/>
+
+                                            </div>
+
                                             <div className="li__delete">
                                                 <img src="../images/cross.svg" alt="Close"/>
                                             </div>
@@ -308,18 +338,21 @@ const PopupEntryClothes = (props) => {
                         </span>
                         <div className={"select" + (isOpenSelect ? " select_open" : "")}>
                             <div className="select__head" onClick={e => setIsOpenSelect(prev => !prev)}>
-                                {
-                                    sortBy === 'price' ?
-                                        <span><Translate>sort_by_price</Translate></span> :
-                                        <span><Translate>sort_by_rarity</Translate></span>
-                                }
+                                <span>
+                                    {
+                                        sortBy === "730" ? "CSGO" : sortBy === "252490" ? "RUST" : "Все игры"
+                                    }
+                                </span>
                             </div>
                             <div className="select__body">
-                                <div data-select={'price'} onClick={e => setSortBy('price')} className="select__item">
-                                    <Translate>sort_by_price</Translate>
+                                <div onClick={e => setSortBy('all')} className="select__item">
+                                    Все игры
                                 </div>
-                                <div data-select={'rarity'} onClick={e => setSortBy('rarity')} className="select__item">
-                                    <Translate>sort_by_rarity</Translate>
+                                <div onClick={e => setSortBy('730')} className="select__item">
+                                    CSGO
+                                </div>
+                                <div onClick={e => setSortBy('252490')} className="select__item">
+                                    RUST
                                 </div>
                             </div>
                         </div>
@@ -327,17 +360,24 @@ const PopupEntryClothes = (props) => {
                     <ul className="popup-new-room__list">
                         {
                             userInventory
-                                ?.sort((a, b) => {
-                                    if (sortBy === 'price') {
-                                        return a.price.value - b.price.value
-                                    } else if (sortBy === 'rarity') {
-                                        return a.rarity.color - b.rarity.color
-                                    }
+                                .filter(item => sortBy !== "all" ? item.game === sortBy : item)
+                                ?.filter((item, index) => {
+                                    return !listOnZone.some(listItem => {
+                                        return listItem.id === item.id
+                                    })
                                 })
                                 .map(item =>
                                     <li key={item.id} data-id={item.id} className="popup-new-room__item"
                                         onMouseDown={e => itemMove(e, item)}>
-                                        <div className={"clothes__cool"} style={{background: item.rarity.color}} />
+
+                                        <div
+                                            className={"item__is-lock" + (item.trade_ban !== null ? " item__is-lock_true" : "")}>
+                                            <img src="../images/lock-map.svg" width={'11'} alt=""/>
+                                            <p><TradeBanTimer
+                                                time={setTrueTime(item)}/>
+                                            </p>
+                                        </div>
+
                                         <div className="li__delete">
                                             <img src="../images/cross.svg" alt="Close"/>
                                         </div>
