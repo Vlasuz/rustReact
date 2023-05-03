@@ -31,6 +31,14 @@ const RightsProcessor = (props) => {
             filterCheckbox: false,
         }
     )
+    // const commission = useSelector(state => state.reducerSettings.settings).sell_skin_commission
+
+    const settings = useSelector(state => state.reducerSettings.settings)
+    const [commission, setCommission] = useState(0)
+
+    useEffect(() => {
+        setCommission(processorList.summary / 100 * settings.sell_skin_commission)
+    }, [processorList.summary])
 
 
     const handleGoToShop = () => {
@@ -305,7 +313,7 @@ const RightsProcessor = (props) => {
                     <div className="rht">
                         <img src="../images/header__coins.svg" alt="Ico"/>
                         <span>
-                            {processorList.summary}
+                            {(processorList.summary - commission).toFixed(2)}
                         </span>
                     </div>
                 </button>

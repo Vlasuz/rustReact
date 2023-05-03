@@ -13,6 +13,7 @@ import {getCookie} from "../../Hooks/GetCookies";
 import Translate from "../../Hooks/Translate";
 import {setNotice} from "../../Redux/Reducers/reducerNotice";
 import TradeBanTimer from "../TradeBanTimer";
+import {userBalanceRemoveCoins} from "../../Redux/Reducers/reducerUserBalance";
 
 const PopupEntryClothes = (props) => {
 
@@ -122,14 +123,18 @@ const PopupEntryClothes = (props) => {
                     document.removeEventListener('mousemove', onMouseMove);
                     document.onmouseup = null;
 
-                    elemBelow.closest('.popup').querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
-                    setListOnZone(prev => prev.filter(itemAll => itemAll.id !== item.id))
+                    postItem.style.display = 'flex';
                     postItemCopy.remove()
+
+                    // ПОМЕНЯТЬ НЕ НА ФЛЕКС, А НА УБАЛЕНИЕ ИЗ СПИСКА В ЗОНЕ
+
+                    // setListOnZone(prev => [...prev.id !== item.id])
+
+                    setListOnZone(prev => prev.filter(itemAll => itemAll.id !== item.id))
 
                     if (listOnZone.some(itemAll => itemAll.id === item.id)) {
                         setSummaryPrice(prev => prev - item.price.value)
                     }
-
                 }
 
             }
@@ -193,7 +198,15 @@ const PopupEntryClothes = (props) => {
 
             } else {
                 postItem.style.display = 'flex';
-                e.target.closest('.popup').querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+                // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
+
+                // setListOnZone(prev => [...prev.id !== item.id])
+
                 setListOnZone(prev => prev.filter(itemAll => itemAll.id !== item.id))
 
                 if (listOnZone.some(itemAll => itemAll.id === item.id)) {

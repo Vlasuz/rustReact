@@ -4,9 +4,6 @@ import {logDOM} from "@testing-library/react";
 
 const FightAreaTop = ({ userInfo }) => {
 
-
-    console.log('userInfo fight-top', userInfo?.user?.name, userInfo)
-
     const handleOpenItems = (e) => {
         e.target.closest('.resources__clothes').querySelector('.clothes__body').classList.toggle('clothes__body_active')
     }

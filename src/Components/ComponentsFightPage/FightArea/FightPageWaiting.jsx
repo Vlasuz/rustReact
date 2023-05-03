@@ -10,6 +10,7 @@ import Translate from "../../../Hooks/Translate";
 import {getCookie} from "../../../Hooks/GetCookies";
 import {userInventoryAdd} from "../../../Redux/actions";
 import FightAreaBottom from "./FightAreaBottom";
+import {userBalanceAddCoins, userBalanceRemoveCoins} from "../../../Redux/Reducers/reducerUserBalance";
 
 const FightPageWaiting = ({ roomData }) => {
 
@@ -22,6 +23,7 @@ const FightPageWaiting = ({ roomData }) => {
         axios.defaults.headers.delete['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.delete("https://"+GlobalLink()+`/api/fight/room/cancel?game_id=${roomData.id}`).then(res => {
             dispatch(userInventoryAdd(roomData?.first_player?.items))
+            dispatch(userBalanceAddCoins(roomData.first_player.coins))
             navigate('/')
         })
     }

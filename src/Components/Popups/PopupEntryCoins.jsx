@@ -13,6 +13,7 @@ import GlobalLink from "../../Hooks/GlobalLink";
 import Translate from "../../Hooks/Translate";
 import {getCookie} from "../../Hooks/GetCookies";
 import {setNotice} from "../../Redux/Reducers/reducerNotice";
+import {userBalanceRemoveCoins} from "../../Redux/Reducers/reducerUserBalance";
 
 const PopupEntryCoins = ({ data }) => {
 
@@ -37,6 +38,7 @@ const PopupEntryCoins = ({ data }) => {
             "coins": data.first_player?.coins
         }).then(res => {
             const sk = new WebSocket("wss://"+GlobalLink()+'/ws/api/fight/game/' + data.id + "/")
+            dispatch(userBalanceRemoveCoins(data.first_player?.coins))
             sk.onopen = function () {
                 sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
                 dispatch(setSocket(sk))

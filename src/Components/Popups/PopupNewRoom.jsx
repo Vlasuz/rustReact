@@ -17,6 +17,7 @@ import Translate from "../../Hooks/Translate";
 import {setNotice} from "../../Redux/Reducers/reducerNotice";
 import {setSound} from "../../Redux/Reducers/reducerSound";
 import TradeBanTimer from "../TradeBanTimer";
+import {userBalanceRemoveCoins} from "../../Redux/Reducers/reducerUserBalance";
 
 const PopupNewRoom = () => {
 
@@ -57,6 +58,7 @@ const PopupNewRoom = () => {
             }).then(res => {
 
                 dispatch(userInventoryRemove(listOnZone))
+                dispatch(userBalanceRemoveCoins(coinsBid))
 
                 const sk = new WebSocket("wss://" + GlobalLink() + '/ws/api/fight/game/' + res.data.id + "/")
                 sk.onopen = function () {
@@ -175,12 +177,6 @@ const PopupNewRoom = () => {
 
                     postItem.style.display = 'flex';
                     postItemCopy.remove()
-                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
-                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
-                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
-                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
-                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
-                    // document.querySelector(`.popup-new-room__item[data-id="${item.id}"]`).style.display = "flex"
 
                     // ПОМЕНЯТЬ НЕ НА ФЛЕКС, А НА УБАЛЕНИЕ ИЗ СПИСКА В ЗОНЕ
 

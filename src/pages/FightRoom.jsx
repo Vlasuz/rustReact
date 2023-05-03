@@ -14,7 +14,7 @@ import GlobalLink from "../Hooks/GlobalLink";
 import NotFound from "./NotFound";
 import Loader from "../Hooks/Loader";
 import {logger} from "../middleware/logger";
-import {userBalanceAddCoins} from "../Redux/Reducers/reducerUserBalance";
+import {userBalanceAddCoins, userBalanceSetCoins} from "../Redux/Reducers/reducerUserBalance";
 import {userInventoryAdd} from "../Redux/actions";
 import {setSound} from "../Redux/Reducers/reducerSound";
 import "react-jquery-plugin";
@@ -48,7 +48,7 @@ const FightRoom = (props) => {
                 let message = JSON.parse(JSON.parse(e.data))
                 let skin = message?.data && message?.data[0]?.skin !== null ? message?.data[0]?.skin?.gallery : settings.default_fight_skin?.gallery
 
-                if(message.type === 'player_join_event' && message.data.length === 2){
+                if (message.type === 'player_join_event' && message.data.length === 2) {
                     dispatch(setSound('sound15'))
                 }
 
@@ -91,7 +91,7 @@ const FightRoom = (props) => {
 
             setIsSwitch(
                 <section className={"loader-on-fight"}>
-                    <Loader />
+                    <Loader/>
                 </section>
             )
 
@@ -144,48 +144,29 @@ const FightRoom = (props) => {
     }, [response])
 
 
-
     const countCoins = (player) => {
 
         let minusCoinsCount = +document.querySelector('.resources__coins_minus span')?.innerText;
         let plusCoinsCount = +document.querySelector('.resources__coins_plus span')?.innerText;
-
+        let itemsWinnerPerson = player?.fight?.first_player?.user?.id !== session?.id ? player?.fight?.first_player?.items : player?.fight?.second_player?.items
 
         let coinsCounts = setInterval(function () {
-
-            let itemsLooserPerson = player?.fight?.first_player?.user?.id === session?.id ? player?.fight?.first_player?.items : player?.fight?.second_player?.items
-            let itemsWinnerPerson = player?.fight?.first_player?.user?.id !== session?.id ? player?.fight?.first_player?.items : player?.fight?.second_player?.items
 
             if (minusCoinsCount === -1) {
                 clearInterval(coinsCounts)
 
-                if (response?.fight?.winner.user.id === session?.id) {
-                    !itemsWinnerPerson.length && dispatch(userBalanceAddCoins(-1))
-                    // dispatch(userInventoryAdd([...itemsWinnerPerson, ...itemsLooserPerson]))
-                } else {
-                    !itemsWinnerPerson.length && dispatch(userBalanceAddCoins(1))
-                }
+                axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
+                axios.get("https://" + GlobalLink() + '/api/user/info/').then(res => {
+                    dispatch(userBalanceSetCoins(res.data.balance))
+                })
 
-            } else {
+            } else if ((document.querySelector('.resources__coins_minus span') && document.querySelector('.resources__coins_plus span')) && (!isNaN(minusCoinsCount) && !isNaN(plusCoinsCount))) {
 
-                if (
-                    (
-                        document.querySelector('.resources__coins_minus span') &&
-                        document.querySelector('.resources__coins_plus span')
-                    ) &&
-                    (!isNaN(minusCoinsCount) && !isNaN(plusCoinsCount))
-                ) {
+                document.querySelector('.resources__coins_minus span').innerText = +minusCoinsCount--;
+                document.querySelector('.resources__coins_plus span').innerText = +plusCoinsCount++;
 
-                    document.querySelector('.resources__coins_minus span').innerText = +minusCoinsCount--;
-                    document.querySelector('.resources__coins_plus span').innerText = +plusCoinsCount++;
-
-                    if (!itemsWinnerPerson.length) {
-                        if (response?.fight?.winner.user.id === session?.id) {
-                            dispatch(userBalanceAddCoins(1))
-                        } else {
-                            dispatch(userBalanceAddCoins(-1))
-                        }
-                    }
+                if (!itemsWinnerPerson.length && response?.fight?.winner.user.id === session?.id) {
+                    dispatch(userBalanceAddCoins(1))
                 }
 
             }
@@ -196,43 +177,6 @@ const FightRoom = (props) => {
 
     return (
         <div>
-
-
-            {/*{*/}
-            {/*    roomData.length && isMyGame ?*/}
-            {/*        <>*/}
-
-
-            {/*{(response.type === "player_join_event") || response.type === "waiting" ?*/}
-            {/*    <FightPageWaiting roomData={roomData[0]}/>*/}
-            {/*:*/}
-            {/*response?.fight?.game_state === "defense" || response?.fight?.game_state === "attack" ||*/}
-            {/*response?.type === "defense" || response?.type === "attack" ?*/}
-            {/*    <FightPageRunning roomData={roomData[0]}/>*/}
-            {/*:*/}
-            {/*response?.fight?.game_state === "duel" || response?.fight?.game_state === "ended" ?*/}
-            {/*    <FightPageFinish roomData={roomData[0]}/>*/}
-            {/*:*/}
-            {/*                        <>*/}
-            {/*                            <section className={"loader-on-fight"}>*/}
-            {/*                                <Loader></Loader>*/}
-            {/*                            </section>*/}
-            {/*                        </>*/}
-            {/*            }*/}
-
-
-            {/*        </>*/}
-            {/*        :*/}
-            {/*        <NotFound/>*/}
-            {/*}*/}
-
-
-            {/*{*/}
-            {/*    roomData.length && isMyGame ?*/}
-            {/*        <>*/}
-
-
-            {/*{pageSteps()}*/}
 
             {
                 isMyGame ? isSwitch :

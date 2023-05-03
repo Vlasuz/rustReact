@@ -2,13 +2,15 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import FightAreaTop from "./FightAreaTop";
 import {logDOM} from "@testing-library/react";
-import {userBalanceAddCoins} from "../../../Redux/Reducers/reducerUserBalance";
+import {userBalanceAddCoins, userBalanceSetCoins} from "../../../Redux/Reducers/reducerUserBalance";
 import {useNavigate} from "react-router-dom";
 import {userInventoryAdd, userInventoryRemove} from "../../../Redux/actions";
 import GlobalLink from "../../../Hooks/GlobalLink";
 import Translate from "../../../Hooks/Translate";
 import 'jquery'
 import {setSound} from "../../../Redux/Reducers/reducerSound";
+import axios from "axios";
+import {getCookie} from "../../../Hooks/GetCookies";
 
 const FightPageFinish = (props) => {
 
@@ -65,6 +67,13 @@ const FightPageFinish = (props) => {
 
                 setTimeout(() => {
                     navigate('/')
+
+                    setTimeout(() => {
+                        axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
+                        axios.get("https://" + GlobalLink() + '/api/user/info/').then(res => {
+                            dispatch(userBalanceSetCoins(res.data.balance))
+                        })
+                    }, 500)
                 }, 5000)
 
                 if (userData.id === response.fight.winner.user.id) {
