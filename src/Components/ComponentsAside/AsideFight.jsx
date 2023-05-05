@@ -16,7 +16,6 @@ const AsideFight = () => {
             // document.cookie = 'prevPage=airdrop';
         }
 
-        console.log('cookie')
 
     }, [location.pathname])
 

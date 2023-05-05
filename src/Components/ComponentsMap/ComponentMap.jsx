@@ -57,7 +57,6 @@ const ComponentMap = () => {
         if (step === 'ended' || step === 'skipped') {
             let intervalConfetti = setInterval(() => {
 
-                console.log(document.getElementById('canvas'))
                 if (document.getElementById('canvas')) {
 
                     const button = document.querySelector('.button_boom');

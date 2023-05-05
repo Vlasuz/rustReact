@@ -56,8 +56,6 @@ const PopupEntryCoins = ({ data }) => {
                         break;
                 }
             }
-            sk.onclose = () => console.log('FIGHT close')
-            sk.onerror = () => console.log('FIGHT error')
         })
     }
 

@@ -42,8 +42,6 @@ const FightRoom = (props) => {
                     dispatch(setSocket(ws.current))
                 }
 
-                ws.current.onclose = () => console.log("ws closed");
-                ws.current.onerror = () => console.log("ws error");
             })
         }
 

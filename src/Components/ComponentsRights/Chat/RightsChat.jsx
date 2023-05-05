@@ -56,8 +56,6 @@ const RightsChat = () => {
     }, [session])
 
 
-    websocket.onclose = () => console.log('CHAT close')
-    websocket.onerror = () => console.log('CHAT error')
     websocket.onmessage = (e) => {
         let data_value = JSON.parse(JSON.parse(e.data))
 

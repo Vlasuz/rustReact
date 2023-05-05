@@ -51,7 +51,6 @@ const TradingSearch = () => {
                                 dispatch(setOpenPopup("popup-trade-error-cancel", {response: data?.bot, type: "withdraw"}))
                         }
                     }
-                    socket.onerror = () => console.log('TRADE withdraw error')
                     socket.onclose = () => {
                         // dispatch(setOpenPopup("popup-trade-error-cancel", {response: {message: "else-error"}}))
                     }
@@ -86,7 +85,6 @@ const TradingSearch = () => {
                         dispatch(setOpenPopup("popup-trade-good", {response: data, type: "pay"}))
 
 
-                        // console.log('success data', data.items)
                         dispatch(userInventoryAdd(data.items))
                         // dispatch(userBalanceSetCoins(+data.user.balance))
 
@@ -98,7 +96,6 @@ const TradingSearch = () => {
                         break;
                 }
             }
-            socket.onerror = () => console.log('TRADE pay error')
             socket.onclose = (e) => {
                 // if(!isSuccess){
                 //     dispatch(setOpenPopup("popup-trade-error-cancel", {response: {message: "else-error"}}))

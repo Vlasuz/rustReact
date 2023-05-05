@@ -36,9 +36,6 @@ const TimerSeconds = () => {
 
         dispatch(setSocketAirdrop(socket))
 
-        socket.onopen = () => console.log('AIRDROP open')
-        socket.onerror = () => console.log('AIRDROP error')
-        socket.onclose = () => console.log('AIRDROP close')
     }, [])
 
     socket.onmessage = (e) => {
@@ -46,7 +43,6 @@ const TimerSeconds = () => {
         steps[data.airdrop.game_state]?.func(data, session)
 
         setResponse(data)
-        console.log(data)
 
         dispatch(setSocketAirdropResponse(data))
         dispatch(airdropStep(data.airdrop.game_state))

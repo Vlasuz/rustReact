@@ -39,7 +39,6 @@ const PopupAddCoinsByDollars = () => {
                 dispatch(setNotice(res.data.message))
             }
         }).catch(er => {
-            console.log(er)
             dispatch(setNotice('its_to_low_for_pay'))
         })
 

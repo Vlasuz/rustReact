@@ -51,8 +51,6 @@ const PopupOutputSearch = () => {
                             break;
                     }
                 }
-                socket.onerror = () => console.log('error')
-                socket.onclose = () => console.log('close')
 
                 dispatch(setOpenPopup("popup-pull", {type: "withdraw", socket, items: inventory.filter(item => item.isCheck).map(item => item)}))
 
@@ -87,15 +85,12 @@ const PopupOutputSearch = () => {
                         break;
                 }
             }
-            socket.onerror = () => console.log('error')
-            socket.onclose = () => console.log('close')
         }
 
     }, [isPopup])
 
     const handleClosePopup = () => {
         dispatch(setOpenPopup(""))
-        websocket.onclose = () => console.log('Close')
     }
 
     return (

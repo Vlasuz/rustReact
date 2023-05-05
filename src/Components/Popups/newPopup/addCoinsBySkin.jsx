@@ -30,7 +30,6 @@ const AddCoinsBySkin = () => {
             axios.get('https://' + GlobalLink() + '/api/trade/inventory/').then(res => {
                 setResponse(res.data)
                 setLoad(false)
-                console.log('asd1')
 
                 if (res.data.message === 'hidden_inventory') {
                     dispatch(setOpenPopup("popup-trade-error-cancel", {type: "pay", data: res.data}))
