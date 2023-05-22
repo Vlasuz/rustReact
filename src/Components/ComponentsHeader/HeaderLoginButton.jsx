@@ -6,15 +6,15 @@ import {useLocation} from "react-router-dom";
 const HeaderLoginButton = () => {
 
     // http://localhost:3000
-    // https://www.smallstash.gg
+    // https://smallstash.gg
 
     let location = useLocation()
 
     let auth_params = {
         'openid.ns': 'http://specs.openid.net/auth/2.0',
         'openid.mode': 'checkid_setup',
-        'openid.return_to': 'https://www.smallstash.gg' + location.pathname,
-        'openid.realm': 'https://www.smallstash.gg' + location.pathname,
+        'openid.return_to': 'https://smallstash.gg' + location.pathname,
+        'openid.realm': 'https://smallstash.gg' + location.pathname,
         'openid.identity': 'http://specs.openid.net/auth/2.0/identifier_select',
         'openid.claimed_id': 'http://specs.openid.net/auth/2.0/identifier_select'
     }

@@ -27,6 +27,7 @@ import sound16 from "../../audio/sound-16.wav";
 import sound17 from "../../audio/sound-17.wav";
 import sound18 from "../../audio/sound-18.wav";
 import sound19 from "../../audio/sound-19.wav";
+import {setNotice} from "../../Redux/Reducers/reducerNotice";
 
 const HeaderBurgerMenu = () => {
 
@@ -36,6 +37,7 @@ const HeaderBurgerMenu = () => {
     const navigate = useNavigate()
     const socials = useSelector(state => state.reducerSettings.settings)
     const [isOpenPopup, setIsOpenPopup] = useState(false)
+    const settings = useSelector(state => state.reducerSettings.settings)
 
 
     document.addEventListener('click', function (e) {
@@ -52,7 +54,7 @@ const HeaderBurgerMenu = () => {
         dispatch(userBalanceSetCoins(0))
 
         navigate('/')
-        document.cookie = 'access_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie = `access_token= ; path=/; domain=smallstash.gg; expires=Tue, 19 Jan 1970 03:14:07 GMT`;
     }
 
 
@@ -106,6 +108,14 @@ const HeaderBurgerMenu = () => {
             document.querySelector('#musicOnSite').play()
         }
     }, [sound])
+
+    const addCash = () => {
+        if(settings.pay_enable) {
+            dispatch(setOpenPopup("popup-add-coins"))
+        } else {
+            dispatch((setNotice('not_enable_payment')))
+        }
+    }
 
     return (
         <>
@@ -188,7 +198,7 @@ const HeaderBurgerMenu = () => {
                     </li>
                 </ul>
 
-                <button className="header__coins" onClick={() => dispatch(setOpenPopup("popup-add-coins"))}>
+                <button className="header__coins" onClick={addCash}>
                     <img src="../images/header__coins.svg" alt="Coins"/>
                     <span>
                         {balance}

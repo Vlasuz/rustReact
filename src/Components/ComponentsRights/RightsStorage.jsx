@@ -11,6 +11,7 @@ import {Trans, useTranslation} from "react-i18next";
 import Translate from "../../Hooks/Translate";
 import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
 import {setSound} from "../../Redux/Reducers/reducerSound";
+import {setNotice} from "../../Redux/Reducers/reducerNotice";
 
 const RightsStorage = (props) => {
 
@@ -26,6 +27,7 @@ const RightsStorage = (props) => {
     const storageListWithdraw = useSelector(state => state.reducerStorageWithdraw.list)
     const dispatch = useDispatch()
     const auth = useSelector(state => state.reducerAuth.auth)
+    const settings = useSelector(state => state.reducerSettings.settings)
 
     const handleGoToShop = () => {
 
@@ -40,6 +42,14 @@ const RightsStorage = (props) => {
 
         document.querySelector('.aside__list .li_active')?.classList.remove('li_active')
         document.querySelector('.section-right__top .top__item:first-child').click()
+    }
+
+    const withdrawClothes = () => {
+        if(settings.withdraw_enable) {
+            dispatch(setOpenPopup('popup-pull-search', {type: "withdraw"}))
+        } else {
+            dispatch((setNotice('not_enable_withdraw')))
+        }
     }
 
     return (
@@ -100,7 +110,7 @@ const RightsStorage = (props) => {
                     !!storageListWithdraw.length ?
                         <button
                             className="zone__button"
-                            onClick={() => dispatch(setOpenPopup('popup-pull-search', {type: "withdraw"}))}>
+                            onClick={withdrawClothes}>
                             <img src="../images/arr-r-t.svg" alt="Ico"/>
                             <span>
                                 <Translate>withdraw_items</Translate>

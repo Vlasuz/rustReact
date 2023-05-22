@@ -1,16 +1,17 @@
 import React from 'react';
 import PopupCrossClose from "./PopupCrossClose";
+import Translate from "../../../Hooks/Translate";
 
 const TradingSuccess = () => {
     return (
         <div className="popup__content">
             <h2 className="green">
-                <span>Отлично</span>
+                <span><Translate>cool</Translate></span>
                 <div className="img">
                     <img src="../images/green-check.svg" alt="Error"/>
                 </div>
             </h2>
-            <p>Сделка завершена</p>
+            <p><Translate>trade_success</Translate></p>
             <PopupCrossClose/>
         </div>
     );

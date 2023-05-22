@@ -3,6 +3,7 @@ import PopupCloseBackground from "./PopupCloseBackground";
 import PopupCloseCross from "./PopupCloseCross";
 import {useDispatch, useSelector} from "react-redux";
 import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
+import Translate from "../../Hooks/Translate";
 
 const PopupTradingSuccess = () => {
 
@@ -19,12 +20,12 @@ const PopupTradingSuccess = () => {
             <div className="popup__bgd" onClick={handleClosePopup} />
             <div className="popup__content">
                 <h2 className="green">
-                    <span>Отлично</span>
+                    <span><Translate>cool</Translate></span>
                     <div className="img">
                         <img src="../images/green-check.svg" alt="Error"/>
                     </div>
                 </h2>
-                <p>Сделка завершена</p>
+                <p><Translate>trade_success</Translate></p>
                 <div className="popup__cross popup__close" onClick={handleClosePopup}>
                     <img src="../images/cross.svg" alt="Close"/>
                 </div>

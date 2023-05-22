@@ -37,16 +37,25 @@ const PopupEntryCoins = ({ data }) => {
         axios.post("https://"+GlobalLink()+`/api/fight/room/join?game_id=${data.id}`, {
             "coins": data.first_player?.coins
         }).then(res => {
+
+            if(res.data.message === 'not_enable_now') return dispatch((setNotice('not_enable_fight')));
+
             const sk = new WebSocket("wss://"+GlobalLink()+'/ws/api/fight/game/' + data.id + "/")
             dispatch(userBalanceRemoveCoins(data.first_player?.coins))
+
+            console.log('fight start')
+            navigate("/fight/"+data.id)
+
             sk.onopen = function () {
                 sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
                 dispatch(setSocket(sk))
-                navigate("/fight/"+data.id)
+                console.log('fight open')
             }
             sk.onmessage = e => {
                 let message = JSON.parse(JSON.parse(e.data))
                 dispatch(setResponse(message))
+
+                console.log('fight message')
 
 
                 switch(message.type){

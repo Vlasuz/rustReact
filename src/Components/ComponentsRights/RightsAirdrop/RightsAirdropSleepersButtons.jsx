@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {airdropStepRights} from "../../../Redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {handleSubmitAirdrop} from "../../../Redux/Reducers/reducerSubmitAirdrop";
@@ -11,7 +11,7 @@ import {
     removeBoughtSleeper, removeSetSleeper,
     setSleepers
 } from "../../../Redux/Reducers/reducerAirdropMySleepers";
-import {userBalanceRemoveCoins} from "../../../Redux/Reducers/reducerUserBalance";
+import {userBalanceRemoveCoins, userBalanceSetCoins} from "../../../Redux/Reducers/reducerUserBalance";
 import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 import GlobalLink from "../../../Hooks/GlobalLink";
 import Translate from "../../../Hooks/Translate";
@@ -23,18 +23,24 @@ const RightsAirdropSleepersButtons = () => {
     const responseAirdrop = useSelector(state => state.reducerAirdropSocket.response)
     const sleepers = useSelector(state => state.reducerMySleepers)
     const settings = useSelector(state => state.reducerSettings.settings)
+    const [isSubmitGame, setIsSubmitGame] = useState(false)
 
     const letsStart = () => {
+        setIsSubmitGame(true)
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+'/api/airdrop/bags/choose?game_id=' + responseAirdrop.airdrop.id, {
             "bags": sleepers.setSleepers
         }).then(res => {
-            dispatch(airdropStepRights(3))
-            dispatch(handleSubmitAirdrop(true))
-            dispatch(userBalanceRemoveCoins(sleepers.setSleepers.length * settings.airdrop_bag_price))
-            document.querySelectorAll('.sleepers__item')?.forEach(item => item?.remove())
 
-            dispatch(setSound('sound6'))
+            if(res.data.message === 'not_enable_now') return dispatch((setNotice('not_enable_airdrop')));
+
+            if(res.data.status) {
+                dispatch(airdropStepRights(3))
+                dispatch(userBalanceSetCoins(+res.data.message))
+                dispatch(handleSubmitAirdrop(true))
+                document.querySelectorAll('.sleepers__item')?.forEach(item => item?.remove())
+                dispatch(setSound('sound6'))
+            }
         })
     }
 
@@ -93,7 +99,7 @@ const RightsAirdropSleepersButtons = () => {
                 <img src="../images/random.svg" alt="Random"/>
             </button>
             {
-                !!sleepers.boughtSleepers.length ?
+                (!!sleepers.boughtSleepers.length || isSubmitGame) ?
                     <button className="move__random" onClick={e => dispatch(setNotice("not_set_all_sleepers"))}>
                         <span>
                             <Translate>submit</Translate>

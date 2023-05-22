@@ -8,7 +8,11 @@ import {
     airdropTimerSeconds,
     airdropTrajectoryPlane
 } from "../../Redux/actions";
-import {userBalanceAddCoins} from "../../Redux/Reducers/reducerUserBalance";
+import {
+    userBalanceAddCoins,
+    userBalanceRemoveCoins,
+    userBalanceSetCoins
+} from "../../Redux/Reducers/reducerUserBalance";
 import {handleSubmitAirdrop} from "../../Redux/Reducers/reducerSubmitAirdrop";
 import {clearSleeper} from "../../Redux/Reducers/reducerAirdropMySleepers";
 import {setSocketAirdrop, setSocketAirdropResponse} from "../../Redux/Reducers/reducerAirdropSocket";
@@ -18,6 +22,8 @@ import {logger} from "../../middleware/logger";
 import {useLocation} from "react-router-dom";
 import {setCoods} from "../../Redux/Reducers/reducerCoodsSwipeMap";
 import {reducerSound, setSound} from "../../Redux/Reducers/reducerSound";
+import axios from "axios";
+import {getCookie} from "../../Hooks/GetCookies";
 
 let socket = new WebSocket("wss://" + GlobalLink() + '/ws/api/airdrop/')
 const TimerSeconds = () => {
@@ -153,7 +159,8 @@ const TimerSeconds = () => {
                 return cur.result < prev.result ? cur : prev
             });
 
-            document.querySelectorAll('.point')?.forEach((bag, index) => {
+            document.querySelectorAll('.map__points .point')?.forEach((bag, index) => {
+
                 let dropX = +getComputedStyle(document.querySelector('.airdrop-drop-sent')).left.replace('px', '') + 1
                 let dropY = +getComputedStyle(document.querySelector('.airdrop-drop-sent')).top.replace('px', '') + 1
                 let bagX = +getComputedStyle(bag).left.replace('px', '')
@@ -161,8 +168,8 @@ const TimerSeconds = () => {
 
                 if (pointWinner.bagY === bagY && pointWinner.bagX === bagX) {
                     bag.classList.add('sleepers__item_winner')
-                    bagX = +getComputedStyle(document.querySelectorAll('.point')[index]).left.replace('px', '')
-                    bagY = +getComputedStyle(document.querySelectorAll('.point')[index]).top.replace('px', '')
+                    bagX = +getComputedStyle(bag.closest('.point')).left.replace('px', '')
+                    bagY = +getComputedStyle(bag.closest('.point')).top.replace('px', '')
 
                     swipeToWinner(bagX, bagY)
 
@@ -173,11 +180,12 @@ const TimerSeconds = () => {
                     document.querySelector('.line-to-winner').style.width = result + "px"
                     document.querySelector('.line-to-winner')?.classList.add('line-to-winner_active')
 
+
                     let radius = Math.asin(Math.abs(bagY) / result) * (180 / Math.PI).toFixed(2)
                     dropX = +getComputedStyle(document.querySelector('.airdrop-drop-sent')).left.replace('px', '') + 1
                     dropY = +getComputedStyle(document.querySelector('.airdrop-drop-sent')).top.replace('px', '') + 1
-                    bagX = +getComputedStyle(document.querySelectorAll('.point')[index]).left.replace('px', '')
-                    bagY = +getComputedStyle(document.querySelectorAll('.point')[index]).top.replace('px', '')
+                    bagX = +getComputedStyle(bag.closest('.point')).left.replace('px', '')
+                    bagY = +getComputedStyle(bag.closest('.point')).top.replace('px', '')
 
                     if (bagX >= dropX && bagY >= dropY) {
                         radius = 360 - radius
@@ -237,6 +245,10 @@ const TimerSeconds = () => {
                         let adding = setInterval(() => {
                             dispatch(userBalanceAddCoins(1))
                             if (data.airdrop.bank >= i) {
+                                axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
+                                axios.get("https://" + GlobalLink() + '/api/user/info/').then(res => {
+                                    dispatch(userBalanceSetCoins(res.data.balance))
+                                })
                                 clearInterval(adding)
                             }
                         }, 1)
@@ -280,6 +292,10 @@ const TimerSeconds = () => {
                         let adding = setInterval(() => {
                             dispatch(userBalanceAddCoins(1))
                             if (data.airdrop.bank >= i) {
+                                axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
+                                axios.get("https://" + GlobalLink() + '/api/user/info/').then(res => {
+                                    dispatch(userBalanceSetCoins(res.data.balance))
+                                })
                                 clearInterval(adding)
                             }
                         }, 1)

@@ -172,13 +172,13 @@ const RightsProcessor = (props) => {
     }
 
     useEffect(() => {
-        processorList.list.filter(item => setArrayToRecycle(prev => [...prev, item.id]))
+        setArrayToRecycle(processorList.list)
     }, [processorList])
 
     const handleConvert = () => {
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.post("https://"+GlobalLink()+`/api/items/recycle/`, arrayToRecycle).then(res => {
+        axios.post("https://"+GlobalLink()+`/api/items/recycle/`, arrayToRecycle.map(item => item.id)).then(res => {
 
             setArrayToRecycle([])
             dispatch(setSound('sound4'))

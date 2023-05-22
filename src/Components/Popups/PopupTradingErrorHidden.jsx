@@ -9,13 +9,12 @@ const PopupTradingErrorHidden = () => {
             <PopupCloseBackground />
             <div className="popup__content">
                 <h2>
-                    <span>Ошибка</span>
+                    <span><Translate>error</Translate></span>
                     <div className="img">
                         <img src="../images/error-red.svg" alt="Error"/>
                     </div>
                 </h2>
-                <p>Ваш инвентарь в steam скрыт,
-                    <br/>откройте его у себя в настройках</p>
+                <p><Translate>hidden_inventory</Translate></p>
                 <PopupCloseCross />
                 <div className="trade__buttons">
                     <button className="grey">

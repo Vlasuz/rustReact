@@ -3,6 +3,7 @@ import PopupCloseBackground from "./PopupCloseBackground";
 import PopupCloseCross from "./PopupCloseCross";
 import {useDispatch, useSelector} from "react-redux";
 import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
+import Translate from "../../Hooks/Translate";
 
 const PopupTradingErrorCancel = () => {
 
@@ -19,12 +20,12 @@ const PopupTradingErrorCancel = () => {
             <div className="popup__bgd" onClick={handleClosePopup} />
             <div className="popup__content">
                 <h2>
-                    <span>Ошибка</span>
+                    <span><Translate>error</Translate></span>
                     <div className="img">
                         <img src="../images/error-red.svg" alt="Error"/>
                     </div>
                 </h2>
-                <p>Вы отменили трейд-предложение</p>
+                <p><Translate>cancel_trading</Translate></p>
                 <div className="popup__cross popup__close" onClick={handleClosePopup}>
                     <img src="../images/cross.svg" alt="Close"/>
                 </div>

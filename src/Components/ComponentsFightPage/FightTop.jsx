@@ -11,13 +11,18 @@ const FightTop = () => {
     const membersOnline = useSelector(state => state.reducerChat.online)
     const userData = useSelector(state => state.reducerUserData.data)
     const dispatch = useDispatch()
+    const settings = useSelector(state => state.reducerSettings.settings)
 
     const routeToShop = () => {
         dispatch(setNotice("auth_for_action"))
     }
 
     const handleOpenPopup = () => {
-        !!Object.keys(userData).length ? OpenPopup('popup-new-room') : dispatch(setNotice("auth_for_action"))
+        if(settings.fight_enable) {
+            !!Object.keys(userData).length ? OpenPopup('popup-new-room') : dispatch(setNotice("auth_for_action"))
+        } else {
+            dispatch((setNotice('not_enable_fight')))
+        }
     }
 
     return (

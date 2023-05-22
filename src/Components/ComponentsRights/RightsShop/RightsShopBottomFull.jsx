@@ -24,7 +24,7 @@ const RightsShopBottomFull = (props) => {
             <div className="sum">
                 <img src="../images/header__coins.svg" alt="Coins"/>
                 <span>
-                    {(list.summary + commission).toFixed(2)}
+                    {(list.summary + commission).toFixed()}
                 </span>
             </div>
         </div>

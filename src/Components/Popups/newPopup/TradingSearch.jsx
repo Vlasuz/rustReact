@@ -9,6 +9,7 @@ import {setOpenPopup} from "../../../Redux/Reducers/reducerOpenPopup";
 import {storageListDelete, userInventoryAdd, userInventoryDelete, userInventoryRemove} from "../../../Redux/actions";
 import {logger} from "../../../middleware/logger";
 import {userBalanceSetCoins} from "../../../Redux/Reducers/reducerUserBalance";
+import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 
 const TradingSearch = () => {
 
@@ -24,6 +25,8 @@ const TradingSearch = () => {
 
             axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
             axios.post('https://'+GlobalLink()+'/api/trade/create/withdraw/', inventory.filter(item => item.isCheck).map(item => item.id)).then(res => {
+
+                if(res.data.message === 'not_enable_now') return dispatch((setNotice('not_enable_withdraw')));
 
                 if(res.data.id) {
                     const socket = new WebSocket("wss://"+GlobalLink()+`/ws/api/trade/withdraw/${res.data.id}/`)

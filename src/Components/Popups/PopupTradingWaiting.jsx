@@ -18,8 +18,8 @@ const PopupTradingWaiting = () => {
         <div className={"popup popup-trade popup-trade-waiting popup_active"}>
             <PopupCloseBackground/>
             <div className="popup__content">
-                <h2>Трейд</h2>
-                <p>Ожидайте предложения от нашего бота:</p>
+                <h2><Translate>trade_word</Translate></h2>
+                <p><Translate>waiting_trading_from_bot</Translate>:</p>
                 <PopupCloseCross/>
                 <div className="popup-trade__bot">
                     <div className="bot__photo">

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const GlobalLink = () => {
-    return "api.onefut.net";
+    return "api.smallstash.gg";
 };
 
 export default GlobalLink;

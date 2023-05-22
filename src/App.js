@@ -25,6 +25,7 @@ import {userSkinSet} from "./Redux/Reducers/reducerUserSkins";
 import {logger} from "./middleware/logger";
 import Popup from "./Components/Popups/newPopup/Popup";
 import {setPages} from "./Redux/Reducers/reducerPages";
+import Translate from "./Hooks/Translate";
 
 function App() {
 
@@ -37,9 +38,23 @@ function App() {
     const reducerUserData = useSelector(state => state.reducerUserData.data)
     const [loadImages, setLoadImages] = useState([])
 
+    // function set_cookie(name, value, exp_y, exp_m, exp_d, path, domain, secure) {
+    //     var cookie_string = name + "=" + escape(value);
+    //     if (exp_y) {
+    //         var expires = new Date(exp_y, exp_m, exp_d);
+    //         cookie_string += "; expires=" + expires.toGMTString();
+    //     }
+    //
+    //     if (path) cookie_string += "; path=" + escape(path);
+    //     if (domain) cookie_string += "; domain=" + escape(domain);
+    //     if (secure) cookie_string += "; secure";
+    //
+    //     document.cookie = cookie_string;
+    // }
+
     useEffect(() => {
 
-        if(!technical){
+        if (!technical) {
             if (getCookie('access_token')) {
                 axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
                 axios.post("https://" + GlobalLink() + '/api/auth/session/').then(res => {
@@ -50,7 +65,7 @@ function App() {
                     dispatch(setSession(res.data))
 
                 }).catch(error => {
-                    document.cookie = 'access_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
+                    // document.cookie = 'access_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
                 })
 
                 setTimeout(() => {
@@ -58,11 +73,11 @@ function App() {
                 }, 600)
 
             } else if (!isLoad && window.location.href.includes('openid')) {
-                let steamData = window.location.href.replace('https://www.smallstash.gg', '').replace(location.pathname, '')
+                let steamData = window.location.href.replace('https://smallstash.gg', '').replace(location.pathname, '')
                 let urlAxios = "https://" + GlobalLink() + `/api/auth/login/${steamData}`;
 
                 // DELETE !!!!!
-                if(window.location.href.includes('localhost')) {
+                if (window.location.href.includes('localhost')) {
                     steamData = window.location.href.replace('http://localhost:3000', '').replace(location.pathname, '')
                     urlAxios = "https://" + GlobalLink() + `/api/auth/login/${steamData}`;
                 }
@@ -70,7 +85,11 @@ function App() {
 
                 axios.post(urlAxios).then(res => {
 
-                    document.cookie = 'access_token=' + res.data.access_token;
+                    if(window.location.href.includes('localhost')) {
+                        document.cookie = `access_token=${res.data.access_token}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+                    } else {
+                        document.cookie = `access_token=${res.data.access_token}; path=/; domain=smallstash.gg; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+                    }
 
                     dispatch(userData(res.data.user))
                     dispatch(authAction(true))
@@ -97,7 +116,7 @@ function App() {
     }, [isLoad])
     useEffect(() => {
 
-        if(!technical) {
+        if (!technical) {
             if (location.pathname.includes("airdrop")) {
                 dispatch(switcherRights('ra'))
                 document.querySelector('.section-right__top .top__item:first-child')?.click()
@@ -112,7 +131,7 @@ function App() {
             }
         }
 
-        axios.get('https://'+GlobalLink()+'/api/base/pages/').then(res => {
+        axios.get('https://' + GlobalLink() + '/api/base/pages/').then(res => {
             dispatch(setPages(res.data))
         })
         axios.get("https://" + GlobalLink() + '/api/base/settings/').then(res => {
@@ -126,7 +145,7 @@ function App() {
     }, [])
     useEffect(() => {
 
-        if(!technical) {
+        if (!technical) {
             if (!Object.keys(reducerUserData).length) {
 
                 axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
@@ -135,7 +154,7 @@ function App() {
                 })
 
                 axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
-                axios.get("https://"+GlobalLink()+'/api/fight/shop/').then(res => {
+                axios.get("https://" + GlobalLink() + '/api/fight/shop/').then(res => {
                     dispatch(skinsShop(res.data))
                     dispatch(userSkinSet(res.data.chosen))
                 })
@@ -145,7 +164,7 @@ function App() {
     }, [reducerUserData])
     const list = useSelector(state => state.reducerShopSkins.skins)
 
-    if(!technical) {
+    if (!technical) {
         document.addEventListener('click', function (e) {
             CloseModal('header__lang', 'lang__button', e)
             CloseModal('section-right__smiles', 'smiles', e)
@@ -156,12 +175,13 @@ function App() {
             <>
 
                 <div className="lazy-load-images-for-fights">
-                    {loadImages.map((image, imageNum) => <AsyncImages key={imageNum} src={"https://" + GlobalLink() + "/" + image}/>)}
+                    {loadImages.map((image, imageNum) => <AsyncImages key={imageNum}
+                                                                      src={"https://" + GlobalLink() + "/" + image}/>)}
                     {list?.shop?.map((image, imageNum) => {
-                        return Object.values(image?.gallery).map((item, itemNum) => <AsyncImages key={imageNum + "-" + itemNum} src={"https://" + GlobalLink() + "/" + item}/>)
+                        return Object.values(image?.gallery).map((item, itemNum) => <AsyncImages
+                            key={imageNum + "-" + itemNum} src={"https://" + GlobalLink() + "/" + item}/>)
                     })}
                 </div>
-
 
 
                 <div className={"loader-page" + (isLoad ? " loader-page_hide" : "")}>
@@ -178,7 +198,7 @@ function App() {
 
                                 </div>
                             </div>
-                            <span>Загрузка...</span>
+                            <span><Translate>loading</Translate>...</span>
                         </div>
                     </div>
                 </div>

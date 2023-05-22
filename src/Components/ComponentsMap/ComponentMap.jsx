@@ -279,10 +279,9 @@ const ComponentMap = () => {
         >
 
             {drop.isDropDown &&
-                <div className="airdrop-drop-sent"
-                     style={{top: coodsPlane + 20 + "px", left: drop.coodDrop + "px"}}>
-                    <div className='point'></div>
-                    <div className='line-to-winner'></div>
+                <div className="airdrop-drop-sent" style={{top: coodsPlane + 20 + "px", left: drop.coodDrop + "px"}}>
+                    <div className='point' />
+                    <div className='line-to-winner' />
                 </div>}
 
             <img className="map-img" src="../images/map.png" alt="Map"/>

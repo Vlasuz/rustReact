@@ -57,29 +57,41 @@ const PopupNewRoom = () => {
                 "items": listOnZone.map(item => item.id),
             }).then(res => {
 
-                dispatch(userInventoryRemove(listOnZone))
-                dispatch(userBalanceRemoveCoins(coinsBid))
+                if(res.data.message === 'not_enable_now') return dispatch((setNotice('not_enable_fight')));
 
-                const sk = new WebSocket("wss://" + GlobalLink() + '/ws/api/fight/game/' + res.data.id + "/")
-                sk.onopen = function () {
-                    sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
-                    dispatch(setSocket(sk))
-                }
-                sk.onmessage = e => {
-                    let message = JSON.parse(JSON.parse(e.data))
-                    dispatch(setResponse(message))
+                if(res.data.message === 'small_balance_for_commission') {
+                    dispatch(setNotice("not_enough_money"))
+                    return null;
+                } else {
 
-                    if (message.type === 'player_join_event' && message.data.length === 2) {
-                        dispatch(setSound('sound15'))
+                    dispatch(userInventoryRemove(listOnZone))
+                    dispatch(userBalanceRemoveCoins(coinsBid))
+
+                    const sk = new WebSocket("wss://" + GlobalLink() + '/ws/api/fight/game/' + res.data.id + "/")
+                    sk.onopen = function () {
+                        sk.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
+                        dispatch(setSocket(sk))
                     }
 
-                    switch (message.type) {
-                        case 'player_join_event':
-                            let skin = message.data[0].skin !== null ? message.data[0].skin?.gallery : settings.default_fight_skin?.gallery
-                            dispatch(setSkin('me', skin))
-                            !window.location.href.includes(res.data.id) && navigate("/fight/" + res.data.id)
-                            break;
+                    sk.onmessage = e => {
+                        let message = JSON.parse(JSON.parse(e.data))
+                        dispatch(setResponse(message))
+
+                        console.log('eee', e)
+
+                        if (message.type === 'player_join_event' && message.data.length === 2) {
+                            dispatch(setSound('sound15'))
+                        }
+
+                        switch (message.type) {
+                            case 'player_join_event':
+                                let skin = message.data[0].skin !== null ? message.data[0].skin?.gallery : settings.default_fight_skin?.gallery
+                                dispatch(setSkin('me', skin))
+                                !window.location.href.includes(res.data.id) && navigate("/fight/" + res.data.id)
+                                break;
+                        }
                     }
+
                 }
 
             })
@@ -452,13 +464,13 @@ const PopupNewRoom = () => {
                             <div className="select__head" onClick={e => setIsOpenSelect(prev => !prev)}>
                                 <span>
                                     {
-                                        sortBy === "730" ? "CSGO" : sortBy === "252490" ? "RUST" : "Все игры"
+                                        sortBy === "730" ? "CSGO" : sortBy === "252490" ? "RUST" : <Translate>all_games</Translate>
                                     }
                                 </span>
                             </div>
                             <div className="select__body">
                                 <div onClick={e => setSortBy('all')} className="select__item">
-                                    Все игры
+                                    <Translate>all_games</Translate>
                                 </div>
                                 <div onClick={e => setSortBy('730')} className="select__item">
                                     CSGO

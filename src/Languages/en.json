@@ -194,5 +194,19 @@
 
   "methods_payment": "Payment Methods",
   "go_to_payment": "Go to the payment",
-  "redirection": "Redirect"
+  "redirection": "Redirect",
+
+  "before_the_game": "Before the start of each game, (32 random symbols) and the number on which the game will end are randomly generated.",
+  "before_the_game_hash": "They are added together and hashed with sha256, after which this hash is displayed before the game starts.",
+  "before_the_game_end": "At the end of the game, you can see the salt with which the generation was made, and make sure that the hash has not changed and everything matches",
+  "tech_work": "Engineering works",
+  "tech_work_text": "At the moment we are improving the site and trying to make it even better! <br/>The site will work through:",
+  "loading": "Loading",
+  "trade_success": "Deal completed",
+  "error_connect": "Connection error",
+  "cancel_trading": "You canceled a trade offer",
+  "all_games": "All games",
+  "not_added_trade_link": "You have not added a trade link in your profile",
+  "trade_word": "Trade",
+  "waiting_trading_from_bot": "Wait for offers from our bot"
 }

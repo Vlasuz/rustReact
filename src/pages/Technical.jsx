@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Translate from "../Hooks/Translate";
 
 const Technical = ({ technicalDate }) => {
     const [days, setDays] = useState(0);
@@ -30,9 +31,8 @@ const Technical = ({ technicalDate }) => {
             <div className="ico">
                 <img src="../images/tech-work-ico.svg" alt="Ico" />
             </div>
-            <h1>Технические работы</h1>
-            <p>На данный момент мы улучшаем сайт и стараемся сделать его еще лучше!
-                <br/>Сайт заработает через:</p>
+            <h1><Translate>tech_work</Translate></h1>
+            <p><Translate>tech_work_text</Translate></p>
             <time>
                 <span className="day">
                     <span>

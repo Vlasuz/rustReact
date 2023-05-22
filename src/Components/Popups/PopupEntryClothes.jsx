@@ -69,6 +69,8 @@ const PopupEntryClothes = (props) => {
             "items": listOnZone.map(item => item.id)
         }).then(res => {
 
+            if(res.data.message === 'not_enable_now') return dispatch((setNotice('not_enable_fight')));
+
             dispatch(userInventoryRemove(listOnZone))
 
             const sk = new WebSocket("wss://" + GlobalLink() + '/ws/api/fight/game/' + props.data.id + "/")
@@ -353,13 +355,13 @@ const PopupEntryClothes = (props) => {
                             <div className="select__head" onClick={e => setIsOpenSelect(prev => !prev)}>
                                 <span>
                                     {
-                                        sortBy === "730" ? "CSGO" : sortBy === "252490" ? "RUST" : "Все игры"
+                                        sortBy === "730" ? "CSGO" : sortBy === "252490" ? "RUST" : <Translate>all_games</Translate>
                                     }
                                 </span>
                             </div>
                             <div className="select__body">
                                 <div onClick={e => setSortBy('all')} className="select__item">
-                                    Все игры
+                                    <Translate>all_games</Translate>
                                 </div>
                                 <div onClick={e => setSortBy('730')} className="select__item">
                                     CSGO

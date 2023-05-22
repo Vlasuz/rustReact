@@ -8,6 +8,7 @@ import GlobalLink from "../../../Hooks/GlobalLink";
 import {setOpenPopup} from "../../../Redux/Reducers/reducerOpenPopup";
 import {logger} from "../../../middleware/logger";
 import TradeBanTimer from "../../TradeBanTimer";
+import {setNotice} from "../../../Redux/Reducers/reducerNotice";
 
 const AddCoinsBySkin = () => {
 
@@ -49,6 +50,9 @@ const AddCoinsBySkin = () => {
     const addCoinsFunction = () => {
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie("access_token")}`;
         axios.post('https://' + GlobalLink() + '/api/trade/create/pay/', items.map(item => item.id)).then(res => {
+
+            if(res.data.message === 'not_enable_now') return dispatch((setNotice('not_enable_payment')));
+
             if (res.data.message === 'Trade-link is empty') {
                 dispatch(setOpenPopup("popup-trade-error-cancel", {type: "pay", data: res.data}))
             } else {

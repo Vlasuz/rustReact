@@ -31,10 +31,16 @@ const RightsAirdropSleepers = () => {
     const sleepers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const handleBuySleepers = () => {
-        dispatch(setSound('sound19'))
-        dispatch(airdropStepRights(2))
-        dispatch(buySleepers(countSleepers))
-        dispatch(setNotice("success_to_buy_bags"))
+
+        if(settings.airdrop_enable) {
+            dispatch(setSound('sound19'))
+            dispatch(airdropStepRights(2))
+            dispatch(buySleepers(countSleepers))
+            dispatch(setNotice("success_to_buy_bags"))
+        } else {
+            dispatch((setNotice('not_enable_airdrop')))
+        }
+
     }
 
 

@@ -61,14 +61,11 @@ const PopupFairGame = () => {
                     </ul>
                 </div>
                 <div className="popup-fair-game__text">
-                    <p>Перед началом каждой игры <span>случайным образом</span> генерируются (32 случайных символа) и
-                        число, на котором закончится игра.</p>
+                    <p><Translate>before_the_game</Translate></p>
                     <br />
-                    <p>Они складываются между собой и хешируются с помощью sha256, после чего этот хэш
-                        отображается <span>до того как начнется игра</span>.</p>
+                    <p><Translate>before_the_game_hash</Translate></p>
                     <br />
-                    <p>В конце игры можно увидеть соль, с помощью которой была произведена генерация, и
-                        убедиться, что хэш не менялся и все совпадает</p>
+                    <p><Translate>before_the_game_end</Translate></p>
                     <a href={"https://api.random.org/signatures/form"} target={"_blank"} className="popup__close">
                         <Translate>fair_game_check</Translate>
                     </a>

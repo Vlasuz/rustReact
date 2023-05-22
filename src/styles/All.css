@@ -4311,6 +4311,17 @@ section {
     opacity: 1;
     visibility: visible;
 }
+@media screen and (max-width: 576px) {
+    .section-right__notice-body{
+        left: 50%;
+    }
+    .section-right__notice .notice__item{
+        width: 85%;
+        margin-left: 30px;
+    }
+}
+
+
 .section-right__notice .notice__add-cart {
     bottom: 85px;
     z-index: 2

@@ -3,14 +3,27 @@ import OpenPopup from "../../Hooks/OpenPopup";
 import {useDispatch, useSelector} from "react-redux";
 import Translate from "../../Hooks/Translate";
 import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
+import {setSound} from "../../Redux/Reducers/reducerSound";
+import {airdropStepRights} from "../../Redux/actions";
+import {buySleepers} from "../../Redux/Reducers/reducerAirdropMySleepers";
+import {setNotice} from "../../Redux/Reducers/reducerNotice";
 
 const HeaderCoins = () => {
 
     const balance = useSelector(state => state.reducerUserBalance.balance)
     const dispatch = useDispatch()
+    const settings = useSelector(state => state.reducerSettings.settings)
+
+    const addCash = () => {
+        if(settings.pay_enable) {
+            dispatch(setOpenPopup("popup-add-coins"))
+        } else {
+            dispatch((setNotice('not_enable_payment')))
+        }
+    }
 
     return (
-        <button className="header__coins" onClick={() => dispatch(setOpenPopup("popup-add-coins"))}>
+        <button className="header__coins" onClick={addCash}>
             <img src="../images/header__coins.svg" alt="Coins" />
             <span>
                 {balance}

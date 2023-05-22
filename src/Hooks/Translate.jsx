@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Trans, useTranslation} from "react-i18next";
+import parse from "html-react-parser";
 
 const Translate = ({ children }) => {
     const {t} = useTranslation();
-    // <Translate>search</Translate>
     return (
         <Trans t={t}>{children}</Trans>
     );

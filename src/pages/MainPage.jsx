@@ -52,7 +52,7 @@ const MainPage = () => {
                             <h3>
                                 <Translate>airdrop_title</Translate>
                             </h3>
-                            <p style={{color: "#DB4752"}}>Ошибка подключения</p>
+                            <p style={{color: "#DB4752"}}><Translate>error_connect</Translate></p>
                         </div>
                         :
                     <div className={"stats stats_disabled"}>
@@ -69,7 +69,7 @@ const MainPage = () => {
                             <h3>
                                 <Translate>fight_title</Translate>
                             </h3>
-                            <p style={{color: "#DB4752"}}>Ошибка подключения</p>
+                            <p style={{color: "#DB4752"}}><Translate>error_connect</Translate></p>
                         </div>
                         :
                     <div className={"stats stats_disabled"}>
@@ -86,7 +86,7 @@ const MainPage = () => {
                 <Table dataStats={dataStats} person_id={session}/> :
                 error ?
                     <div className="section-block">
-                        <p style={{color: "#DB4752"}}>Ошибка подключения</p>
+                        <p style={{color: "#DB4752"}}><Translate>error_connect</Translate></p>
                     </div>
                     :
                 <div className="section-block">

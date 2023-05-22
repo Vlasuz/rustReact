@@ -5,11 +5,21 @@ import {useDispatch, useSelector} from "react-redux";
 import {reducerUserData} from "../../Redux/Reducers/reducerUserData";
 import Translate from "../../Hooks/Translate";
 import {setOpenPopup} from "../../Redux/Reducers/reducerOpenPopup";
+import {setNotice} from "../../Redux/Reducers/reducerNotice";
 
 const BalanceTop = () => {
 
     const balance = useSelector(state => state.reducerUserBalance.balance)
     const dispatch = useDispatch()
+    const settings = useSelector(state => state.reducerSettings.settings)
+
+    const addCash = () => {
+        if(settings.pay_enable) {
+            dispatch(setOpenPopup("popup-add-coins"))
+        } else {
+            dispatch((setNotice('not_enable_payment')))
+        }
+    }
 
     return (
         <div className="balance__top">
@@ -24,7 +34,7 @@ const BalanceTop = () => {
                     </span>
                 </div>
             </div>
-            <button className="balance__add" onClick={e => dispatch(setOpenPopup("popup-add-coins"))}>
+            <button className="balance__add" onClick={addCash}>
                 <span>
                     <Translate>text_add_cash</Translate>
                 </span>

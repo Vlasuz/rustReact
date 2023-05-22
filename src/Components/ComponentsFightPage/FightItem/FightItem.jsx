@@ -34,6 +34,8 @@ const FightItem = ({data}) => {
     }, [])
 
     const handleJoin = () => {
+        if(!settings.fight_enable) return dispatch((setNotice('not_enable_fight')))
+
         if (!!Object.keys(userData).length) {
             (data.first_player?.items.length > 0 ?
                 OpenPopup('popup-entry-clothes-' + data.id) :

@@ -125,7 +125,7 @@ const AddCoinsByRub = () => {
                        onChange={e => e.target.validity.valid ? setInput(e.target.value) : e.target.validity.valid}/>
                 <div className="sum">
                     <img src="../images/header__coins.svg" alt="Ico"/>
-                    <span>{scrap.toFixed(2)}</span>
+                    <span>{scrap.toFixed()}</span>
                 </div>
             </div>
             <button onClick={handlePay}>

@@ -76,6 +76,26 @@ const Notices = () => {
             "type": "amount_larger",
             "text": 'Слишком большое значение',
             "icons": "../images/status-error.svg",
+        },
+        {
+            "type": "not_enable_airdrop",
+            "text": '"Аирдроп" временно недоступно',
+            "icons": "../images/status-error.svg",
+        },
+        {
+            "type": "not_enable_payment",
+            "text": '"Пополнение баланса" временно недоступно',
+            "icons": "../images/status-error.svg",
+        },
+        {
+            "type": "not_enable_withdraw",
+            "text": '"Вывод вещей" временно недоступно',
+            "icons": "../images/status-error.svg",
+        },
+        {
+            "type": "not_enable_fight",
+            "text": '"Схватка" временно недоступно',
+            "icons": "../images/status-error.svg",
         }
     ];
 
