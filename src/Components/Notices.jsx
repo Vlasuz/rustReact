@@ -69,32 +69,32 @@ const Notices = () => {
         },
         {
             "type": "amount_smaller",
-            "text": 'Слишком маленькое значение',
+            "text": <Translate>amount_smaller</Translate>,
             "icons": "../images/status-error.svg",
         },
         {
             "type": "amount_larger",
-            "text": 'Слишком большое значение',
+            "text": <Translate>amount_larger</Translate>,
             "icons": "../images/status-error.svg",
         },
         {
             "type": "not_enable_airdrop",
-            "text": '"Аирдроп" временно недоступно',
+            "text": <Translate>not_enable_airdrop</Translate>,
             "icons": "../images/status-error.svg",
         },
         {
             "type": "not_enable_payment",
-            "text": '"Пополнение баланса" временно недоступно',
+            "text": <Translate>not_enable_payment</Translate>,
             "icons": "../images/status-error.svg",
         },
         {
             "type": "not_enable_withdraw",
-            "text": '"Вывод вещей" временно недоступно',
+            "text": <Translate>not_enable_withdraw</Translate>,
             "icons": "../images/status-error.svg",
         },
         {
             "type": "not_enable_fight",
-            "text": '"Схватка" временно недоступно',
+            "text": <Translate>not_enable_fight</Translate>,
             "icons": "../images/status-error.svg",
         }
     ];

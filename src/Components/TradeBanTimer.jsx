@@ -1,13 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {logDOM} from "@testing-library/react";
 
-const TradeBanTimer = ({ time }) => {
+const TradeBanTimer = ({time}) => {
     const [finishTime] = useState(time.getTime());
     const [[diffDays, diffH, diffM, diffS], setDiff] = useState([0, 0, 0, 0]);
     const [tick, setTick] = useState(false);
 
     useEffect(() => {
-        const diff = (finishTime - new Date()) / 1000;
+        let d1 = new Date();
+        d1.toUTCString();
+        Math.floor(d1.getTime() / 1000)
+        let d2 = new Date(d1.getUTCFullYear(), d1.getUTCMonth(), d1.getUTCDate(), d1.getUTCHours(), d1.getUTCMinutes(), d1.getUTCSeconds());
+        d2.toUTCString();
+        Math.floor(d2.getTime() / 1000)
+
+        console.log('>>>', Date(Date.now()))
+
+        const diff = (finishTime - d2) / 1000;
         if (diff < 0) return // время вышло
         setDiff([
             Math.floor(diff / 86400), // дни

@@ -180,8 +180,8 @@ const RightsItem = (props) => {
 
             <div className={"item__is-lock" + (props.item.trade_ban !== null ? " item__is-lock_true" : "")}>
                 <img src="../images/lock-map.svg" width={'11'} alt=""/>
-                <p><TradeBanTimer
-                    time={setTrueTime(props.item)}/>
+                <p>
+                    {props.item.trade_ban !== null ? <TradeBanTimer time={setTrueTime(props.item)}/> : ""}
                 </p>
             </div>
             <div className="item__photo">

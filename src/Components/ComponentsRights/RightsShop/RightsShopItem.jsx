@@ -84,8 +84,8 @@ const RightsShopItem = ({data}) => {
             {data.count && <div className="item__count"> {data.count} </div>}
             <div className={"item__is-lock" + (data.trade_ban !== null ? " item__is-lock_true" : "")}>
                 <img src="../images/lock-map.svg" width={'11'} alt=""/>
-                <p><TradeBanTimer
-                    time={setTrueTime(data)}/>
+                <p>
+                    {data.trade_ban !== null ? <TradeBanTimer time={setTrueTime(data)}/> : ""}
                 </p>
             </div>
             <div className="item__photo">

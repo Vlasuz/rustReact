@@ -2982,7 +2982,10 @@ main {
     margin-top: auto;
     -webkit-transition: all .3s ease;
     -o-transition: all .3s ease;
-    transition: all .3s ease
+    transition: all .3s ease;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 .aside__author p {
     -webkit-transition: all .3s ease;
@@ -2998,6 +3001,7 @@ main {
     display: block
 }
 .aside__author img {
+    margin: 0 auto;
     margin-bottom: 3px;
     width: 30px;
 }
@@ -4265,13 +4269,8 @@ section {
     transition: opacity .3s ease,visibility .3s ease
 }
 .section-right__notice-body{
-    /*-webkit-transform: translateX(0);*/
-    /*-ms-transform: translateX(0);*/
-    /*transform: translateX(0);*/
-    /*right: 30px;*/
     bottom: 29px;
     left: 40%;
-    /*pointer-events: none;*/
 }
 .section-right__notice .notice__item {
     height: 60px;
@@ -9557,9 +9556,10 @@ section {
         display: none
     }
     .aside__author img {
+        margin: 0 auto;
         margin-bottom: 5px;
         width: 20px;
-        height: 20px
+        height: 20px;
     }
     .aside__plane .timer {
         margin-top: 6px
@@ -11316,6 +11316,21 @@ section {
     .aside__plane button{
         padding-left: 10px;
         padding-right: 10px;
+    }
+    .aside__author img {
+        margin-right: 0;
+    }
+    .aside__author {
+        text-align: right;
+    }
+
+    .header__lang{
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .buttonToLogin span{
+        margin-right: 5px;
+        font-size: 12px;
     }
 }
 /*NEW STYLE*/

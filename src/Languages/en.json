@@ -208,5 +208,11 @@
   "all_games": "All games",
   "not_added_trade_link": "You have not added a trade link in your profile",
   "trade_word": "Trade",
-  "waiting_trading_from_bot": "Wait for offers from our bot"
+  "waiting_trading_from_bot": "Wait for offers from our bot",
+  "amount_smaller": "Too small value",
+  "amount_larger": "Too much value",
+  "not_enable_airdrop": "'Airdrop' is temporarily unavailable",
+  "not_enable_payment": "'Top up balance' is temporarily unavailable",
+  "not_enable_withdraw": "'Show Items' is temporarily unavailable",
+  "not_enable_fight": "'Fight' is temporarily unavailable"
 }
