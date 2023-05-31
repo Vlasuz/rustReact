@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {logDOM} from "@testing-library/react";
 
-const TradeBanTimer = ({time}) => {
+const TradeBanTimer = ({time, isTradeBan}) => {
     const [finishTime] = useState(time.getTime());
     const [[diffDays, diffH, diffM, diffS], setDiff] = useState([0, 0, 0, 0]);
     const [tick, setTick] = useState(false);
@@ -13,8 +13,6 @@ const TradeBanTimer = ({time}) => {
         let d2 = new Date(d1.getUTCFullYear(), d1.getUTCMonth(), d1.getUTCDate(), d1.getUTCHours(), d1.getUTCMinutes(), d1.getUTCSeconds());
         d2.toUTCString();
         Math.floor(d2.getTime() / 1000)
-
-        console.log('>>>', Date(Date.now()))
 
         const diff = (finishTime - d2) / 1000;
         if (diff < 0) return // время вышло
@@ -31,7 +29,20 @@ const TradeBanTimer = ({time}) => {
         return () => clearInterval(timerID);
     }, [tick])
 
-    return `${diffDays}:${diffH.toString().padStart(2, '0')}:${diffM.toString().padStart(2, '0')}:${diffS.toString().padStart(2, '0')}`
+    if(!isTradeBan || (diffDays <= 0 && diffH <= 0 && diffM <= 0 && diffS <= 0)) {
+        return (
+            <div className={"item__is-lock"} />
+        )
+    }
+
+    return (
+        <div className={"item__is-lock item__is-lock_true"}>
+            <img src="../images/lock-map.svg" width={'11'} alt=""/>
+            <p>
+                {`${diffDays}:${diffH.toString().padStart(2, '0')}:${diffM.toString().padStart(2, '0')}:${diffS.toString().padStart(2, '0')}`}
+            </p>
+        </div>
+    )
 };
 
 export default TradeBanTimer;

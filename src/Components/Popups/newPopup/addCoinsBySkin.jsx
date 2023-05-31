@@ -148,13 +148,7 @@ const AddCoinsBySkin = () => {
                                             {item.count}
                                         </div>
                                     }
-                                    <div
-                                        className={"item__is-lock" + (item.trade_ban !== null ? " item__is-lock_true" : "")}>
-                                        <img src="../images/lock-map.svg" width={'11'} alt=""/>
-                                        <p>
-                                            {item.trade_ban !== null ? <TradeBanTimer time={new Date('Wed, 5 Oct 2024 00:00:00')}/> : ""}
-                                        </p>
-                                    </div>
+                                    <TradeBanTimer isTradeBan={item.trade_ban} time={new Date('Wed, 5 Oct 2024 00:00:00')}/>
                                     <div className="item__photo">
                                         <img src={item.image} alt="Skin"/>
                                     </div>

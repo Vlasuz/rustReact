@@ -494,15 +494,7 @@ const PopupNewRoom = () => {
                                 .map(item =>
                                     <li key={item.id} data-id={item.id} className="popup-new-room__item"
                                         onMouseDown={e => itemMove(e, item)}>
-
-                                        <div
-                                            className={"item__is-lock" + (item.trade_ban !== null ? " item__is-lock_true" : "")}>
-                                            <img src="../images/lock-map.svg" width={'11'} alt=""/>
-                                            <p>
-                                                {item.trade_ban !== null ? <TradeBanTimer time={setTrueTime(item)}/> : ""}
-                                            </p>
-                                        </div>
-
+                                        <TradeBanTimer isTradeBan={item.trade_ban} time={setTrueTime(item)}/>
                                         <div className="li__delete">
                                             <img src="../images/cross.svg" alt="Close"/>
                                         </div>
