@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {shopListAdd} from "../../../Redux/actions";
+import {shopList, shopListAdd, shopListRemove} from "../../../Redux/actions";
 import axios from "axios";
 import {userBalanceAddCoins} from "../../../Redux/Reducers/reducerUserBalance";
 import {getCookie} from "../../../Hooks/GetCookies";
@@ -13,38 +13,35 @@ const RightsShopItem = ({data}) => {
     const dispatch = useDispatch()
     const listAdded = useSelector(state => state.reducerShopListAdded.list)
     const userData = useSelector(state => state.reducerUserData.data)
+    const [itemAdded, setItemAdded] = useState({})
+    let sameItems = listAdded.some(item => item.id === data.id)
 
     const addItem = function (e) {
-
-        // if (e.target.closest('li')?.querySelector('.item__is-lock_true')) {
-        //     return null;
-        // }
-
-        let sameItems = listAdded.some(item => item.id === data.id)
 
         if (!sameItems && !!Object.keys(userData).length) {
 
             axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
             axios.post("https://" + GlobalLink() + `/api/basket/add?item_id=${data.id}`).then(res => {
+
+                if(res.data.message === 'item_not_available') {
+
+                    axios.get("https://" + GlobalLink() + '/api/items/shop/').then(res => {
+                        dispatch(shopList(res.data))
+                    })
+                    dispatch(setNotice(res.data.message))
+                    return null;
+                }
+
                 dispatch(shopListAdd(res.data))
-                // dispatch(setNotice("added_to_cart"))
+                setItemAdded(res.data)
             })
 
         } else {
-            !!Object.keys(userData).length ? dispatch(setNotice("already_added_item")) : dispatch(setNotice("not_added_to_cart"))
+            axios.post("https://" + GlobalLink() + `/api/basket/remove?item_id=${data.id}`).then(res => {
+                dispatch(shopListAdd(res.data))
+            })
+            // !!Object.keys(userData).length ? dispatch(setNotice("already_added_item")) : dispatch(setNotice("not_added_to_cart"))
         }
-    }
-
-    function handleMouseDown(e) {
-        // if (e.target.closest('li')?.querySelector('.item__is-lock_true')) {
-        //     setTimeout(() => {
-        //         e.target.closest('li').classList.add('item-is-lock')
-        //     }, 50)
-        //     setTimeout(() => {
-        //         e.target.closest('li')?.classList.remove('item-is-lock')
-        //     }, 500)
-        //     return null;
-        // }
     }
 
     var weekday = new Array(7);
@@ -74,10 +71,12 @@ const RightsShopItem = ({data}) => {
 
     return (
         <li
-            className="postamat__item"
-            onMouseDown={handleMouseDown}
+            className={"postamat__item" + (sameItems ? " postamat__item_active" : "")}
             onClick={(e) => addItem(e)}
         >
+            <div className="item__check">
+                <img src="../images/green-check.svg" alt="Check"/>
+            </div>
             {!!Object.keys(userData).length && <div className="item__buy">
                 <img src="../images/basket.svg" alt="Basket"/>
             </div>}

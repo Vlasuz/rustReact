@@ -77,8 +77,6 @@ const PopupNewRoom = () => {
                         let message = JSON.parse(JSON.parse(e.data))
                         dispatch(setResponse(message))
 
-                        console.log('eee', e)
-
                         if (message.type === 'player_join_event' && message.data.length === 2) {
                             dispatch(setSound('sound15'))
                         }

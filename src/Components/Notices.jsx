@@ -96,6 +96,16 @@ const Notices = () => {
             "type": "not_enable_fight",
             "text": <Translate>not_enable_fight</Translate>,
             "icons": "../images/status-error.svg",
+        },
+        {
+            "type": "nothing_to_buy",
+            "text": <Translate>nothing_to_buy</Translate>,
+            "icons": "../images/status-error.svg",
+        },
+        {
+            "type": "item_not_available",
+            "text": <Translate>item_not_available</Translate>,
+            "icons": "../images/status-error.svg",
         }
     ];
 

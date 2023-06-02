@@ -214,5 +214,7 @@
   "not_enable_airdrop": "'Airdrop' is temporarily unavailable",
   "not_enable_payment": "'Top up balance' is temporarily unavailable",
   "not_enable_withdraw": "'Show Items' is temporarily unavailable",
-  "not_enable_fight": "'Fight' is temporarily unavailable"
+  "not_enable_fight": "'Fight' is temporarily unavailable",
+  "nothing_to_buy": "One or more items are not available for purchase!",
+  "item_not_available": "This item is no longer available for purchase!"
 }

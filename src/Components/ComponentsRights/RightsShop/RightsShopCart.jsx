@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import RightsShopCartItem from "./RightsShopCartItem";
 import {useDispatch, useSelector} from "react-redux";
-import {shopList, shopListAdd, shopListRemove, userInventoryAdd} from "../../../Redux/actions";
+import {shopList, shopListAdd, shopListRemove, userInventoryAdd, userInventoryRemove} from "../../../Redux/actions";
 import axios from "axios";
 import {userBalanceAddCoins, userBalanceSetCoins} from "../../../Redux/Reducers/reducerUserBalance";
 import {Trans, useTranslation} from "react-i18next";
@@ -24,18 +24,38 @@ const RightsShopCart = (props) => {
             return null;
         }
 
-        dispatch(userInventoryAdd(listAdded.list))
+        dispatch(userInventoryRemove('all'))
+        axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
+        axios.get("https://" + GlobalLink() + '/api/items/inventory/').then(res => {
+            dispatch(userInventoryAdd(res.data))
+        })
         dispatch(shopListRemove('all'))
         dispatch(setSound(''))
 
+
+
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+'/api/basket/buy').then(res => {
+
+            if(res.data.message === 'nothing_to_buy') {
+                dispatch(setNotice(res.data.message))
+                axios.get("https://"+GlobalLink()+'/api/items/shop/').then(res => {
+                    dispatch(shopList(res.data))
+                })
+                return null;
+            }
+
             dispatch(userBalanceSetCoins(res.data.balance))
             props.setIsOpenCart(false)
             props.setIsOpenThanks(true)
 
-            dispatch(setSound('sound5'))
+            dispatch(userInventoryRemove('all'))
+            axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
+            axios.get("https://" + GlobalLink() + '/api/items/inventory/').then(res => {
+                dispatch(userInventoryAdd(res.data))
+            })
 
+            dispatch(setSound('sound5'))
 
             axios.get("https://"+GlobalLink()+'/api/items/shop/').then(res => {
                 dispatch(shopList(res.data))

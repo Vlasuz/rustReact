@@ -4154,7 +4154,7 @@ section {
     object-fit: contain
 }
 .section-right__cart-bought {
-    z-index: 5;
+    z-index: 6;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -9327,6 +9327,7 @@ section {
 .storage .postamat__item:hover .item__photo {
     opacity: 1
 }
+.postamat__block .postamat__item .item__check,
 .storage .postamat__item .item__check {
     position: absolute;
     top: 6px;
@@ -9363,6 +9364,7 @@ section {
 .storage .postamat__item_active .item__count {
     opacity: 0
 }
+.postamat__block .postamat__item_active .item__check,
 .storage .postamat__item_active .item__check {
     opacity: 1
 }
