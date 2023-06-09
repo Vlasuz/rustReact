@@ -19,11 +19,16 @@ const FightPageWaiting = ({ roomData }) => {
     const response = useSelector(state => state.reducerFightsResponse.response)
     const [isActivePage, setIsActivePage] = useState('')
 
+    const [isClick, setIsClick] = useState(false)
+
     const handleCancel = () => {
+        setIsClick(true)
         axios.defaults.headers.delete['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.delete("https://"+GlobalLink()+`/api/fight/room/cancel?game_id=${roomData.id}`).then(res => {
             dispatch(userInventoryAdd(roomData?.first_player?.items))
             dispatch(userBalanceAddCoins(roomData.first_player.coins))
+            navigate('/')
+        }).catch(er => {
             navigate('/')
         })
     }
@@ -50,7 +55,7 @@ const FightPageWaiting = ({ roomData }) => {
                     </div>
                 </div>
                 <div className="section-fight__bottom">
-                    <button className="section-fight__cancel" onClick={handleCancel}>
+                    <button className="section-fight__cancel" disabled={isClick} onClick={handleCancel}>
                         <Translate>cancel_fight</Translate>
                     </button>
                 </div>

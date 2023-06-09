@@ -16,13 +16,11 @@ const RightsShopCart = (props) => {
     const listAdded = useSelector(state => state.reducerShopListAdded)
     const dispatch = useDispatch()
     const balance = useSelector(state => state.reducerUserBalance.balance)
+    const [isBought, setIsBought] = useState(false)
 
     const buyItemsButton = (e) => {
 
-        if(!!listAdded.list.length && balance < listAdded.summary) {
-            dispatch(setNotice("not_enough_money"))
-            return null;
-        }
+        setIsBought(true)
 
         dispatch(userInventoryRemove('all'))
         axios.defaults.headers.get['Authorization'] = `Bearer ${getCookie('access_token')}`;
@@ -36,6 +34,10 @@ const RightsShopCart = (props) => {
 
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.post("https://"+GlobalLink()+'/api/basket/buy').then(res => {
+
+            setTimeout(() => {
+                setIsBought(false)
+            }, 300)
 
             if(res.data.message === 'nothing_to_buy') {
                 dispatch(setNotice(res.data.message))
@@ -94,15 +96,16 @@ const RightsShopCart = (props) => {
                     </span>
                 </button>
                 {
-                    (!!listAdded.list.length && balance >= listAdded.summary) ?
+                    (balance >= listAdded.summary) ?
                         <button
                             className={"buttons__buy"}
+                            disabled={isBought}
                             onClick={buyItemsButton}>
                             <span>
                                 <Translate>buy</Translate>
                             </span>
                         </button> :
-                        <button className={"buttons__back"} onClick={buyItemsButton}>
+                        <button className={"buttons__back"} onClick={_ => dispatch(setNotice("not_enough_money"))}>
                             <span>
                                 <Translate>buy</Translate>
                             </span>

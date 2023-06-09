@@ -24,6 +24,7 @@ const RightsProcessor = (props) => {
     const dispatch = useDispatch()
     const auth = useSelector(state => state.reducerAuth.auth)
     const [arrayToRecycle, setArrayToRecycle] = useState([])
+    const [isRecycle, setIsRecycle] = useState(false)
     const [sortArray, setSortArray] = useState(
         {
             search: '',
@@ -177,16 +178,19 @@ const RightsProcessor = (props) => {
 
     const handleConvert = () => {
 
+        setIsRecycle(true)
         axios.defaults.headers.post['Authorization'] = `Bearer ${getCookie('access_token')}`;
-        axios.post("https://"+GlobalLink()+`/api/items/recycle/`, arrayToRecycle.map(item => item.id)).then(res => {
+        axios.post("https://" + GlobalLink() + `/api/items/recycle/`, arrayToRecycle.map(item => item.id)).then(res => {
 
             setArrayToRecycle([])
             dispatch(setSound('sound4'))
-            // setTimeout(() => {
-                processorList.list.filter(item => dispatch(processorListRemove([item])))
-                dispatch(userBalanceSetCoins(res.data.balance))
-                dispatch(setNotice("processor_done"))
-            // }, 1000)
+            processorList.list.filter(item => dispatch(processorListRemove([item])))
+            dispatch(userBalanceSetCoins(res.data.balance))
+            dispatch(setNotice("processor_done"))
+
+            setTimeout(() => {
+                setIsRecycle(false)
+            }, 300)
 
         })
 
@@ -237,7 +241,7 @@ const RightsProcessor = (props) => {
                                     <a href={"https://steamcommunity.com/openid/login?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.mode=checkid_setup&openid.return_to=https%3A%2F%2Fwww.smallstash.gg&openid.realm=https%3A%2F%2Fwww.smallstash.gg&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select"}>
 
                                         <Translate>storage_empty_button_not_login</Translate>
-                                        <img src="../images/steam.svg" alt="Login" />
+                                        <img src="../images/steam.svg" alt="Login"/>
                                     </a>
                                 </>}
                         </div>
@@ -303,6 +307,7 @@ const RightsProcessor = (props) => {
                 <button
                     className="zone__done"
                     onClick={handleConvert}
+                    disabled={isRecycle}
                     style={processorList.list.length > 0 ? {display: 'flex'} : {}}>
                     <div className="lft">
                         <img src="../images/pererab-button.svg" alt="Ico"/>
