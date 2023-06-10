@@ -38,6 +38,13 @@ const RightsChat = () => {
     useEffect(() => {
         !messages.length && axios.get("https://"+GlobalLink()+'/api/chat/get/?amount=100').then(res => {
             dispatch(chatAddMessages(res.data.reverse()))
+            let chatBlock = document.querySelector('.section-right__chatting')
+            setTimeout(() => {
+                chatBlock.scrollTo({
+                    top: chatBlock.scrollHeight,
+                    // behavior: "smooth"
+                });
+            }, 100)
         })
     }, [])
 
@@ -45,14 +52,6 @@ const RightsChat = () => {
         dispatch(actionBan(session?.ban_chat_permanent))
         dispatch(actionBlock(!!session?.ban_chat_date?.length))
         dispatch(actionMutedSet(session?.muted_users))
-
-        let chatBlock = document.querySelector('.section-right__chatting')
-        setTimeout(() => {
-            chatBlock.scrollTo({
-                top: chatBlock.scrollHeight,
-                behavior: "smooth"
-            });
-        }, 10)
     }, [session])
 
 

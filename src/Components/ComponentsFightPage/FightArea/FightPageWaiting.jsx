@@ -25,8 +25,11 @@ const FightPageWaiting = ({ roomData }) => {
         setIsClick(true)
         axios.defaults.headers.delete['Authorization'] = `Bearer ${getCookie('access_token')}`;
         axios.delete("https://"+GlobalLink()+`/api/fight/room/cancel?game_id=${roomData.id}`).then(res => {
-            dispatch(userInventoryAdd(roomData?.first_player?.items))
-            dispatch(userBalanceAddCoins(roomData.first_player.coins))
+            if(roomData?.first_player?.items.length) {
+                dispatch(userInventoryAdd(roomData?.first_player?.items))
+            } else {
+                dispatch(userBalanceAddCoins(roomData.first_player.coins))
+            }
             navigate('/')
         }).catch(er => {
             navigate('/')
