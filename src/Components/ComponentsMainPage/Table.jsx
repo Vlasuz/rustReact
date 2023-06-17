@@ -66,113 +66,120 @@ const Table = ({dataStats, person_id}) => {
             </ul>
             <div className="tabs__block">
                 {dataStats?.airdrop_games?.length ? <div className="tabs__item tabs__item-airdrop tabs__item_active">
-                    <div className="table">
-                        <div className="thead">
-                            <div className="tr">
-                                <div className="td">
-                                    <Translate>table_thead_date</Translate>
-                                </div>
-                                <div className="td">
-                                    <Translate>table_thead_bags</Translate>
-                                </div>
-                                <div className="td">
-                                    <Translate>table_thead_winner</Translate>
-                                </div>
-                                <div className="td">
-                                    <Translate>table_thead_bid</Translate>
-                                </div>
-                                <div className="td">
-                                    <Translate>table_thead_bank</Translate>
-                                </div>
-                                <div className="td">
-                                    <Translate>table_thead_pf</Translate>
-                                </div>
-                                <div className="td">
-                                    <Translate>table_thead_status</Translate>
+                        <div className="table">
+                            <div className="thead">
+                                <div className="tr">
+                                    <div className="td">
+                                        <Translate>table_thead_date</Translate>
+                                    </div>
+                                    <div className="td">
+                                        <Translate>table_thead_bags</Translate>
+                                    </div>
+                                    <div className="td">
+                                        <Translate>table_thead_winner</Translate>
+                                    </div>
+                                    <div className="td">
+                                        <Translate>table_thead_bid</Translate>
+                                    </div>
+                                    <div className="td">
+                                        <Translate>table_thead_bank</Translate>
+                                    </div>
+                                    <div className="td">
+                                        <Translate>table_thead_pf</Translate>
+                                    </div>
+                                    <div className="td">
+                                        <Translate>table_thead_status</Translate>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="tbody">
+                            <div className="tbody">
 
-                            {
-                                dataStats?.airdrop_games?.map(item =>
-                                    <div key={item.id} className="tr" data-id={item.id}>
+                                {
+                                    dataStats?.airdrop_games?.map(item =>
+                                        <div key={item.id} className="tr" data-id={item.id}>
 
-                                        <div className="td">
-                                            {item.created_at.slice(item.created_at.indexOf(' '))}
-                                            <span>
+                                            <div className="td">
+                                                {item.created_at.slice(item.created_at.indexOf(' '))}
+                                                <span>
                                                 {item.created_at.slice(0, item.created_at.indexOf(' '))}
                                             </span>
-                                        </div>
-
-                                        <div className="td">
-                                            {item?.win_bag?.map_pos}
-                                        </div>
-
-                                        <div className="td">
-                                            <div className="list-players">
-                                                <ul>
-                                                    <li>
-                                                        <NavLink
-                                                            to={session?.id !== item?.winner?.user?.id ? "/user/" + item?.winner?.user?.id : "/profile"}>
-                                                            <img src={item?.winner?.user?.avatar} alt=""/>
-                                                        </NavLink>
-                                                    </li>
-                                                </ul>
                                             </div>
-                                        </div>
 
-                                        <div className="td">
-                                            <div className="td__coins">
-                                                <img src="../images/header__coins.svg" alt="Ico"/>
-                                                <span>
+                                            <div className="td">
+                                                {item?.win_bag?.map_pos}
+                                            </div>
+
+                                            <div className="td">
+                                                <div className="list-players">
+                                                    <ul>
+                                                        <li>
+                                                            {item?.winner?.user ? <NavLink
+                                                                to={session?.id !== item?.winner?.user?.id ? "/user/" + item?.winner?.user?.id : "/profile"}>
+                                                                <img src={item?.winner?.user?.avatar} alt=""/>
+                                                            </NavLink> : <NavLink
+                                                                to={'/user'}>
+                                                                <img
+                                                                    src={'images/non-photo.png'}
+                                                                    alt=""/>
+                                                            </NavLink>}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div className="td">
+                                                <div className="td__coins">
+                                                    <img src="../images/header__coins.svg" alt="Ico"/>
+                                                    <span>
                                             {item?.winner?.bags.length * settings.airdrop_bag_price}
                                         </span>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div className="td">
-                                            <div className="td__coins">
-                                                <img src="../images/header__coins.svg" alt="Ico"/>
-                                                <span className={'games-bank'}>
+                                            <div className="td">
+                                                <div className="td__coins">
+                                                    <img src="../images/header__coins.svg" alt="Ico"/>
+                                                    <span className={'games-bank'}>
                                                     {item?.bank}
                                                 </span>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div className="td">
-                                            <div className="shield hash-info-table" data-hash={item?.random_hash} data-signature={item?.random_data}>
-                                                <img src="../images/shield.svg" alt="Shield"/>
-                                                <button onClick={e => handleOpenFairGame(item?.random_hash, item?.random_data, item?.bank)}>
+                                            <div className="td">
+                                                <div className="shield hash-info-table" data-hash={item?.random_hash}
+                                                     data-signature={item?.random_data}>
+                                                    <img src="../images/shield.svg" alt="Shield"/>
+                                                    <button
+                                                        onClick={e => handleOpenFairGame(item?.random_hash, item?.random_data, item?.bank)}>
                                                     <span>
                                                         {item?.random_hash.substr(0, 5) + "..." + item?.random_hash.substr(-4, 4)}
                                                     </span>
-                                                </button>
+                                                    </button>
+                                                </div>
                                             </div>
+
+                                            <div className="td">
+                                                {
+                                                    item?.winner?.user?.id === person_id?.id ?
+                                                        <img src="../images/victory.svg" alt="Shield"/> :
+                                                        <img src="../images/fail.svg" alt="Shield"/>
+                                                }
+                                            </div>
+
                                         </div>
+                                    )
+                                }
 
-                                        <div className="td">
-                                            {
-                                                item?.winner?.user?.id === person_id?.id ?
-                                                    <img src="../images/victory.svg" alt="Shield"/> :
-                                                    <img src="../images/fail.svg" alt="Shield"/>
-                                            }
-                                        </div>
-
-                                    </div>
-                                )
-                            }
-
+                            </div>
                         </div>
                     </div>
-                </div>
-                :
+                    :
 
-                <div className="tabs__item tabs__item_active">
-                    <big>
-                        <Translate>no_data</Translate>
-                    </big>
-                </div>}
+                    <div className="tabs__item tabs__item_active">
+                        <big>
+                            <Translate>no_data</Translate>
+                        </big>
+                    </div>}
 
                 {dataStats?.fight_games?.length ? <div className="tabs__item tabs__item-fight">
                         <div className="table">
@@ -213,10 +220,15 @@ const Table = ({dataStats, person_id}) => {
                                                 <div className="list-players">
                                                     <ul>
                                                         <li>
-                                                            {<NavLink
+                                                            {item?.first_player?.user && item?.second_player?.user ? <NavLink
                                                                 to={person_id?.id !== item?.first_player?.user?.id ? "/user/" + item?.first_player?.user?.id : "/user/" + item?.second_player?.user?.id}>
                                                                 <img
-                                                                    src={person_id?.id !== item?.first_player?.user?.id ? item?.first_player?.user?.avatar : item?.second_player?.user.avatar}
+                                                                    src={person_id?.id !== item?.first_player?.user?.id ? item?.first_player?.user?.avatar : item?.second_player?.user?.avatar}
+                                                                    alt=""/>
+                                                            </NavLink> : <NavLink
+                                                                to={'/user'}>
+                                                                <img
+                                                                    src={'images/non-photo.png'}
                                                                     alt=""/>
                                                             </NavLink>}
                                                         </li>
@@ -228,7 +240,7 @@ const Table = ({dataStats, person_id}) => {
                                                 <div className="td__coins">
                                                     <img src="../images/header__coins.svg" alt="Ico"/>
                                                     <span>
-                                                        {item?.winner.coins}
+                                                        {item?.winner?.coins}
                                                     </span>
                                                 </div>
                                             </div>
@@ -237,7 +249,7 @@ const Table = ({dataStats, person_id}) => {
                                                 <div className="td__coins">
                                                     <img src="../images/header__coins.svg" alt="Ico"/>
                                                     <span>
-                                                    {item?.winner.coins * 2}
+                                                    {item?.winner?.coins * 2}
                                                 </span>
                                                 </div>
                                             </div>
