@@ -1,0 +1,31 @@
+:root{
+    --cFF: #FFFFFF;
+}
+
+body {
+    margin: 0;
+    background: #191A29;
+    color: var(--cFF);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+section{
+	width: 100%;
+}
+
+canvas { width: 100vh; height: 100vh }
+
+.clothes__cool_green{
+    background: #92C145;
+}
+.clothes__cool_blue{
+    background: #558EFE;
+}
+.clothes__cool_red{
+    background: #EC5555;
+}
+.clothes__cool_grey{
+    background: #676E84;
+}
