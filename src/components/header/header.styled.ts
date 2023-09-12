@@ -22,6 +22,8 @@ export const HeaderStyled = styled.header`
             margin-left: 6%;
             display: flex;
             align-items: center;
+            justify-content: flex-end;
+            min-width: 352px;
         }
 
         &__coins{

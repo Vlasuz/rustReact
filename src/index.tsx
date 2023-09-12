@@ -4,12 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 import './assets/styles/_general.css'
 import './assets/styles/_normalize.css'
 import './assets/fonts/GothamPro/stylesheet.css'
+import { Provider } from 'react-redux';
+import { store } from './redux';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );

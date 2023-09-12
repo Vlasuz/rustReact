@@ -14,7 +14,11 @@ export const ProductStyled = styled.li`
     flex-direction: column;
     position: relative;
     transition: all .3s ease;
-    cursor: pointer;
+    cursor: grab;
+
+    &:focus {
+        cursor: grabbing;
+    }
 
     &:active{
         transform: scale(.9);

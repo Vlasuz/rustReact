@@ -10,6 +10,7 @@ export const LanguagesStyled = styled.div`
         border-radius: 6px;
         padding: 7px 10px;
         cursor: pointer;
+        border: none;
         path{
             transition: all .3s ease;
         }
@@ -36,14 +37,18 @@ export const LanguagesStyled = styled.div`
         visibility: hidden;
         transition: all .3s ease;
     }
-    &_active{
+    &._active{
         .lang__list{
             opacity: 1;
             visibility: visible;
         }
     }
+    button,
     a{
         font-weight: 500;
+        background: transparent;
+        border: none;
+        cursor: pointer;
         font-size: 13px;
         line-height: 14px;
         color: #A2ABC5;
@@ -54,6 +59,7 @@ export const LanguagesStyled = styled.div`
             color: #fff;
         }
     }
+    .lang_active button,
     .lang_active a{
         color: #63697F;
     }

@@ -27,10 +27,10 @@ export const FightUser: React.FC<IFightUserProps> = ({ fight_user, user_winner }
                 fight_user === null ? userLoading :
                     <>
                         <div className="user__photo">
-                            <img src={fight_user?.photo} alt="Photo" />
+                            <img src={fight_user.avatar} alt="Photo" />
                         </div>
                         <div className="user__name">
-                            {fight_user?.username}
+                            {fight_user.name}
                         </div>
                     </>
             }

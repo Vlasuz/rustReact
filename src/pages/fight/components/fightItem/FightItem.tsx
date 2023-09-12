@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import coin from './../../../../assets/images/header__coins.svg'
 import clothes from './../../../../assets/images/clothes.svg'
 import { FightItemStyled } from './fightItem.styled'
@@ -12,7 +12,7 @@ interface IFightItemProps {
 
 export const FightItem: React.FC<IFightItemProps> = ({ fight_data }) => {
 
-    const [isOpenClothes, setIsOpenClothes] = React.useState(false)
+    const [isOpenClothes, setIsOpenClothes] = useState(false)
 
     return (
         <FightItemStyled className={isOpenClothes ? "game_open-clothes" : ""}>
@@ -22,8 +22,8 @@ export const FightItem: React.FC<IFightItemProps> = ({ fight_data }) => {
 
             <ul className="item__clothes">
                 {
-                    fight_data.clothes?.map(item =>
-                        <li key={item.id}>
+                    fight_data.clothes?.map((item, index) =>
+                        <li key={index}>
                             <div className={"clothes__cool clothes__cool_" + (item.rarity)} />
                             <img src={item.image} alt="Photo" />
                         </li>

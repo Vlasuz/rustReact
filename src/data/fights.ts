@@ -5,11 +5,12 @@ import user from './../assets/images/user.jpeg'
 export const fightsList: IFightItem[] = [
     {
         user_first: {
-            id: "123123",
-            photo: user,
-            username: "asd",
-            user_link: "qe12",
-            steam_url: "asdasd",
+            id: "12312123",
+            avatar: user,
+            name: "asd",
+            profile: "qe12",
+            steam_id: "",
+            status: ""
         },
         clothes: null,
         user_second: null,
@@ -20,15 +21,18 @@ export const fightsList: IFightItem[] = [
     {
         user_first: {
             id: "123123",
-            photo: user,
-            username: "asd",
-            user_link: "qe12",
-            steam_url: "asdasd",
+            avatar: user,
+            name: "asd",
+            profile: "qe12",
+            steam_id: "",
+            status: ""
         },
         clothes: [
             {
                 image: weapon,
+                id: '123',
                 cost: 123,
+                title: '123',
                 rarity: 'red',
             }
         ],
@@ -39,60 +43,69 @@ export const fightsList: IFightItem[] = [
     },
     {
         user_first: {
-            id: "123123",
-            photo: user,
-            username: "xcz312",
-            user_link: "qe12",
-            steam_url: "asdasd",
+            id: "1231233213asd",
+            avatar: user,
+            name: "asd",
+            profile: "qe12",
+            steam_id: "",
+            status: ""
         },
         clothes: [
             {
                 image: weapon,
+                id: '123',
+                title: 'ds',
                 cost: 123,
                 rarity: 'red',
             }
         ],
         user_second: {
-            id: "123123321",
-            photo: user,
-            username: "112asc",
-            user_link: "qe12",
-            steam_url: "asdasd",
+            id: "1231233asd21",
+            avatar: user,
+            name: "asd",
+            profile: "qe12",
+            steam_id: "",
+            status: ""
         },
-        bank: 134,
+        bank: 1234,
         game_status: "process",
         user_winner: null,
     },
     {
         user_first: {
-            id: "123123",
-            photo: user,
-            username: "xcz312",
-            user_link: "qe12",
-            steam_url: "asdasd",
+            id: "1231zxcasd23",
+            avatar: user,
+            name: "asd",
+            profile: "qe12",
+            steam_id: "",
+            status: ""
         },
         clothes: [
             {
                 image: weapon,
                 cost: 123,
+                id: '123',
+                title: 'ds',
                 rarity: 'red',
             }
         ],
         user_second: {
-            id: '3213',
-            photo: user,
-            username: "112asc",
-            user_link: "qe12",
-            steam_url: "asdasd",
+            id: '32123sad13',
+            avatar: user,
+            name: "asd",
+            profile: "qe12",
+            steam_id: "",
+            status: ""
         },
         bank: 134,
         game_status: "finish",
         user_winner: {
-            id: "3213",
-            photo: user,
-            username: "112asc",
-            user_link: "qe12",
-            steam_url: "asdasd",
+            id: "32123sad13",
+            avatar: user,
+            name: "asd",
+            profile: "qe12",
+            steam_id: "",
+            status: ""
         },
     }
 ]

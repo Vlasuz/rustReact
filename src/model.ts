@@ -1,51 +1,95 @@
-export interface IUserSession {
-    "id": string,
-    "steam_id": string,
-    "name": string,
-    "avatar": string,
-    "profile": string,
-    "status": string,
-    "trade_link": string,
-    "balance": number,
-    "country_code": string,
-    "role": string,
-    "verify"?: null,
-    "ban_chat_permanent": boolean,
-    "ban_chat_date"?: string,
-    "muted_users"?: IUser[],
-    "chosen_skin"?: Object
-}
-
 export interface IUser {
     id: string
-    photo: string
-    username: string
-    user_link: string
-    steam_url: string
+    steam_id: string
+    name: string
+    avatar: string
+    profile: string
+    status: string
+    trade_link?: string
+    balance?: number
+    country_code?: string
+    role?: string
+    verify?: null
+    ban_chat_permanent?: boolean
+    ban_chat_date?: string
+    muted_users?: IUser[]
+    chosen_skin?: Object
+}
+
+export interface IAirdropBag {
+    map_pos: string
+    x_pos: number
+    y_pos: number
+}
+
+export interface IFaqList {
+    id: string
+    title: string
+    en_title: string
+    ua_title: string
+    image: string
+    faqs: IFaqItem[]
+}
+
+export interface IFaqItem {
+    id: string
+    title: string
+    en_title: string
+    ua_title: string
+    text: string
+    en_text: string
+    ua_text: string
+}
+
+export interface IAirdropPlayers {
+    user: IUser
+    bags: IAirdropBag[]
 }
 
 export interface IUserHistory {
-    date: Date
-    sleepers: string
-    winner: {
-        photo: string
-        link: string
-    }
-    bid: number | string
-    bank: number | string
-    PF: {
-        signature: string
-        random: string
-        jackpot: number
-    }
-    is_winner: boolean
+    airdrop_games: IUserHistoryAirdrop[]
+    fight_games: IUserHistoryFight[]
 }
 
-export interface IUserHistoryAirdrop extends IUserHistory {}
+export interface IUserGames {
+    title: string
+    slug: string
+    data: IUserHistoryFight[] | IUserHistoryAirdrop[]
+}
 
-export interface IUserHistoryFight extends IUserHistory {
-    sleepers: never
-    PF: never
+export interface IUserHistoryFightPlayer {
+    id: string
+    attack: string
+    defense: string
+    hit: boolean
+    user: IUser
+    coins: number
+    items: IProduct[] | null
+}
+
+export interface IUserHistoryFight {
+    id: string
+    game_state: string
+    created_at: string
+    first_player: IUserHistoryFightPlayer
+    second_player: IUserHistoryFightPlayer
+    winner: IUserHistoryFightPlayer
+}
+
+export interface IUserHistoryAirdrop {
+    id: string
+    game_id: number
+    game_state: string
+    created_at: string
+    random_hash: string
+    random_data: string
+    players: IAirdropPlayers[]
+    degree: number
+    bank: number
+    x_pos: number
+    y_pos: number
+    winner: IAirdropPlayers
+    win_bag: IAirdropBag
 }
 
 export interface IUserStatic {
@@ -70,9 +114,96 @@ export interface ISocialsItem {
 }
 
 export interface IProduct {
-    id?: string | number
+    id: string | number
     count?: number
+    title: string
     image: string
     cost: number
     rarity: string
+}
+
+export interface IFilterData {
+    sortBy: string
+    sort: boolean
+}
+
+export interface IRarity {
+    [rarity: string]: number
+}
+
+export interface IChatItem {
+    id: string
+    user: {
+        name: string
+        photo: string
+        link: string
+        isAdmin: boolean
+    }
+    message: string
+    time: string
+}
+
+export interface IAsideButtonToRight {
+    icon: string
+    title: string
+    slug: string
+}
+
+export interface ITrigger {
+    type: string
+    status: boolean
+}
+
+export interface ISkin {
+    id: string
+    title: string
+    sub_title: string
+    image: string
+    price: number
+    sale: null | number
+    active: boolean
+    gallery: {
+        iii: string
+        iix: string
+        ixi: string
+        xii: string
+        xix: string
+        xxi: string
+        ixx: string
+        xxx: string
+    }
+}
+
+export interface ISiteSettings {
+
+    vkontakte: string
+    telegram: string
+    discord: string
+    technical_break: boolean
+    technical_break_date: null
+    default_fight_skin: ISkin
+    airdrop_bag_price: number
+    chat_rules_page: {
+        id: string
+        title: string
+        en_title: string
+        ua_title: string
+        text: string
+        en_text: string
+        ua_text: string
+        is_main: boolean
+    }
+    usd_to_coins: number
+    uah_to_coins: number
+    kzt_to_coins: number
+    rub_to_coins: number
+    sell_skin_commission: number
+    pay_skin_commission: number
+    fight_commission: number
+    airdrop_commission: number
+    withdraw_enable: boolean
+    pay_enable: boolean
+    airdrop_enable: boolean
+    fight_enable: boolean
+
 }

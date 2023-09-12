@@ -22,10 +22,24 @@ export const AsideStyled = styled.aside`
 			height: 80px;
 			margin: 5px 10px;
 			border-radius: 8px;
-			transition: all .3s ease;
+			position: relative;
+			&:after {
+				content: '';
+				background: linear-gradient(38.31deg, rgba(162, 171, 197, 0.15) 0%, rgba(162, 171, 197, 0.05) 100%);
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				border-radius: 8px;
+				opacity: 0;
+				transition: all .3s ease;
+			}
 			&:hover,
 			&_active{
-				background: linear-gradient(38.31deg, rgba(162, 171, 197, 0.15) 0%, rgba(162, 171, 197, 0.05) 100%);
+				&:after {
+					opacity: 1;
+				}
 			}
 		}
 		&__center{
@@ -58,6 +72,9 @@ export const AsideStyled = styled.aside`
 			}
 		}
 		&__list{
+			svg { 
+				fill-opacity: 0.5;
+			}
 			.li_active{
 				a{
 					path{

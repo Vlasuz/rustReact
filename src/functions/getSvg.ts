@@ -1,3 +1,3 @@
-export const createMarkup = (svgString: string) => {
+export const getSvg = (svgString: string) => {
     return { __html: svgString };
 };
