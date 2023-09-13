@@ -248,10 +248,13 @@ export const ShopStyle = styled.section`
                 .item__skin{
                     max-width: 176px;
                     margin: 0 auto;
+                    height: 350px;
                     img{
                         display: block;
                         margin: 0 auto;
+                        object-fit: cover;
                         width: 100%;
+                        height: 350px;
                     }
                 }
                 &_active{
@@ -274,12 +277,12 @@ export const ShopStyle = styled.section`
                     bottom: 20px;
                     left: 50%;
                     transform: translateX(-50%);
-                    background: #4A55BB;
+                    /* background: #4A55BB; */
                     border-radius: 8px;
                     &:hover button{
                         &.buy__price{
-                            opacity: 0;
-                            visibility: hidden;
+                            /* opacity: 0;
+                            visibility: hidden; */
                         }
                         &.buy__buy{
                             opacity: 1;
@@ -322,18 +325,29 @@ export const ShopStyle = styled.section`
                         }
                     }
                     .buy__set{
-                        background: rgba(162, 171, 197, 0.4);
+                        transition: all .3s ease;
+                        opacity: 1;
+                        visibility: visible;
+                        background-color: #5562dd;
+                        &:hover {
+                            transform: scale(1.05);
+                        }
+                        &:active {
+                            transform: scale(0.95);
+                        }
+                    }
+                    .buy__isset {
                         backdrop-filter: blur(5px);
-                        opacity: 0;
-                        visibility: hidden;
+                        background: rgba(162, 171, 197, 0.4);
+                        cursor: default;
                     }
                     .buy__price{
                         background: #4A55BB;
                     }
                     .buy__buy{
-                        background: #5562DD;
                         opacity: 0;
                         visibility: hidden;
+                        background: #5562DD;
                     }
                     &_bought{
                         background: transparent;

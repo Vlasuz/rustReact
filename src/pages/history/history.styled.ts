@@ -25,6 +25,8 @@ export const HistoryStyle = styled.section`
                 padding: 30px 20px;
                 margin-right: 10px;
                 position: relative;
+                cursor: pointer;
+                transition: all .3s ease;
                 &:last-child{
                     margin-right: 0;
                 }
@@ -62,6 +64,16 @@ export const HistoryStyle = styled.section`
             }
         }
 
+        &__block {
+            height: 100%;
+            max-height: calc(100vh - 249px);
+            overflow: auto;
+            transition: all .3s ease;
+            &_hide {
+                opacity: 0;
+            }
+        }
+
         &__center{
             background: #202232;
             border-radius: 6px;
@@ -77,12 +89,17 @@ export const HistoryStyle = styled.section`
             li{
                 position: relative;
             }
+            button,
             a{
                 font-weight: 500;
                 font-size: 13px;
                 line-height: 14px;
                 color: rgba(162, 171, 197, 0.5);
                 padding: 0 15px;
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                transition: all .3s ease;
                 &:after{
                     content: '';
                     width: 40px;
@@ -94,9 +111,11 @@ export const HistoryStyle = styled.section`
                     transform: translateX(-50%);
                     bottom: -11px;
                     opacity: 0;
+                    transition: all .3s ease;
                 }
             }
             .li_active{
+                button,
                 a{
                     color: #A2ABC5;
                     &:after{
@@ -117,25 +136,6 @@ export const HistoryStyle = styled.section`
                 margin-right: 10px;
             }
             .select{
-                display: flex;
-                align-items: center;
-                position: relative;
-                padding-right: 10px;
-                &:after{
-                    content: '';
-                    display: block;
-                    background: url('../img/arr-td.svg') no-repeat;
-                    background-size: contain;
-                    width: 5px;
-                    height: 8px;
-                    position: absolute;
-                    top: 50%;
-                    right: 0;
-                    z-index: 0;
-                    transform: translateY(-50%) rotate(90deg);
-                }
-            }
-            select{
                 appearance: none;
                 font-weight: 500;
                 font-size: 13px;
@@ -148,6 +148,46 @@ export const HistoryStyle = styled.section`
                 z-index: 1;
                 padding-right: 20px;
                 margin-right: -20px;
+                &__head {
+                    cursor: pointer;
+                }
+                &__body {
+                    position: absolute;
+                    backdrop-filter: blur(5px);
+                    background: #26293b;
+                    border-radius: 10px;
+                    box-shadow: 0 7px 15px rgba(0,0,0,.1);
+                    min-width: 100px;
+                    opacity: 0;
+                    padding: 10px;
+                    position: absolute;
+                    right: 0;
+                    top: 150%;
+                    transition: all .3s ease;
+                    visibility: hidden;
+                    z-index: 3;
+                }
+                &_active {
+                    .select__body {
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                }
+                &__item {
+                    background: transparent;
+                    border: none;
+                    border-radius: 6px;
+                    color: #a2abc5;
+                    display: block;
+                    font-size: 13px;
+                    font-weight: 500;
+                    line-height: 14px;
+                    padding: 7px 10px;
+                    text-align: left;
+                    transition: all .3s ease;
+                    width: 100%;
+                    cursor: pointer;
+                }
             }
         }
 
@@ -163,6 +203,12 @@ export const HistoryStyle = styled.section`
             }
             &:not(:last-child){
                 margin-bottom: 8px;
+            }
+            &:first-child {
+                .item__list .li__name {
+                    bottom: auto;
+                    top: 100%;
+                }
             }
             &:hover{
                 .item__delete{
@@ -253,8 +299,6 @@ export const HistoryStyle = styled.section`
                 height: 80px;
                 display: flex;
                 align-items: center;
-                // overflow-x: auto;
-                // overflow-y: visible;
                 border-radius: 10px;
                 margin-right: 20px;
                 .li__name{
@@ -269,6 +313,7 @@ export const HistoryStyle = styled.section`
                     opacity: 0;
                     visibility: hidden;
                     transition: all .3s ease;
+                    z-index: 1;
                     p{
                         font-weight: 400;
                         font-size: 12px;

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IAsideButtonToRight, IChatItem, IFaqList, IFilterData, IProduct, ISiteSettings, ITrigger, IUser, IUserHistory, IUserHistoryAirdrop, IUserHistoryFight } from "../model";
+import { IAsideButtonToRight, IChatItem, IFaqList, IFilterData, IProduct, ISiteSettings, ISkin, ITrigger, IUser, IUserHistory, IUserHistoryAirdrop, IUserHistoryBalance, IUserHistoryFight } from "../model";
 
 
 const toolkitSlice = createSlice({
@@ -8,6 +8,7 @@ const toolkitSlice = createSlice({
         user: <IUser>{},
         userInventory: <IProduct[]>[],
         userGames: <IUserHistory | unknown>[],
+        userHistory: <IUserHistoryBalance[]>[],
         rightBlock: <IAsideButtonToRight>{},
         itemDrag: <IProduct>{},
         pererabZoneItems: <IProduct[]>[],
@@ -18,6 +19,7 @@ const toolkitSlice = createSlice({
         inventoryWithdraw: <IProduct[]>[],
         faqList: <IFaqList[]>[],
         siteSettings: <ISiteSettings>{},
+        skinShop: {},
 
         trigger: <ITrigger>{ type: '', status: true }
     },
@@ -34,6 +36,17 @@ const toolkitSlice = createSlice({
             } else {
                 state.userInventory = action.payload
             }
+        },
+        setUserHistory(state, action) {
+            state.userHistory = action.payload
+        },
+
+        changeUserBalance(state, action) {
+            state.user = {...state.user, balance: state.user.balance + action.payload}
+        },
+
+        setSkinShop(state, action) {
+            state.skinShop = action.payload
         },
 
         setSiteSettings(state, action) {
@@ -109,6 +122,9 @@ export const {
     setUser,
     setUserGames,
     setUserInventory,
+    setUserHistory,
+
+    changeUserBalance,
 
     setItemDrag,
     setPererabZoneItems,
@@ -127,6 +143,7 @@ export const {
     setRightBlock,
 
     setFaqList,
+    setSkinShop,
     setSiteSettings,
 
     setTrigger

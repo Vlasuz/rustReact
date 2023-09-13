@@ -174,6 +174,35 @@ export interface ISkin {
     }
 }
 
+export interface IUserHistoryBalance {
+    id: string
+    created_at: string
+    type: string
+    value: number
+    price: number
+    status: string
+    pay_type: string
+    pin_code: string
+    items: [
+        {
+            id: string
+            steam_id: string
+            game: string
+            title: string
+            trade_ban: string
+            image: string
+            rarity: {
+                title: string
+                color: string
+            }
+            price: {
+                steam_price: number
+                value: number
+            }
+        }
+    ]
+}
+
 export interface ISiteSettings {
 
     vkontakte: string
