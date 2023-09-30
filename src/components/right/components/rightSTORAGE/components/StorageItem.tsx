@@ -10,20 +10,19 @@ interface IStorageItemProps {
     data: IProduct
 }
 
-export const StorageItem:React.FC<IStorageItemProps> = ({data}) => {
-    
+export const StorageItem: React.FC<IStorageItemProps> = ({ data }) => {
+
     const dispatch = useDispatch()
     const withdrawList: IProduct[] = useSelector((state: any) => state.toolkit.inventoryWithdraw)
 
     return (
         <div onClick={_ => dispatch(addItemToWithdraw(data))} className={"postamat__item" + (withdrawList.some((item: IProduct) => item.id === data.id) ? " postamat__item_checked" : "")}>
             <div className="item__check">
-                <img src={check} alt="Check"/>
-
-                </div>
-            <div className="item__buy">
-                <img src={basket} alt="Basket" />
+                <img src={check} alt="Check" />
             </div>
+            {/* <div className="item__buy">
+                <img src={basket} alt="Basket" />
+            </div> */}
             {/* <div className="item__count">
                 {data.count}
             </div> */}
@@ -34,7 +33,7 @@ export const StorageItem:React.FC<IStorageItemProps> = ({data}) => {
             <div className="item__price">
                 <img src={coin} alt="Ico" />
                 <span>
-                    {data.cost}
+                    {data.price.value}
                 </span>
             </div>
         </div>

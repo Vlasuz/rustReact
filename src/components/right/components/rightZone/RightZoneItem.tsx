@@ -29,7 +29,7 @@ export const RightZoneItem: React.FC<IRightZoneItemProps> = ({ product_data }) =
             <div className="item__price">
                 <img src="../images/header__coins.svg" alt="Ico" />
                 <span>
-                    {product_data?.cost}
+                    {product_data?.price.value}
                 </span>
             </div>
         </li>

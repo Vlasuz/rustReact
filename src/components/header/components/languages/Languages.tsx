@@ -1,35 +1,60 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { LanguagesStyled } from './languages.styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLanguage } from '../../../../redux/toolkitSlice'
 import { useToggleModal } from '../../../../hooks/toggleModal'
+import Lang_EN from '../../../../languages/en.json'
+import Lang_RU from '../../../../languages/ru.json'
+import Lang_UA from '../../../../languages/ua.json'
+import i18n from "i18next";
+import { initReactI18next, useTranslation } from "react-i18next";
+import setCookie from '../../../../functions/setCookie'
+import getCookie from '../../../../functions/getCookie'
 
 interface ILanguagesProps {
 
 }
 
+const jsonLanguages = {
+    "ru": { translation: Lang_RU },
+    "en": { translation: Lang_EN },
+    "ua": { translation: Lang_UA },
+}
+// Инициализация:
+i18n.use(initReactI18next).init({
+    resources: jsonLanguages,
+    lng: getCookie("lang") ?? Object.keys(jsonLanguages)[0],
+    fallbackLng: getCookie("lang") ?? Object.keys(jsonLanguages)[0]
+});
+
 export const Languages: React.FC<ILanguagesProps> = () => {
 
+    const {i18n} = useTranslation();
     const [isOpen, setIsOpen] = useState(false)
-    const dispatch = useDispatch()
     const langSelected = useSelector((state: any) => state.toolkit.language)
+    const dispatch = useDispatch()
+
+    useToggleModal({ setState: setIsOpen, block: ['.lang__button', '.lang__list'] })
 
     const languages = [
         {
             lang_title: "Украинский",
-            lang_slug: "UA"
+            lang_slug: "ua"
         },
         {
             lang_title: "Русский",
-            lang_slug: "RU"
+            lang_slug: "ru"
         },
         {
             lang_title: "Английский",
-            lang_slug: "EN"
+            lang_slug: "en"
         },
     ]
 
-    useToggleModal({setState: setIsOpen, block: ['.lang__button', '.lang__list']})
+    useEffect(() => {
+        dispatch(setLanguage(i18n.language))
+        setCookie('lang', i18n.language)
+    }, [i18n.language])
 
     return (
         <LanguagesStyled className={isOpen ? "_active" : ""}>
@@ -43,12 +68,12 @@ export const Languages: React.FC<ILanguagesProps> = () => {
 
                 {
                     languages.map(lang =>
-                        <li key={lang.lang_slug} className={lang.lang_slug === langSelected ? "lang_active" : ""}>
-                            <button onClick={_ => dispatch(setLanguage(lang.lang_slug))}>{lang.lang_title}</button>
+                        <li key={lang.lang_slug} className={lang.lang_slug.toLowerCase() === langSelected.toLowerCase() ? "lang_active" : ""}>
+                            <button onClick={_ => i18n.changeLanguage(lang.lang_slug)}>{lang.lang_title}</button>
                         </li>
                     )
                 }
-                
+
 
             </ul>
         </LanguagesStyled>

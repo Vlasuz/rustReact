@@ -1,10 +1,43 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useContext, useEffect, useState } from 'react'
+import { getApiLink } from '../../../functions/getApiLink'
+import { ISmilesList, ISmilesSticker } from '../../../model'
+import { ChatWsContext } from '../../../context/chatWsContext'
+import getCookies from "../../../functions/getCookie";
+import {setNotice} from "../../../redux/toolkitSlice";
+import {useDispatch} from "react-redux";
 
 interface IChatSmilesProps {
-    isOpenSmiles: any
+    isOpenSmiles: boolean
+    setIsOpenSmiles: any
 }
 
-export const ChatSmiles: React.FC<IChatSmilesProps> = ({isOpenSmiles}) => {
+export const ChatSmiles: React.FC<IChatSmilesProps> = ({ isOpenSmiles, setIsOpenSmiles }) => {
+
+    const [smileList, setSmileList] = useState<ISmilesList[]>([])
+    const [activeSmile, setActiveSmile] = useState<ISmilesList>()
+    const wsChat: any = useContext(ChatWsContext)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        axios.get(getApiLink('api/chat/stickers/')).then(({ data }) => {
+            setSmileList(data)
+            setActiveSmile(data[0])
+        })
+    }, [])
+
+    const handleSendSmile = (item: ISmilesSticker) => {
+        setIsOpenSmiles(false)
+
+        if(!getCookies('access_token')) {
+            return dispatch(setNotice('forChattingAuth'))
+        }
+
+        wsChat.current.send(JSON.stringify({
+            "type": "send_message",
+            "data": { "message": getApiLink(item.image) }
+        }))
+    }
 
     return (
         <>
@@ -12,89 +45,33 @@ export const ChatSmiles: React.FC<IChatSmilesProps> = ({isOpenSmiles}) => {
                 <div className="smiles__inner">
                     <div className="smiles__block">
                         <ul>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-0.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-1.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-2.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-3.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-4.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-5.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-0.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-1.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-2.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-3.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-4.png" alt="Smile" />
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <img src="img/Bitmap-5.png" alt="Smile" />
-                                </button>
-                            </li>
+
+                            {
+                                smileList.filter((item: ISmilesList) => item.id === activeSmile?.id)[0]?.stickers.map((item: ISmilesSticker) =>
+                                    <li key={item.id}>
+                                        <button onClick={_ => handleSendSmile(item)}>
+                                            <img src={getApiLink(item.image)} alt="Smile" />
+                                        </button>
+                                    </li>
+                                )
+                            }
+
                         </ul>
                     </div>
                 </div>
                 <div className="smiles__switches">
                     <ul>
-                        <li>
-                            <button>Смайлики</button>
-                        </li>
-                        <li className="li_active">
-                            <button>Стикеры «Фермер»</button>
-                        </li>
-                        <li>
-                            <button>«Стикеры Грибник»</button>
-                        </li>
-                        <li>
-                            <button>Смайлики</button>
-                        </li>
-                        <li>
-                            <button>Стикеры «Фермер»</button>
-                        </li>
-                        <li>
-                            <button>«Стикеры Грибник»</button>
-                        </li>
+
+                        {
+                            smileList.map((item: ISmilesList) =>
+                                <li key={item.id} className={item.id === activeSmile?.id ? "li_active" : ""}>
+                                    <button onClick={_ => setActiveSmile(item)}>
+                                        {item.title}
+                                    </button>
+                                </li>
+                            )
+                        }
+
                     </ul>
                 </div>
             </div>

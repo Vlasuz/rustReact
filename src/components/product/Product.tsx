@@ -31,7 +31,7 @@ export const Product: React.FC<IProductProps> = ({ product_data }) => {
             <div className="item__check">
                 <img src={green_check} alt="Check" />
             </div>
-            <div className="item__count">2</div>
+            {/* <div className="item__count">2</div> */}
             <div className={"item__cool clothes__cool_" + product_data.rarity}>
 
             </div>
@@ -41,7 +41,7 @@ export const Product: React.FC<IProductProps> = ({ product_data }) => {
             <div className="item__price">
                 <img src={coin} alt="Ico" />
                 <span>
-                    {product_data.cost}
+                    {product_data.price.value}
                 </span>
             </div>
 

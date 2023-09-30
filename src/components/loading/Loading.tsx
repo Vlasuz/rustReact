@@ -3,7 +3,6 @@ import { LoadingStyled } from './loading.styled';
 
 interface ILoadingProps {
     children: any;
-    
 }
 
 export const Loading:React.FC<ILoadingProps> = ({children}) => {

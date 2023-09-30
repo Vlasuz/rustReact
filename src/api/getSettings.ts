@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { setSiteSettings, setUserInventory } from "../redux/toolkitSlice"
-import { products } from "../data/poducts"
 import axios from "axios"
 import { getApiLink } from "../functions/getApiLink"
 

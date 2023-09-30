@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { IUser, IUserGames, IUserHistory, IUserHistoryAirdrop } from "../model"
 import { useEffect } from "react"
-import { getUserGames } from "../functions/getUserGames"
+import { getUserGames } from "../api/getUserGames"
 
 interface useUserDataProps {
     user: string | any

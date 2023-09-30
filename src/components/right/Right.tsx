@@ -16,9 +16,9 @@ interface IRightProps {
 export const Right: React.FC<IRightProps> = () => {
 
     const [blockValue, setBlockValue] = useState({
-        header: 'no_chat',
-        body: 'no_chat',
-        block: 'no_chat'
+        header: 'chat',
+        body: 'chat',
+        block: 'chat'
     })
     const isHideBlock = blockValue.body !== blockValue.header ? " section-right__item_hide" : "";
 
@@ -30,6 +30,7 @@ export const Right: React.FC<IRightProps> = () => {
 
     const trigger: ITrigger = useSelector((state: any) => state.toolkit.trigger)
     const activeRightBlock: IAsideButtonToRight = useSelector((state: any) => state.toolkit.rightBlock)
+    const userOnline = useSelector((state: any) => state.toolkit.userOnline)
 
     const handleSwitch = (block: string) => {
         setBlockValue({
@@ -74,7 +75,9 @@ export const Right: React.FC<IRightProps> = () => {
                     <span>Чат</span>
                     <div className="people">
                         <img src={users} alt="Ico" />
-                        <span>176</span>
+                        <span>
+                            {userOnline}
+                        </span>
                     </div>
                 </button>
             </div>

@@ -20,6 +20,9 @@ export const RightStyled = styled.section`
         grid-template-rows: repeat(4, 1fr);
         grid-gap: 6px;
         overflow: auto;
+        &_empty {
+            display: flex;
+        }
     }
 
     .postamat{
@@ -116,7 +119,7 @@ export const RightStyled = styled.section`
                     opacity: 1;
                 }
                 .item__photo{
-                    opacity: 0;
+                    /* opacity: 0; */
                 }
             }
             .item__buy{
@@ -298,118 +301,6 @@ export const RightStyled = styled.section`
     }
 
     .section-right{
-    
-        &__smiles{
-            position: absolute;
-            bottom: 84px;
-            left: 10px;
-            width: calc(100% - 20px);
-            padding: 20px;
-            background: rgba(38, 41, 59, 0.96);
-            box-shadow: 0px 12px 30px rgba(15, 17, 28, 0.2);
-            backdrop-filter: blur(5px);
-            border-radius: 10px;
-            z-index: 3;
-
-            transition: all .3s ease;
-            opacity: 0;
-            visibility: hidden;
-            &_active{
-                opacity: 1;
-                visibility: visible;
-            }
-            .smiles__block{
-                img{
-                    width: 50px;
-                    height: 50px;
-                }
-                ul{
-                    display: flex;
-                    align-items: center;
-                    overflow: auto;
-                    padding-bottom: 15px;
-                }
-                li{
-                    margin-right: 15px;
-                }
-                button{
-                    background: transparent;
-                    border: none;
-                    cursor: pointer;
-                    transition: all .3s ease;
-                    &:hover{
-                        transform: scale(1.1);
-                    }
-                    &:active{
-                        transform: scale(.9);
-                    }
-                }
-            }
-            .smiles__switches{
-                position: relative;
-                margin-top: 20px;
-                &:after{
-                    content: '';
-                    background: linear-gradient(270deg, #26293B 33.06%, rgba(38, 41, 59, 0) 100%);
-                    width: 60px;
-                    height: 50px;
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                }
-                ul{
-                    display: flex;
-                    align-items: center;
-                    overflow: auto;
-                    margin-bottom: -20px;
-                    margin-top: -20px;
-                    &::-webkit-scrollbar {
-                        width: 0;
-                        height: 0;
-                        background: rgba(#04B8AD, .1);
-                    }
-                }
-                button{
-                    font-weight: 400;
-                    font-size: 13px;
-                    line-height: 12px;
-                    color: #A2ABC5;
-                    background: transparent;
-                    padding-top: 20px;
-                    border: none;
-                    cursor: pointer;
-                    white-space: nowrap;
-                    padding-bottom: 20px;
-                }
-                li{
-                    margin-right: 35px;
-                    position: relative;
-                    &:after{
-                        content: '';
-                        background: #F5AD57;
-                        border-radius: 2px;
-                        width: 40px;
-                        height: 3px;
-                        position: absolute;
-                        bottom: 0;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        opacity: 0;
-                    }
-                    &.li_active{
-                        &:after{
-                            opacity: 1;
-                        }
-                        button{
-                            color: #fff;
-                        }
-                    }
-                    &:last-child{
-                        padding-right: 60px;
-                    }
-                }
-            }
-        }
 
         &__rules{
             position: absolute;
@@ -460,7 +351,8 @@ export const RightStyled = styled.section`
             top: 74px;
             left: 10px;
             width: calc(100% - 20px);
-            height: calc(100% - 74px - 80px);
+            height: calc(100vh - 180px);
+            overflow: auto;
             background: #26293B;
             box-shadow: 0px 12px 30px rgba(15, 17, 28, 0.2);
             backdrop-filter: blur(5px);

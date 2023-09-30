@@ -20,7 +20,7 @@ export const History: React.FC<IHistoryProps> = () => {
 
     useEffect(() => {
         
-        getBearer()
+        getBearer({type: 'get'})
         axios.get(getApiLink('api/user/transactions/')).then(({data}) => {
             console.log(data)
             dispatch(setUserHistory(data))

@@ -28,13 +28,13 @@ export const fightsList: IFightItem[] = [
             status: ""
         },
         clothes: [
-            {
-                image: weapon,
-                id: '123',
-                cost: 123,
-                title: '123',
-                rarity: 'red',
-            }
+            // {
+            //     image: weapon,
+            //     id: '123',
+            //     cost: 123,
+            //     title: '123',
+            //     rarity: 'red',
+            // }
         ],
         user_second: null,
         bank: 134,
@@ -51,13 +51,13 @@ export const fightsList: IFightItem[] = [
             status: ""
         },
         clothes: [
-            {
-                image: weapon,
-                id: '123',
-                title: 'ds',
-                cost: 123,
-                rarity: 'red',
-            }
+            // {
+            //     image: weapon,
+            //     id: '123',
+            //     title: 'ds',
+            //     cost: 123,
+            //     rarity: 'red',
+            // }
         ],
         user_second: {
             id: "1231233asd21",
@@ -81,13 +81,13 @@ export const fightsList: IFightItem[] = [
             status: ""
         },
         clothes: [
-            {
-                image: weapon,
-                cost: 123,
-                id: '123',
-                title: 'ds',
-                rarity: 'red',
-            }
+            // {
+            //     image: weapon,
+            //     cost: 123,
+            //     id: '123',
+            //     title: 'ds',
+            //     rarity: 'red',
+            // }
         ],
         user_second: {
             id: '32123sad13',

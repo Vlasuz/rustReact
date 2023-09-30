@@ -7,6 +7,7 @@ import { StorageItem } from './components/StorageItem'
 import { useSortBy } from '../../../../hooks/sortBy'
 import { IProduct } from '../../../../model'
 import { useSelector } from 'react-redux'
+import { EmptyInventory } from '../emptyInventory/EmptyInventory'
 
 interface IRightStorageProps {
     blockValue: any,
@@ -15,11 +16,12 @@ interface IRightStorageProps {
 
 export const RightStorage: React.FC<IRightStorageProps> = ({ blockValue, isHideBlock }) => {
 
-    const [searchValue, setSearchValue] = useState('')
     const allProducts: IProduct[] = useSelector((state: any) => state.toolkit.userInventory)
-    const {products}: any = useSortBy({ allProducts, searchValue })
-    const productSorted = products.length && products.filter((item: IProduct) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
     const withdrawList: IProduct[] = useSelector((state: any) => state.toolkit.inventoryWithdraw)
+    const [searchValue, setSearchValue] = useState('')
+    const {products}: any = useSortBy({ allProducts, searchValue })
+
+    const isHaveProducts = products.length ? products?.map((item: IProduct) => <StorageItem key={item.id} data={item} />) : <EmptyInventory/>
 
     return (
         <RightStorageStyle className={"section-right__item" + (blockValue.block === 'no_chat' ? ' section-right_active' : '') + isHideBlock}>
@@ -29,8 +31,10 @@ export const RightStorage: React.FC<IRightStorageProps> = ({ blockValue, isHideB
 
                 <hr />
 
-                <div className="postamat__block">
-                    {productSorted?.map((item: IProduct) => <StorageItem key={item.id} data={item} />)}
+                <div className={"postamat__block" + (products.length ? "" : " postamat__block_empty")}>
+
+                    {isHaveProducts}
+
                 </div>
 
                 {

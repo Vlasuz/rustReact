@@ -9,17 +9,25 @@ const toolkitSlice = createSlice({
         userInventory: <IProduct[]>[],
         userGames: <IUserHistory | unknown>[],
         userHistory: <IUserHistoryBalance[]>[],
+        userOnline: <number>0,
+        mutedUsers: <IUser[]>[],
         rightBlock: <IAsideButtonToRight>{},
         itemDrag: <IProduct>{},
         pererabZoneItems: <IProduct[]>[],
         rightFilter: <IFilterData>{},
         chatItems: <IChatItem[]>[],
         language: <string>'RU',
+        shopList: <IProduct[]>[],
         shopCart: <IProduct[]>[],
         inventoryWithdraw: <IProduct[]>[],
         faqList: <IFaqList[]>[],
         siteSettings: <ISiteSettings>{},
         skinShop: {},
+        notice: <string>'',
+        sound: <string>'',
+        popup: <string>'',
+
+        isOpenWsChat: <boolean>false,
 
         trigger: <ITrigger>{ type: '', status: true }
     },
@@ -34,15 +42,42 @@ const toolkitSlice = createSlice({
             if (action.payload.status === 'delete') {
                 state.userInventory = state.userInventory.filter(item => item.id !== action.payload.item.id)
             } else {
-                state.userInventory = action.payload
+                state.userInventory = [...state.userInventory, ...action.payload]
             }
         },
         setUserHistory(state, action) {
             state.userHistory = action.payload
         },
+        setUserOnline(state, action) {
+            state.userOnline = action.payload
+        },
+
+        setNotice(state, action) {
+            state.notice = action.payload
+        },
+        setSound(state, action) {
+            state.sound = action.payload
+        },
+
+        setMutedUsers(state, action) {
+            state.mutedUsers = action.payload
+        },
+        addMutedUsers(state, action) {
+            state.mutedUsers = [...state.mutedUsers, action.payload]
+        },
+        removeMutedUsers(state, action) {
+            state.mutedUsers = state.mutedUsers.filter((item: IUser) => item.id !== action.payload.id)
+        },
 
         changeUserBalance(state, action) {
             state.user = {...state.user, balance: state.user.balance + action.payload}
+        },
+        setUserBalance(state, action) {
+            state.user = {...state.user, balance: action.payload}
+        },
+
+        setShopList(state, action) {
+            state.shopList = action.payload
         },
 
         setSkinShop(state, action) {
@@ -57,29 +92,31 @@ const toolkitSlice = createSlice({
         },
 
         addItemToCart(state, action) {
-            if(!state.shopCart.some(item => item.id === action.payload.id)) {
-                state.shopCart = [...state.shopCart, action.payload]
+            state.shopCart = [...state.shopCart, ...action.payload]
+        },
+        removeItemFromCart(state, action) {
+            if(action.payload === 'all') {
+                state.shopCart = []    
             } else {
                 state.shopCart = state.shopCart.filter(item => item.id !== action.payload.id)
             }
         },
+
         addItemToWithdraw(state, action) {
             if(!state.inventoryWithdraw.some(item => item.id === action.payload.id)) {
                 state.inventoryWithdraw = [...state.inventoryWithdraw, action.payload]
-            } else {
+            } else  {
                 state.inventoryWithdraw = state.inventoryWithdraw.filter(item => item.id !== action.payload.id)
             }
-        },
-
-        removeItemFromCart(state, action) {
-            state.shopCart = state.shopCart.filter(item => item.id !== action.payload.id)
         },
 
         setItemDrag(state, action) {
             state.itemDrag = action.payload
         },
         setPererabZoneItems(state, action) {
-            if (action.payload.status === 'delete') {
+            if (action.payload.status === 'delete' && action.payload.item === 'all') {
+                state.pererabZoneItems = []
+            } else if (action.payload.status === 'delete') {
                 state.pererabZoneItems = state.pererabZoneItems.filter(item => item.id !== action.payload.item.id)
             } else {
                 state.pererabZoneItems = [...state.pererabZoneItems, action.payload]
@@ -107,6 +144,13 @@ const toolkitSlice = createSlice({
             state.rightBlock = action.payload
         },
 
+        setOpenWsChat(state) {
+            state.isOpenWsChat = true
+        },
+        setPopup(state, action) {
+            state.popup = action.payload
+        },
+
         setTrigger(state, action) {
             state.trigger = {
                 type: action.payload,
@@ -123,8 +167,18 @@ export const {
     setUserGames,
     setUserInventory,
     setUserHistory,
+    setUserOnline,
 
     changeUserBalance,
+    setUserBalance,
+
+    setMutedUsers,
+    addMutedUsers,
+    removeMutedUsers,
+
+    setShopList,
+    setNotice,
+    setSound,
 
     setItemDrag,
     setPererabZoneItems,
@@ -145,6 +199,9 @@ export const {
     setFaqList,
     setSkinShop,
     setSiteSettings,
+
+    setOpenWsChat,
+    setPopup,
 
     setTrigger
 

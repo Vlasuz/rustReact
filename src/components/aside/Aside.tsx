@@ -6,7 +6,7 @@ import plane from './../../assets/images/plane.svg'
 import timer_line from './../../assets/images/timer-line.svg'
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setRightBlock } from '../../redux/toolkitSlice'
+import { setRightBlock, setSound } from '../../redux/toolkitSlice'
 import { RightItemsButton } from './components/RightItemsButton'
 import { getSvg } from '../../functions/getSvg'
 import { rightItemsButtonList } from '../../constants/asideButtonsToRight'
@@ -21,9 +21,7 @@ export const Aside: React.FC<IAsideProps> = () => {
 
     return (
         <AsideStyled>
-            {/* <aside className="aside"> */}
-            {/* <!-- aside__plane aside__plane_timeline --> */}
-            <a className="aside__plane" href="map.html">
+            <NavLink to={"/airdrop"} className={({isActive}) => "aside__plane" + (isActive ? " aside__plane_timeline" : "")}>
                 <img src={plane} alt="Plane" />
                 <div className="timer">
                     <div className="min">
@@ -40,15 +38,15 @@ export const Aside: React.FC<IAsideProps> = () => {
                         <div className="timer-line__line_done" />
                     </div>
                 </div>
-            </a>
-            <NavLink to={'/'} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
+            </NavLink>
+            <NavLink to={'/'} onClick={_ => dispatch(setSound('sound12'))} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
                 <img src={fight} alt="Fight" />
             </NavLink>
             <div className="aside__center">
                 <ul className="aside__list">
 
                     {
-                        rightItemsButtonList.map(item => <RightItemsButton key={item.slug} icon={item.icon} title={item.title} slug={item.slug} />)
+                        rightItemsButtonList.map(item => <RightItemsButton key={item.slug} sound={item.sound} icon={item.icon} title={item.title} slug={item.slug} />)
                     }
 
                 </ul>

@@ -24,5 +24,7 @@
     "src",
     "resources/**/*.ts",
     "src/assets/**/*.svg",
+    "src/assets/**/*.mp3",
+    "src/assets/**/*.wav",
   ]
 }

@@ -15,10 +15,10 @@ export const ChatRules: React.FC<IChatRulesProps> = ({ isOpenRules }) => {
         <div className={"section-right__rules" + (isOpenRules ? " section-right__rules_active" : "")}>
             <div className="rules__block">
                 <h2>
-                    {settings.chat_rules_page.title}
+                    {settings.chat_rules_page?.title}
                 </h2>
 
-                {parse(settings.chat_rules_page.text)}
+                {settings.chat_rules_page && parse(settings.chat_rules_page.text)}
             </div>
         </div>
     )

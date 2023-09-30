@@ -3,11 +3,12 @@ import userPhoto from './../../../assets/images/user.jpeg'
 import steam from './../../../assets/images/steam.svg'
 import tradeLinkActive from './../../../assets/images/active.svg'
 import { useUserData } from '../../../hooks/userData'
-import { useSelector } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { IUser } from '../../../model'
 import { useParams } from 'react-router'
-import { getUser } from '../../../functions/getUser'
+import { getUser } from '../../../api/getUser'
 import { useUserProfile } from '../../../hooks/userProfile'
+import { setPopup } from '../../../redux/toolkitSlice'
 
 interface IUserProps {
     userData: IUser
@@ -15,15 +16,16 @@ interface IUserProps {
 
 export const User: React.FC<IUserProps> = ({userData}) => {
 
-    const isUserProfile = Object.keys(userData).length
+    const {userId} = useParams()
+    const dispatch = useDispatch()
 
     return (
         <div className="top-gamer">
-            <div className="top-gamer__vertical">
+            <button className="top-gamer__vertical" onClick={_ => dispatch(setPopup('popup-change-status'))}>
                 <span>
                     {userData.status}
                 </span>
-            </div>
+            </button>
             <div className="top-gamer__info">
                 <div className="info__photo">
                     <img src={userData.avatar} alt="Photo" />
@@ -38,7 +40,7 @@ export const User: React.FC<IUserProps> = ({userData}) => {
                     </a>
                 </div>
             </div>
-            {!isUserProfile && <div className="top-gamer__trade-link">
+            {!userId && <div className="top-gamer__trade-link">
                 <div className="trade-link__block">
                     <h3>Trade-ссылка</h3>
                     {/* onClick="openPopup('trade-link-change')" */}

@@ -12,6 +12,7 @@ import { Docs } from './components/docs/Docs'
 import { ISiteSettings, ISocialsItem } from '../../model'
 import { useSelector } from 'react-redux'
 import { SocialsItem } from './components/socialsItem/SocialsItem'
+import { Translate } from '../translate/Translate'
 
 interface IHeaderProps {
 
@@ -49,10 +50,12 @@ export const Header: React.FC<IHeaderProps> = () => {
                     <Languages />
                     <Volume />
                     <div className="header__lowright">
-                        <Docs/>
+                        <Docs />
                         <NavLink to={"/faq"} className="header__support">
                             <img src={support} alt="Ico" />
-                            <span>Поддержка</span>
+                            <span>
+                                <Translate>header_support</Translate>
+                            </span>
                         </NavLink>
                         <ul className="header__socials">
 

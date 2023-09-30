@@ -15,12 +15,14 @@ export const useSortBy = ({ allProducts, searchValue, rangeValue }: ISortByProps
 
     newArray = newArray.filter((item: IProduct) => item.title.toLowerCase().includes(searchValue.toLowerCase())) // Search
 
-    if (rangeValue) newArray = newArray.filter((item: IProduct) => rangeValue[0] <= item.cost && rangeValue[1] >= item.cost) // Range
+    if (rangeValue?.length) {
+        newArray = newArray.filter((item: IProduct) => rangeValue[0] <= item.price.value && rangeValue[1] >= item.price.value) // Range
+    }
 
     if (filter.sortBy === 'rarity') {
-        return { products: newArray?.sort((a: IProduct, b: IProduct) => filter.sort ? rarity[b.rarity] - rarity[a.rarity] : rarity[a.rarity] - rarity[b.rarity]) } // Сортировка по раритетности
+        return { products: newArray?.sort((a: IProduct, b: IProduct) => filter.sort ? rarity[b.rarity.title] - rarity[a.rarity.title] : rarity[a.rarity.title] - rarity[b.rarity.title]) } // Сортировка по раритетности
     } else if (filter.sortBy === 'price') {
-        return { products: newArray?.sort((a: IProduct, b: IProduct) => filter.sortBy === 'price' && filter.sort ? b.cost - a.cost : a.cost - b.cost) } // Сортировка по цене
+        return { products: newArray?.sort((a: IProduct, b: IProduct) => filter.sortBy === 'price' && filter.sort ? b.price.value - a.price.value : a.price.value - b.price.value) } // Сортировка по цене
     }
 
     return { products: newArray };

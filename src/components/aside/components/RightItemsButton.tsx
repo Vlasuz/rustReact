@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setRightBlock, setTrigger } from '../../../redux/toolkitSlice'
+import { setRightBlock, setSound, setTrigger } from '../../../redux/toolkitSlice'
 import { getSvg } from '../../../functions/getSvg'
 import { IAsideButtonToRight } from '../../../model'
 import { rightItemsButtonList } from '../../../constants/asideButtonsToRight'
 
-export const RightItemsButton: React.FC<IAsideButtonToRight> = ({icon, title, slug}) => {
+export const RightItemsButton: React.FC<IAsideButtonToRight> = ({icon, title, slug, sound}) => {
 
     const dispatch = useDispatch()
     const rightItemBlock: IAsideButtonToRight = useSelector((state: any) => state.toolkit.rightBlock)
@@ -13,6 +13,7 @@ export const RightItemsButton: React.FC<IAsideButtonToRight> = ({icon, title, sl
     const handleChange = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault()
         dispatch(setTrigger('CHANGE_RIGHT_BLOCK'))
+        dispatch(setSound(sound))
         document.querySelector('.postamat')?.classList.remove('postamat_active')
 
         setTimeout(() => {

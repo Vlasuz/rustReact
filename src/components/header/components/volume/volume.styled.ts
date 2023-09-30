@@ -4,6 +4,15 @@ export const VolumeStyled = styled.div`
     
     display: flex;
     align-items: center;
+    audio {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+    }
     .volume__block{
         background: #202232;
         border-radius: 6px;

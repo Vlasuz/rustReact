@@ -4,6 +4,8 @@ import coin from './../../../../assets/images/header__coins.svg'
 import { NavLink } from 'react-router-dom'
 import { Burger } from '../burger/Burger'
 import { useUserData } from '../../../../hooks/userData'
+import { useDispatch } from 'react-redux'
+import { setSound } from '../../../../redux/toolkitSlice'
 
 interface IUserProps {
 
@@ -12,6 +14,7 @@ interface IUserProps {
 export const User: React.FC<IUserProps> = () => {
 
     const { userData } = useUserData()
+    const dispatch = useDispatch()
 
     return (
         <>
@@ -27,7 +30,7 @@ export const User: React.FC<IUserProps> = () => {
                     </svg>
                 </div>
             </button>
-            <NavLink to={'/profile'} className="header__user">
+            <NavLink onClick={_ => dispatch(setSound('sound12'))} to={'/profile'} className="header__user">
                 <img src={userData.avatar} alt="User" />
                 <span>
                     {userData.name}

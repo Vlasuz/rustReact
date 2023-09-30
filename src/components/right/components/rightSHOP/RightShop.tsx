@@ -3,14 +3,16 @@ import { RightShopStyle } from './rightShop.styled'
 import { Search } from '../search/Search'
 import { Filter } from '../filter/Filter'
 import { Range } from '../range/Range'
-import { shop } from '../../../../data/shop'
 
 import coin from './../../../../assets/images/header__coins.svg'
-import { RightShopItem } from './RightShopItem'
-import { RightShopMiniCart } from './RightShopMiniCart'
-import { RightShopCart } from './RightShopCart'
+import check from './../../../../assets/images/green-check.svg'
+import { RightShopItem } from './components/RightShopItem'
+import { RightShopMiniCart } from './components/RightShopMiniCart'
+import { RightShopCart } from './components/RightShopCart'
 import { useSortBy } from '../../../../hooks/sortBy'
-import { IProduct } from '../../../../model'
+import { IFightItem, IProduct } from '../../../../model'
+import { getShop } from '../../../../api/getShopItems'
+import { useDispatch, useSelector } from 'react-redux'
 
 interface IRightShopProps {
     blockValue: any,
@@ -19,46 +21,45 @@ interface IRightShopProps {
 
 export const RightShop: React.FC<IRightShopProps> = ({ blockValue, isHideBlock }) => {
 
-    const [searchValue, setSearchValue] = useState('')
     const [isCartOpen, setIsCartOpen] = useState(false)
+    const [isBoughtSuccess, setIsBoughtSuccess] = useState(false)
+
+    const [searchValue, setSearchValue] = useState('')
     const [rangeValue, setRangeValue] = useState<number[]>([])
+    const [minValue, setMinValue] = useState(0)
+    const [maxValue, setMaxValue] = useState(0)
 
-    const { products }: any = useSortBy({ allProducts: shop, searchValue })
+    const dispatch = useDispatch()
+    const shopList = useSelector((state: any) => state.toolkit.shopList)
 
-    const array = products.map((item: IProduct) => item.cost)
-    const [minValue, setMinValue] = useState(array[0])
-    const [maxValue, setMaxValue] = useState(array[0])
-
-    useEffect(() => {
-        for (let i = 1; i < array.length; ++i) {
-            if (array[i] > maxValue) setMaxValue(+array[i]);
-            if (array[i] < minValue) setMinValue(+array[i]);
-        }
-    }, [])
+    useEffect(() => getShop({dispatch}), [])
 
     useEffect(() => {
-        setRangeValue([minValue, maxValue])
-    }, [minValue, maxValue])
+        const itemsNumbers = shopList.map((item: IProduct) => +item.price.value)
+        
+        setMaxValue(Math.max(...itemsNumbers));
+        setMinValue(Math.min(...itemsNumbers));
+        setRangeValue([Math.min(...itemsNumbers), Math.max(...itemsNumbers)])
+    
+    }, [shopList])
 
-    const rangeFilterProducts = (products: IProduct[]) => {
-        return products.filter((item: IProduct) => rangeValue[0] <= item.cost && rangeValue[1] >= item.cost)
-    }
+    const { products }: any = useSortBy({ allProducts: shopList, searchValue, rangeValue })
 
     return (
         <RightShopStyle className={"section-right__item" + (blockValue.block === 'no_chat' ? ' section-right_active' : '') + isHideBlock}>
-            <div className="section-right__cart-bought">
+            <div className={"section-right__cart-bought" + (isBoughtSuccess ? " section-right__cart_active" : "")}>
                 <div className="text">
                     <h3>
                         <span>Отлично</span>
                         <div className="img">
-                            <img src="img/green-check.svg" alt="Ico" />
+                            <img src={check} alt="Ico" />
                         </div>
                     </h3>
                     <p>Предметы куплены</p>
                 </div>
-                <button className="cart-bought__close">Закрыть</button>
+                <button className="cart-bought__close" onClick={_ => setIsBoughtSuccess(false)}>Закрыть</button>
             </div>
-            <RightShopCart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
+            <RightShopCart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} setIsBoughtSuccess={setIsBoughtSuccess} />
             <div className="postamat">
                 <Search searchValue={searchValue} setSearchValue={setSearchValue} />
                 <Range min={minValue} max={maxValue} rangeValue={setRangeValue} />
@@ -69,7 +70,7 @@ export const RightShop: React.FC<IRightShopProps> = ({ blockValue, isHideBlock }
                 <div className="postamat__block">
 
                     {
-                        rangeFilterProducts(products)?.map((item: IProduct) => <RightShopItem searchValue={searchValue} key={item.id} data={item} />)
+                        products?.map((item: IProduct) => <RightShopItem searchValue={searchValue} key={item.id} data={item} />)
                     }
 
                 </div>

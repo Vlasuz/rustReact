@@ -9,7 +9,7 @@ import coin from './../../../../assets/images/header__coins.svg'
 import { BurgerStyled } from './burger.styled'
 import setCookie from '../../../../functions/setCookie'
 import { useDispatch } from 'react-redux'
-import { setUser } from '../../../../redux/toolkitSlice'
+import { setSound, setUser } from '../../../../redux/toolkitSlice'
 import { useNavigate } from 'react-router'
 import { handleExit } from '../../../../functions/exitSite'
 import { NavLink } from 'react-router-dom'
@@ -30,13 +30,13 @@ export const Burger: React.FC<IBurgerProps> = () => {
 
     return (
         <BurgerStyled ref={block}>
-            <button className="header__burger header__burger_notice" onClick={_ => setIsBurgerOpen(prev => !prev)}>
-                <img src={burger} />
+            <button className="header__burger" onClick={_ => setIsBurgerOpen(prev => !prev)}>
+                <img src={burger} alt=""/>
             </button>
             <div className={"burger__menu" + (isBurgerOpen ? ' burger__menu_active' : '')}>
                 <ul>
                     <li>
-                        <NavLink to={"/history"}>История баланса</NavLink>
+                        <NavLink onClick={_ => dispatch(setSound('sound12'))} to={"/history"}>История баланса</NavLink>
                     </li>
                     <li>
                         <a onClick={event => handleExit({event, dispatch, navigate})} href="#">Выйти с сайта</a>

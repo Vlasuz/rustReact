@@ -25,7 +25,7 @@ export const Shop: React.FC<IShopProps> = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        getBearer()
+        getBearer({type: 'get'})
         axios.get(getApiLink('api/fight/shop/')).then(({ data }) => {
             dispatch(setSkinShop(data))
             setChosenSkin(data.chosen?.id)

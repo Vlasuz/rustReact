@@ -15,10 +15,9 @@ export const Range: React.FC<IRangeProps> = ({ min, max, rangeValue }) => {
     const [valueMax, setValueMax] = useState(+max)
 
     const handleChangeValue = (value: number[]) => {
-        setValueMin(20 + max * value[0] / 100)
+        setValueMin(min + max * value[0] / 100)
         setValueMax(0 + max * value[1] / 100)
-
-        rangeValue([+(20 + max * value[0] / 100).toFixed(), +(max * value[1] / 100).toFixed()])
+        rangeValue([+(min + max * value[0] / 100).toFixed(), +(max * value[1] / 100).toFixed()])
     }
 
     useEffect(() => {

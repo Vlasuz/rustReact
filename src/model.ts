@@ -114,12 +114,20 @@ export interface ISocialsItem {
 }
 
 export interface IProduct {
-    id: string | number
-    count?: number
-    title: string
+    game: string
+    id: string
     image: string
-    cost: number
-    rarity: string
+    price: {
+        steam_price: number
+        value: number
+    }
+    rarity: {
+        title: string
+        color: string
+    }
+    steam_id: string
+    title: string
+    trade_ban: null | string
 }
 
 export interface IFilterData {
@@ -133,20 +141,16 @@ export interface IRarity {
 
 export interface IChatItem {
     id: string
-    user: {
-        name: string
-        photo: string
-        link: string
-        isAdmin: boolean
-    }
-    message: string
-    time: string
+    user: IUser
+    text: string
+    created_at: string
 }
 
 export interface IAsideButtonToRight {
     icon: string
     title: string
     slug: string
+    sound: string
 }
 
 export interface ITrigger {
@@ -235,4 +239,24 @@ export interface ISiteSettings {
     airdrop_enable: boolean
     fight_enable: boolean
 
+}
+
+export interface INotice {
+    slug: string
+    text: string
+    icon: string
+}
+
+export interface ISmilesSticker {
+    id: string
+    code: string
+    image: string
+}
+
+export interface ISmilesList {
+    id: string
+    title: string
+    en_title: string
+    ua_title: string
+    stickers: ISmilesSticker[]
 }
