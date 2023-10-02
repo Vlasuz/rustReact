@@ -2,17 +2,20 @@ import styled from "styled-components";
 
 export const PopupStyled = styled.div`
   
-  opacity: 0;
-  visibility: hidden;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all .3s ease;
+  
+  .popup {
+    opacity: 0;
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s ease;
+  }
   
   .popup__bgd {
     background: rgba(25,26,41,.7);
@@ -46,7 +49,7 @@ export const PopupStyled = styled.div`
     visibility: hidden;
   }
 
-  &.popup_active {
+  .popup_active {
     opacity: 1;
     visibility: visible;
     .popup__content,
@@ -910,12 +913,12 @@ export const PopupStyled = styled.div`
   .popup-add-coins .var__item:last-child {
     margin-right: 0
   }
-  &.popup-change-status .input,
+  .popup-change-status .input,
   .popup-trade-link .input,
   .popup-trade-link-change .input {
     position: relative
   }
-  &.popup-change-status .input:after,
+  .popup-change-status .input:after,
   .popup-trade-link .input:after{
     content: "";
     background: 0 0;
@@ -925,7 +928,7 @@ export const PopupStyled = styled.div`
     left: 0;
     top: 0
   }
-  &.popup-change-status .input img,
+  .popup-change-status .input img,
   .popup-trade-link .input img,
   .popup-trade-link-change .input img {
     position: absolute;
@@ -936,17 +939,17 @@ export const PopupStyled = styled.div`
     transform: translateY(-50%);
     right: 20px
   }
-  &.popup-change-status .popup__content,
+  .popup-change-status .popup__content,
   .popup-trade-link .popup__content,
   .popup-trade-link-change .popup__content {
     max-width: 442px
   }
-  &.popup-change-status h2,
+  .popup-change-status h2,
   .popup-trade-link h2,
   .popup-trade-link-change h2 {
     text-align: center
   }
-  &.popup-change-status p,
+  .popup-change-status p,
   .popup-trade-link p,
   .popup-trade-link-change p {
     font-weight: 400;
@@ -955,7 +958,7 @@ export const PopupStyled = styled.div`
     text-align: center;
     color: #a2abc5
   }
-  &.popup-change-status .trade-link__input,
+  .popup-change-status .trade-link__input,
   .popup-trade-link .trade-link__input,
   .popup-trade-link-change .trade-link__input {
     height: 60px;
@@ -979,11 +982,11 @@ export const PopupStyled = styled.div`
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
   }
-  &.popup-change-status .trade-link__input_error,
+  .popup-change-status .trade-link__input_error,
   .popup-trade-link .trade-link__input_error{
     border-color: #DB4752;
   }
-  &.popup-change-status .trade-link__buttons,
+  .popup-change-status .trade-link__buttons,
   .popup-trade-link .trade-link__buttons,
   .popup-trade-link-change .trade-link__buttons {
     display: -webkit-box;
@@ -996,7 +999,7 @@ export const PopupStyled = styled.div`
     -ms-flex-align: center;
     align-items: center
   }
-  &.popup-change-status .trade-link__buttons a,
+  .popup-change-status .trade-link__buttons a,
   .popup-trade-link .trade-link__buttons a,
   .popup-trade-link-change .trade-link__buttons a {
     font-weight: 400;

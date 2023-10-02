@@ -4,6 +4,8 @@ import add from './../../../assets/images/balance-add.svg'
 import clock from './../../../assets/images/clock.svg'
 import { useUserData } from '../../../hooks/userData'
 import { NavLink } from 'react-router-dom'
+import {useDispatch} from "react-redux";
+import { setPopup } from '../../../redux/toolkitSlice'
 
 interface IBalanceProps {
 
@@ -12,6 +14,7 @@ interface IBalanceProps {
 export const Balance: React.FC<IBalanceProps> = () => {
 
     const {userData} = useUserData()
+    const dispatch = useDispatch()
 
     return (
         <div className="balance">
@@ -25,7 +28,7 @@ export const Balance: React.FC<IBalanceProps> = () => {
                         </span>
                     </div>
                 </div>
-                <button className="balance__add">
+                <button onClick={_ => dispatch(setPopup('popup-add-coins'))} className="balance__add">
                     <span>Пополнить</span>
                     <img src={add} alt="Ico" />
                 </button>

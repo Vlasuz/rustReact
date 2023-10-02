@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { Burger } from '../burger/Burger'
 import { useUserData } from '../../../../hooks/userData'
 import { useDispatch } from 'react-redux'
-import { setSound } from '../../../../redux/toolkitSlice'
+import {setPopup, setSound } from '../../../../redux/toolkitSlice'
 
 interface IUserProps {
 
@@ -18,7 +18,7 @@ export const User: React.FC<IUserProps> = () => {
 
     return (
         <>
-            <button className="header__coins">
+            <button className="header__coins" onClick={_ => dispatch(setPopup('popup-add-coins'))}>
                 <img src={coin} alt="Coins" />
                 <span>
                     {userData.balance}

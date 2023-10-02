@@ -10,6 +10,7 @@ const toolkitSlice = createSlice({
         userGames: <IUserHistory | unknown>[],
         userHistory: <IUserHistoryBalance[]>[],
         userOnline: <number>0,
+
         mutedUsers: <IUser[]>[],
         rightBlock: <IAsideButtonToRight>{},
         itemDrag: <IProduct>{},
