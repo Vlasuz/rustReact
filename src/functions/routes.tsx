@@ -42,7 +42,7 @@ export const routes = () => {
         },
         {
             element: <Policy/>,
-            path: '/policy',
+            path: '/docs/:docId',
             isGlobal: true,
         },
         {

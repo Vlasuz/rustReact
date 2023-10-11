@@ -1,5 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IAsideButtonToRight, IChatItem, IFaqList, IFilterData, IProduct, ISiteSettings, ISkin, ITrigger, IUser, IUserHistory, IUserHistoryAirdrop, IUserHistoryBalance, IUserHistoryFight } from "../model";
+import {
+    IAsideButtonToRight,
+    IChatItem,
+    IFaqList,
+    IFilterData,
+    IPages,
+    IProduct,
+    ISiteSettings,
+    ISkin,
+    ITrigger,
+    IUser,
+    IUserHistory,
+    IUserHistoryAirdrop,
+    IUserHistoryBalance,
+    IUserHistoryFight
+} from "../model";
 
 
 const toolkitSlice = createSlice({
@@ -11,6 +26,7 @@ const toolkitSlice = createSlice({
         userHistory: <IUserHistoryBalance[]>[],
         userOnline: <number>0,
 
+        pages: <IPages[]>[],
         mutedUsers: <IUser[]>[],
         rightBlock: <IAsideButtonToRight>{},
         itemDrag: <IProduct>{},
@@ -53,6 +69,9 @@ const toolkitSlice = createSlice({
             state.userOnline = action.payload
         },
 
+        setPages(state, action) {
+            state.pages = action.payload
+        },
         setNotice(state, action) {
             state.notice = action.payload
         },
@@ -172,6 +191,8 @@ export const {
 
     changeUserBalance,
     setUserBalance,
+
+    setPages,
 
     setMutedUsers,
     addMutedUsers,

@@ -3,7 +3,7 @@ import { ChatStyle } from './chat.styled'
 import { ChatItem } from './components/ChatItem'
 import { chatData } from '../../data/chat'
 import { useDispatch, useSelector } from 'react-redux'
-import { IChatItem } from '../../model'
+import {IChatItem, IPages} from '../../model'
 import { ChatForm } from './components/ChatForm'
 import { ChatRules } from './components/ChatRules'
 import { ChatSmiles } from './components/ChatSmiles'
@@ -28,6 +28,8 @@ export const Chat: React.FC<IChatProps> = (props) => {
     const [isOpenRules, setIsOpenRules] = useState(false)
     const dispatch = useDispatch()
     const { ws } = useWsChat()
+
+    const pages: IPages[] = useSelector((state: any) => state.toolkit.pages)
 
     useEffect(() => {
         axios.get(getApiLink('api/chat/get/?amount=100')).then(({ data }) => {
@@ -59,8 +61,9 @@ export const Chat: React.FC<IChatProps> = (props) => {
                     <ChatRules isOpenRules={isOpenRules} />
                     <div className="chat__bottom">
                         <div className="section-right__resources">
-                            <button className="resources__button" onClick={_ => setIsOpenRules(prev => !prev)}>Правила чата</button>
-                            <NavLink to={'/policy'} className="resources__button">Пользовательское соглашение</NavLink>
+                            <button className="resources__button" onClick={_ => setIsOpenRules(prev => !prev)}>
+                                {pages.filter(item => !item.is_main && item)[0]?.ua_title}
+                            </button>
                         </div>
                         <ChatForm setIsOpenSmiles={setIsOpenSmiles} />
                     </div>

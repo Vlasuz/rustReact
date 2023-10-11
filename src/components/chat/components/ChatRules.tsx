@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { ISiteSettings } from '../../../model'
+import {IPages, ISiteSettings} from '../../../model'
 import parse from 'html-react-parser';
 
 interface IChatRulesProps {
@@ -9,16 +9,16 @@ interface IChatRulesProps {
 
 export const ChatRules: React.FC<IChatRulesProps> = ({ isOpenRules }) => {
 
-    const settings: ISiteSettings = useSelector((state: any) => state.toolkit.siteSettings)
+    const pages: IPages[] = useSelector((state: any) => state.toolkit.pages)
 
     return (
         <div className={"section-right__rules" + (isOpenRules ? " section-right__rules_active" : "")}>
             <div className="rules__block">
                 <h2>
-                    {settings.chat_rules_page?.title}
+                    {pages.filter(item => !item.is_main && item)[0]?.ua_title}
                 </h2>
 
-                {settings.chat_rules_page && parse(settings.chat_rules_page.text)}
+                {pages.filter(item => !item.is_main && item)[0]?.ua_text && parse(pages.filter(item => !item.is_main && item)[0]?.ua_text)}
             </div>
         </div>
     )

@@ -20,7 +20,7 @@ export const RightPererab: React.FC<IRightPererabProps> = ({blockValue, isHideBl
                 <Search searchValue={searchValue} setSearchValue={setSearchValue} />
                 <Filter />
 
-                <hr />
+                <hr/>
 
                 <DndProvider backend={HTML5Backend}>
                     <RightItemsDND searchValue={searchValue} />

@@ -16,12 +16,13 @@ export const PolicyStyle = styled.section`
             margin-top: 0;
         }
     }
+    span,
     p{
         font-weight: 400;
         font-size: 14px;
         line-height: 24px;
         text-transform: lowercase;
-        color: #FFFFFF;
+        color: #FFFFFF !important;
     }
     .section-terms{
         &__content{

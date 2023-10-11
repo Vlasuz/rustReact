@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FightStyled } from './fight.styled'
 
 import { FightItem } from './components/fightItem/FightItem'
@@ -6,12 +6,22 @@ import { fightsList } from '../../data/fights'
 import { IFightItem } from '../../model'
 import { Loading } from '../../components/loading/Loading'
 import { FightTop } from '../../components/fightTop/FightTop'
+import axios from "axios";
+import {getApiLink} from "../../functions/getApiLink";
 
 interface IMainProps {
 
 }
 
 export const Fight: React.FC<IMainProps> = () => {
+
+    const [fightList, setFightList] = useState([])
+
+    useEffect(() => {
+        axios.get(getApiLink('api/fight/room/list')).then(({data}) => {
+            setFightList(data)
+        }).catch(er => {console.log('Схватки', er)})
+    }, [])
 
     return (
         <FightStyled>
@@ -22,7 +32,7 @@ export const Fight: React.FC<IMainProps> = () => {
 
                 <Loading>
 
-                    {fightsList.map((item: IFightItem, index: number) => <FightItem key={index} fight_data={item} />)}
+                    {fightList.map((item: IFightItem, index: number) => <FightItem key={index} fight_data={item} />)}
 
                 </Loading>
 

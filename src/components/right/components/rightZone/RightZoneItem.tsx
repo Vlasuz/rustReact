@@ -11,12 +11,11 @@ interface IRightZoneItemProps {
 
 export const RightZoneItem: React.FC<IRightZoneItemProps> = ({ product_data }) => {
 
-    const { drag, isDragging } = useItemDrag({ product_data, itemType: ItemTypes.ITEM_ZONE })
+    const { drag } = useItemDrag({ product_data, itemType: ItemTypes.ITEM_ZONE })
     const dispatch = useDispatch()
-    const products: IProduct[] = useSelector((state: any) => state.toolkit.userInventory)
 
     const handleDelete = (item: IProduct) => {
-        dispatch(setUserInventory([...products, item])) // Добавление элемента в инвентарь пользователя
+        dispatch(setUserInventory([item])) // Добавление элемента в инвентарь пользователя
         dispatch(setPererabZoneItems({status: 'delete', item})) // Удаление элемента из зоны переработки
     }
 

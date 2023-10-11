@@ -6,10 +6,15 @@ import {setPopup} from "../../redux/toolkitSlice";
 import {PopupsContext} from "../../context/popupsContext";
 import {AddCash} from "../../components/popups/AddCash";
 import {closePopup} from "../../functions/closePopup";
+import {TradeLink} from "../../components/popups/TradeLink";
+import {TradeLinkChange} from "../../components/popups/TradeLinkChange";
+import {CreateNewFight} from "../../components/popups/CreateNewFight";
+import {AddCashAmount} from "../../components/popups/AddCashAmount";
 
 export const usePopups = () => {
 
     const [isOpen, setIsOpen] = useState(false)
+    const [localPopup, setLocalPopup] = useState('')
     const dispatch = useDispatch()
 
     const popup: string = useSelector((state: any) => state.toolkit.popup)
@@ -17,10 +22,29 @@ export const usePopups = () => {
     const popupsInner: any = {
         "popup-change-status": <ChangeUserSlogan/>,
         "popup-add-coins": <AddCash/>,
+        "popup-trade popup-trade-link-change": <TradeLink/>,
+        "popup-trade popup-trade-link": <TradeLinkChange/>,
+        "popup-new-room": <CreateNewFight/>,
+        "popup-add-coins-balance popup-add-coins-balance-uah": <AddCashAmount currency={"uah"} />,
+        "popup-add-coins-balance popup-add-coins-balance-kzt": <AddCashAmount currency={"kzt"}/>,
+        "popup-add-coins-balance popup-add-coins-balance-rub": <AddCashAmount currency={"rub"}/>,
     }
 
     useEffect(() => {
-        popup && setIsOpen(true)
+
+        console.log(popup, localPopup)
+        if (popup && localPopup) {
+            setIsOpen(false)
+            setTimeout(() => {
+                setLocalPopup(popup)
+                setIsOpen(true)
+            }, 300)
+        } else if(popup) {
+            setLocalPopup(popup)
+            setIsOpen(true)
+        } else if (!popup) {
+            setLocalPopup('')
+        }
     }, [popup])
 
     const handleClosePopup = () => {
@@ -31,11 +55,11 @@ export const usePopups = () => {
         'popup':
             <PopupsContext.Provider value={setIsOpen}>
                 <PopupStyled>
-                    <div className={"popup " + popup + (isOpen ? " popup_active" : "")}>
+                    <div className={"popup " + localPopup + (isOpen ? " popup_active" : "")}>
                         <div className="popup__bgd" onClick={handleClosePopup}/>
                         <div className="popup__content">
                             {
-                                popup && popupsInner[popup]
+                                localPopup && popupsInner[localPopup]
                             }
                         </div>
                     </div>

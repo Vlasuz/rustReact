@@ -12,7 +12,6 @@ interface useItemDropProps {
 export const useItemDrop = ({ itemType }: useItemDropProps) => {
     const [isDrop, setIsDrop] = useState<boolean>(false)
     const itemDrag: IProduct = useSelector((state: any) => state.toolkit.itemDrag)
-    const products: IProduct[] = useSelector((state: any) => state.toolkit.userInventory)
     const dispatch = useDispatch()
 
     const [{ isOver }, drop] = useDrop(() => ({
@@ -29,7 +28,7 @@ export const useItemDrop = ({ itemType }: useItemDropProps) => {
         dispatch(setUserInventory({status: 'delete', item: itemDrag })) // Удаление элемента из инвентаря
     }
     const dropInventory = () => {
-        dispatch(setUserInventory([...products, itemDrag])) // Добавление элемента в инвентарь пользователя
+        dispatch(setUserInventory([itemDrag])) // Добавление элемента в инвентарь пользователя
         dispatch(setPererabZoneItems({status: 'delete', item: itemDrag})) // Удаление элемента из зоны переработки
     }
 

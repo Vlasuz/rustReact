@@ -10,6 +10,7 @@ import {getInventory} from './api/getInventory';
 import {getCart} from './api/getCart';
 import {Notice} from './components/notice/Notice';
 import {usePopups} from "./hooks/popup/popup";
+import {getPages} from "./api/getPages";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         getSettings({dispatch});
         getInventory({dispatch});
         getCart({dispatch});
+        getPages({dispatch})
     }, [])
 
     return (

@@ -4,7 +4,8 @@ import clothes_shop from './../../assets/images/clothes-shop.svg'
 import { NavLink } from 'react-router-dom'
 import { FightTopStyle } from './fightTop.styled'
 import { Translate } from '../translate/Translate'
-import { useSelector } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import {setPopup} from "../../redux/toolkitSlice";
 
 interface IFightTopProps {
 
@@ -12,6 +13,7 @@ interface IFightTopProps {
 
 export const FightTop: React.FC<IFightTopProps> = () => {
 
+    const dispatch = useDispatch()
     const userOnline = useSelector((state: any) => state.toolkit.userOnline)
 
     return (
@@ -26,8 +28,7 @@ export const FightTop: React.FC<IFightTopProps> = () => {
                         {userOnline}
                     </span>
                 </div>
-                {/* onClick="openPopup('new-room')" */}
-                <button className="create-game__button">
+                <button onClick={_ => dispatch(setPopup('popup-new-room'))} className="create-game__button">
                     <Translate>create_fight_room_button</Translate>
                 </button>
             </div>

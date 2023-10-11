@@ -22,6 +22,17 @@ export interface IAirdropBag {
     y_pos: number
 }
 
+export interface IPages {
+    id: string
+    title: string
+    en_title: string
+    ua_title: string
+    text: string
+    en_text: string
+    ua_text: string
+    is_main: boolean
+}
+
 export interface IFaqList {
     id: string
     title: string
