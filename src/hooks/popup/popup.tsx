@@ -10,6 +10,7 @@ import {TradeLink} from "../../components/popups/TradeLink";
 import {TradeLinkChange} from "../../components/popups/TradeLinkChange";
 import {CreateNewFight} from "../../components/popups/CreateNewFight";
 import {AddCashAmount} from "../../components/popups/AddCashAmount";
+import {Inventory} from "../../components/popups/Inventory";
 
 export const usePopups = () => {
 
@@ -21,13 +22,14 @@ export const usePopups = () => {
 
     const popupsInner: any = {
         "popup-change-status": <ChangeUserSlogan/>,
-        "popup-add-coins": <AddCash/>,
         "popup-trade popup-trade-link-change": <TradeLink/>,
         "popup-trade popup-trade-link": <TradeLinkChange/>,
         "popup-new-room": <CreateNewFight/>,
+        "popup-add-coins": <AddCash/>,
         "popup-add-coins-balance popup-add-coins-balance-uah": <AddCashAmount currency={"uah"} />,
         "popup-add-coins-balance popup-add-coins-balance-kzt": <AddCashAmount currency={"kzt"}/>,
         "popup-add-coins-balance popup-add-coins-balance-rub": <AddCashAmount currency={"rub"}/>,
+        "popup-add-coins-skins": <Inventory/>,
     }
 
     useEffect(() => {

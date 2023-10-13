@@ -19,7 +19,7 @@ export const AddCash: React.FC<IAddCashProps> = () => {
             <h2>Пополнение баланса</h2>
             <PopupCross/>
             <div className="popup-add-coins__var">
-                <button className="game__item">
+                <button onClick={_ => dispatch(setPopup('popup-add-coins-skins'))} className="game__item">
                     <img src={rustIcon} alt="Game"/>
                     <img src={csgoIcon} alt="Game"/>
                 </button>
