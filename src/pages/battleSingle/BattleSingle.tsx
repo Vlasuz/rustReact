@@ -44,7 +44,7 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
 
                 <BattleCreate setGameType={setGameType} gameType={gameType}/>
 
-                <BattleArea blockArea={blockArea}/>
+                <BattleArea gameType={gameType} blockArea={blockArea}/>
 
                 <BattleBottom gameType={gameType}/>
             </div>

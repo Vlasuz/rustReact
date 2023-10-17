@@ -3,12 +3,14 @@ import {CrateItem} from "./CrateItem";
 import CrateBig from "../../../assets/images/CrateBig.svg";
 import {animated, useSpring} from "@react-spring/web";
 import {useDrag} from "react-use-gesture";
+import {IBattleCreate} from "../../../model";
 
 interface IBattleAreaProps {
     blockArea: any
+    gameType: IBattleCreate
 }
 
-export const BattleArea:React.FC<IBattleAreaProps> = ({blockArea}) => {
+export const BattleArea:React.FC<IBattleAreaProps> = ({blockArea, gameType}) => {
 
     const [{x, y}, api] = useSpring(() => ({x: 0, y: 0,}))
 
@@ -38,12 +40,38 @@ export const BattleArea:React.FC<IBattleAreaProps> = ({blockArea}) => {
     })
 
     return (
-        <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()} className="battle-area__center">
-            <CrateItem/>
-            <CrateItem/>
-            <CrateItem/>
-            <div className="crate crate__empty">
-                <img src={CrateBig} alt=""/>
+        <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()} className={`battle-area__center area-${gameType.type}-${gameType.option}`}>
+            <div className="area__line">
+                <CrateItem/>
+                <CrateItem/>
+                <CrateItem/>
+                <div className="crate crate__empty">
+                    <img src={CrateBig} alt=""/>
+                </div>
+            </div>
+            <div className="area__line">
+                <CrateItem/>
+                <CrateItem/>
+                <CrateItem/>
+                <div className="crate crate__empty">
+                    <img src={CrateBig} alt=""/>
+                </div>
+            </div>
+            <div className="area__line">
+                <CrateItem/>
+                <CrateItem/>
+                <CrateItem/>
+                <div className="crate crate__empty">
+                    <img src={CrateBig} alt=""/>
+                </div>
+            </div>
+            <div className="area__line">
+                <CrateItem/>
+                <CrateItem/>
+                <CrateItem/>
+                <div className="crate crate__empty">
+                    <img src={CrateBig} alt=""/>
+                </div>
             </div>
         </animated.div>
     )

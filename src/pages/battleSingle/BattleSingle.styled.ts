@@ -63,16 +63,19 @@ export const BattleSingleStyled = styled.section`
           display: flex;
           align-items: center;
           margin-bottom: 15px;
+
           .img {
             width: 25px;
             height: 25px;
             position: relative;
             margin-right: 10px;
+
             &_active {
               img:last-child {
                 opacity: 0;
               }
             }
+
             img {
               width: 100%;
               height: 100%;
@@ -80,7 +83,11 @@ export const BattleSingleStyled = styled.section`
               position: absolute;
               top: 0;
               left: 0;
-              -webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease;
+              -webkit-transition: all .3s ease;
+              -moz-transition: all .3s ease;
+              -ms-transition: all .3s ease;
+              -o-transition: all .3s ease;
+              transition: all .3s ease;
             }
           }
         }
@@ -177,6 +184,78 @@ export const BattleSingleStyled = styled.section`
       margin: -100px;
       min-height: 100%;
       user-select: none;
+      display: flex;
+      justify-content: space-between;
+
+      &.area-team-2v2 {
+        .area__line:nth-child(1) {
+          margin-left: 50px;
+        }
+
+        .area__line:nth-child(2) {
+          margin-right: 50px;
+        }
+
+        .area__line:nth-child(3) {
+          margin-left: 50px;
+        }
+
+        .area__line:nth-child(4) {
+          margin-right: 50px;
+        }
+      }
+
+      &.area-group-2p,
+      &.area-regular-1v1 {
+        .area__line:nth-child(1) {
+          margin-left: 50px;
+        }
+
+        .area__line:nth-child(2) {
+          display: none;
+        }
+
+        .area__line:nth-child(3) {
+          display: none;
+        }
+
+        .area__line:nth-child(4) {
+          margin-right: 50px;
+        }
+      }
+
+      &.area-group-3p,
+      &.area-regular-1v1v1 {
+        .area__line:nth-child(1) {
+          margin-left: 50px;
+        }
+        .area__line:nth-child(2) {
+          display: none;
+        }
+        .area__line:nth-child(4) {
+          margin-right: 50px;
+        }
+      }
+
+      &.area-group-4p,
+      &.area-regular-4way {
+        .area__line:nth-child(1) {
+          margin-left: 50px;
+        }
+        .area__line:nth-child(4) {
+          margin-right: 50px;
+        }
+      }
+
+      &.area-group-2p {
+        justify-content: space-around;
+      }
+      &.area-group-3p {
+        justify-content: space-around;
+      }
+      &.area-group-4p {
+        justify-content: space-around;
+      }
     }
 
     .crate {
@@ -188,21 +267,23 @@ export const BattleSingleStyled = styled.section`
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      
+
       &__image {
         width: 50px;
         margin: auto 0;
+
         img {
           width: 100%;
           height: 100%;
           object-fit: contain;
         }
       }
-      
+
       .price {
         display: flex;
         align-items: center;
         justify-content: center;
+
         span {
           color: #FFF;
           font-size: 12px;
@@ -210,13 +291,14 @@ export const BattleSingleStyled = styled.section`
           margin-left: 8px;
         }
       }
-      
+
       .top {
         border-radius: 8px;
         background: rgba(38, 41, 57, 0.80);
         display: flex;
         align-items: center;
         justify-content: space-between;
+
         button {
           padding: 5px 10px;
           background: transparent;
@@ -227,33 +309,40 @@ export const BattleSingleStyled = styled.section`
           align-items: center;
           justify-content: center;
           position: relative;
-          
+
           &.minus {
             &:after {
               content: '';
               width: 1px;
-              -webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;
+              -webkit-border-radius: 5px;
+              -moz-border-radius: 5px;
+              border-radius: 5px;
               height: 15px;
               background: rgba(162, 171, 197, 0.05);
               position: absolute;
               right: 0;
             }
           }
+
           &.plus {
             &:after {
               content: '';
               width: 1px;
-              -webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;
+              -webkit-border-radius: 5px;
+              -moz-border-radius: 5px;
+              border-radius: 5px;
               height: 15px;
               background: rgba(162, 171, 197, 0.05);
               position: absolute;
               left: 0;
             }
           }
+
           svg {
             display: block;
           }
         }
+
         input {
           width: 100%;
           background: transparent;
@@ -264,6 +353,7 @@ export const BattleSingleStyled = styled.section`
           font-size: 12px;
           font-weight: 500;
           height: 100%;
+
           &::-webkit-outer-spin-button,
           &::-webkit-inner-spin-button {
             -webkit-appearance: none
@@ -295,7 +385,7 @@ export const BattleSingleStyled = styled.section`
       height: 100px;
       display: flex;
       align-items: center;
-      
+
       strong {
         position: relative;
         color: #A2ABC5;
@@ -305,13 +395,13 @@ export const BattleSingleStyled = styled.section`
         margin-top: 25px;
         display: block;
       }
-      
+
       .bgd {
         position: absolute;
         bottom: 0;
         left: 0;
       }
-      
+
       .bottom__people {
         display: flex;
         align-items: center;
@@ -327,36 +417,42 @@ export const BattleSingleStyled = styled.section`
           justify-content: space-around;
         }
       }
-      
+
       .person {
         position: relative;
         display: flex;
         align-items: flex-end;
-        
+
         .user__photo {
           background: #212232;
           width: 65px;
           height: 65px;
-          -webkit-border-radius: 8px;-moz-border-radius: 8px;border-radius: 8px;
+          -webkit-border-radius: 8px;
+          -moz-border-radius: 8px;
+          border-radius: 8px;
           display: flex;
           align-items: center;
           justify-content: center;
         }
-        
+
         &:before {
           content: '';
           width: 35px;
           height: 3px;
-          -webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
           position: absolute;
           left: 15px;
           bottom: -10px;
         }
+
         img {
           width: 65px;
           height: 65px;
           border-radius: 8px 8px 0px 8px;
         }
+
         span {
           padding: 7px 15px;
           border-radius: 8px;
@@ -369,43 +465,47 @@ export const BattleSingleStyled = styled.section`
           margin-left: -5px;
           min-width: 110px;
         }
-        
+
         &_left {
           span {
             transform: rotate(-2deg);
           }
         }
+
         &_right {
           span {
             transform: rotate(2deg);
           }
         }
-        
+
         &_blue {
           &:before {
             background: #5562DD;
             box-shadow: 0 0 10px #5562DD;
           }
         }
+
         &_red {
           &:before {
             background: #EC5555;
             box-shadow: 0 0 10px #EC5555;
           }
         }
+
         &_green {
           &:before {
             background: #92C145;
             box-shadow: 0 0 10px #92C145;
           }
         }
+
         &_orange {
           &:before {
             background: #F5AD57;
             box-shadow: 0 0 10px #F5AD57;
           }
         }
-        
+
         &_loading {
           .user__photo {
             border: 2px dashed #343748;
