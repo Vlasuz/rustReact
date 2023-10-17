@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import {BrowserRouter, HashRouter} from 'react-router-dom';
 import './assets/styles/_general.css'
 import './assets/styles/_normalize.css'
 import './assets/fonts/GothamPro/stylesheet.css'
@@ -12,8 +12,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </Provider>
 );
