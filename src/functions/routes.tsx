@@ -7,6 +7,9 @@ import {Policy} from "../pages/policy/Policy";
 import {NotFound} from "../pages/notFound/NotFound";
 import React from "react";
 import {Airdrop} from "../pages/airdrop/Airdrop";
+import {OpenCases} from "../pages/openCases/OpenCases";
+import {Battle} from "../pages/battle/Battle";
+import {BattleSingle} from "../pages/battleSingle/BattleSingle";
 
 export const routes = () => {
     return [
@@ -48,6 +51,21 @@ export const routes = () => {
         {
             element: <Airdrop/>,
             path: '/airdrop',
+            isGlobal: true,
+        },
+        {
+            element: <OpenCases/>,
+            path: '/open-cases',
+            isGlobal: true,
+        },
+        {
+            element: <Battle/>,
+            path: '/battle',
+            isGlobal: true,
+        },
+        {
+            element: <BattleSingle/>,
+            path: '/battle/:battleId',
             isGlobal: true,
         },
 

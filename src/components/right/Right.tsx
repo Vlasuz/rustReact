@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { IAsideButtonToRight, ITrigger } from '../../model'
 import { RightStorage } from './components/rightSTORAGE/RightStorage'
 import { RightShop } from './components/rightSHOP/RightShop'
+import {RightCases} from "./components/rightCASES/RightCases";
 
 interface IRightProps {
 
@@ -26,6 +27,7 @@ export const Right: React.FC<IRightProps> = () => {
         'PERERAB': <RightPererab blockValue={blockValue} isHideBlock={isHideBlock}/>,
         'STORAGE': <RightStorage blockValue={blockValue} isHideBlock={isHideBlock}/>,
         'SHOP': <RightShop blockValue={blockValue} isHideBlock={isHideBlock}/>,
+        'CASES': <RightCases blockValue={blockValue} isHideBlock={isHideBlock}/>,
     }
 
     const trigger: ITrigger = useSelector((state: any) => state.toolkit.trigger)

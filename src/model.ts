@@ -271,3 +271,8 @@ export interface ISmilesList {
     ua_title: string
     stickers: ISmilesSticker[]
 }
+
+export interface IBattleCreate {
+    type: string
+    option: string
+}

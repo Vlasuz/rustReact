@@ -7,7 +7,7 @@ export const RightStyled = styled.section`
     width: 100%;
     overflow: hidden;
     border-radius: 10px;
-    height: calc(100vh - 96px);
+    height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;
     position: relative;

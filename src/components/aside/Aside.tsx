@@ -4,11 +4,13 @@ import { AsideStyled } from './aside.styled'
 import fight from './../../assets/images/fight.svg'
 import plane from './../../assets/images/plane.svg'
 import timer_line from './../../assets/images/timer-line.svg'
+import open_cases from './../../assets/images/openCases.svg'
+import battle from './../../assets/images/battle.svg'
+
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setRightBlock, setSound } from '../../redux/toolkitSlice'
+import {setRightBlock, setSound, setTrigger} from '../../redux/toolkitSlice'
 import { RightItemsButton } from './components/RightItemsButton'
-import { getSvg } from '../../functions/getSvg'
 import { rightItemsButtonList } from '../../constants/asideButtonsToRight'
 
 interface IAsideProps {
@@ -19,9 +21,28 @@ export const Aside: React.FC<IAsideProps> = () => {
 
     const dispatch = useDispatch()
 
+    const handleChangePage = (sound: string, rightType?: any) => {
+        dispatch(setSound(sound))
+
+        if(rightType) {
+
+            dispatch(setTrigger('CHANGE_RIGHT_BLOCK'))
+            document.querySelector('.postamat')?.classList.remove('postamat_active')
+
+            setTimeout(() => {
+                dispatch(setRightBlock({icon: "", title: rightType.title, slug: rightType.slug}))
+                setTimeout(() => {
+                    document.querySelector('.postamat')?.classList.add('postamat_active')
+                }, 150)
+            }, 150)
+
+        }
+
+    }
+
     return (
         <AsideStyled>
-            <NavLink to={"/airdrop"} className={({isActive}) => "aside__plane" + (isActive ? " aside__plane_timeline" : "")}>
+            <NavLink to={"/airdrop"} onClick={_ => handleChangePage("sound12", {slug: "AIRDROP", title: "Аирдроп"})} className={({isActive}) => "aside__plane" + (isActive ? " aside__plane_timeline" : "")}>
                 <img src={plane} alt="Plane" />
                 <div className="timer">
                     <div className="min">
@@ -39,8 +60,14 @@ export const Aside: React.FC<IAsideProps> = () => {
                     </div>
                 </div>
             </NavLink>
-            <NavLink to={'/'} onClick={_ => dispatch(setSound('sound12'))} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
+            <NavLink to={'/'} onClick={_ => handleChangePage("sound12")} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
                 <img src={fight} alt="Fight" />
+            </NavLink>
+            <NavLink to={'/open-cases'} onClick={_ => handleChangePage("sound12", {slug: "CASES", title: "Кейсы"})} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
+                <img src={open_cases} alt="Fight" />
+            </NavLink>
+            <NavLink to={'/battle'} onClick={_ => handleChangePage("sound12", {slug: "CASES", title: "Баттл"})} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
+                <img src={battle} alt="Fight" />
             </NavLink>
             <div className="aside__center">
                 <ul className="aside__list">
