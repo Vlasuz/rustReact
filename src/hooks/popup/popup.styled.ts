@@ -3,7 +3,6 @@ import array from './../../assets/images/arr-td.svg'
 
 export const PopupStyled = styled.div`
   
-  
   .popup {
     opacity: 0;
     visibility: hidden;
@@ -16,6 +15,7 @@ export const PopupStyled = styled.div`
     align-items: center;
     justify-content: center;
     transition: all .3s ease;
+    z-index: 2;
   }
 
   .select span{

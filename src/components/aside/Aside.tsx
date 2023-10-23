@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { AsideStyled } from './aside.styled'
 
 import fight from './../../assets/images/fight.svg'
@@ -25,7 +25,6 @@ export const Aside: React.FC<IAsideProps> = () => {
         dispatch(setSound(sound))
 
         if(rightType) {
-
             dispatch(setTrigger('CHANGE_RIGHT_BLOCK'))
             document.querySelector('.postamat')?.classList.remove('postamat_active')
 
@@ -37,8 +36,13 @@ export const Aside: React.FC<IAsideProps> = () => {
             }, 150)
 
         }
-
     }
+
+    useEffect(() => {
+        if(window.location.href.includes('airdrop')) {
+            handleChangePage("", {slug: "AIRDROP", title: "Аирдроп"})
+        }
+    }, [])
 
     return (
         <AsideStyled>

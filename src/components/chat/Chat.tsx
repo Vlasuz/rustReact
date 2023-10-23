@@ -26,6 +26,7 @@ export const Chat: React.FC<IChatProps> = (props) => {
     const chatItems = useSelector((state: any) => state.toolkit.chatItems)
     const [isOpenSmiles, setIsOpenSmiles] = useState(false)
     const [isOpenRules, setIsOpenRules] = useState(false)
+    const [isScrollActive, setIsScrollActive] = useState(false)
     const dispatch = useDispatch()
     const { ws } = useWsChat()
 
@@ -34,6 +35,9 @@ export const Chat: React.FC<IChatProps> = (props) => {
     useEffect(() => {
         axios.get(getApiLink('api/chat/get/?amount=100')).then(({ data }) => {
             dispatch(setChatItems(data.reverse()))
+            setTimeout(() => {
+                setIsScrollActive(true)
+            }, 500)
         })
     }, [])
 
@@ -48,7 +52,7 @@ export const Chat: React.FC<IChatProps> = (props) => {
 
     return (
         <ChatWsContext.Provider value={ws}>
-            <ChatStyle className={props.className}>
+            <ChatStyle style={{scrollBehavior: isScrollActive ? "smooth" : "auto"}} className={props.className}>
                 <div className="section-right__chatting">
                     <div className="chatting__block">
 

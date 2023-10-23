@@ -11,7 +11,6 @@ export const ChatStyle = styled.div`
     flex-direction: column;
     overflow: auto;
     padding-top: 20px;
-    scroll-behavior: smooth;
 
     .section-right {
         &__smiles{
