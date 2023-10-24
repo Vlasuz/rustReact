@@ -11,6 +11,8 @@ import {TradeLinkChange} from "../../components/popups/TradeLinkChange";
 import {CreateNewFight} from "../../components/popups/CreateNewFight";
 import {AddCashAmount} from "../../components/popups/AddCashAmount";
 import {Inventory} from "../../components/popups/Inventory";
+import {StartFightCash} from "../../components/popups/StartFightCash";
+import {StartFightClothes} from "../../components/popups/StartFightClothes";
 
 export const usePopups = () => {
 
@@ -30,6 +32,8 @@ export const usePopups = () => {
         "popup-add-coins-balance popup-add-coins-balance-kzt": <AddCashAmount currency={"kzt"}/>,
         "popup-add-coins-balance popup-add-coins-balance-rub": <AddCashAmount currency={"rub"}/>,
         "popup-add-coins-skins": <Inventory/>,
+        "popup-entry-coins": <StartFightCash/>,
+        "popup-entry-clothes": <StartFightClothes/>,
     }
 
     useEffect(() => {

@@ -119,6 +119,11 @@ export const Notice: React.FC<INoticeProps> = () => {
             text: "Эта вещь больше недоступна для покупки!",
             icon: errorIcon,
         },
+        {
+            slug: 'fightItemAlreadyProcess',
+            text: "Игра уже идет!",
+            icon: errorIcon,
+        },
     ]
 
     useEffect(() => {
