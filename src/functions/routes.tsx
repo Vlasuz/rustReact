@@ -10,12 +10,18 @@ import {Airdrop} from "../pages/airdrop/Airdrop";
 import {OpenCases} from "../pages/openCases/OpenCases";
 import {Battle} from "../pages/battle/Battle";
 import {BattleSingle} from "../pages/battleSingle/BattleSingle";
+import {FightSingle} from "../pages/fightSingle/FightSingle";
 
 export const routes = () => {
     return [
         {
             element: <Fight/>,
             path: '/',
+            isGlobal: true,
+        },
+        {
+            element: <FightSingle/>,
+            path: '/fight/:fightId',
             isGlobal: true,
         },
         {

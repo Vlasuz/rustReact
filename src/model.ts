@@ -103,20 +103,37 @@ export interface IUserHistoryAirdrop {
     win_bag: IAirdropBag
 }
 
-export interface IUserStatic {
-    title: string
-    games: number
-    games_winner: number
-    static_lines: boolean[]
-}
-
 export interface IFightItem {
-    user_first: IUser
-    user_second: IUser | null
-    bank: number
-    clothes: IProduct[] | null
-    game_status: string
-    user_winner: IUser | null
+    id: string
+    game_state: string
+    created_at: string
+    first_player: {
+        id: string
+        attack: string
+        defense: string
+        hit: boolean
+        user: IUser
+        coins: number
+        items: IProduct[]
+    }
+    second_player: {
+        id: string
+        attack: string
+        defense: string
+        hit: boolean
+        user: IUser
+        coins: number
+        items: IProduct[]
+    } | null
+    winner: {
+        id: string
+        attack: string
+        defense: string
+        hit: boolean
+        user: IUser
+        coins: number
+        items: IProduct[]
+    } | null
 }
 
 export interface ISocialsItem {

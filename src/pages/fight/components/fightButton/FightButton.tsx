@@ -1,44 +1,44 @@
 import React from 'react'
-import { FightButtonStyled } from './fightButton.styled'
+import {FightButtonStyled} from './fightButton.styled'
 
 import coin from './../../../../assets/images/header__coins.svg'
 import looser from './../../../../assets/images/looser.svg'
-import { IFightItem } from '../../../../model'
+import {IFightItem} from '../../../../model'
 
 interface IFightButtonProps {
-    fight_data: IFightItem
+    data: IFightItem
 }
 
-export const FightButton: React.FC<IFightButtonProps> = ({ fight_data }) => {
+export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
 
-    const userWinner = <div className="winner">
-        <img src={coin} alt="Ico" />
-        <span>{fight_data.bank}</span>
-    </div>
+    const userWinner =
+        <div className="winner">
+            <img src={coin} alt="Ico"/>
+            <span>{data.first_player.coins}</span>
+        </div>
 
-    const userLooser = <div className="looser">
-        <img src={looser} alt="Ico" />
-    </div>
+    const userLooser =
+        <div className="looser">
+            <img src={looser} alt="Ico"/>
+        </div>
 
-    console.log(fight_data.user_winner !== null)
+    const isGameRunning = data.game_state === "attack" || data.game_state === "defense" || data.game_state === "duel" ? "process" : ""
 
     return (
-        <FightButtonStyled className={"item__button " + fight_data.game_status}>
+        <FightButtonStyled className={"item__button " + isGameRunning}>
 
-            {fight_data.user_winner !== null ? <>
+            {data.winner !== null ? <>
 
-                {fight_data.user_winner.id === fight_data.user_first.id ? userWinner : userLooser}
-                {fight_data.user_winner.id === fight_data.user_second?.id ? userWinner : userLooser}
+                {data.winner.id === data.first_player.user.id ? userWinner : userLooser}
+                {data.winner.id === data.second_player?.user?.id ? userWinner : userLooser}
 
             </> : <>
 
-                {
-                    fight_data.game_status === "waiting" && <span>Играть за</span>
-                }
+                {data.game_state === "waiting" && <span>Играть за</span>}
 
-                <img src={coin} alt="Ico" />
+                <img src={coin} alt="Ico"/>
                 <span>
-                    {fight_data.bank}
+                    {data.first_player.coins}
                 </span>
 
             </>

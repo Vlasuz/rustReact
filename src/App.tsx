@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Header} from './components/header/header';
 import {AppStyled} from './App.styled';
 import {Container} from './components/container/Container';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getProducts} from './api/getProducts';
 import {getUser} from './api/getUser';
 import {getSettings} from './api/getSettings';
@@ -16,13 +16,18 @@ function App() {
 
     const dispatch = useDispatch()
     const {popup} = usePopups()
+    const isAuth = useSelector((state: any) => state.toolkit.user)
 
     useEffect(() => {
-        getProducts({dispatch});
+        // Object.keys(isAuth).length && getUser({dispatch});
+        // Object.keys(isAuth).length && getInventory({dispatch});
+        // Object.keys(isAuth).length && getCart({dispatch});
         getUser({dispatch});
-        getSettings({dispatch});
         getInventory({dispatch});
         getCart({dispatch});
+
+        getProducts({dispatch});
+        getSettings({dispatch});
         getPages({dispatch})
     }, [])
 

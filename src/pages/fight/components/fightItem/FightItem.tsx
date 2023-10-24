@@ -7,22 +7,24 @@ import { FightButton } from '../fightButton/FightButton'
 import { FightUser } from '../fightUser/FightUser'
 
 interface IFightItemProps {
-    fight_data: IFightItem
+    data: IFightItem
 }
 
-export const FightItem: React.FC<IFightItemProps> = ({ fight_data }) => {
+export const FightItem: React.FC<IFightItemProps> = ({ data }) => {
 
     const [isOpenClothes, setIsOpenClothes] = useState(false)
 
+    const isHasItems = Object.keys(data.first_player.items).length
+
     return (
         <FightItemStyled className={isOpenClothes ? "game_open-clothes" : ""}>
-            <div className={"item__type item__type_" + (fight_data.clothes !== null ? "clothes" : "coins")} onClick={_ => fight_data.clothes !== null && setIsOpenClothes(prev => !prev)}>
-                <img src={fight_data.clothes !== null ? clothes : coin} alt="Ico" />
+            <div className={"item__type item__type_" + (isHasItems ? "clothes" : "coins")} onClick={_ => isHasItems && setIsOpenClothes(prev => !prev)}>
+                <img src={isHasItems ? clothes : coin} alt="Ico" />
             </div>
 
             <ul className="item__clothes">
                 {
-                    fight_data.clothes?.map((item, index) =>
+                    data.first_player.items?.map((item, index) =>
                         <li key={index}>
                             <div className={"clothes__cool clothes__cool_" + (item.rarity)} />
                             <img src={item.image} alt="Photo" />
@@ -31,13 +33,13 @@ export const FightItem: React.FC<IFightItemProps> = ({ fight_data }) => {
                 }
             </ul>
 
-            <FightUser fight_user={fight_data.user_first} user_winner={fight_data?.user_winner}  />
+            <FightUser fight_user={data.first_player} user_winner={data.winner}  />
 
             {/* onClick="openPopup('entry-coins')" */}
 
-            <FightButton fight_data={fight_data} />
+            <FightButton data={data} />
 
-            <FightUser fight_user={fight_data.user_second} user_winner={fight_data?.user_winner}  />
+            <FightUser fight_user={data.second_player} user_winner={data.winner}  />
 
         </FightItemStyled>
     )

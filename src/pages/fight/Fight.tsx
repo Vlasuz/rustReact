@@ -15,11 +15,12 @@ interface IMainProps {
 
 export const Fight: React.FC<IMainProps> = () => {
 
-    const [fightList, setFightList] = useState([])
+    const [fightList, setFightList] = useState<IFightItem[]>([])
 
     useEffect(() => {
         axios.get(getApiLink('api/fight/room/list')).then(({data}) => {
             setFightList(data)
+            console.log(data)
         }).catch(er => {console.log('Схватки', er)})
     }, [])
 
@@ -32,7 +33,7 @@ export const Fight: React.FC<IMainProps> = () => {
 
                 <Loading>
 
-                    {fightList.map((item: IFightItem, index: number) => <FightItem key={index} fight_data={item} />)}
+                    {fightList.map((item: IFightItem, index: number) => <FightItem key={index} data={item} />)}
 
                 </Loading>
 

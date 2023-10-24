@@ -34,7 +34,6 @@ export const usePopups = () => {
 
     useEffect(() => {
 
-        console.log(popup, localPopup)
         if (popup && localPopup) {
             setIsOpen(false)
             setTimeout(() => {
