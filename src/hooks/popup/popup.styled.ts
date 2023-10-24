@@ -1835,7 +1835,8 @@ export const PopupStyled = styled.div`
     grid-gap: 6px;
     margin-top: 20px;
     max-height: 335px;
-    overflow: auto
+    overflow: auto;
+    min-height: 200px;
   }
   .popup-entry-clothes__item,
   .popup-new-room__item {

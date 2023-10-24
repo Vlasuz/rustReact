@@ -15,6 +15,7 @@ import {
     IUserHistoryBalance,
     IUserHistoryFight
 } from "../model";
+import {log} from "util";
 
 
 const toolkitSlice = createSlice({
@@ -31,6 +32,7 @@ const toolkitSlice = createSlice({
         rightBlock: <IAsideButtonToRight>{},
         itemDrag: <IProduct>{},
         pererabZoneItems: <IProduct[]>[],
+        popupZoneItems: <IProduct[]>[],
         rightFilter: <IFilterData>{},
         chatItems: <IChatItem[]>[],
         language: <string>'RU',
@@ -142,6 +144,16 @@ const toolkitSlice = createSlice({
                 state.pererabZoneItems = [...state.pererabZoneItems, action.payload]
             }
         },
+        setPopupZoneItems(state, action) {
+            if (action.payload.status === 'delete' && action.payload.item === 'all') {
+                state.userInventory = [...state.userInventory, ...state.popupZoneItems]
+                state.popupZoneItems = []
+            } else if (action.payload.status === 'delete') {
+                state.popupZoneItems = state.popupZoneItems.filter(item => item?.id !== action.payload.item?.id)
+            } else {
+                state.popupZoneItems = [...state.popupZoneItems, action.payload]
+            }
+        },
         setRightFilter(state, action) {
             state.rightFilter = action.payload
         },
@@ -204,6 +216,7 @@ export const {
 
     setItemDrag,
     setPererabZoneItems,
+    setPopupZoneItems,
     setRightFilter,
 
     setChatItems,

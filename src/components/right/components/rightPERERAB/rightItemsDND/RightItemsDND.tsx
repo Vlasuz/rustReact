@@ -21,11 +21,11 @@ export const RightItemsDND: React.FC<IRightItemsDNDProps> = ({ searchValue }) =>
     const pererabZoneItems = useSelector((state: any) => state.toolkit.pererabZoneItems);
     const allProducts: IProduct[] = useSelector((state: any) => state.toolkit.userInventory)
     const {products}: any = useSortBy({allProducts, searchValue})
-    const dropToZone = useItemDrop({ itemType: ItemTypes.ITEM })
+    const dropToZone = useItemDrop({ itemType: ItemTypes.ITEM, typeOfState: 'pererab' })
     const dropToInventory = useItemDrop({ itemType: ItemTypes.ITEM_ZONE })
 
     const productsLength = products.length || pererabZoneItems.length
-    const isHaveProducts = productsLength ? products?.map((item: IProduct) => <Product key={item.id} product_data={item} />) : <EmptyInventory/>
+    const isHaveProducts = productsLength ? products?.map((item: IProduct) => <Product key={item.id} typeOfZone={"pererab"} product_data={item} />) : <EmptyInventory/>
 
     return (
 

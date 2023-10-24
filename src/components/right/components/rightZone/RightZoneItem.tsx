@@ -2,7 +2,7 @@ import React from 'react'
 import { IProduct } from '../../../../model'
 import { useItemDrag } from '../../../../hooks/itemDrag'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPererabZoneItems, setUserInventory } from '../../../../redux/toolkitSlice'
+import {setPererabZoneItems, setPopupZoneItems, setUserInventory} from '../../../../redux/toolkitSlice'
 import { ItemTypes } from '../../../../constants/ItemTypes'
 
 interface IRightZoneItemProps {
@@ -17,6 +17,7 @@ export const RightZoneItem: React.FC<IRightZoneItemProps> = ({ product_data }) =
     const handleDelete = (item: IProduct) => {
         dispatch(setUserInventory([item])) // Добавление элемента в инвентарь пользователя
         dispatch(setPererabZoneItems({status: 'delete', item})) // Удаление элемента из зоны переработки
+        dispatch(setPopupZoneItems({status: 'delete', item})) // Удаление элемента из зоны
     }
 
     return (

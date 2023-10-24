@@ -4,6 +4,8 @@ import cross from "./../../assets/images/cross.svg"
 import {PopupCross} from "../../hooks/popup/components/PopupCross";
 import {useSelector} from "react-redux";
 import {IProduct, IUser} from "../../model";
+import {UserInventory} from "./components/userInventory";
+import {ZoneOfProducts} from "./components/zoneOfProducts";
 
 interface ICreateNewFightProps {
 
@@ -14,13 +16,19 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
     const userInfo: IUser = useSelector((state: any) => state.toolkit.user)
     const [typeOfCreate, setTypeOfCreate] = useState('coins')
     const [coinsValue, setCoinsValue] = useState(0)
-    const [isSelectOpen, setIsSelectOpen] = useState(false)
-    const inventory = useSelector((state: any) => state.toolkit.userInventory)
 
     const handleSwitch = (e: React.MouseEvent<HTMLAnchorElement>, type: string) => {
         e.preventDefault()
         setTypeOfCreate(type)
     }
+
+    const popupZoneItems = useSelector((state: any) => state.toolkit.popupZoneItems);
+    const [countOfBet, setCountOfBet] = useState(0)
+
+    useEffect(() => {
+        setCountOfBet(0)
+        popupZoneItems.map((item: IProduct) => setCountOfBet(prev => prev + item.price.value))
+    }, [popupZoneItems])
 
     const isFightOnSkins = typeOfCreate === "skins"
 
@@ -66,67 +74,22 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                         </button>
                     </form>
                 </div>
-                <form
-                    className={"popup__content-item popup__content-item-clothes" + (isFightOnSkins ? " popup__content-item_active" : "")}>
-                    <a className="link-to-page" href="/fight-waiting"/>
-                    <div className="popup-new-room__zone">
-                        <p>Перетащите сюда скины для ставки</p>
-                        <ul>
-
-                        </ul>
-                    </div>
+                <form className={"popup__content-item popup__content-item-clothes" + (isFightOnSkins ? " popup__content-item_active" : "")}>
+                    <ZoneOfProducts/>
                     <div className="inputs__item inputs__item-have inputs__item_skins">
                         <p>Итоговая сумма ставки:</p>
                         <div className="input">
                             <img src={coins} alt="Ico"/>
-                            <span>0</span>
+                            <span>
+                                {countOfBet}
+                            </span>
                         </div>
                     </div>
                     <button type="submit" disabled>Создать игру</button>
                 </form>
             </div>
             <div className="popup__content_rht" style={{display: isFightOnSkins ? "block" : "none"}}>
-                <h2>Инвентарь сайта</h2>
-                <PopupCross/>
-                <div className="popup-new-room__sort">
-                    <span>Сортировка</span>
-                    <div className={"select" + (isSelectOpen ? " select_open" : "")}>
-                        <div className="select__head" onClick={_ => setIsSelectOpen(prev => !prev)}>
-                            <span>Все игры</span>
-                        </div>
-                        <div className="select__body">
-                            <div className="select__item">Все игры</div>
-                            <div className="select__item">CSGO</div>
-                            <div className="select__item">RUST</div>
-                        </div>
-                    </div>
-                </div>
-                <ul className="popup-new-room__list">
-
-                    {
-                        inventory?.map((item: IProduct) =>
-                            <li key={item.id} className="popup-new-room__item">
-                                <div className="item__is-lock" />
-                                <div className="li__delete">
-                                    <img src={cross} alt="Close"/>
-                                </div>
-                                <div className="item__check">
-                                    <img src="../images/green-check-sq.svg" alt="Check"/>
-                                </div>
-                                <div className="item__photo">
-                                <img src={item?.image} alt="Photo"/>
-                                </div>
-                                <div className="item__price">
-                                    <img src={coins} alt="Coin"/>
-                                    <span>
-                                        {item?.price.value}
-                                    </span>
-                                </div>
-                            </li>
-                        )
-                    }
-
-                </ul>
+                <UserInventory/>
             </div>
         </>
     )

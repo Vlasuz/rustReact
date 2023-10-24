@@ -3,13 +3,14 @@ import { IProduct } from "../model"
 import { useDispatch, useSelector } from "react-redux"
 import { ItemTypes } from "../constants/ItemTypes"
 import { useDrop } from "react-dnd"
-import { setItemDrag, setPererabZoneItems, setUserInventory } from "../redux/toolkitSlice"
+import { setItemDrag, setPererabZoneItems, setPopupZoneItems, setUserInventory } from "../redux/toolkitSlice"
 
 interface useItemDropProps {
-    itemType: any
+    itemType: any,
+    typeOfState?: string
 }
 
-export const useItemDrop = ({ itemType }: useItemDropProps) => {
+export const useItemDrop = ({ itemType, typeOfState }: useItemDropProps) => {
     const [isDrop, setIsDrop] = useState<boolean>(false)
     const itemDrag: IProduct = useSelector((state: any) => state.toolkit.itemDrag)
     const dispatch = useDispatch()
@@ -22,27 +23,30 @@ export const useItemDrop = ({ itemType }: useItemDropProps) => {
         }),
     }))
 
-
     const dropZone = () => {
-        dispatch(setPererabZoneItems(itemDrag)) // Добавление элемента в зону переработки
+        if(typeOfState === 'popup') {
+            dispatch(setPopupZoneItems(itemDrag)) // Добавление элемента в зону
+        } else if (typeOfState === 'pererab') {
+            dispatch(setPererabZoneItems(itemDrag)) // Добавление элемента в зону переработки
+        }
         dispatch(setUserInventory({status: 'delete', item: itemDrag })) // Удаление элемента из инвентаря
     }
     const dropInventory = () => {
         dispatch(setUserInventory([itemDrag])) // Добавление элемента в инвентарь пользователя
         dispatch(setPererabZoneItems({status: 'delete', item: itemDrag})) // Удаление элемента из зоны переработки
+        dispatch(setPopupZoneItems({status: 'delete', item: itemDrag})) // Удаление элемента из зоны
     }
 
     useEffect(() => {
         if (!Object.keys(itemDrag).length) return
 
-        if(itemType === 'item') {
-            dropZone()
-        } else if (itemType === 'item_zone') {
+        if (itemType.includes('zone')) {
             dropInventory()
+        } else {
+            dropZone()
         }
 
         dispatch(setItemDrag({}))
-
     }, [isDrop])
 
     return { drop, isOver }

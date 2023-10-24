@@ -12,7 +12,9 @@ import {CreateNewFight} from "../../components/popups/CreateNewFight";
 import {AddCashAmount} from "../../components/popups/AddCashAmount";
 import {Inventory} from "../../components/popups/Inventory";
 import {StartFightCash} from "../../components/popups/StartFightCash";
-import {StartFightClothes} from "../../components/popups/StartFightClothes";
+import {StartFightClothes} from "../../components/popups/startFightClothes/StartFightClothes";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 export const usePopups = () => {
 
@@ -26,14 +28,14 @@ export const usePopups = () => {
         "popup-change-status": <ChangeUserSlogan/>,
         "popup-trade popup-trade-link-change": <TradeLink/>,
         "popup-trade popup-trade-link": <TradeLinkChange/>,
-        "popup-new-room": <CreateNewFight/>,
+        "popup-new-room": <DndProvider backend={HTML5Backend}><CreateNewFight/></DndProvider>,
         "popup-add-coins": <AddCash/>,
         "popup-add-coins-balance popup-add-coins-balance-uah": <AddCashAmount currency={"uah"} />,
         "popup-add-coins-balance popup-add-coins-balance-kzt": <AddCashAmount currency={"kzt"}/>,
         "popup-add-coins-balance popup-add-coins-balance-rub": <AddCashAmount currency={"rub"}/>,
         "popup-add-coins-skins": <Inventory/>,
         "popup-entry-coins": <StartFightCash/>,
-        "popup-entry-clothes": <StartFightClothes/>,
+        "popup-entry-clothes": <DndProvider backend={HTML5Backend}><StartFightClothes/></DndProvider>,
     }
 
     useEffect(() => {

@@ -8,20 +8,25 @@ import green_check from './../../assets/images/green-check.svg'
 import { useDrag } from 'react-dnd'
 import { ItemTypes } from '../../constants/ItemTypes'
 import { useDispatch } from 'react-redux'
-import { setItemDrag, setPererabZoneItems, setUserInventory } from '../../redux/toolkitSlice'
+import {setItemDrag, setPererabZoneItems, setPopupZoneItems, setUserInventory} from '../../redux/toolkitSlice'
 import { useItemDrag } from '../../hooks/itemDrag'
 
 interface IProductProps {
     product_data: IProduct
+    typeOfZone: string
 }
 
-export const Product: React.FC<IProductProps> = ({ product_data }) => {
+export const Product: React.FC<IProductProps> = ({ product_data, typeOfZone }) => {
 
     const { drag, isDragging } = useItemDrag({ product_data, itemType: ItemTypes.ITEM })
     const dispatch = useDispatch()
 
     const handleSelect = () => {
-        dispatch(setPererabZoneItems(product_data)) // Добавление элемента в зону переработки
+        if(typeOfZone === "popup") {
+            dispatch(setPopupZoneItems(product_data)) // Добавление элемента в зону
+        } else if (typeOfZone === "pererab") {
+            dispatch(setPererabZoneItems(product_data)) // Добавление элемента в зону переработки
+        }
         dispatch(setUserInventory({ status: 'delete', item: product_data })) // Удаление элемента из инвентаря
     }
 
