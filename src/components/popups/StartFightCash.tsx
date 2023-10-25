@@ -1,12 +1,16 @@
 import React, {useEffect} from 'react'
 import coins from './../../assets/images/header__coins.svg'
 import {PopupCross} from "../../hooks/popup/components/PopupCross";
+import {IFightItem} from "../../model";
+import {useSelector} from "react-redux";
 
 interface IStartFightCashProps {
 
 }
 
 export const StartFightCash: React.FC<IStartFightCashProps> = () => {
+
+    const fightItemData: IFightItem = useSelector((state: any) => state.toolkit.fightItemData)
 
     return (
         <>
@@ -18,7 +22,9 @@ export const StartFightCash: React.FC<IStartFightCashProps> = () => {
                 <p>Ставка в этой комнате</p>
                 <div className="info__coins">
                     <img src={coins} alt="Ico"/>
-                    <span>2</span>
+                    <span>
+                        {fightItemData.first_player.coins}
+                    </span>
                 </div>
             </div>
             <form>

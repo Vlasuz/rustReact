@@ -35,8 +35,6 @@ export const FightItem: React.FC<IFightItemProps> = ({ data }) => {
 
             <FightUser fight_user={data.first_player} user_winner={data.winner}  />
 
-            {/* onClick="openPopup('entry-coins')" */}
-
             <FightButton data={data} />
 
             <FightUser fight_user={data.second_player} user_winner={data.winner}  />

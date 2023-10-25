@@ -5,7 +5,7 @@ import coin from './../../../../assets/images/header__coins.svg'
 import looser from './../../../../assets/images/looser.svg'
 import {IFightItem} from '../../../../model'
 import {useDispatch, useSelector} from "react-redux";
-import {setNotice, setPopup} from "../../../../redux/toolkitSlice";
+import {setFightItemData, setNotice, setPopup} from "../../../../redux/toolkitSlice";
 
 interface IFightButtonProps {
     data: IFightItem
@@ -36,12 +36,14 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
     const handlePressButton = () => {
         if (data.winner === null && Object.keys(userData).length && !data.first_player.items.length) {
             dispatch(setPopup("popup-entry-coins"))
+            dispatch(setFightItemData(data))
         } else if (!Object.keys(userData).length) {
             dispatch(setNotice('beforeYouNeedAuth'))
         } else if (data.second_player?.user?.id) {
             dispatch(setNotice('fightItemAlreadyProcess'))
         } else if (data.winner === null && Object.keys(userData).length && data.first_player.items.length) {
             dispatch(setPopup("popup-entry-clothes"))
+            dispatch(setFightItemData(data))
         }
     }
 

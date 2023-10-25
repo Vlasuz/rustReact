@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
     IAsideButtonToRight,
     IChatItem,
-    IFaqList,
+    IFaqList, IFightItem,
     IFilterData,
     IPages,
     IProduct,
@@ -45,6 +45,7 @@ const toolkitSlice = createSlice({
         notice: <string>'',
         sound: <string>'',
         popup: <string>'',
+        fightItemData: <IFightItem>{},
 
         isOpenWsChat: <boolean>false,
 
@@ -182,6 +183,9 @@ const toolkitSlice = createSlice({
         setPopup(state, action) {
             state.popup = action.payload
         },
+        setFightItemData(state, action) {
+            state.fightItemData = action.payload
+        },
 
         setTrigger(state, action) {
             state.trigger = {
@@ -237,6 +241,8 @@ export const {
 
     setOpenWsChat,
     setPopup,
+
+    setFightItemData,
 
     setTrigger
 
