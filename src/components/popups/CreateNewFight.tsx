@@ -1,11 +1,16 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import coins from "./../../assets/images/header__coins.svg"
 import cross from "./../../assets/images/cross.svg"
 import {PopupCross} from "../../hooks/popup/components/PopupCross";
-import {useSelector} from "react-redux";
-import {IProduct, IUser} from "../../model";
+import {useDispatch, useSelector} from "react-redux";
+import {IFightItem, IProduct, IUser} from "../../model";
 import {UserInventory} from "./components/userInventory";
 import {ZoneOfProducts} from "./components/zoneOfProducts";
+import axios from "axios";
+import {getApiLink} from "../../functions/getApiLink";
+import {useNavigate} from "react-router";
+import {setFightItemData, setPopup, setPopupZoneItems} from "../../redux/toolkitSlice";
+import {PopupsContext} from "../../context/popupsContext";
 
 interface ICreateNewFightProps {
 
@@ -14,23 +19,46 @@ interface ICreateNewFightProps {
 export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
 
     const userInfo: IUser = useSelector((state: any) => state.toolkit.user)
+    const popupZoneItems = useSelector((state: any) => state.toolkit.popupZoneItems);
+
     const [typeOfCreate, setTypeOfCreate] = useState('coins')
     const [coinsValue, setCoinsValue] = useState(0)
+    const [countOfBet, setCountOfBet] = useState(0)
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const setIsOpen: any = useContext(PopupsContext)
+
+    const isFightOnSkins = typeOfCreate === "skins"
 
     const handleSwitch = (e: React.MouseEvent<HTMLAnchorElement>, type: string) => {
         e.preventDefault()
         setTypeOfCreate(type)
     }
 
-    const popupZoneItems = useSelector((state: any) => state.toolkit.popupZoneItems);
-    const [countOfBet, setCountOfBet] = useState(0)
+    const handleCreateFight = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        axios.post(getApiLink("api/fight/room/create"), {
+            "coins": coinsValue,
+            "items": popupZoneItems.map((item: IProduct) => item.id)
+        }).then(({data}) => {
+            dispatch(setFightItemData(data))
+
+            setIsOpen(false)
+            setTimeout(() => {
+                dispatch(setPopup(''))
+            }, 300)
+
+            navigate("/fight/"+data.id)
+        }).catch(er => console.log(er))
+    }
 
     useEffect(() => {
         setCountOfBet(0)
         popupZoneItems.map((item: IProduct) => setCountOfBet(prev => prev + item.price.value))
     }, [popupZoneItems])
-
-    const isFightOnSkins = typeOfCreate === "skins"
 
     return (
         <>
@@ -48,7 +76,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                     </ul>
                 </div>
                 <div className={"popup__content-item" + (!isFightOnSkins ? " popup__content-item_active" : "")}>
-                    <form action="#">
+                    <form onSubmit={e => handleCreateFight(e)}>
                         <div className="inputs">
                             <div className="inputs__item inputs__item-sum">
                                 <p>Сумма ставки:</p>
@@ -68,14 +96,13 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                                 </div>
                             </div>
                         </div>
-                        <button type="submit"
-                                disabled={userInfo?.balance ? (coinsValue <= 0 || !(userInfo?.balance >= coinsValue)) : true}>Создать
-                            игру
+                        <button type="submit" disabled={userInfo?.balance ? (coinsValue <= 0 || !(userInfo?.balance >= coinsValue)) : true}>
+                            Создать игру
                         </button>
                     </form>
                 </div>
-                <form className={"popup__content-item popup__content-item-clothes" + (isFightOnSkins ? " popup__content-item_active" : "")}>
-                    <ZoneOfProducts/>
+                <form onSubmit={e => handleCreateFight(e)} className={"popup__content-item popup__content-item-clothes" + (isFightOnSkins ? " popup__content-item_active" : "")}>
+                    <ZoneOfProducts />
                     <div className="inputs__item inputs__item-have inputs__item_skins">
                         <p>Итоговая сумма ставки:</p>
                         <div className="input">
@@ -85,7 +112,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                             </span>
                         </div>
                     </div>
-                    <button type="submit" disabled>Создать игру</button>
+                    <button type="submit" disabled={!popupZoneItems.length}>Создать игру</button>
                 </form>
             </div>
             <div className="popup__content_rht" style={{display: isFightOnSkins ? "block" : "none"}}>

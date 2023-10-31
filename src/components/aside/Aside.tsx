@@ -21,11 +21,11 @@ export const Aside: React.FC<IAsideProps> = () => {
 
     const dispatch = useDispatch()
 
-    const handleChangePage = (sound: string, rightType?: any) => {
+    const handleChangePage = (sound: string, rightType?: any, isOpenChat?: boolean) => {
         dispatch(setSound(sound))
 
         if(rightType) {
-            dispatch(setTrigger('CHANGE_RIGHT_BLOCK'))
+            dispatch(setTrigger(isOpenChat ? "CHANGE_RIGHT_BLOCK_CHAT" : 'CHANGE_RIGHT_BLOCK'))
             document.querySelector('.postamat')?.classList.remove('postamat_active')
 
             setTimeout(() => {
@@ -64,7 +64,7 @@ export const Aside: React.FC<IAsideProps> = () => {
                     </div>
                 </div>
             </NavLink>
-            <NavLink to={'/'} onClick={_ => handleChangePage("sound12")} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
+            <NavLink to={'/'} onClick={_ => handleChangePage("sound12", {slug: "PERERAB", title: "Переработчик"}, true)} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
                 <img src={fight} alt="Fight" />
             </NavLink>
             <NavLink to={'/open-cases'} onClick={_ => handleChangePage("sound12", {slug: "CASES", title: "Кейсы"})} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>

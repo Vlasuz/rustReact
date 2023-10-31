@@ -1,10 +1,16 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {PopupCross} from "../../../hooks/popup/components/PopupCross";
 import coins from "../../../assets/images/header__coins.svg";
 import {IFightItem, IProduct, IUser} from "../../../model";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {UserInventory} from "../components/userInventory";
 import {ZoneOfProducts} from "../components/zoneOfProducts";
+import {useNavigate} from "react-router";
+import {PopupsContext} from "../../../context/popupsContext";
+import {closePopup} from "../../../functions/closePopup";
+import {setPopup, setPopupZoneItems} from "../../../redux/toolkitSlice";
+import axios from "axios";
+import {getApiLink} from "../../../functions/getApiLink";
 
 interface IStartFightClothesProps {
 
@@ -15,6 +21,9 @@ export const StartFightClothes: React.FC<IStartFightClothesProps> = () => {
     const popupZoneItems = useSelector((state: any) => state.toolkit.popupZoneItems);
     const fightItemData: IFightItem = useSelector((state: any) => state.toolkit.fightItemData)
     const [countOfBet, setCountOfBet] = useState(0)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const setIsOpen: any = useContext(PopupsContext)
 
     useEffect(() => {
         setCountOfBet(0)
@@ -24,7 +33,21 @@ export const StartFightClothes: React.FC<IStartFightClothesProps> = () => {
     const handleStartGame = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        console.log('asd')
+        console.log(popupZoneItems.map((item: IProduct) => item.id))
+        axios.post(getApiLink("api/fight/room/join?game_id="+fightItemData.id), {
+            // coins: fightItemData.first_player.coins,
+            items: popupZoneItems.map((item: IProduct) => item.id)
+        }).then(({data}) => {
+            if(!data?.status) return;
+
+            setIsOpen(false)
+            setTimeout(() => {
+                dispatch(setPopup(''))
+            }, 300)
+            navigate('/fight/'+fightItemData.id)
+
+        }).catch(er => console.log(er))
+
     }
 
     return (

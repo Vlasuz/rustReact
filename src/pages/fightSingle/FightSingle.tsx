@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Translate} from '../../components/translate/Translate'
 import {FightSingleTop} from "./components/FightSingleTop";
 import {FightSingleStyled} from "./FightSingle.styled";
@@ -11,6 +11,15 @@ import personSilhouette from './../../assets/images/persone-siluete.png'
 import personNNN from './../../assets/images/persone-nnn.png'
 import {Loading} from "../../components/loading/Loading";
 import {LoadingStyled} from "../../components/loading/loading.styled";
+import {useSelector} from "react-redux";
+import {useNavigate, useParams} from "react-router";
+import {getApiLink} from "../../functions/getApiLink";
+import getCookie from '../../functions/getCookie';
+import axios from "axios";
+import {IFightItem, IUser} from "../../model";
+import {FightSingleCenter} from "./components/FightSingleCenter";
+import {FightSingleRHT} from "./components/FightSingleRHT";
+import {FightSingleLFT} from "./components/FightSingleLFT";
 
 interface IFightSingleProps {
 
@@ -18,103 +27,59 @@ interface IFightSingleProps {
 
 export const FightSingle: React.FC<IFightSingleProps> = () => {
 
+    const {fightId} = useParams()
+    const ws: any = useRef(null)
+    const [mainPlayer, setMainPlayer] = useState({})
+    const [opponentPlayer, setOpponentPlayer] = useState({})
 
+    const [gameState, setGameState] = useState("waiting")
+    const navigate = useNavigate()
+
+    const userData: IUser = useSelector((state: any) => state.toolkit.user)
+    const fightData: IFightItem = useSelector((state: any) => state.toolkit.fightItemData)
+
+    useEffect(() => {
+
+        if (!Object.keys(userData).length) return;
+
+        ws.current = new WebSocket(getApiLink("ws/api/fight/game/"+fightId+"/", true))
+
+        ws.current.onopen = () => {
+            ws.current.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
+        }
+
+        ws.current.onmessage = (e: any) => {
+            const data = JSON.parse(JSON.parse(e.data))
+
+            console.log(data)
+
+            setGameState(data.fight?.game_state ?? "waiting")
+
+            if(data.fight?.game_state === "ended") {
+                ws.current.close()
+                setTimeout(() => {
+                    navigate("/")
+                }, 5000)
+            }
+
+            if(data.type === "player_join_event" && userData?.id) {
+                setMainPlayer(userData.id !== data.data[0]?.id ? data.data[0] : data.data[1])
+                setOpponentPlayer(userData.id === data.data[0]?.id ? data.data[0] : data.data[1])
+            } else if (userData?.id) {
+                setMainPlayer(userData.id === data.fight.first_player?.user.id ? data.fight?.first_player : data.fight?.second_player)
+                setOpponentPlayer(userData.id !== data.fight.second_player?.user.id ? data.fight?.second_player : data.fight?.first_player)
+            }
+        }
+
+    }, [ws, userData])
 
     return (
         <FightSingleStyled className="section-fight">
-            <div className="section-fight__lft">
-                <FightSingleTop/>
-                <div className="section-fight__persone">
-                    <div className="persone__start">
-                        <img src={personNNN} alt="Persone"/>
-                    </div>
-                </div>
-                <div className="section-fight__bottom">
-                    <button className="section-fight__cancel">Отменить игру</button>
-                </div>
-            </div>
-            <div className="section-fight__center">
-                <div className="center__loading">
-                    <LoadingStyled className="load">
-                        <div className="line" />
-                        <div className="line" />
-                        <div className="line" />
-                    </LoadingStyled>
-                    <span>Ожидание</span>
-                </div>
-            </div>
-            <div className="section-fight__rht">
-                <div className="section-fight__top">
-                    <div className="section-fight__user section-fight__user_hidden">
-                        <div className="user__photo">
-                            <img src={userPhoto} alt="User"/>
-                        </div>
-                        <div className="user__name">Семён</div>
-                    </div>
-                    <div className="section-fight__resources">
-                        <div className="resources__clothes">
-                            <button className="clothes__head">
-                                <img src={clothesIcon} alt="Ico"/>
-                            </button>
-                            <div className="clothes__body">
-                                <ul>
-                                    <li>
-                                        <div className="clothes__cool clothes__cool_green">
+            <FightSingleLFT gameState={gameState} mainPlayer={mainPlayer} fightId={fightId} />
 
-                                        </div>
-                                        <img src={weaponIcon} alt="Photo"/>
-                                    </li>
-                                    <li>
-                                        <div className="clothes__cool clothes__cool_green">
+            <FightSingleCenter gameState={gameState}/>
 
-                                        </div>
-                                        <img src={weaponIcon} alt="Photo"/>
-                                    </li>
-                                    <li>
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src={weaponIcon} alt="Photo"/>
-                                    </li>
-                                    <li>
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src={weaponIcon} alt="Photo"/>
-                                    </li>
-                                    <li>
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src={weaponIcon} alt="Photo"/>
-                                    </li>
-                                    <li>
-                                        <div className="clothes__cool clothes__cool_green">
-
-                                        </div>
-                                        <img src={weaponIcon} alt="Photo"/>
-                                    </li>
-                                    <li className="count">
-                                        <span>+3</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="resources__coins resources__coins_none">
-                            <img src={coins} alt="Ico"/>
-                            <span>0</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="section-fight__persone">
-                    <div className="persone__start">
-                        <img src={personSilhouette} alt="Persone"/>
-                    </div>
-                </div>
-                <div className="section-fight__bottom">
-                    <div className="section-fight__opponent-info">Нет игрока</div>
-                </div>
-            </div>
+            <FightSingleRHT gameState={gameState} opponentPlayer={opponentPlayer}/>
         </FightSingleStyled>
     )
 }

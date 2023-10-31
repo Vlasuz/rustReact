@@ -5,10 +5,10 @@ import {ItemTypes} from "../../../constants/ItemTypes";
 import {useSelector} from "react-redux";
 
 interface IZoneOfProductsProps {
-
+    setItems?: any
 }
 
-export const ZoneOfProducts:React.FC<IZoneOfProductsProps> = () => {
+export const ZoneOfProducts:React.FC<IZoneOfProductsProps> = ({setItems}) => {
 
     const dropToZone = useItemDrop({itemType: ItemTypes.ITEM, typeOfState: 'popup'})
     const popupZoneItems = useSelector((state: any) => state.toolkit.popupZoneItems);

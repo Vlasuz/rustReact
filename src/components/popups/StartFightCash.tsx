@@ -1,8 +1,13 @@
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import coins from './../../assets/images/header__coins.svg'
 import {PopupCross} from "../../hooks/popup/components/PopupCross";
-import {IFightItem} from "../../model";
-import {useSelector} from "react-redux";
+import {IFightItem, IProduct} from "../../model";
+import {useDispatch, useSelector} from "react-redux";
+import axios from "axios";
+import {getApiLink} from "../../functions/getApiLink";
+import {setPopup} from "../../redux/toolkitSlice";
+import {PopupsContext} from "../../context/popupsContext";
+import {useNavigate} from "react-router";
 
 interface IStartFightCashProps {
 
@@ -11,6 +16,26 @@ interface IStartFightCashProps {
 export const StartFightCash: React.FC<IStartFightCashProps> = () => {
 
     const fightItemData: IFightItem = useSelector((state: any) => state.toolkit.fightItemData)
+    const setIsOpen: any = useContext(PopupsContext)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const handleStartGame = () => {
+
+        axios.post(getApiLink("api/fight/room/join?game_id="+fightItemData.id), {
+            coins: fightItemData.first_player.coins,
+        }).then(({data}) => {
+            if(!data?.status) return;
+
+            setIsOpen(false)
+            setTimeout(() => {
+                dispatch(setPopup(''))
+            }, 300)
+            navigate('/fight/'+fightItemData.id)
+
+        }).catch(er => console.log(er))
+
+    }
 
     return (
         <>
@@ -27,9 +52,7 @@ export const StartFightCash: React.FC<IStartFightCashProps> = () => {
                     </span>
                 </div>
             </div>
-            <form>
-                <button>Внести ставку</button>
-            </form>
+            <button onClick={handleStartGame}>Внести ставку</button>
         </>
     )
 }

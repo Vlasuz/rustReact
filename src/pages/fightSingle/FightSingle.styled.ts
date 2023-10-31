@@ -79,6 +79,11 @@ export const FightSingleStyled = styled.section`
         padding: 19px;
         transition: all .3s ease;
         cursor: pointer;
+        
+        &.button_hidden {
+          opacity: 0;
+          visibility: hidden;
+        }
 
         &:hover {
           transform: scale(1.05);
@@ -232,7 +237,7 @@ export const FightSingleStyled = styled.section`
       position: relative;
       display: flex;
       flex-direction: column;
-      overflow: auto;
+      overflow: hidden;
     }
 
     &__rht {
@@ -246,7 +251,7 @@ export const FightSingleStyled = styled.section`
       position: relative;
       display: flex;
       flex-direction: column;
-      overflow: auto;
+      overflow: hidden;
     }
 
     &__user {
@@ -647,26 +652,27 @@ export const FightSingleStyled = styled.section`
           transform: translateX(-50%);
 
           &:nth-child(1) {
-            top: -15px;
+            top: -0px;
             opacity: 0;
           }
 
           &:nth-child(2) {
-            top: 60px;
+            top: 68px;
             opacity: 0;
           }
 
           &:nth-child(3) {
-            bottom: -10px;
+            bottom: 5px;
             opacity: 0;
           }
 
-          &.img_hover {
+          &.img_hover,
+          &:hover {
             opacity: 1;
           }
 
           &.img_clicked {
-            opacity: 0 !important;
+            opacity: 1 !important;
           }
         }
       }
@@ -709,10 +715,13 @@ export const FightSingleStyled = styled.section`
         max-height: 471px;
         height: 100%;
         margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         img {
-          width: 100%;
-          height: 100%;
+          //height: 100%;
+          width: 1000px;
         }
       }
     }

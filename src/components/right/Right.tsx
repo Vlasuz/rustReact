@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { RightStyled } from './right.styled'
+import React, {useEffect, useState} from 'react'
+import {RightStyled} from './right.styled'
 
 import users from './../../assets/images/users.svg'
-import { Chat } from '../chat/Chat'
-import { RightPererab } from './components/rightPERERAB/RightPererab'
-import { useSelector } from 'react-redux'
-import { IAsideButtonToRight, ITrigger } from '../../model'
-import { RightStorage } from './components/rightSTORAGE/RightStorage'
-import { RightShop } from './components/rightSHOP/RightShop'
+import {Chat} from '../chat/Chat'
+import {RightPererab} from './components/rightPERERAB/RightPererab'
+import {useSelector} from 'react-redux'
+import {IAsideButtonToRight, ITrigger} from '../../model'
+import {RightStorage} from './components/rightSTORAGE/RightStorage'
+import {RightShop} from './components/rightSHOP/RightShop'
 import {RightCases} from "./components/rightCASES/RightCases";
 import {RightAirdrop} from "./components/rightAIRDROP/RightAirdrop";
 
@@ -62,25 +62,31 @@ export const Right: React.FC<IRightProps> = () => {
     }
 
     useEffect(() => {
-        if(trigger.type !== 'CHANGE_RIGHT_BLOCK') return;
 
-        handleSwitch('no_chat')
+        if (trigger.type === 'CHANGE_RIGHT_BLOCK_CHAT') {
+            handleSwitch('chat')
+        } else if (trigger.type === 'CHANGE_RIGHT_BLOCK') {
+            handleSwitch('no_chat')
+        }
+
     }, [trigger])
 
-
+    console.log(trigger)
 
     return (
         <RightStyled>
             <div className="section-right__top">
-                <button onClick={_ => handleSwitch('no_chat')} className={"top__item" + (blockValue.header === 'no_chat' ? ' top__item_active' : '')}>
+                <button onClick={_ => handleSwitch('no_chat')}
+                        className={"top__item" + (blockValue.header === 'no_chat' ? ' top__item_active' : '')}>
                     <span>
                         {activeRightBlock.title}
                     </span>
                 </button>
-                <button onClick={_ => handleSwitch('chat')} className={"top__item" + (blockValue.header === 'chat' ? ' top__item_active' : '')}>
+                <button onClick={_ => handleSwitch('chat')}
+                        className={"top__item" + (blockValue.header === 'chat' ? ' top__item_active' : '')}>
                     <span>Чат</span>
                     <div className="people">
-                        <img src={users} alt="Ico" />
+                        <img src={users} alt="Ico"/>
                         <span>
                             {userOnline}
                         </span>
@@ -89,7 +95,8 @@ export const Right: React.FC<IRightProps> = () => {
             </div>
             <div className="section-right__switcher">
                 {blockValue.body === 'no_chat' && rightBlock[activeRightBlock.slug]}
-                {blockValue.body === 'chat' && <Chat className={"section-right__item" + (blockValue.block === 'chat' ? ' section-right_active' : '') + isHideBlock} />}
+                {blockValue.body === 'chat' && <Chat
+                    className={"section-right__item" + (blockValue.block === 'chat' ? ' section-right_active' : '') + isHideBlock}/>}
             </div>
         </RightStyled>
     )
