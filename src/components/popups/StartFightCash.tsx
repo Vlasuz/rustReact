@@ -8,6 +8,7 @@ import {getApiLink} from "../../functions/getApiLink";
 import {setPopup} from "../../redux/toolkitSlice";
 import {PopupsContext} from "../../context/popupsContext";
 import {useNavigate} from "react-router";
+import {prettyCoinValues} from "../../functions/prettyCoinValues";
 
 interface IStartFightCashProps {
 
@@ -25,7 +26,7 @@ export const StartFightCash: React.FC<IStartFightCashProps> = () => {
         axios.post(getApiLink("api/fight/room/join?game_id="+fightItemData.id), {
             coins: fightItemData.first_player.coins,
         }).then(({data}) => {
-            if(!data?.status) return;
+            if(data?.status === false) return;
 
             setIsOpen(false)
             setTimeout(() => {
@@ -48,7 +49,7 @@ export const StartFightCash: React.FC<IStartFightCashProps> = () => {
                 <div className="info__coins">
                     <img src={coins} alt="Ico"/>
                     <span>
-                        {fightItemData.first_player.coins}
+                        {prettyCoinValues(fightItemData.first_player.coins)}
                     </span>
                 </div>
             </div>

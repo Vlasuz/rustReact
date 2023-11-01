@@ -8,6 +8,7 @@ import axios from 'axios'
 import { Loading } from '../../../components/loading/Loading'
 import { LoadingStyled } from '../../../components/loading/loading.styled'
 import { changeUserBalance } from '../../../redux/toolkitSlice'
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface ISkinItemProps {
     skin: ISkin
@@ -88,7 +89,7 @@ export const SkinItem: React.FC<ISkinItemProps> = ({ skin, chosenSkin, setChosen
                 {isSettingSkin || skins.owned.some((item: ISkin) => item.id === skin.id) || !skinBought.some((item: ISkin) => item.id === skin.id) && <button className="buy__price">
                     <img src={coin} alt="Skin" />
                     <span>
-                        {skin.price}
+                        {prettyCoinValues(skin.price)}
                     </span>
                     {skin.sale && <div className="sale">
                         {skin.sale}

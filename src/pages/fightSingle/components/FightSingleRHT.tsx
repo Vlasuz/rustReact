@@ -1,36 +1,91 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {FightSingleTop} from "./FightSingleTop";
 import personSilhouette from "../../../assets/images/persone-siluete.png";
 import greenCheck from "../../../assets/images/red-check.svg";
-import { findTheSameElems } from '../../../functions/fingTheSameElems';
+import {findTheSameElems} from '../../../functions/fingTheSameElems';
 import headSil from "../../../assets/images/head-hit.png";
 import bodySil from "../../../assets/images/body-hit.png";
 import legsSil from "../../../assets/images/legs-hit.png";
 
 import looserIcon from "./../../../assets/images/fight-looser.svg"
 import winnerIcon from "../../../assets/images/victory-cup.svg";
+import bullet from "../../../assets/images/bullet.svg";
+import {WSFight} from "../FightSingle";
+import personSSN from "../../../assets/images/persone-ssn.png";
+import personNNN from "../../../assets/images/persone-nnn.png";
+import personSNN from "../../../assets/images/persone-snn.png";
+import personNSN from "../../../assets/images/persone-nsn.png";
+import personNSS from "../../../assets/images/persone-nss.png";
+import personNNS from "../../../assets/images/persone-nns.png";
+import personSNS from "../../../assets/images/persone-sns.png";
+import {useSelector} from "react-redux";
 
 interface IFightSingleLFTProps {
     opponentPlayer: any,
     gameState: string
+    gameData: any
 }
 
-export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, gameState}) => {
+export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, gameState, gameData}) => {
 
     const [suit, setSuit] = useState([false, false, false])
     const [suitType] = useState(["Голова", "Торс", "Ноги"])
     const [isFullSuit, setIsFullSuit] = useState(false)
+    const userData = useSelector((state: any) => state.toolkit.user)
+
+    const isYour = gameData.fight?.first_player.user.id === userData.id
+    const attackFirst = isYour ? gameData.fight?.first_player.attack : gameData.fight?.second_player.attack
+    const defenseSecond = !isYour ? gameData.fight?.first_player.defense : gameData.fight?.second_player.defense
+
+    const ws: any = useContext(WSFight)
+
+    const suitHead = defenseSecond?.includes('head') ? "S" : "N"
+    const suitBody = defenseSecond?.includes('body') ? "S" : "N"
+    const suitLegs = defenseSecond?.includes('legs') ? "S" : "N"
+
+    const suitImage: any = {
+        "SSN": personSSN,
+        "NNN": personNNN,
+        "SNN": personSNN,
+        "NSN": personNSN,
+        "NSS": personNSS,
+        "NNS": personNNS,
+        "SNS": personSNS,
+    }
 
     useEffect(() => {
         setIsFullSuit(findTheSameElems(suit, true) === 2)
+        if (suit[0] || suit[1] || suit[2]) {
+            ws.send(JSON.stringify({
+                "type": "attack",
+                "head": suit[0],
+                "body": suit[1],
+                "legs": suit[2]
+            }))
+        }
     }, [suit])
 
     const [isHoverButtonToSkin, setIsHoverButtonToSkin] = useState(10)
 
+    useEffect(() => {
+        if (gameState === "duel") {
+            setSuit([false, false, false])
+        }
+    }, [gameState])
+
+    const isHit = (bodyPart: string) => {
+        return attackFirst.includes(bodyPart) && defenseSecond.includes(bodyPart) ? " attacked__bullet_good" : " attacked__bullet_bad"
+    }
+    const isAttack = (bodyPart: string) => {
+        return attackFirst.includes(bodyPart) ? " attacked__bullet_active" : ""
+    }
+
+    const isWinner = gameData.fight?.winner?.user?.id !== userData?.id
+
     return (
         <div className="section-fight__rht">
             <FightSingleTop player={opponentPlayer}/>
-            <div className="section-fight__persone">
+            <div className="section-fight__persone section-fight__persone-hit">
                 {gameState === "prepare" && <div className="persone__green">
                     <img className={"head" + (isHoverButtonToSkin === 0 ? " img_hover" : suit[0] ? " img_clicked" : "")}
                          onClick={_ => setSuit(prev => [!isFullSuit && !suit[0] && !prev[0], prev[1], prev[2]])}
@@ -46,7 +101,26 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                          width="270"/>
                 </div>}
                 <div className="persone__start">
-                    <img src={personSilhouette} alt="Persone"/>
+                    {(gameState === "duel" || gameState === "ended") && <div className="persone__attacked">
+                        <div
+                            className={"attacked__bullet attacked__bullet-head" + (isHit('head') + (isAttack('head')))}>
+                            <img src={bullet} alt="Ico"/>
+                            <div className="line"></div>
+                        </div>
+                        <div
+                            className={"attacked__bullet attacked__bullet-body" + (isHit('body') + (isAttack('body')))}>
+                            <img src={bullet} alt="Ico"/>
+                            <div className="line"></div>
+                        </div>
+                        <div
+                            className={"attacked__bullet attacked__bullet-legs" + (isHit('legs') + (isAttack('legs')))}>
+                            <img src={bullet} alt="Ico"/>
+                            <div className="line"></div>
+                        </div>
+                    </div>}
+                    <img
+                        src={suitHead === "S" || suitBody === "S" || suitLegs === "S" ? suitImage[suitHead + suitBody + suitLegs] : personSilhouette}
+                        className={"persone-img"} alt="Persone"/>
                 </div>
             </div>
 
@@ -54,11 +128,12 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                 <div className="section-fight__opponent-info">Нет игрока</div>
             </div>}
 
-            {(gameState === "duel" || gameState === "ended") && <div className="section-fight__bottom section-fight__bottom_finish">
-                <div className="bottom__status bottom__status_looser">
-                    {gameState === "ended" && <img src={looserIcon} alt={"Looser"}/>}
-                </div>
-            </div>}
+            {(gameState === "duel" || gameState === "ended") &&
+                <div className="section-fight__bottom section-fight__bottom_finish">
+                    <div className={"bottom__status" + (isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
+                        {gameState === "ended" && <img src={isWinner ? winnerIcon : looserIcon} alt={"winner"}/>}
+                    </div>
+                </div>}
 
             {gameState === "prepare" && <div className="section-fight__bottom">
                 {!isFullSuit && <div className="bottom__info">

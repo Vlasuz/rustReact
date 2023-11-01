@@ -5,6 +5,7 @@ import weaponIcon from "../../../assets/images/weapon.png";
 import coins from "../../../assets/images/header__coins.svg";
 import {useToggleModal} from "../../../hooks/toggleModal";
 import {FightSingleItems} from "./FightSingleItems";
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface IFightSingleTopProps {
     player: any
@@ -24,12 +25,12 @@ export const FightSingleTop:React.FC<IFightSingleTopProps> = ({player}) => {
             </div>
             <div className="section-fight__resources">
 
-                <FightSingleItems items={player?.items}/>
+                {!!player?.items?.length && <FightSingleItems items={player?.items}/>}
 
                 <div className={"resources__coins" + (player?.coins > 0 ? "" : " resources__coins_none")}>
                     <img src={coins} alt="Ico"/>
                     <span>
-                        {player?.coins ?? 0}
+                        {prettyCoinValues(player?.coins) ?? 0}
                     </span>
                 </div>
             </div>

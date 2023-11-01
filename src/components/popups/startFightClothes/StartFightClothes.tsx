@@ -11,6 +11,7 @@ import {closePopup} from "../../../functions/closePopup";
 import {setPopup, setPopupZoneItems} from "../../../redux/toolkitSlice";
 import axios from "axios";
 import {getApiLink} from "../../../functions/getApiLink";
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface IStartFightClothesProps {
 
@@ -63,7 +64,7 @@ export const StartFightClothes: React.FC<IStartFightClothesProps> = () => {
                                 <p>Сумма ставки:</p>
                                 <div className="input">
                                     <img src={coins} alt="Ico"/>
-                                    <input type="text" value={countOfBet} disabled placeholder="0"/>
+                                    <input type="text" value={prettyCoinValues(countOfBet)} disabled placeholder="0"/>
                                 </div>
                             </div>
                             <div className="inputs__item inputs__item-opp">

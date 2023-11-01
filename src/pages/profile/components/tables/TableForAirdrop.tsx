@@ -23,7 +23,7 @@ export const TableForAirdrop: React.FC<ITableForAirdropProps> = ({ tableValue, t
                 <div className="thead">
                     <div className="tr">
                         <div className="td">Дата</div>
-                        <div className="td">Спальники</div>
+                        <div className="td">Номер игры</div>
                         <div className="td">Победитель</div>
                         <div className="td">Ставка</div>
                         <div className="td">Банк</div>
@@ -50,7 +50,9 @@ export const TableForAirdrop: React.FC<ITableForAirdropProps> = ({ tableValue, t
                                         {time}
                                         <span>{date}</span>
                                     </div>
-                                    <div className="td">R14</div>
+                                    <div className="td">
+                                        {item.game_id}
+                                    </div>
                                     <div className="td">
                                         <div className="list-players">
                                             <ul>

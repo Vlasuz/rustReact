@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {createContext, useEffect, useRef, useState} from 'react'
 import {Translate} from '../../components/translate/Translate'
 import {FightSingleTop} from "./components/FightSingleTop";
 import {FightSingleStyled} from "./FightSingle.styled";
@@ -25,6 +25,8 @@ interface IFightSingleProps {
 
 }
 
+export const WSFight: any = createContext(null)
+
 export const FightSingle: React.FC<IFightSingleProps> = () => {
 
     const {fightId} = useParams()
@@ -32,17 +34,17 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
     const [mainPlayer, setMainPlayer] = useState({})
     const [opponentPlayer, setOpponentPlayer] = useState({})
 
+    const [gameData, setGameData] = useState({})
     const [gameState, setGameState] = useState("waiting")
     const navigate = useNavigate()
 
     const userData: IUser = useSelector((state: any) => state.toolkit.user)
-    const fightData: IFightItem = useSelector((state: any) => state.toolkit.fightItemData)
 
     useEffect(() => {
 
         if (!Object.keys(userData).length) return;
 
-        ws.current = new WebSocket(getApiLink("ws/api/fight/game/"+fightId+"/", true))
+        ws.current = new WebSocket(getApiLink("ws/api/fight/game/" + fightId + "/", true))
 
         ws.current.onopen = () => {
             ws.current.send(`{"type":"auth", "token":"${getCookie('access_token')}"}`)
@@ -53,16 +55,19 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
 
             console.log(data)
 
+            if(data.type === "defense" || data.type === "attack") return;
+
+            setGameData(data)
             setGameState(data.fight?.game_state ?? "waiting")
 
-            if(data.fight?.game_state === "ended") {
+            if (data.fight?.game_state === "ended") {
                 ws.current.close()
                 setTimeout(() => {
-                    navigate("/")
+                    // navigate("/")
                 }, 5000)
             }
 
-            if(data.type === "player_join_event" && userData?.id) {
+            if (data.type === "player_join_event" && userData?.id) {
                 setMainPlayer(userData.id !== data.data[0]?.id ? data.data[0] : data.data[1])
                 setOpponentPlayer(userData.id === data.data[0]?.id ? data.data[0] : data.data[1])
             } else if (userData?.id) {
@@ -74,12 +79,14 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
     }, [ws, userData])
 
     return (
-        <FightSingleStyled className="section-fight">
-            <FightSingleLFT gameState={gameState} mainPlayer={mainPlayer} fightId={fightId} />
+        <WSFight.Provider value={ws.current}>
+            <FightSingleStyled className="section-fight">
+                <FightSingleLFT gameState={gameState} mainPlayer={mainPlayer} gameData={gameData}/>
 
-            <FightSingleCenter gameState={gameState}/>
+                <FightSingleCenter gameState={gameState} gameData={gameData}/>
 
-            <FightSingleRHT gameState={gameState} opponentPlayer={opponentPlayer}/>
-        </FightSingleStyled>
+                <FightSingleRHT gameState={gameState} opponentPlayer={opponentPlayer} gameData={gameData}/>
+            </FightSingleStyled>
+        </WSFight.Provider>
     )
 }

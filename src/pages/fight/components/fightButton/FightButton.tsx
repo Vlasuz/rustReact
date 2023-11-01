@@ -7,6 +7,7 @@ import {IFightItem, IUser} from '../../../../model'
 import {useDispatch, useSelector} from "react-redux";
 import {setFightItemData, setNotice, setPopup} from "../../../../redux/toolkitSlice";
 import {useNavigate} from "react-router";
+import {prettyCoinValues} from "../../../../functions/prettyCoinValues";
 
 interface IFightButtonProps {
     data: IFightItem
@@ -70,7 +71,7 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
             return (<>
                 {!!Object.keys(userData).length && data.game_state === "waiting" && <span>Играть за</span>}
                 <img src={coin} alt="Ico"/>
-                <span>{data.first_player.coins}</span>
+                <span>{prettyCoinValues(data.first_player.coins)}</span>
             </>)
         }
     }

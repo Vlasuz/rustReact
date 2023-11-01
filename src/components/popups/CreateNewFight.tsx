@@ -11,6 +11,7 @@ import {getApiLink} from "../../functions/getApiLink";
 import {useNavigate} from "react-router";
 import {setFightItemData, setPopup, setPopupZoneItems} from "../../redux/toolkitSlice";
 import {PopupsContext} from "../../context/popupsContext";
+import {prettyCoinValues} from "../../functions/prettyCoinValues";
 
 interface ICreateNewFightProps {
 
@@ -23,6 +24,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
 
     const [typeOfCreate, setTypeOfCreate] = useState('coins')
     const [coinsValue, setCoinsValue] = useState(0)
+    // const [coinValueVisual, setCoinValueVisual] = useState("")
     const [countOfBet, setCountOfBet] = useState(0)
 
     const navigate = useNavigate()
@@ -60,6 +62,10 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
         popupZoneItems.map((item: IProduct) => setCountOfBet(prev => prev + item.price.value))
     }, [popupZoneItems])
 
+    const changeCoinsValue = (e: any) => {
+        setCoinsValue(e.target.value.replace(/\D/g,'').substr(0,13))
+    }
+
     return (
         <>
             <div className="popup__content_lft">
@@ -82,8 +88,11 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                                 <p>Сумма ставки:</p>
                                 <div className="input">
                                     <img src={coins} alt="Ico"/>
-                                    <input onChange={(e: any) => setCoinsValue(e.target.value)} type="text"
-                                           placeholder="0" value={coinsValue === 0 ? "" : coinsValue}/>
+                                    <input onChange={e => changeCoinsValue(e)} type="text"
+                                           placeholder="0" value={coinsValue === 0 ? "" : prettyCoinValues(+coinsValue)}/>
+                                    {/*<span>*/}
+                                    {/*    {prettyCoinValues(+coinsValue)}*/}
+                                    {/*</span>*/}
                                 </div>
                             </div>
                             <div className="inputs__item inputs__item-have">
@@ -91,7 +100,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                                 <div className="input">
                                     <img src={coins} alt="Ico"/>
                                     <span>
-                                        {userInfo.balance}
+                                        {prettyCoinValues(userInfo.balance)}
                                     </span>
                                 </div>
                             </div>
@@ -108,7 +117,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                         <div className="input">
                             <img src={coins} alt="Ico"/>
                             <span>
-                                {countOfBet}
+                                {prettyCoinValues(countOfBet)}
                             </span>
                         </div>
                     </div>

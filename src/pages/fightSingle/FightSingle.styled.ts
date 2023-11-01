@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import bgBottomInfo from './../../assets/images/bgd-bottom-info.png'
 import bgFight from './../../assets/images/bgd-fight.svg'
+import lineBullet from './../../assets/images/line-bullet.svg'
 
 export const FightSingleStyled = styled.section`
 
@@ -22,7 +23,6 @@ export const FightSingleStyled = styled.section`
           height: 130px;
           border-radius: 0px 0px 10px 10px;
           margin-left: -20px;
-          margin-top: -40px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -252,6 +252,21 @@ export const FightSingleStyled = styled.section`
       display: flex;
       flex-direction: column;
       overflow: hidden;
+
+      //.attacked__bullet {
+      //  left: 0;
+      //  right: auto;
+      //  width: 320px;
+      //  img {
+      //    margin-left: -20px;
+      //  }
+      //  img,
+      //  &:after,
+      //  &:before {
+      //    transform: rotate(180deg) !important;
+      //  }
+      //}
+      
     }
 
     &__user {
@@ -286,6 +301,8 @@ export const FightSingleStyled = styled.section`
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
+      z-index: 2;
     }
 
     &__resources {
@@ -399,6 +416,7 @@ export const FightSingleStyled = styled.section`
         justify-content: center;
         max-width: 130px;
         width: 100%;
+        height: 50px;
         margin-left: 6px;
 
         span {
@@ -419,7 +437,7 @@ export const FightSingleStyled = styled.section`
 
     &__center {
       position: absolute;
-      z-index: 2;
+      z-index: 3;
       background: #191A29;
       border-radius: 20px;
       width: 120px;
@@ -536,18 +554,6 @@ export const FightSingleStyled = styled.section`
         display: none;
         opacity: 0;
 
-        &:nth-child(1) {
-          animation: attackRight 1.5s .5s ease-out forwards;
-        }
-
-        &:nth-child(2) {
-          animation: attackRight 1.5s 1s ease-out forwards;
-        }
-
-        &:nth-child(3) {
-          animation: attackRight 1.5s 1.5s ease-out forwards;
-        }
-
         &_good {
           display: flex;
           align-items: center;
@@ -603,9 +609,24 @@ export const FightSingleStyled = styled.section`
             border-radius: 50%;
           }
         }
+        
+        img {
+          width: 17px;
+        }
 
         &_active {
           display: flex;
+          &:nth-child(1) {
+            animation: attackRight 1.5s .5s ease-out forwards;
+          }
+
+          &:nth-child(2) {
+            animation: attackRight 1.5s 1s ease-out forwards;
+          }
+
+          &:nth-child(3) {
+            animation: attackRight 1.5s 1.5s ease-out forwards;
+          }
         }
 
         .line {
@@ -616,7 +637,7 @@ export const FightSingleStyled = styled.section`
           left: 30px;
           top: 50%;
           transform: translateY(-50%);
-          background: url('../img/line-bullet.svg') repeat-x;
+          background: url(${lineBullet}) repeat-x;
         }
 
         &:nth-child(1) {
@@ -706,24 +727,34 @@ export const FightSingleStyled = styled.section`
           }
         }
       }
+      
+    }
+  }
 
-      .persone__start {
-        min-width: 270px;
-        max-width: 270px;
-        width: 100%;
-        min-height: 471px;
-        max-height: 471px;
-        height: 100%;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        img {
-          //height: 100%;
-          width: 1000px;
-        }
-      }
+  @keyframes attackLeft {
+    0% {
+      left: 0;
+      opacity: 0
+    }
+    20% {
+      left: 100px
+    }
+    100% {
+      left: 110px;
+      opacity: 1
+    }
+  }
+  @keyframes attackRight {
+    0% {
+      right: 0;
+      opacity: 0
+    }
+    20% {
+      right: 100px
+    }
+    100% {
+      right: 110px;
+      opacity: 1
     }
   }
 

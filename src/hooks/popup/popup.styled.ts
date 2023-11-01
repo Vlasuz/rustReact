@@ -2319,5 +2319,18 @@ export const PopupStyled = styled.div`
     -ms-flex-pack: center;
     justify-content: center
   }
+  
+  //.inputs__item.inputs__item-sum .input {
+  //  position: relative;
+  //}
+  //.inputs__item.inputs__item-sum .input input {
+  //  //color: transparent;
+  //}
+  //.inputs__item.inputs__item-sum .input span {
+  //  position: absolute;
+  //  right: 40px;
+  //  pointer-events: none;
+  //  font-weight: bold;
+  //}
     
 `

@@ -11,6 +11,10 @@ export const AirdropStyled = styled.section`
   .map__photo {
     width: 1400px;
     height: 1440px;
+    cursor: grab;
+    &:active {
+      cursor: grabbing;
+    }
     img {
       width: 100%;
       height: 100%;

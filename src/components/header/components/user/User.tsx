@@ -6,6 +6,7 @@ import { Burger } from '../burger/Burger'
 import { useUserData } from '../../../../hooks/userData'
 import { useDispatch } from 'react-redux'
 import {setPopup, setSound } from '../../../../redux/toolkitSlice'
+import {prettyCoinValues} from "../../../../functions/prettyCoinValues";
 
 interface IUserProps {
 
@@ -21,7 +22,7 @@ export const User: React.FC<IUserProps> = () => {
             <button className="header__coins" onClick={_ => dispatch(setPopup('popup-add-coins'))}>
                 <img src={coin} alt="Coins" />
                 <span>
-                    {userData.balance}
+                    {prettyCoinValues(userData.balance)}
                 </span>
                 <div className="ico">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
