@@ -61,20 +61,6 @@ canvas { width: 100vh; height: 100vh }
     position: relative;
     min-height: 50px;
 }
-.section-fight__rht .section-fight__bottom{
-    opacity: 0;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
-}
-.section-fight__rht .section-fight__bottom_active{
-    opacity: 1;
-}
-.section-fight__rht .section-fight__bottom_hide{
-    opacity: 0;
-}
 .section-fight__bottom_finish {
     margin: 0;
     min-height: 130px;
@@ -830,20 +816,20 @@ canvas { width: 100vh; height: 100vh }
 }
 .section-fight__persone .persone__green img:nth-child(1),
 .section-fight__persone .persone__red img:nth-child(1) {
-    bottom: 402px;
+    bottom: 427px;
     opacity: 0;
-    width: 280px;
+    width: 300px;
 }
 .section-fight__persone .persone__green img:nth-child(2),
 .section-fight__persone .persone__red img:nth-child(2) {
-    bottom: 267px;
+    bottom: 282px;
     opacity: 0;
-    width: 285px;
+    width: 310px;
 }
 .section-fight__persone .persone__green img:nth-child(3),
 .section-fight__persone .persone__red img:nth-child(3) {
     bottom: -10px;
-    width: 280px;
+    width: 299px;
     opacity: 0
 }
 .section-fight__persone .persone__green img.img_hover,
@@ -947,6 +933,18 @@ canvas { width: 100vh; height: 100vh }
 @media screen and (max-height: 860px) {
     .section-fight__persone .persone__start .persone-img{
         width: 1050px;
+    }
+    .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
+        bottom: 398px;
+        width: 280px;
+    }
+    .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
+        bottom: 260px;
+        width: 291px;
+    }
+    .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
+        bottom: -17px;
+        width: 282px;
     }
 }
 @media screen and (max-height: 800px) {

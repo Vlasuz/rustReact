@@ -9,6 +9,29 @@ export const FightSingleStyled = styled.section`
   align-items: center;
   justify-content: center;
   
+  .svg_timer {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+
+  .maskCircle{
+    width: 100px;
+    height: 100px;
+    fill: none;
+    stroke: #F5AD57;
+    stroke-width: 2;
+    stroke-dasharray: 3;
+    stroke-dashoffset: 110;
+  }
+  .maskCircle__inner{
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-dashoffset: 0;
+    stroke-dasharray: 370;
+  }
+  
   .section-fight {
 
     &__bottom {
@@ -550,7 +573,7 @@ export const FightSingleStyled = styled.section`
       .attacked__bullet {
         position: absolute;
         right: 0;
-        z-index: 2;
+        z-index: 1;
         display: none;
         opacity: 0;
 
@@ -656,36 +679,36 @@ export const FightSingleStyled = styled.section`
 
       .persone__red,
       .persone__green {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        min-width: 270px;
-        max-width: 270px;
-        width: 100%;
-        min-height: 471px;
-        max-height: 471px;
-        height: 100%;
-        bottom: 0;
+        //position: absolute;
+        //left: 50%;
+        //transform: translateX(-50%);
+        //min-width: 270px;
+        //max-width: 270px;
+        //width: 100%;
+        //min-height: 471px;
+        //max-height: 471px;
+        //height: 100%;
+        //bottom: 0;
 
         img {
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-
-          &:nth-child(1) {
-            top: -0px;
-            opacity: 0;
-          }
-
-          &:nth-child(2) {
-            top: 68px;
-            opacity: 0;
-          }
-
-          &:nth-child(3) {
-            bottom: 5px;
-            opacity: 0;
-          }
+          //position: absolute;
+          //left: 50%;
+          //transform: translateX(-50%);
+          //
+          //&:nth-child(1) {
+          //  top: -0px;
+          //  opacity: 0;
+          //}
+          //
+          //&:nth-child(2) {
+          //  top: 68px;
+          //  opacity: 0;
+          //}
+          //
+          //&:nth-child(3) {
+          //  bottom: 5px;
+          //  opacity: 0;
+          //}
 
           &.img_hover,
           &:hover {

@@ -130,7 +130,7 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
 
             {(gameState === "duel" || gameState === "ended") &&
                 <div className="section-fight__bottom section-fight__bottom_finish">
-                    <div className={"bottom__status" + (isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
+                    <div className={"bottom__status" + (gameData.fight?.winner?.user?.id && isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
                         {gameState === "ended" && <img src={isWinner ? winnerIcon : looserIcon} alt={"winner"}/>}
                     </div>
                 </div>}

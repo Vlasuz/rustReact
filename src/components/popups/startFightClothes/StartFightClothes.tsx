@@ -39,7 +39,7 @@ export const StartFightClothes: React.FC<IStartFightClothesProps> = () => {
             // coins: fightItemData.first_player.coins,
             items: popupZoneItems.map((item: IProduct) => item.id)
         }).then(({data}) => {
-            if(!data?.status) return;
+            if(data?.status === false) return;
 
             setIsOpen(false)
             setTimeout(() => {
