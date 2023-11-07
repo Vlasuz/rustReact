@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {createContext, useEffect, useRef, useState} from 'react'
 import {BattleSingleStyled} from "./BattleSingle.styled";
 import {BattleTop} from "../../components/battleTop/BattleTop";
 
@@ -24,6 +24,8 @@ interface IBattleSingleProps {
 
 }
 
+export const GameState: any = createContext(null)
+
 export const BattleSingle: React.FC<IBattleSingleProps> = () => {
 
     const blockArea: any = useRef(null)
@@ -33,21 +35,26 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
         option: "2v2"
     })
 
+    const gameStep: string = "ended"
+    // start, waiting, process, ended
+
     return (
-        <BattleSingleStyled ref={blockArea}>
-            <BattleTop/>
+        <GameState.Provider value={gameStep}>
+            <BattleSingleStyled ref={blockArea}>
+                <BattleTop/>
 
-            <div className="battle-area">
-                <div className="battle-area__bgd">
-                    <img src={bgd} alt="img"/>
+                <div className="battle-area">
+                    <div className="battle-area__bgd">
+                        <img src={bgd} alt="img"/>
+                    </div>
+
+                    {gameStep === "start" && <BattleCreate setGameType={setGameType} gameType={gameType}/>}
+
+                    <BattleArea gameType={gameType} blockArea={blockArea}/>
+
+                    <BattleBottom gameType={gameType}/>
                 </div>
-
-                <BattleCreate setGameType={setGameType} gameType={gameType}/>
-
-                <BattleArea gameType={gameType} blockArea={blockArea}/>
-
-                <BattleBottom gameType={gameType}/>
-            </div>
-        </BattleSingleStyled>
+            </BattleSingleStyled>
+        </GameState.Provider>
     )
 }

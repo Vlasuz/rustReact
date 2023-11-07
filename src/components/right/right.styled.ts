@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import halfCircle from './../../assets/images/half-circle.svg'
 
 export const RightStyled = styled.section`
 
@@ -766,7 +767,7 @@ export const RightStyled = styled.section`
         }
       }
     }
-
+    
     &__airdrop {
       background: #202232;
       padding: 24px 14px 14px;
@@ -804,7 +805,7 @@ export const RightStyled = styled.section`
 
         &:after {
           content: '';
-          background: url('../img/half-circle.svg') no-repeat;
+          background: url(${halfCircle}) no-repeat;
           border-radius: 10px;
           display: block;
           width: 100%;
@@ -826,7 +827,12 @@ export const RightStyled = styled.section`
         border: none;
         cursor: pointer;
         transition: all .3s ease;
+        height: 45px;
 
+        &.move__submit {
+          height: 45px;
+        }
+        
         &:active {
           transform: scale(.9);
         }
@@ -863,6 +869,12 @@ export const RightStyled = styled.section`
         transition: all .3s ease;
         height: 50px;
         width: 100%;
+        &.move__random {
+          margin-right: 0;
+          span {
+            margin: 0;
+          }
+        }
 
         &:active {
           transform: scale(.9);
@@ -1239,7 +1251,7 @@ export const RightStyled = styled.section`
     &_active {
       opacity: 1;
     }
-
+    
   }
 
 `

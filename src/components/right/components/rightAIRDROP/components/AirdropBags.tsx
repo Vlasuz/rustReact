@@ -1,18 +1,30 @@
 import React, {useEffect, useState} from 'react'
+import {useSelector} from 'react-redux'
 
 import coins from './../../../../../assets/images/header__coins.svg'
+import {store} from "../../../../../redux";
+import {IUser} from "../../../../../model";
 
 interface IAirdropBagsProps {
-
+    setBags: any
+    handleBuyBags: any
 }
 
-export const AirdropBags: React.FC<IAirdropBagsProps> = () => {
+export const AirdropBags: React.FC<IAirdropBagsProps> = ({setBags, handleBuyBags}) => {
 
     const [countOfBags, setCountOfBags] = useState(0)
     const [costOfBags, setCostOfBags] = useState(0)
 
+    const userInfo: IUser = useSelector((state: any) => state.toolkit.user)
+
     const bagsArray = Array.apply('', Array(9))
-    const costOneBag = 200
+    const costOneBag = 50
+
+    useEffect(() => {
+        setBags(countOfBags)
+    }, [countOfBags])
+
+    const isCanBuy = userInfo.balance ? userInfo.balance >= (countOfBags * costOfBags) : false
 
     return (
         <div className="airdrop__sleepers">
@@ -33,7 +45,8 @@ export const AirdropBags: React.FC<IAirdropBagsProps> = () => {
                 }
 
             </ul>
-            <button className="sleepers__buy">
+
+            <button disabled={!(isCanBuy && countOfBags > 0)} onClick={handleBuyBags} className={"sleepers__buy" + (isCanBuy && countOfBags > 0 ? " move__submit" : "")}>
 
                 {countOfBags > 0 ? <>
                     <span>Купить</span>

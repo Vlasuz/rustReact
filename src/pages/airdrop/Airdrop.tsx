@@ -1,9 +1,11 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {AirdropStyled} from "./airdrop.styles";
 
 import mapPhoto from './../../assets/images/map.png'
 import {animated, useSpring} from "@react-spring/web";
 import {useDrag} from "react-use-gesture";
+import {Stage, Layer, Circle} from "react-konva";
+
 
 interface IAirdropProps {
 
@@ -43,26 +45,18 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
 
     })
 
+    const [wheelValue, setWheelValue] = useState(1)
 
-    // useEffect(() => {
-    //     function zoom(event: any) {
-    //         event.preventDefault();
-    //
-    //         scale += event.deltaY * -0.01;
-    //
-    //         // Restrict scale
-    //         scale = Math.min(Math.max(1, scale), 3);
-    //
-    //         // Apply scale transform
-    //         blockScale.current.style.transform = `scale(${scale})`;
-    //     }
-    //
-    //     let scale = 1;
-    //     document.body.onwheel = zoom;
-    // }, [])
+    const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+        if(wheelValue < 1) {
+            setWheelValue(prev => prev - (e.deltaY / 1000))
+        } else {
+            setWheelValue(1)
+        }
+    }
 
     return (
-        <AirdropStyled ref={blockArea} className="section-map">
+        <AirdropStyled onWheel={handleWheel} ref={blockArea} className="section-map">
             <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()}>
                 <div ref={blockScale} className="transform-scale">
                     <div ref={blockMap} className="map__photo">

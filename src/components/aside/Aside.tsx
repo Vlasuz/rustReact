@@ -63,15 +63,27 @@ export const Aside: React.FC<IAsideProps> = () => {
                         <div className="timer-line__line_done" />
                     </div>
                 </div>
+                <span className="absolute-span">
+                    Аирдроп
+                </span>
             </NavLink>
             <NavLink to={'/'} onClick={_ => handleChangePage("sound12", {slug: "PERERAB", title: "Переработчик"}, true)} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
                 <img src={fight} alt="Fight" />
+                <span className="absolute-span">
+                    Схватка
+                </span>
             </NavLink>
             <NavLink to={'/open-cases'} onClick={_ => handleChangePage("sound12", {slug: "CASES", title: "Кейсы"})} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
                 <img src={open_cases} alt="Fight" />
+                <span className="absolute-span">
+                    Кейсы
+                </span>
             </NavLink>
             <NavLink to={'/battle'} onClick={_ => handleChangePage("sound12", {slug: "CASES", title: "Баттл"})} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
                 <img src={battle} alt="Fight" />
+                <span className="absolute-span">
+                    Баттл
+                </span>
             </NavLink>
             <div className="aside__center">
                 <ul className="aside__list">
