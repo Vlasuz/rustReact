@@ -5,7 +5,7 @@ import { ISkin } from '../../../model'
 import { getApiLink } from '../../../functions/getApiLink'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { Loading } from '../../../components/loading/Loading'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { LoadingStyled } from '../../../components/loading/loading.styled'
 import { changeUserBalance } from '../../../redux/toolkitSlice'
 import {prettyCoinValues} from "../../../functions/prettyCoinValues";
@@ -83,7 +83,11 @@ export const SkinItem: React.FC<ISkinItemProps> = ({ skin, chosenSkin, setChosen
                 {skin.sub_title}
             </p>
             <div className="item__skin">
-                <img src={getApiLink(skin.image)} loading="lazy" alt="Skin" />
+                <LazyLoadImage
+                    visibleByDefault={coin}
+                    src={getApiLink(skin.image)}
+                    effect="blur"
+                />
             </div>
             <div className="item__buy">
                 {isSettingSkin || skins.owned.some((item: ISkin) => item.id === skin.id) || !skinBought.some((item: ISkin) => item.id === skin.id) && <button className="buy__price">

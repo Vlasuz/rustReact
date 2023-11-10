@@ -3,12 +3,14 @@ import { IProduct } from '../../../../../model'
 import coin from './../../../../../assets/images/header__coins.svg'
 import check from './../../../../../assets/images/green-check.svg'
 import basket from './../../../../../assets/images/basket.svg'
+import lockIcon from './../../../../../assets/images/lock-map.svg'
 import { addItemToCart, removeItemFromCart, setNotice } from '../../../../../redux/toolkitSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { getApiLink } from '../../../../../functions/getApiLink'
 import { getBearer } from '../../../../../functions/getBearer'
 import getCookies from "../../../../../functions/getCookie";
+import {RightItemTradeBan} from "./RightItemTradeBan";
 
 interface IRightShopItemProps {
     data: IProduct
@@ -41,12 +43,15 @@ export const RightShopItem: React.FC<IRightShopItemProps> = ({ data, searchValue
         <div onClick={handleAddToCart} className={"postamat__item" + (cart.some((item: IProduct) => item.id === data.id) ? " postamat__item_checked" : "")}>
             <div className="item__check">
                 <img src={check} alt="Check" />
-
             </div>
             <div className="item__buy">
                 <img src={basket} alt="Basket" />
             </div>
             <div className={"item__cool " + data.rarity.title} style={{ background: data.rarity.color }} />
+            <div className="item__title">
+                Title of product
+            </div>
+            <RightItemTradeBan data={data} />
             <div className="item__photo">
                 <img src={data.image} alt="Skin" />
             </div>

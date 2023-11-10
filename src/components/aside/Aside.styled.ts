@@ -63,10 +63,18 @@ export const AsideStyled = styled.aside`
         opacity: 0;
         transition: all .3s ease;
       }
+      
+      img {
+        opacity: .4;
+        -webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease;
+      }
 
       &:hover,
       &_active {
         &:after {
+          opacity: 1;
+        }
+        img {
           opacity: 1;
         }
       }
@@ -90,7 +98,8 @@ export const AsideStyled = styled.aside`
       padding: 20px 14px;
       margin-top: auto;
       transition: all .3s ease;
-
+      text-align: center;
+      
       &:hover {
         filter: brightness(1.5);
       }
@@ -101,8 +110,7 @@ export const AsideStyled = styled.aside`
       }
 
       img {
-        margin-bottom: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
       }
     }
 
@@ -175,6 +183,21 @@ export const AsideStyled = styled.aside`
       padding: 6px;
       padding-top: 18px;
       position: relative;
+
+      img {
+        opacity: .4;
+        -webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease;
+      }
+
+      &:hover,
+      &_timeline {
+        &:after {
+          opacity: 1;
+        }
+        img {
+          opacity: 1;
+        }
+      }
 
       .timer {
         display: flex;

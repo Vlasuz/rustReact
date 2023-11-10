@@ -15,6 +15,87 @@ export const RightStyled = styled.section`
   padding-bottom: 0;
   margin-top: -5px;
 
+  .item__cool {
+    width: 10px;
+    height: 10px;
+    top: 8px;
+    left: 8px;
+    position: absolute;
+    border-radius: 50%;
+
+    &:hover + .item__title {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  .item__is-lock {
+    display: none;
+
+    &_active {
+      display: block;
+    }
+
+    img {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      z-index: 2;
+      &:hover + p {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    p {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 0;
+      border-radius: 8px 8px 0px 0px;
+      background: #313344;
+      padding: 7px 0;
+      color: #FFF;
+      font-size: 12px;
+      font-weight: 400;
+      z-index: 3;
+      text-align: center;
+      transition: all .3s ease;
+
+      opacity: 0;
+      visibility: hidden;
+
+      &:hover {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  .item__title {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0;
+    border-radius: 8px 8px 0px 0px;
+    background: #313344;
+    padding: 7px 0;
+    color: #FFF;
+    font-size: 12px;
+    font-weight: 400;
+    z-index: 3;
+    text-align: center;
+    transition: all .3s ease;
+
+    opacity: 0;
+    visibility: hidden;
+
+    &:hover {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
   .postamat__block {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -135,7 +216,7 @@ export const RightStyled = styled.section`
           /* opacity: 0; */
         }
       }
-
+      
       .item__buy {
         position: absolute;
         background: rgba(162, 171, 197, 0.1);
@@ -169,15 +250,6 @@ export const RightStyled = styled.section`
         display: flex;
         align-items: center;
         justify-content: center;
-      }
-
-      .item__cool {
-        width: 10px;
-        height: 10px;
-        top: 8px;
-        left: 8px;
-        position: absolute;
-        border-radius: 50%;
       }
 
       .item__price {

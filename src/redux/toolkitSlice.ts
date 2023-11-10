@@ -65,6 +65,9 @@ const toolkitSlice = createSlice({
                 state.userInventory = [...state.userInventory, ...action.payload]
             }
         },
+        clearUserInventory(state) {
+            state.userInventory = []
+        },
         setUserHistory(state, action) {
             state.userHistory = action.payload
         },
@@ -202,6 +205,7 @@ export const {
     setUser,
     setUserGames,
     setUserInventory,
+    clearUserInventory,
     setUserHistory,
     setUserOnline,
 

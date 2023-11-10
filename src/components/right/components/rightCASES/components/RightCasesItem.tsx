@@ -9,6 +9,7 @@ import axios from 'axios'
 import { getApiLink } from '../../../../../functions/getApiLink'
 import { getBearer } from '../../../../../functions/getBearer'
 import getCookies from "../../../../../functions/getCookie";
+import {RightItemTradeBan} from "../../rightSHOP/components/RightItemTradeBan";
 
 interface IRightShopItemProps {
     data: IProduct
@@ -37,16 +38,20 @@ export const RightCasesItem: React.FC<IRightShopItemProps> = ({ data, searchValu
         }
     }
 
+
     return (
         <div onClick={handleAddToCart} className={"postamat__item" + (cart.some((item: IProduct) => item.id === data.id) ? " postamat__item_checked" : "")}>
             <div className="item__check">
                 <img src={check} alt="Check" />
-
             </div>
             <div className="item__buy">
                 <img src={basket} alt="Basket" />
             </div>
             <div className={"item__cool " + data.rarity.title} style={{ background: data.rarity.color }} />
+            <div className="item__title">
+                Title of product
+            </div>
+            <RightItemTradeBan data={data} />
             <div className="item__photo">
                 <img src={data.image} alt="Skin" />
             </div>

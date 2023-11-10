@@ -86,16 +86,23 @@ export const RightAirdropStyled = styled.div`
       }
     }
   }
-
+  
   &.dragging {
     .section-right__players {
-      height: 395px;
+      height: calc(100vh - 532px);
     }
   }
   &.member {
     .section-right__players {
-      height: 555px;
+      height: calc(100vh - 372px);
     }
   }
 
+  &.no-auth {
+    .section-right__players {
+      height: calc(100vh - 292px);
+    }
+  }
+  
+  
 `

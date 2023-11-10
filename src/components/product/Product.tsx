@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect } from 'react'
 import { IProduct } from './../../model'
-import { ProductStyled } from './product.styled'
+import { ProductStyled } from './Product.styled'
 
 import coin from './../../assets/images/header__coins.svg'
 import green_check from './../../assets/images/green-check.svg'
@@ -10,6 +10,7 @@ import { ItemTypes } from '../../constants/ItemTypes'
 import { useDispatch } from 'react-redux'
 import {setItemDrag, setPererabZoneItems, setPopupZoneItems, setUserInventory} from '../../redux/toolkitSlice'
 import { useItemDrag } from '../../hooks/itemDrag'
+import {RightItemTradeBan} from "../right/components/rightSHOP/components/RightItemTradeBan";
 
 interface IProductProps {
     product_data: IProduct
@@ -36,10 +37,11 @@ export const Product: React.FC<IProductProps> = ({ product_data, typeOfZone }) =
             <div className="item__check">
                 <img src={green_check} alt="Check" />
             </div>
-            {/* <div className="item__count">2</div> */}
-            <div className={"item__cool clothes__cool_" + product_data.rarity}>
-
+            <div className={"item__cool " + product_data.rarity.title} style={{ background: product_data.rarity.color }} />
+            <div className="item__title">
+                Title of product
             </div>
+            <RightItemTradeBan data={product_data} />
             <div className="item__photo">
                 <img src={product_data.image} alt="Skin" />
             </div>

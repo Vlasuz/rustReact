@@ -71,8 +71,6 @@ export const Right: React.FC<IRightProps> = () => {
 
     }, [trigger])
 
-    console.log(trigger)
-
     return (
         <RightStyled>
             <div className="section-right__top">

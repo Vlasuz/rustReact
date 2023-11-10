@@ -34,8 +34,10 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
         "member": <AirdropMember/>,
     }
 
+    const isUserAuthMainClass = !Object.keys(userInfo).length ? " no-auth" : ""
+
     return (
-        <RightAirdropStyled className={"section-right__item" + (blockValue.block === 'no_chat' ? ' section-right_active' : '') + ` ${pointOfGame}` + isHideBlock}>
+        <RightAirdropStyled className={"section-right__item" + (blockValue.block === 'no_chat' ? ' section-right_active' : '') + ` ${pointOfGame}` + isUserAuthMainClass + isHideBlock}>
             <div className="section-right__airdrop">
 
                 <AirdropInfoBlock/>

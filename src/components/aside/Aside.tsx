@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react'
-import { AsideStyled } from './aside.styled'
+import { AsideStyled } from './Aside.styled'
 
 import fight from './../../assets/images/fight.svg'
 import plane from './../../assets/images/plane.svg'
 import timer_line from './../../assets/images/timer-line.svg'
 import open_cases from './../../assets/images/openCases.svg'
 import battle from './../../assets/images/battle.svg'
+import logoDev from './../../assets/images/logo-dev.svg'
 
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -93,11 +94,10 @@ export const Aside: React.FC<IAsideProps> = () => {
                     }
 
                 </ul>
-                <div className="aside__author">
-                    <img src="img/author.svg" alt="Ico" />
-                    <p>Тёмкин<span>Дизайн сайта</span>
-                    </p>
-                </div>
+                <a href={"https://freelancehunt.com/freelancer/denielsonis.html"} target={"_blank"} className="aside__author">
+                    <img width={30} src={logoDev} alt="Ico" />
+                    <p>Deniel Sonis<span>разработка сайтов</span></p>
+                </a>
             </div>
         </AsideStyled>
     )

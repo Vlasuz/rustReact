@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { HeaderStyled } from './header.styled'
+import { HeaderStyled } from './Header.styled'
 import { Languages } from './components/languages/Languages'
 import { Volume } from './components/volume/Volume'
 import logo from './../../assets/images/logo-ico.svg'

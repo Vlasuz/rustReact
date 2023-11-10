@@ -12,6 +12,27 @@ export const BattleSingleStyled = styled.section`
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
+    
+    &__back {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      
+      svg {
+        display: block;
+      }
+      
+      span {
+        color: rgba(162, 171, 197, 0.50);
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 10px;
+        margin-bottom: -2px;
+      }
+    }
 
     &__create {
       position: absolute;
