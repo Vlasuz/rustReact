@@ -1,9 +1,9 @@
-import React, { ReactNode, useState } from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { RightItemsDND } from './rightItemsDND/RightItemsDND'
-import { Filter } from '../filter/Filter'
-import { Search } from '../search/Search'
+import React, {ReactNode, useState} from 'react'
+import {DndProvider} from 'react-dnd'
+import {HTML5Backend} from 'react-dnd-html5-backend'
+import {RightItemsDND} from './rightItemsDND/RightItemsDND'
+import {Filter} from '../filter/Filter'
+import {Search} from '../search/Search'
 
 interface IRightPererabProps {
     blockValue: any
@@ -15,16 +15,15 @@ export const RightPererab: React.FC<IRightPererabProps> = ({blockValue, isHideBl
     const [searchValue, setSearchValue] = useState('')
 
     return (
-        <div className={"section-right__item" + (blockValue.block === 'no_chat' ? ' section-right_active' : '') + isHideBlock}>
+        <div
+            className={"section-right__item" + (blockValue.block === 'no_chat' ? ' section-right_active' : '') + isHideBlock}>
             <div className="postamat">
-                <Search searchValue={searchValue} setSearchValue={setSearchValue} />
-                <Filter />
+                <Search searchValue={searchValue} setSearchValue={setSearchValue}/>
+                <Filter/>
 
                 <hr/>
 
-                <DndProvider backend={HTML5Backend}>
-                    <RightItemsDND searchValue={searchValue} />
-                </DndProvider>
+                <RightItemsDND searchValue={searchValue}/>
 
             </div>
         </div>

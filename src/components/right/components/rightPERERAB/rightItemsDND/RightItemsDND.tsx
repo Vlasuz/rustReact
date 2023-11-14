@@ -21,6 +21,7 @@ export const RightItemsDND: React.FC<IRightItemsDNDProps> = ({ searchValue }) =>
     const pererabZoneItems = useSelector((state: any) => state.toolkit.pererabZoneItems);
     const allProducts: IProduct[] = useSelector((state: any) => state.toolkit.userInventory)
     const {products}: any = useSortBy({allProducts, searchValue})
+
     const dropToZone = useItemDrop({ itemType: ItemTypes.ITEM, typeOfState: 'pererab' })
     const dropToInventory = useItemDrop({ itemType: ItemTypes.ITEM_ZONE })
 

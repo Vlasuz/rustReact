@@ -1,19 +1,52 @@
 import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from "react-redux";
+import {addAirdropBagsMap, setAirdropSaveZone1, setAirdropSaveZone2, setAirdropSaveZone3, setAirdropSaveZone4 } from '../../../redux/toolkitSlice';
 
 interface IAirdropSavesItemProps {
-    save: number
-    setSave: any
+    save?: any
+    setSave?: any
+    saveZone?: number
 }
 
-export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, setSave}) => {
+export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, saveZone}) => {
 
     const [isMouseDown, setIsMouseDown] = useState(false)
-
     let timeToSave: any;
+
+    const dispatch = useDispatch()
+
 
     useEffect(() => {
         timeToSave = setTimeout(() => {
-            save ? setSave(0) : setSave(3)
+
+            if(saveZone === 1) {
+                if(save.length === 0) {
+                    dispatch(setAirdropSaveZone1(""))
+                } else {
+                    dispatch(setAirdropSaveZone1('clear'))
+                }
+            }
+            if(saveZone === 2) {
+                if(save.length === 0) {
+                    dispatch(setAirdropSaveZone2(""))
+                } else {
+                    dispatch(setAirdropSaveZone2('clear'))
+                }
+            }
+            if(saveZone === 3) {
+                if(save.length === 0) {
+                    dispatch(setAirdropSaveZone3(""))
+                } else {
+                    dispatch(setAirdropSaveZone3('clear'))
+                }
+            }
+            if(saveZone === 4) {
+                if(save.length === 0) {
+                    dispatch(setAirdropSaveZone4(""))
+                } else {
+                    dispatch(setAirdropSaveZone4('clear'))
+                }
+            }
 
             setIsMouseDown(false)
         }, 1000)
@@ -26,17 +59,40 @@ export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, setSav
         setIsMouseDown(false)
     }
 
+    const handleSetBags = () => {
+        if(saveZone === 1) {
+            if(save.length) {
+                dispatch(addAirdropBagsMap(save))
+            }
+        }
+        if(saveZone === 2) {
+            if(save.length) {
+                dispatch(addAirdropBagsMap(save))
+            }
+        }
+        if(saveZone === 3) {
+            if(save.length) {
+                dispatch(addAirdropBagsMap(save))
+            }
+        }
+        if(saveZone === 4) {
+            if(save.length) {
+                dispatch(addAirdropBagsMap(save))
+            }
+        }
+    }
+
     return (
-        <div onMouseDown={_ => setIsMouseDown(true)} onMouseUp={mouseUp} onMouseLeave={mouseUp}
-             className={"saves__item saves__item_empty" + (save ? " saves__item_full" : " saves__item_empty") + (isMouseDown ? " mouseDown" : "")}>
+        <div onMouseDown={_ => setIsMouseDown(true)} onClick={handleSetBags} onMouseUp={mouseUp} onMouseLeave={mouseUp}
+             className={"saves__item saves__item_empty" + (save.length ? " saves__item_full" : " saves__item_empty") + (isMouseDown ? " mouseDown" : "")}>
             <div className="item__tips">
-                {save ? <span>Удалить шаблон</span> : <span>Сохранить шаблон</span>}
+                {save.length ? <span>Удалить шаблон</span> : <span>Сохранить шаблон</span>}
                 <p>Зажм. ЛКМ</p>
             </div>
             <div className="item__box">
-                {save > 0 ?
+                {save.length > 0 ?
                     <span>
-                            {save}
+                            {save.length}
                         </span> :
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path className={"arrow"}

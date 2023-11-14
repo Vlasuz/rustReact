@@ -4,7 +4,7 @@ export const RightAirdropStyled = styled.div`
 
   background: #191A29;
   height: calc(100vh - 147px);
-  
+
   .section-right__players_none {
     height: calc(100vh - 505px);
   }
@@ -19,10 +19,24 @@ export const RightAirdropStyled = styled.div`
       button {
         background: #A2ABC5;
         margin-top: -10px;
+        cursor: grab;
 
         &:before {
           bottom: -5px;
           opacity: 1;
+        }
+      }
+    }
+
+    &:active {
+      button {
+        margin: 0;
+        cursor: grabbing;
+
+        &:before {
+          bottom: 0;
+          opacity: 0;
+          transition: opacity 0s ease;
         }
       }
     }
@@ -86,12 +100,13 @@ export const RightAirdropStyled = styled.div`
       }
     }
   }
-  
+
   &.dragging {
     .section-right__players {
       height: calc(100vh - 532px);
     }
   }
+
   &.member {
     .section-right__players {
       height: calc(100vh - 372px);
@@ -103,6 +118,6 @@ export const RightAirdropStyled = styled.div`
       height: calc(100vh - 292px);
     }
   }
-  
-  
+
+
 `

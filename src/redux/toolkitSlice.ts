@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {
     IAsideButtonToRight,
     IChatItem,
@@ -15,26 +15,43 @@ import {
     IUserHistoryBalance,
     IUserHistoryFight
 } from "../model";
-import {log} from "util";
 
 
 const toolkitSlice = createSlice({
     name: "toolkit",
     initialState: {
+
+        // USER
         user: <IUser>{},
         userInventory: <IProduct[]>[],
         userGames: <IUserHistory | unknown>[],
         userHistory: <IUserHistoryBalance[]>[],
         userOnline: <number>0,
 
-        pages: <IPages[]>[],
+        // AIRDROP
+        airdropUserStatus: <string>"",
+        airdropBagsMap: <any>[],
+        airdropBags: <number>0,
+        airdropBagsFixed: <number>0,
+        airdropSaveZone1: <any>[],
+        airdropSaveZone2: <any>[],
+        airdropSaveZone3: <any>[],
+        airdropSaveZone4: <any>[],
+
+        // FIGHT
+        fightItemData: <IFightItem>{},
+
+        // CHAT
         mutedUsers: <IUser[]>[],
+        chatItems: <IChatItem[]>[],
+
+        // GENERAL
+        pages: <IPages[]>[],
         rightBlock: <IAsideButtonToRight>{},
         itemDrag: <IProduct>{},
         pererabZoneItems: <IProduct[]>[],
         popupZoneItems: <IProduct[]>[],
         rightFilter: <IFilterData>{},
-        chatItems: <IChatItem[]>[],
         language: <string>'RU',
         shopList: <IProduct[]>[],
         shopCart: <IProduct[]>[],
@@ -44,12 +61,10 @@ const toolkitSlice = createSlice({
         skinShop: {},
         notice: <string>'',
         sound: <string>'',
-        popup: <string>'',
-        fightItemData: <IFightItem>{},
-
         isOpenWsChat: <boolean>false,
+        popup: <string>'',
 
-        trigger: <ITrigger>{ type: '', status: true }
+        trigger: <ITrigger>{type: '', status: true}
     },
     reducers: {
         setUser(state, action) {
@@ -73,6 +88,70 @@ const toolkitSlice = createSlice({
         },
         setUserOnline(state, action) {
             state.userOnline = action.payload
+        },
+
+        addAirdropBagsMap(state, action) {
+            state.airdropBagsMap = action.payload
+        },
+        changeAirdropBagsMap(state) {
+            state.airdropBags = 0
+            let newArray = [];
+
+            for (let a = 0; a < state.airdropBagsFixed; a++) {
+                const randomNumberX = Math.floor(Math.random() * 1480) + 20;
+                const randomNumberY = Math.floor(Math.random() * 1480) + 20;
+
+                newArray.push({x: randomNumberX, y: randomNumberY})
+            }
+
+            state.airdropBagsMap = newArray
+        },
+        clearAirdropBagsMap(state) {
+            state.airdropBagsMap = []
+        },
+
+        setAirdropUserStatus(state, action) {
+            state.airdropUserStatus = action.payload
+        },
+
+        setAirdropBags(state, action) {
+            state.airdropBags = action.payload
+            state.airdropBagsFixed = action.payload
+        },
+        removeAirdropBags(state, action) {
+            state.airdropBags = action.payload > 0 ? state.airdropBags - action.payload : state.airdropBags
+        },
+        addAirdropBags(state) {
+            state.airdropBags = state.airdropBags + 1
+        },
+
+        setAirdropSaveZone1(state, action) {
+            if(action.payload === "clear") {
+                state.airdropSaveZone1 = []
+            } else {
+                state.airdropSaveZone1 = state.airdropBagsMap
+            }
+        },
+        setAirdropSaveZone2(state, action) {
+            if(action.payload === "clear") {
+                state.airdropSaveZone2 = []
+            } else {
+                state.airdropSaveZone2 = state.airdropBagsMap
+            }
+        },
+        setAirdropSaveZone3(state, action) {
+            if(action.payload === "clear") {
+                state.airdropSaveZone3 = []
+            } else {
+                state.airdropSaveZone3 = state.airdropBagsMap
+            }
+        },
+        setAirdropSaveZone4(state, action) {
+            if(action.payload === "clear") {
+                state.airdropSaveZone4 = []
+            } else {
+                state.airdropSaveZone4 = state.airdropBagsMap
+            }
         },
 
         setPages(state, action) {
@@ -121,17 +200,17 @@ const toolkitSlice = createSlice({
             state.shopCart = [...state.shopCart, ...action.payload]
         },
         removeItemFromCart(state, action) {
-            if(action.payload === 'all') {
-                state.shopCart = []    
+            if (action.payload === 'all') {
+                state.shopCart = []
             } else {
                 state.shopCart = state.shopCart.filter(item => item.id !== action.payload.id)
             }
         },
 
         addItemToWithdraw(state, action) {
-            if(!state.inventoryWithdraw.some(item => item.id === action.payload.id)) {
+            if (!state.inventoryWithdraw.some(item => item.id === action.payload.id)) {
                 state.inventoryWithdraw = [...state.inventoryWithdraw, action.payload]
-            } else  {
+            } else {
                 state.inventoryWithdraw = state.inventoryWithdraw.filter(item => item.id !== action.payload.id)
             }
         },
@@ -234,6 +313,18 @@ export const {
     addItemToCart,
     addItemToWithdraw,
     removeItemFromCart,
+
+    setAirdropSaveZone1,
+    setAirdropSaveZone2,
+    setAirdropSaveZone3,
+    setAirdropSaveZone4,
+    setAirdropUserStatus,
+    changeAirdropBagsMap,
+    addAirdropBagsMap,
+    clearAirdropBagsMap,
+    setAirdropBags,
+    removeAirdropBags,
+    addAirdropBags,
 
     setLanguage,
 

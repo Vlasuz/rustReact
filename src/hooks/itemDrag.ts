@@ -13,6 +13,7 @@ interface useItemDragProps {
 export const useItemDrag = ({product_data, itemType}: useItemDragProps) => {
     const dispatch = useDispatch();
 
+    // TODO проверить это!!
     const [{ isDragging }, drag] = useDrag(() => ({
         type: itemType,
         collect: (monitor) => ({

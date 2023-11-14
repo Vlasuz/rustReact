@@ -11,7 +11,7 @@ interface IGetSettingsProps {
 export const getSettings = ({dispatch}: IGetSettingsProps) => {
     
     axios.get(getApiLink('api/base/settings/')).then(({data}) => {
-        console.log(data)
+        console.log("api/base/settings", data)
         dispatch(setSiteSettings(data));
     })
 

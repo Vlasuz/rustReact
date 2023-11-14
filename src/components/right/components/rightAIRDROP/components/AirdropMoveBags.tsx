@@ -1,17 +1,41 @@
 import React, {useEffect, useState} from 'react'
 import randomIcon from './../../../../../assets/images/random.svg'
+import {useDrag} from "react-dnd";
+import {ItemTypes} from "../../../../../constants/ItemTypes";
+import {AirdropMoveBagsItem} from "./AirdropMoveBagsItem";
+import {useDispatch, useSelector} from "react-redux";
+import {changeAirdropBagsMap, removeAirdropBags} from '../../../../../redux/toolkitSlice';
 
 interface IAirdropMoveBagsProps {
-    countOfBags: any
     handleJoinGame: any
 }
 
-export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({countOfBags, handleJoinGame}) => {
+export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({handleJoinGame}) => {
 
-    const [bagsList, setBagsList] = useState(Array(countOfBags).fill(''))
+    const airdropBags = useSelector((state: any) => state.toolkit.airdropBags)
+    const dispatch = useDispatch()
+    const [bagsList, setBagsList] = useState(Array(airdropBags).fill(''))
 
     const handleRandom = () => {
-        setBagsList([])
+
+        //
+        // setBagsList(Array(airdropBags).fill(''))
+        // dispatch(removeAirdropBags(airdropBags))
+        // dispatch(clearAirdropBagsMap())
+
+        // @ts-ignore
+        document.querySelectorAll('.bags li').forEach(item => item.style.transition = "top .3s ease, left .3s ease");
+        dispatch(changeAirdropBagsMap())
+
+
+    }
+
+    useEffect(() => {
+        setBagsList(Array(airdropBags).fill(''))
+    }, [airdropBags])
+
+    const isDraggingFunc = () => {
+        dispatch(removeAirdropBags(1))
     }
 
     return (
@@ -20,12 +44,7 @@ export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({countOfBags, h
             <ul>
 
                 {
-                    bagsList?.map((item, index) =>
-                        <li key={index} onClick={_ => setBagsList(prev => [...prev.slice(0, bagsList.length - 1)])}
-                            className="sleepers__item">
-                            <button/>
-                        </li>
-                    )
+                    bagsList?.map((item, index) => <AirdropMoveBagsItem key={index} isDraggingFunc={isDraggingFunc} />)
                 }
 
             </ul>

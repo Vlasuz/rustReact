@@ -30,6 +30,9 @@ canvas { width: 100vh; height: 100vh }
     background: #676E84;
 }
 
+li[draggable="true"] {cursor: grab;}
+li[draggable="true"]:active {cursor: grabbing;}
+
 @media screen and (max-width: 576px) {
     .header__right {
         min-width: 0 !important;

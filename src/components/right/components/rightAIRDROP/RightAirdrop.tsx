@@ -6,7 +6,8 @@ import lineAirdrop from './../../../../assets/images/line-for-right.svg'
 import {AirdropMember} from "./components/AirdropMember";
 import {AirdropMoveBags} from "./components/AirdropMoveBags";
 import {AirdropInfoBlock} from "./components/AirdropInfoBlock";
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { setAirdropBags, setAirdropUserStatus } from '../../../../redux/toolkitSlice';
 
 interface IRightAirdropProps {
     blockValue: any,
@@ -17,20 +18,23 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
 
     // choose, dragging, member
     const [pointOfGame, setPointOfGame] = useState<string>("choose")
+    const dispatch = useDispatch()
 
     const [countOfBags, setCountOfBags] = useState(0)
     const userInfo = useSelector((state: any) => state.toolkit.user)
 
     const handleBuyBags = () => {
         setPointOfGame("dragging")
+        dispatch(setAirdropBags(countOfBags))
     }
     const handleJoinGame = () => {
+        dispatch((setAirdropUserStatus("member")))
         setPointOfGame("member")
     }
 
     const steps: any = {
         "choose": <AirdropBags handleBuyBags={handleBuyBags} setBags={setCountOfBags}/>,
-        "dragging": <AirdropMoveBags handleJoinGame={handleJoinGame} countOfBags={countOfBags}/>,
+        "dragging": <AirdropMoveBags handleJoinGame={handleJoinGame}/>,
         "member": <AirdropMember/>,
     }
 

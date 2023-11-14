@@ -15,6 +15,7 @@ export const useItemDrop = ({ itemType, typeOfState }: useItemDropProps) => {
     const itemDrag: IProduct = useSelector((state: any) => state.toolkit.itemDrag)
     const dispatch = useDispatch()
 
+    // TODO проверить это!!
     const [{ isOver }, drop] = useDrop(() => ({
         accept: itemType,
         drop: () => setIsDrop(prev => !prev),

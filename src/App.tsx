@@ -11,6 +11,10 @@ import {getCart} from './api/getCart';
 import {Notice} from './components/notice/Notice';
 import {usePopups} from "./hooks/popup/popup";
 import {getPages} from "./api/getPages";
+import {Loader} from "./components/loader/Loader";
+import {Technical} from "./pages/technical/Technical";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import { DndProvider } from 'react-dnd';
 
 // TODO АИРДРОП
 // TODO Сделать зум карты в airdrop
@@ -26,9 +30,7 @@ import {getPages} from "./api/getPages";
 // TODO Сделать новые пожелания клинета по аирдропу
 
 // TODO ОБЩИЕ
-// TODO Сделать создателя сайта в sidebar
 // TODO Сделать В правом меню вывод крейтов
-// TODO Убрать ошибки 401, сделать так что бы не было ошибок если пользователь не авторизован
 // TODO Сделать ленивую загрузку картинок через библиотеку
 // TODO Сделать лоадер
 // TODO Сделать страницу технического перерыва
@@ -43,36 +45,47 @@ import {getPages} from "./api/getPages";
 function App() {
 
     const dispatch = useDispatch()
-    const {popup} = usePopups()
-    const isAuth = useSelector((state: any) => state.toolkit.user)
     const [isLoad, setIsLoad] = useState(true)
+    const {popup} = usePopups()
+    const isTechnicalTime = useSelector((state: any) => state.toolkit.siteSettings)?.technical_break
+    const isAuth = useSelector((state: any) => state.toolkit.user)
 
     useEffect(() => {
         getUser({dispatch});
         getProducts({dispatch});
         getSettings({dispatch});
         getPages({dispatch})
+        setIsLoad(false)
     }, [])
 
     useEffect(() => {
-        if(!(Object.keys(isAuth).length && isLoad)) return;
-        setIsLoad(false)
+        if (isLoad) return;
+    }, [isLoad])
+
+    useEffect(() => {
+        if (!(Object.keys(isAuth).length && isLoad)) return;
 
         getInventory({dispatch});
         getCart({dispatch});
 
     }, [isAuth, isLoad])
 
+    if (isTechnicalTime) return <Technical/>;
+
     return (
-        <AppStyled className="App">
+        <DndProvider backend={HTML5Backend}>
+            <AppStyled className="App">
 
-            <Header/>
-            <Container/>
-            <Notice/>
+                <Header/>
+                <Container/>
+                <Notice/>
 
-            {popup}
+                <Loader/>
 
-        </AppStyled>
+                {popup}
+
+            </AppStyled>
+        </DndProvider>
     );
 }
 

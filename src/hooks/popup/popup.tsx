@@ -28,14 +28,14 @@ export const usePopups = () => {
         "popup-change-status": <ChangeUserSlogan/>,
         "popup-trade popup-trade-link-change": <TradeLink/>,
         "popup-trade popup-trade-link": <TradeLinkChange/>,
-        "popup-new-room": <DndProvider backend={HTML5Backend}><CreateNewFight/></DndProvider>,
+        "popup-new-room": <CreateNewFight/>,
         "popup-add-coins": <AddCash/>,
         "popup-add-coins-balance popup-add-coins-balance-uah": <AddCashAmount currency={"uah"} />,
         "popup-add-coins-balance popup-add-coins-balance-kzt": <AddCashAmount currency={"kzt"}/>,
         "popup-add-coins-balance popup-add-coins-balance-rub": <AddCashAmount currency={"rub"}/>,
         "popup-add-coins-skins": <Inventory/>,
         "popup-entry-coins": <StartFightCash/>,
-        "popup-entry-clothes": <DndProvider backend={HTML5Backend}><StartFightClothes/></DndProvider>,
+        "popup-entry-clothes": <StartFightClothes/>,
     }
 
     useEffect(() => {
