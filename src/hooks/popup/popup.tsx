@@ -15,6 +15,8 @@ import {StartFightCash} from "../../components/popups/StartFightCash";
 import {StartFightClothes} from "../../components/popups/startFightClothes/StartFightClothes";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
+import {Withdraw} from "../../components/popups/Withdraw";
+import {WithdrawBots} from "../../components/popups/WithdrawBots";
 
 export const usePopups = () => {
 
@@ -36,6 +38,8 @@ export const usePopups = () => {
         "popup-add-coins-skins": <Inventory/>,
         "popup-entry-coins": <StartFightCash/>,
         "popup-entry-clothes": <StartFightClothes/>,
+        "popup-pull-search": <Withdraw/>,
+        "popup-pull": <WithdrawBots/>,
     }
 
     useEffect(() => {

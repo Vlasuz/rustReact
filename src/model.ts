@@ -293,3 +293,19 @@ export interface IBattleCreate {
     type: string
     option: string
 }
+
+export interface IWithdrawBot {
+    id: string
+    status: string
+    message: string
+    bot: {
+        username: string
+        steam_id: string
+    }
+    items: IProduct[]
+}
+
+export interface IWithdrawInfo {
+    id: string
+    bots: IWithdrawBot[]
+}

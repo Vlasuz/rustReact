@@ -29,6 +29,7 @@ export const RightShopCart: React.FC<IRightShopCartProps> = ({ isCartOpen, setIs
         getBearer({ type: 'post' });
         axios.post(getApiLink('api/basket/buy')).then(({ data }) => {
             dispatch(setUserBalance(data.balance))
+            console.log(cart)
             dispatch(setUserInventory(cart))
             dispatch(removeItemFromCart('all'));
             dispatch(setSound('sound5'));

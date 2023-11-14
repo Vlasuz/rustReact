@@ -6,8 +6,9 @@ import arr from './../../../../assets/images/arr-r-t.svg'
 import { StorageItem } from './components/StorageItem'
 import { useSortBy } from '../../../../hooks/sortBy'
 import { IProduct } from '../../../../model'
-import { useSelector } from 'react-redux'
+import {useDispatch, useSelector } from 'react-redux'
 import { EmptyInventory } from '../emptyInventory/EmptyInventory'
+import {setPopup} from "../../../../redux/toolkitSlice";
 
 interface IRightStorageProps {
     blockValue: any,
@@ -20,6 +21,7 @@ export const RightStorage: React.FC<IRightStorageProps> = ({ blockValue, isHideB
     const withdrawList: IProduct[] = useSelector((state: any) => state.toolkit.inventoryWithdraw)
     const [searchValue, setSearchValue] = useState('')
     const {products}: any = useSortBy({ allProducts, searchValue })
+    const dispatch = useDispatch()
 
     const isHaveProducts = products.length ? products?.map((item: IProduct) => <StorageItem key={item.id} data={item} />) : <EmptyInventory/>
 
@@ -38,7 +40,7 @@ export const RightStorage: React.FC<IRightStorageProps> = ({ blockValue, isHideB
                 </div>
 
                 {
-                    withdrawList.length ? <button className="zone__button">
+                    withdrawList.length ? <button onClick={_ => dispatch(setPopup("popup-pull-search"))} className="zone__button">
                         <img src={arr} alt="Ico" />
                         <span>Вывести предметы</span>
                         <div className="zone__count">

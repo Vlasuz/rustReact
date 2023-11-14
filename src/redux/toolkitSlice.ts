@@ -13,7 +13,7 @@ import {
     IUserHistory,
     IUserHistoryAirdrop,
     IUserHistoryBalance,
-    IUserHistoryFight
+    IUserHistoryFight, IWithdrawInfo
 } from "../model";
 
 
@@ -27,6 +27,10 @@ const toolkitSlice = createSlice({
         userGames: <IUserHistory | unknown>[],
         userHistory: <IUserHistoryBalance[]>[],
         userOnline: <number>0,
+
+        // WITHDRAW
+        inventoryWithdraw: <IProduct[]>[],
+        withdrawInfo: <IWithdrawInfo>{},
 
         // AIRDROP
         airdropUserStatus: <string>"",
@@ -55,7 +59,6 @@ const toolkitSlice = createSlice({
         language: <string>'RU',
         shopList: <IProduct[]>[],
         shopCart: <IProduct[]>[],
-        inventoryWithdraw: <IProduct[]>[],
         faqList: <IFaqList[]>[],
         siteSettings: <ISiteSettings>{},
         skinShop: {},
@@ -88,6 +91,10 @@ const toolkitSlice = createSlice({
         },
         setUserOnline(state, action) {
             state.userOnline = action.payload
+        },
+
+        setWithdrawInfo(state, action) {
+            state.withdrawInfo = action.payload
         },
 
         addAirdropBagsMap(state, action) {
@@ -287,6 +294,8 @@ export const {
     clearUserInventory,
     setUserHistory,
     setUserOnline,
+
+    setWithdrawInfo,
 
     changeUserBalance,
     setUserBalance,
