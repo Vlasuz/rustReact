@@ -1,9 +1,12 @@
 import {useContext, useEffect, useState} from "react";
 import {AirdropSocketContext} from "../App";
+import {WSFight} from "../pages/fightSingle/FightSingle";
 
-export const useAirdropTimer = () => {
+export const useFightTimer = () => {
 
-    const airdropWsMessages: any = useContext(AirdropSocketContext)
+    const fightWsMessages: any = useContext(WSFight)
+
+    // console.log(fightWsMessages)
 
     const [isTimerStart, setIsTimerStart] = useState(false)
     const [time, setTime] = useState(0)
@@ -11,22 +14,16 @@ export const useAirdropTimer = () => {
     const [milliseconds, setMilliseconds] = useState(0)
 
     useEffect(() => {
-        setSeconds(airdropWsMessages?.timer > 0 ? airdropWsMessages?.timer - 1 : 0)
-        setTime(airdropWsMessages?.timer > 0 ? airdropWsMessages?.timer - 1 : 0)
-        // @ts-ignore
-        if(document.querySelector('.section-right__airdrop .fly__timer .line_done')) document.querySelector('.section-right__airdrop .fly__timer .line_done').style.transition = "all .1s linear";
+        setSeconds(fightWsMessages[1]?.timer > 0 ? fightWsMessages[1]?.timer - 1 : 0)
+        setTime(fightWsMessages[1]?.timer > 0 ? fightWsMessages[1]?.timer - 1 : 0)
 
-        if(airdropWsMessages?.timer === 0) {
+        if(fightWsMessages[1]?.timer === 0) {
             setMilliseconds(0)
         } else {
             setMilliseconds(99)
             setIsTimerStart(true)
-            setTimeout(() => {
-                // @ts-ignore
-                if(document.querySelector('.section-right__airdrop .fly__timer .line_done')) document.querySelector('.section-right__airdrop .fly__timer .line_done').style.transition = "all 1s linear";
-            }, 10)
         }
-    }, [airdropWsMessages])
+    }, [fightWsMessages])
 
     useEffect(() => {
         const intervalMillisec = setInterval(() => {
@@ -49,7 +46,7 @@ export const useAirdropTimer = () => {
             clearInterval(intervalMillisec);
             clearTimeout(timeoutId);
         };
-    }, [seconds, time, airdropWsMessages]);
+    }, [seconds, time, fightWsMessages]);
 
     useEffect(() => {
         const intervaSecond = setInterval(() => {
@@ -66,7 +63,8 @@ export const useAirdropTimer = () => {
             clearInterval(intervaSecond);
             clearTimeout(timeoutId);
         };
-    }, [time, airdropWsMessages]);
+    }, [time, fightWsMessages]);
 
     return {seconds, milliseconds}
+
 }

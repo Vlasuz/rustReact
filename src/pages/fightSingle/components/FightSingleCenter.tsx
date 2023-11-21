@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {LoadingStyled} from "../../../components/loading/loading.styled";
 import fightFinishIcon from "./../../../assets/images/fight-finish-icon.svg"
 import {FightSingleSvgTimer} from "./FightSingleSvgTimer";
+import {useAirdropTimer} from "../../../hooks/airdropTimer";
+import {useFightTimer} from "../../../hooks/fightTimer";
 
 interface IFightSingleCenterProps {
     gameState: string
@@ -10,43 +12,7 @@ interface IFightSingleCenterProps {
 
 export const FightSingleCenter: React.FC<IFightSingleCenterProps> = ({gameState, gameData}) => {
 
-    const defaultMilliseconds = 85
-    const defaultSeconds = (+gameData?.timer - 1) ?? 10
-
-    const [milliseconds, setMilliseconds] = useState(defaultMilliseconds)
-    const [seconds, setSeconds] = useState(defaultSeconds);
-    const [timerActive, setTimerActive] = useState(false);
-
-    useEffect(() => {
-        if (seconds > 0 && timerActive) {
-            setTimeout(setSeconds, 1000, seconds - 1);
-        } else {
-            if (milliseconds <= 0) {
-                setTimerActive(false);
-            }
-        }
-    }, [seconds, timerActive]);
-
-    useEffect(() => {
-        if (milliseconds > 0 && timerActive) {
-            setTimeout(setMilliseconds, 10, +milliseconds - 1);
-        } else if (seconds > 0) {
-            setMilliseconds(seconds > 0 ? +defaultMilliseconds : 0)
-        }
-    }, [milliseconds, timerActive]);
-
-    useEffect(() => {
-        if (seconds >= 0) {
-            setMilliseconds(defaultMilliseconds)
-        }
-    }, [seconds])
-
-    useEffect(() => {
-        if (gameState === "prepare") {
-            setTimerActive(true)
-            setSeconds(defaultSeconds)
-        }
-    }, [gameState])
+    const {seconds, milliseconds} = useFightTimer()
 
     return (
         <div className="section-fight__center">

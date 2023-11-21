@@ -1,22 +1,10 @@
 import React, {createContext, useEffect, useRef, useState} from 'react'
-import {Translate} from '../../components/translate/Translate'
-import {FightSingleTop} from "./components/FightSingleTop";
 import {FightSingleStyled} from "./FightSingle.styled";
-
-import userPhoto from './../../assets/images/user.jpeg'
-import clothesIcon from './../../assets/images/clothes.svg'
-import coins from './../../assets/images/header__coins.svg'
-import weaponIcon from './../../assets/images/weapon.png'
-import personSilhouette from './../../assets/images/persone-siluete.png'
-import personNNN from './../../assets/images/persone-nnn.png'
-import {Loading} from "../../components/loading/Loading";
-import {LoadingStyled} from "../../components/loading/loading.styled";
 import {useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
 import {getApiLink} from "../../functions/getApiLink";
 import getCookie from '../../functions/getCookie';
-import axios from "axios";
-import {IFightItem, IUser} from "../../model";
+import {IUser} from "../../model";
 import {FightSingleCenter} from "./components/FightSingleCenter";
 import {FightSingleRHT} from "./components/FightSingleRHT";
 import {FightSingleLFT} from "./components/FightSingleLFT";
@@ -79,7 +67,7 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
     }, [ws, userData])
 
     return (
-        <WSFight.Provider value={ws.current}>
+        <WSFight.Provider value={[ws.current, gameData]}>
             <FightSingleStyled className="section-fight">
                 <FightSingleLFT gameState={gameState} mainPlayer={mainPlayer} gameData={gameData}/>
 

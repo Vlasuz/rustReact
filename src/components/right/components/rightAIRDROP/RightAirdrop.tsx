@@ -38,7 +38,6 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
         dispatch(setAirdropBags(countOfBags))
     }
     const handleJoinGame = () => {
-        console.log(isPressJoin)
         if(isPressJoin) return;
         setIsPressJoin(true)
 

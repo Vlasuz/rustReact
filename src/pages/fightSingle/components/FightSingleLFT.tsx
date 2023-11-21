@@ -71,7 +71,7 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
     useEffect(() => {
         setIsFullSuit(findTheSameElems(suit, true) === 2)
         if(suit[0]||suit[1]||suit[2]) {
-            ws.send(JSON.stringify({
+            ws[0].send(JSON.stringify({
                 "type": "defense",
                 "head": suit[0],
                 "body": suit[1],
