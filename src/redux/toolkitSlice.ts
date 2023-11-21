@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
     IAsideButtonToRight,
-    IChatItem,
+    IChatItem, ICrate,
     IFaqList, IFightItem,
     IFilterData,
     IPages,
@@ -49,6 +49,11 @@ const toolkitSlice = createSlice({
         mutedUsers: <IUser[]>[],
         chatItems: <IChatItem[]>[],
 
+        //CRATES
+        crates: <ICrate[]>[],
+        chosenCrate: <ICrate>{},
+        crateRarities: [],
+
         // GENERAL
         pages: <IPages[]>[],
         rightBlock: <IAsideButtonToRight>{},
@@ -91,6 +96,16 @@ const toolkitSlice = createSlice({
         },
         setUserOnline(state, action) {
             state.userOnline = action.payload
+        },
+
+        setCrates(state, action) {
+            state.crates = action.payload
+        },
+        setChosenCrates(state, action) {
+            state.chosenCrate = action.payload
+        },
+        setCrateRarities(state, action) {
+            state.crateRarities = action.payload
         },
 
         setWithdrawInfo(state, action) {
@@ -309,6 +324,10 @@ export const {
     setShopList,
     setNotice,
     setSound,
+
+    setCrates,
+    setChosenCrates,
+    setCrateRarities,
 
     setItemDrag,
     setPererabZoneItems,

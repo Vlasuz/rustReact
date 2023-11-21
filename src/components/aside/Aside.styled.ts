@@ -240,11 +240,12 @@ export const AsideStyled = styled.aside`
           &_done {
             background: #F5AD57;
             border-radius: 2px;
-            width: 40%;
+            width: 0%;
             height: 2px;
             position: absolute;
             left: 0;
             top: 0;
+            transition: all 1s ease;
           }
         }
       }

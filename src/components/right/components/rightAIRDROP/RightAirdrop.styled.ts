@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import planeIcon from './../../../../assets/images/plane.png'
 
 export const RightAirdropStyled = styled.div`
 
@@ -117,6 +118,35 @@ export const RightAirdropStyled = styled.div`
     .section-right__players {
       height: calc(100vh - 292px);
     }
+  }
+
+
+
+  .fly__bottom.fly__bottom_plane .line_done:before{
+    content: "";
+    position: absolute;
+    height: 14px;
+    width: 1px;
+    background: #A2ABC5;
+    border-radius: 2px;
+    display: block;
+    right: 0;
+    top: -10px;
+  }
+  .fly__bottom.fly__bottom_plane .line_done:after{
+    content: "";
+    background: url(${planeIcon}) no-repeat;
+    background-size: 40px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: -20px;
+    top: -60px;
+  }
+  .fly__bottom.fly__bottom_plane .line_done{
+    background: #A2ABC5;
+    position: relative;
   }
 
 

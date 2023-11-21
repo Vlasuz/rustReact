@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux'
 import {setRightBlock, setSound, setTrigger} from '../../redux/toolkitSlice'
 import { RightItemsButton } from './components/RightItemsButton'
 import { rightItemsButtonList } from '../../constants/asideButtonsToRight'
+import {AsideAirdrop} from "./components/AsideAirdrop";
 
 interface IAsideProps {
 
@@ -42,32 +43,14 @@ export const Aside: React.FC<IAsideProps> = () => {
     useEffect(() => {
         if(window.location.href.includes('airdrop')) {
             handleChangePage("", {slug: "AIRDROP", title: "Аирдроп"})
+        } else if (window.location.href.includes('open-cases')) {
+            handleChangePage("", {slug: "CASES", title: "Кейсы"})
         }
     }, [])
 
     return (
         <AsideStyled>
-            <NavLink to={"/airdrop"} onClick={_ => handleChangePage("sound12", {slug: "AIRDROP", title: "Аирдроп"})} className={({isActive}) => "aside__plane" + (isActive ? " aside__plane_timeline" : "")}>
-                <img src={plane} alt="Plane" />
-                <div className="timer">
-                    <div className="min">
-                        <span>**</span>
-                    </div>
-                    <div className="sec">
-                        <small className="dot">.</small>
-                        <span>**</span>
-                    </div>
-                </div>
-                <div className="timer-line">
-                    <img src={timer_line} alt="Line" />
-                    <div className="timer-line__line">
-                        <div className="timer-line__line_done" />
-                    </div>
-                </div>
-                <span className="absolute-span">
-                    Аирдроп
-                </span>
-            </NavLink>
+            <AsideAirdrop handleChangePage={handleChangePage}/>
             <NavLink to={'/'} onClick={_ => handleChangePage("sound12", {slug: "PERERAB", title: "Переработчик"}, true)} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
                 <img src={fight} alt="Fight" />
                 <span className="absolute-span">

@@ -28,7 +28,7 @@ export const OpenCasesStyled = styled.section`
           }
 
           &:first-child {
-            margin-left: calc(-1 * (140px * 50 + (10px * 50)));
+            margin-left: calc(-1 * ((170.1px * 50) - 50vw));
           }
         }
       }
@@ -57,9 +57,10 @@ export const OpenCasesStyled = styled.section`
       .spin__item {
         border-radius: 8px;
         background: rgba(162, 171, 197, 0.06);
-        min-width: 140px;
         width: 140px;
         height: 140px;
+        min-width: 140px;
+        min-height: 140px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -69,7 +70,7 @@ export const OpenCasesStyled = styled.section`
         margin: 0 5px;
 
         &:first-child {
-          margin-left: 45px;
+          margin-left: calc(-1 * (1005px - 50vw));
         }
 
         &.won_the_price {
@@ -222,7 +223,7 @@ export const OpenCasesStyled = styled.section`
         &.active {
           .spin__item:first-child {
             margin-left: 0;
-            margin-top: calc(-1 * (143px * 50 + (15px * 51)));
+            margin-top: calc(-1 * (146px * 50 + (15px * 51)));
           }
         }
 
@@ -420,7 +421,7 @@ export const OpenCasesStyled = styled.section`
       grid-column-start: 1;
       grid-column-end: 3;
 
-      &:after {
+      .line__shadow {
         content: "";
         background: linear-gradient(0deg, rgba(232, 161, 78, 0.10) 0%, rgba(232, 161, 78, 0.00) 100%);
         position: absolute;
@@ -429,6 +430,7 @@ export const OpenCasesStyled = styled.section`
         width: 100%;
         height: 50%;
         display: block;
+        opacity: .15;
       }
 
       .line {

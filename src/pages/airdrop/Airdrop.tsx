@@ -1,9 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import {AirdropStyled} from "./Airdrop.styles";
 
 import mapPhoto from './../../assets/images/map.png'
 import shieldIcon from './../../assets/images/shield-map.svg'
 import planeIcon from './../../assets/images/plane_new.svg'
+import coinsIcon from './../../assets/images/header__coins.svg'
 import {animated, useSpring} from "@react-spring/web";
 import {useDrag} from "react-use-gesture";
 import {AirdropSaves} from "./components/AirdropSaves";
@@ -12,6 +13,8 @@ import {ItemTypes} from "../../constants/ItemTypes";
 import {AirdropBagsItem} from "./components/AirdropBagsItem";
 import {useDispatch, useSelector} from "react-redux";
 import {removeAirdropBags} from "../../redux/toolkitSlice";
+import {AirdropSocketContext} from "../../App";
+import {AirdropPlayersBags} from "./components/AirdropPlayersBags";
 
 
 interface IAirdropProps {
@@ -29,6 +32,8 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
     const blockArea: any = useRef(null)
     const blockCenter: any = useRef(null)
     const blockMap: any = useRef(null)
+
+    const airdropWsMessages: any = useContext(AirdropSocketContext)
 
     const [wheelValue, setWheelValue] = useState(1)
 
@@ -76,21 +81,31 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
 
     }
 
-    const distance = 1500;
-    const time = 15;
-    const planeStep = distance / time;
+    const fixTimer: any = {
+        "waiting": 30,
+        "process": 30,
+        "drop": 5,
+        "ended": 10,
+        "prepare": 5,
+        "start": 1,
+    }
 
     const [planeDistance, setPlaneDistance] = useState(0)
 
     useEffect(() => {
+        setPlaneDistance(0)
+        if(airdropWsMessages?.airdrop?.game_state !== "process") return;
+
+        const planeStep = 1500 / fixTimer[airdropWsMessages.airdrop.game_state];
+
         const intervalToFly = setInterval(() => {
             setPlaneDistance(prev => prev + planeStep)
         }, 1000)
 
         setTimeout(() => {
             clearInterval(intervalToFly)
-        }, (time + 1) * 1000)
-    }, [])
+        }, (airdropWsMessages.timer + 1) * 1000)
+    }, [airdropWsMessages])
 
 
     const [bagsCoods, setBagsCoods] = useState<any>([])
@@ -139,10 +154,12 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
     return (
         <AirdropStyled ref={blockArea} className="section-map">
             <div className="section-map__top">
-                <div className="section-map__game-is">Игра#</div>
+                <div className="section-map__game-is">Игра#{airdropWsMessages?.airdrop?.game_id}</div>
                 <div className="section-map__code">
                     <img src={shieldIcon} alt="Ico"/>
-                    <span className="random_hash">undefined...undefined</span>
+                    <span className="random_hash">
+                        {airdropWsMessages?.airdrop?.random_hash.substr(0, 4) + "..." + airdropWsMessages?.airdrop?.random_hash.substr(-4, 4)}
+                    </span>
                 </div>
             </div>
             <div ref={blockCenter}
@@ -159,10 +176,21 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
                             <img src={mapPhoto} alt=""/>
                         </div>
 
-                        <div className="trajectory" style={{width: planeDistance}}>
+                        {airdropWsMessages?.airdrop?.game_state === "process" && <div className="trajectory"
+                              style={{width: planeDistance, top: (airdropWsMessages?.airdrop?.y_pos * 1480) + "px"}}>
                             <div className="plane">
                                 <img src={planeIcon} alt="Plane" width="54"/>
                             </div>
+                        </div>}
+
+                        <div className="section-map__map">
+                            <ul className="map__points">
+
+                                {
+                                    airdropWsMessages?.airdrop?.players?.map((player: any, index: number) => <AirdropPlayersBags key={player.bags[index] + player.user.id} player={player}/>)
+                                }
+
+                            </ul>
                         </div>
 
                         <ul className="bags" ref={drop}>

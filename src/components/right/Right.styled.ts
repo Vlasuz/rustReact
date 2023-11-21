@@ -800,6 +800,7 @@ export const RightStyled = styled.section`
         max-width: 75px;
         width: 100%;
 
+        p, 
         span {
           font-weight: 700;
           font-size: 14px;
@@ -1122,7 +1123,8 @@ export const RightStyled = styled.section`
             background: #F5AD57;
             border-radius: 2px;
             height: 100%;
-            width: 40%;
+            width: 0%;
+            transition: all 1s linear;
           }
         }
       }

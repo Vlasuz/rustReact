@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {RightStyled} from './right.styled'
+import {RightStyled} from './Right.styled'
 
 import users from './../../assets/images/users.svg'
 import {Chat} from '../chat/Chat'

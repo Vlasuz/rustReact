@@ -142,9 +142,9 @@ export interface ISocialsItem {
 }
 
 export interface IProduct {
-    game: string
+    game?: string
     id: string
-    image: string
+    image?: string
     price: {
         steam_price: number
         value: number
@@ -153,9 +153,9 @@ export interface IProduct {
         title: string
         color: string
     }
-    steam_id: string
+    steam_id?: string
     title: string
-    trade_ban: null | string
+    trade_ban?: null | string
 }
 
 export interface IFilterData {
@@ -309,3 +309,28 @@ export interface IWithdrawInfo {
     id: string
     bots: IWithdrawBot[]
 }
+
+export interface ICrateItem {
+    id: string
+    item: {
+        game: string
+        title: string
+        image: string
+    }
+    rarity: number
+    price: number
+}
+export interface ICrate {
+    id: string
+    name: string
+    icon: string
+    price: number
+    items: ICrateItem[]
+}
+export interface IWinLineItem {
+    crate: ICrate
+    user: IUser
+    item: IProduct
+    amount: number
+}
+

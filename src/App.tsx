@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {createContext, useEffect, useRef, useState} from 'react';
 import {Header} from './components/header/Header';
 import {AppStyled} from './App.styled';
 import {Container} from './components/container/Container';
@@ -14,7 +14,8 @@ import {getPages} from "./api/getPages";
 import {Loader} from "./components/loader/Loader";
 import {Technical} from "./pages/technical/Technical";
 import {HTML5Backend} from "react-dnd-html5-backend";
-import { DndProvider } from 'react-dnd';
+import {DndProvider} from 'react-dnd';
+import {getWsLink} from "./functions/getWsLink";
 
 // TODO АИРДРОП
 // TODO Сделать зум карты в airdrop
@@ -35,6 +36,9 @@ import { DndProvider } from 'react-dnd';
 // TODO Проверить схватку на работоспособность
 // TODO Настроить таймер в схватке
 
+const wsAirdrop = new WebSocket(getWsLink("ws/api/airdrop/"))
+export const AirdropSocketContext: any = createContext(null)
+
 function App() {
 
     const dispatch = useDispatch()
@@ -42,6 +46,8 @@ function App() {
     const {popup} = usePopups()
     const isTechnicalTime = useSelector((state: any) => state.toolkit.siteSettings)?.technical_break
     const userData = useSelector((state: any) => state.toolkit.user)
+
+    const [airdropWsMessage, setAirdropWsMessage] = useState({})
 
     useEffect(() => {
         getUser({dispatch});
@@ -51,6 +57,12 @@ function App() {
         setIsLoad(false)
         getInventory({dispatch});
         getCart({dispatch});
+
+        wsAirdrop.onmessage = (e) => {
+            const data = JSON.parse(JSON.parse(e.data))
+            console.log(data)
+            setAirdropWsMessage(data)
+        }
     }, [])
 
     useEffect(() => {
@@ -60,19 +72,21 @@ function App() {
     if (isTechnicalTime) return <Technical/>;
 
     return (
-        <DndProvider backend={HTML5Backend}>
-            <AppStyled className="App">
+        <AirdropSocketContext.Provider value={airdropWsMessage}>
+            <DndProvider backend={HTML5Backend}>
+                <AppStyled className="App">
 
-                <Header/>
-                <Container/>
-                <Notice/>
+                    <Header/>
+                    <Container/>
+                    <Notice/>
 
-                <Loader/>
+                    <Loader/>
 
-                {popup}
+                    {popup}
 
-            </AppStyled>
-        </DndProvider>
+                </AppStyled>
+            </DndProvider>
+        </AirdropSocketContext.Provider>
     );
 }
 

@@ -42,7 +42,4 @@ export const RightItemsButton: React.FC<IAsideButtonToRight> = ({icon, title, sl
         </li>
     )
 }
-function trigger(): any {
-    throw new Error('Function not implemented.')
-}
 

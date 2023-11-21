@@ -1,16 +1,22 @@
 import React, {useEffect, useState} from 'react'
-import {OpenCasesStyled} from "./openCases.styled";
+import {OpenCasesStyled} from "./OpenCases.styled";
 import coins from './../../assets/images/header__coins.svg'
 import caseMagma from './../../assets/images/case-magma.png'
 import itemIcon from './../../assets/images/weapon.png'
 import spinArrow from './../../assets/images/spin-arrow.png'
 import {HistoryItem} from "./components/historyItem/HistoryItem";
 import {Product} from "../../components/product/Product";
-import {IProduct} from "../../model";
+import {ICrate, ICrateItem, IProduct} from "../../model";
 import green_check from "../../assets/images/green-check.svg";
 import coin from "../../assets/images/header__coins.svg";
 import {CaseItem} from "./components/caseItem/CaseItem";
 import {BattleTop} from "../../components/battleTop/BattleTop";
+import axios from "axios";
+import {getApiLink} from "../../functions/getApiLink";
+import { useSelector } from 'react-redux';
+import {CaseRollingBlock} from "./components/caseRollingBlock/CaseRollingBlock";
+import {getBearer} from "../../functions/getBearer";
+import {useCrateRarity} from "../../hooks/crateRarity";
 
 interface IOpenCasesProps {
 
@@ -20,20 +26,20 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
 
     const [countOfCases, setCountOfCases] = useState(1)
     const [isFastActive, setIsFastActive] = useState(false)
-    const itemsToRoll = Array.from({length: 57}, (_, index) => {
-        if (index === 53) {
-            return {
-                index,
-                item: "54"
-            }
-        }
-        return {index}
-    });
     const [isWonItemActive, setIsWonItemActive] = useState(false)
     const [isActiveSpin, setIsActiveSpin] = useState(false)
 
+    const chosenCrate: ICrate = useSelector((state: any) => state.toolkit.chosenCrate)
+
+    const {crateRarity}: any = useCrateRarity({crate: chosenCrate})
+
     useEffect(() => {
         if (!isActiveSpin) return;
+
+        getBearer({type: "post"})
+        axios.post(getApiLink("api/crate/open/?crate_id=" + chosenCrate.id)).then(({data}) => {
+            console.log("api/crate/open", data)
+        }).catch(er => console.log("api/crate/open", er))
 
         setTimeout(() => {
             if(isActiveSpin) {
@@ -47,6 +53,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
         }, isFastActive ? 1000 : 11000)
     }, [isActiveSpin])
 
+
     return (
         <OpenCasesStyled>
 
@@ -57,21 +64,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     className={"center__spin" + (isActiveSpin ? " active" : "") + (isWonItemActive ? " center__spin-won_item" : "")}>
                     <div className="spin__bgd"/>
                     <img src={spinArrow} alt="^" className="spin__arrow"/>
-                    <ul>
-                        {
-                            itemsToRoll.map(item =>
-                                <li key={item.index}
-                                    style={{transition: isActiveSpin && !isFastActive ? "all 10s ease-in-out" : ""}}
-                                    className={"spin__item" + (!!item.item && isWonItemActive ? " won_the_price" : "")}>
-                                    <img src={itemIcon} alt=""/>
-                                    {!!item.item && <div className="price">
-                                        <img src={coins} alt={item.item}/>
-                                        <span>{item.item}</span>
-                                    </div>}
-                                </li>
-                            )
-                        }
-                    </ul>
+                    <CaseRollingBlock isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>
                 </div>}
                 {countOfCases >= 2 && <div
                     className={"center__spin center__spin_more" + (isActiveSpin ? " active" : "") + (isWonItemActive ? " center__spin-won_item" : "")}>
@@ -79,88 +72,20 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     <img src={spinArrow} alt=">" className="spin__arrow_lft"/>
                     <img src={spinArrow} alt="<" className="spin__arrow_rht"/>
                     <div className="spins">
-                        {countOfCases >= 2 && <ul>
-                            {
-                                itemsToRoll.map(item =>
-                                    <li key={item.index}
-                                        style={{transition: isActiveSpin && !isFastActive ? "all 10s ease-in-out" : ""}}
-                                        className={"spin__item" + (!!item.item && isWonItemActive ? " won_the_price" : "")}>
-                                        <img src={itemIcon} alt=""/>
-                                        {!!item.item && <div className="price">
-                                            <img src={coins} alt={item.item}/>
-                                            <span>{item.item}</span>
-                                        </div>}
-                                    </li>
-                                )
-                            }
-                        </ul>}
-                        {countOfCases >= 2 && <ul>
-                            {
-                                itemsToRoll.map(item =>
-                                    <li key={item.index}
-                                        style={{transition: isActiveSpin && !isFastActive ? "all 10s ease-in-out" : ""}}
-                                        className={"spin__item" + (!!item.item && isWonItemActive ? " won_the_price" : "")}>
-                                        <img src={itemIcon} alt=""/>
-                                        {!!item.item && <div className="price">
-                                            <img src={coins} alt={item.item}/>
-                                            <span>{item.item}</span>
-                                        </div>}
-                                    </li>
-                                )
-                            }
-                        </ul>}
-                        {countOfCases >= 3 && <ul>
-                            {
-                                itemsToRoll.map(item =>
-                                    <li key={item.index}
-                                        style={{transition: isActiveSpin && !isFastActive ? "all 10s ease-in-out" : ""}}
-                                        className={"spin__item" + (!!item.item && isWonItemActive ? " won_the_price" : "")}>
-                                        <img src={itemIcon} alt=""/>
-                                        {!!item.item && <div className="price">
-                                            <img src={coins} alt={item.item}/>
-                                            <span>{item.item}</span>
-                                        </div>}
-                                    </li>
-                                )
-                            }
-                        </ul>}
-                        {countOfCases >= 4 && <ul>
-                            {
-                                itemsToRoll.map(item =>
-                                    <li key={item.index}
-                                        style={{transition: isActiveSpin && !isFastActive ? "all 10s ease-in-out" : ""}}
-                                        className={"spin__item" + (!!item.item && isWonItemActive ? " won_the_price" : "")}>
-                                        <img src={itemIcon} alt=""/>
-                                        {!!item.item && <div className="price">
-                                            <img src={coins} alt={item.item}/>
-                                            <span>{item.item}</span>
-                                        </div>}
-                                    </li>
-                                )
-                            }
-                        </ul>}
-                        {countOfCases >= 5 && <ul>
-                            {
-                                itemsToRoll.map(item =>
-                                    <li key={item.index}
-                                        style={{transition: isActiveSpin && !isFastActive ? "all 10s ease-in-out" : ""}}
-                                        className={"spin__item" + (!!item.item && isWonItemActive ? " won_the_price" : "")}>
-                                        <img src={itemIcon} alt=""/>
-                                        {!!item.item && <div className="price">
-                                            <img src={coins} alt={item.item}/>
-                                            <span>{item.item}</span>
-                                        </div>}
-                                    </li>
-                                )
-                            }
-                        </ul>}
+                        {countOfCases >= 2 && <CaseRollingBlock isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 2 && <CaseRollingBlock isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 3 && <CaseRollingBlock isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 4 && <CaseRollingBlock isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 5 && <CaseRollingBlock isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
                     </div>
                 </div>}
                 <div className="center__buttons">
                     <button onClick={_ => setIsActiveSpin(true)} className="center__buy">
                         <p>Купить</p>
                         <img src={coins} alt="coin"/>
-                        <span>500</span>
+                        <span>
+                            {chosenCrate?.price}
+                        </span>
                     </button>
                     <div className="center__count">
                         <span>Количество</span>
@@ -200,27 +125,23 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
             </div>
 
             <div className="active-case">
-                <h2>Предметы в ящике</h2>
+                <h2>
+                    {chosenCrate?.name}
+                </h2>
                 <ul>
                     <li className="case">
-                        <img src={caseMagma} alt=""/>
-                        <span>Orange Magma</span>
-                        <div className="line"></div>
+                        <img src={"https://api.smallstash.gg" + chosenCrate?.icon} alt=""/>
+                        <span>
+                            {chosenCrate?.name}
+                        </span>
+                        <div className="line" style={{background: crateRarity?.color}} />
+                        <div className="line__shadow" style={{background: `linear-gradient(0deg, ${crateRarity?.color} 0%, transparent 100%)`}} />
                     </li>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
-                    <CaseItem/>
+
+                    {
+                        chosenCrate?.items?.map((item: ICrateItem) => <CaseItem key={item.id} data={item} />)
+                    }
+
                 </ul>
             </div>
 

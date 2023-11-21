@@ -18,11 +18,6 @@ export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({handleJoinGame
 
     const handleRandom = () => {
 
-        //
-        // setBagsList(Array(airdropBags).fill(''))
-        // dispatch(removeAirdropBags(airdropBags))
-        // dispatch(clearAirdropBagsMap())
-
         // @ts-ignore
         document.querySelectorAll('.bags li').forEach(item => item.style.transition = "top .3s ease, left .3s ease");
         dispatch(changeAirdropBagsMap())
