@@ -62,6 +62,7 @@ export const AirdropStyled = styled.section`
     -ms-transition: all 1s linear;
     -o-transition: all 1s linear;
     transition: all 1s linear;
+    height: 28px;
 
     &:before {
       content: '';
@@ -350,14 +351,11 @@ export const AirdropStyled = styled.section`
   }
 
 
-
-
-
-
   .section-map__map .point__group {
     position: absolute;
     top: -65px;
   }
+
   .section-map__map .point {
     position: absolute;
     width: 18px;
@@ -370,9 +368,11 @@ export const AirdropStyled = styled.section`
     right: 200px;
     pointer-events: none;
   }
+
   .section-map__map .point.sleepers__item_winner {
     z-index: 20;
   }
+
   .section-map__map .point__photo img {
     width: 36px;
     height: 36px;
@@ -380,10 +380,12 @@ export const AirdropStyled = styled.section`
     position: absolute;
     margin: 4px
   }
+
   .section-map__map .point__dot {
     position: relative;
     width: 44px
   }
+
   .section-map__map .point__dot:before {
     content: "";
     width: 8px;
@@ -398,6 +400,7 @@ export const AirdropStyled = styled.section`
     transform: translateX(-50%);
     top: 15px
   }
+
   .section-map__map .point__dot .dot {
     content: "";
     width: 18px;
@@ -411,6 +414,7 @@ export const AirdropStyled = styled.section`
     transform: translateX(-50%);
     top: 10px
   }
+
   .section-map__map .point__dot .line {
     height: 14px;
     width: 3px;
@@ -424,33 +428,36 @@ export const AirdropStyled = styled.section`
     transform: translateX(-50%);
     top: 0
   }
-  
-  
-  
-  .point__winner-table .table__left span{
+
+
+  .point__winner-table .table__left span {
     font-weight: 500;
     font-size: 14px;
     line-height: 13px;
     color: #FFFFFF;
   }
-  .point__winner-table .right__bottom span{
+
+  .point__winner-table .right__bottom span {
     font-weight: 700;
     font-size: 14px;
     line-height: 13px;
     color: #FFFFFF;
     margin-left: 6px;
   }
-  .point__winner-table .right__bottom{
+
+  .point__winner-table .right__bottom {
     display: flex;
   }
-  .point__winner-table .table__right p{
+
+  .point__winner-table .table__right p {
     font-weight: 500;
     font-size: 11px;
     line-height: 12px;
     color: #A2ABC5;
     margin-bottom: 6px;
   }
-  .point__winner-table .table__right{
+
+  .point__winner-table .table__right {
     background: rgba(38, 41, 59, 0.9);
     box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(7.5px);
@@ -460,7 +467,8 @@ export const AirdropStyled = styled.section`
     min-width: 120px;
     max-width: 120px;
   }
-  .point__winner-table .table__left .line{
+
+  .point__winner-table .table__left .line {
     content: '';
     background: #DD9C4F;
     border-radius: 2px;
@@ -471,7 +479,8 @@ export const AirdropStyled = styled.section`
     left: 50%;
     transform: translateX(-50%);
   }
-  .point__winner-table .table__left{
+
+  .point__winner-table .table__left {
     display: flex;
     align-items: center;
     background: linear-gradient(89.07deg, #D59953 0.69%, #866644 99.35%);
@@ -480,13 +489,15 @@ export const AirdropStyled = styled.section`
     padding-right: 60px;
     position: relative;
   }
-  .point__winner-table .table__left img{
+
+  .point__winner-table .table__left img {
     border-radius: 10px;
     width: 40px;
     height: 40px;
     margin-right: 10px;
   }
-  .point__winner-table{
+
+  .point__winner-table {
     display: flex;
     position: absolute;
     left: calc(50% + 62px);
@@ -495,8 +506,133 @@ export const AirdropStyled = styled.section`
 
     transition: all .3s ease;
     z-index: 14;
-    
+
     opacity: 0;
     visibility: hidden;
+    
+    &_active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .drop {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    img {
+      position: absolute;
+      &:first-child {
+        width: 100px;
+        height: 100px;
+        z-index: 2;
+        animation: circleAnimation 2s .3s linear infinite;
+      }
+
+      &:last-child {
+        width: 140px;
+        height: 140px;
+        z-index: 1;
+        animation: circleAnimation 2s linear infinite;
+      }
+    }
+    
+
+    &:after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      display: block;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      background: #F5AD57;
+      position: relative;
+      z-index: 3;
+    }
+
+    &__circle {
+      background: radial-gradient(50% 50% at 50% 50%, transparent 0%, rgba(245, 173, 87, 0.45) 100%);
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      backdrop-filter: blur(2px);
+      position: absolute;
+      z-index: 2;
+
+      &:first-child {
+        width: 100px;
+        height: 100px;
+        z-index: 2;
+        animation: circleAnimation 2s .3s linear infinite;
+      }
+
+      &:last-child {
+        width: 140px;
+        height: 140px;
+        z-index: 1;
+        animation: circleAnimation 2s linear infinite;
+        //display: none;
+      }
+    }
+  }
+
+  @keyframes circleAnimation {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    25% {
+      transform: scale(0.2);
+      opacity: 1;
+    }
+    75% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.2);
+      opacity: 0;
+    }
+  }
+
+
+  .line-to-winner {
+    border: 1px dashed #f5ad57;
+    height: 1px;
+    width: 0;
+    position: absolute;
+    -webkit-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    transform: rotate(10deg);
+    z-index: 4;
+    left: 8px;
+    top: 8px;
+    transform-origin: top left;
+    opacity: 0;
+  }
+  .line-to-winner.line-to-winner_active{
+    animation: lineWidth .3s ease-out forwards;
+  }
+
+  .line-to-winner{
+    -webkit-transition: width 3s linear;
+    -moz-transition: width 3s linear;
+    -ms-transition: width 3s linear;
+    -o-transition: width 3s linear;
+    transition: width 3s linear;
+  }
+
+  @keyframes lineWidth {
+    from {
+      /*width: 0;*/
+      opacity: 0;
+    }
+    to{
+      /*width: 100%;*/
+      opacity: 1;
+    }
   }
 `

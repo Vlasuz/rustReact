@@ -45,7 +45,7 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
             return {x_pos: item.x / 1500, y_pos: item.y / 1500}
         })
         getBearer({type: 'post'})
-        axios.post(getApiLink("api/airdrop/bags/choose?game_id=" + airdropWsMessages?.airdrop.id), {
+        axios.post(getApiLink("api/airdrop/bags/choose?game_id=" + airdropWsMessages?.airdrop?.id), {
             "bags": bagsListForRequest
         }).then(({data}) => {
             if(data.status) {
@@ -65,12 +65,11 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
     }
 
     useEffect(() => {
-        console.log(airdropWsMessages.airdrop.players.some((player: any) => player.user.id === userInfo.id))
-        if(airdropWsMessages.airdrop.players.some((player: any) => player.user.id === userInfo.id)) {
+        if(airdropWsMessages?.airdrop?.players.some((player: any) => player.user.id === userInfo.id)) {
             setPointOfGame("member")
         }
 
-        if(airdropWsMessages.airdrop.game_state === "prepare") {
+        if(airdropWsMessages?.airdrop?.game_state === "prepare") {
             setPointOfGame('choose')
         }
     }, [airdropWsMessages, userInfo])

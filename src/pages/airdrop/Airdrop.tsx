@@ -4,6 +4,7 @@ import {AirdropStyled} from "./Airdrop.styles";
 import mapPhoto from './../../assets/images/map.png'
 import shieldIcon from './../../assets/images/shield-map.svg'
 import planeIcon from './../../assets/images/plane_new.svg'
+import dropCircle from './../../assets/images/dropCircle.svg'
 import coinsIcon from './../../assets/images/header__coins.svg'
 import {animated, useSpring} from "@react-spring/web";
 import {useDrag} from "react-use-gesture";
@@ -94,17 +95,28 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
 
     useEffect(() => {
         setPlaneDistance(0)
-        if(airdropWsMessages?.airdrop?.game_state !== "process") return;
+        let numsCount = 30
+        if (airdropWsMessages?.airdrop?.game_state !== "process") return;
 
-        const planeStep = 1500 / fixTimer[airdropWsMessages.airdrop.game_state];
+        const stepNum = 1600 / 30;
+        setPlaneDistance(1600 / fixTimer[airdropWsMessages.airdrop.game_state] * (fixTimer[airdropWsMessages.airdrop.game_state] - airdropWsMessages.timer));
 
         const intervalToFly = setInterval(() => {
-            setPlaneDistance(prev => prev + planeStep)
+            numsCount--
+            setPlaneDistance(prev => prev + stepNum)
         }, 1000)
 
         setTimeout(() => {
             clearInterval(intervalToFly)
         }, (airdropWsMessages.timer + 1) * 1000)
+    }, [airdropWsMessages])
+
+    useEffect(() => {
+        console.log(airdropWsMessages?.airdrop?.game_state)
+        if(airdropWsMessages?.airdrop?.game_state === "ended") {
+            console.log('aaa')
+            lineToWinner(document.querySelector(".point_winner"))
+        }
     }, [airdropWsMessages])
 
 
@@ -151,6 +163,53 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
         droppableItem(true, 0)
     }, [oldItemCoods])
 
+
+    const airdropDrop: any = useRef(null);
+    const airdropLine: any = useRef(null);
+    const [radiusLine, setRadiusLine] = useState(0)
+
+    const lineToWinner = (bag: any) => {
+        console.log('123')
+        let dropX = +getComputedStyle(airdropDrop.current).left.replace('px', '') + 1
+        let dropY = +getComputedStyle(airdropDrop.current).top.replace('px', '') + 1
+        let bagX = +getComputedStyle(bag).left.replace('px', '')
+        let bagY = +getComputedStyle(bag).top.replace('px', '')
+
+        bag.classList.add('sleepers__item_winner')
+        bagX = +getComputedStyle(bag.closest('.point')).left.replace('px', '')
+        bagY = +getComputedStyle(bag.closest('.point')).top.replace('px', '')
+
+        console.log(dropX, dropY)
+        console.log(bagX, bagY)
+
+        bagX -= dropX;
+        bagY -= dropY;
+
+        let result = +Math.sqrt(Math.pow(bagX, 2) + Math.pow(bagY, 2)).toFixed(2)
+        airdropLine.current.style.width = result + "px"
+        airdropLine.current.classList.add('line-to-winner_active')
+
+        console.log(bagX, bagY)
+
+        // @ts-ignore
+        let radius = Math.asin(Math.abs(bagY) / result) * (180 / Math.PI).toFixed(2)
+        dropX = +getComputedStyle(airdropDrop.current).left.replace('px', '') + 1
+        dropY = +getComputedStyle(airdropDrop.current).top.replace('px', '') + 1
+        bagX = +getComputedStyle(bag.closest('.point')).left.replace('px', '')
+        bagY = +getComputedStyle(bag.closest('.point')).top.replace('px', '')
+
+        if (bagX >= dropX && bagY >= dropY) {
+            radius = 360 - radius
+        } else if (bagX <= dropX && bagY >= dropY) {
+            radius = 180 + radius
+        } else if (bagX <= dropX && bagY <= dropY) {
+            radius = 180 - radius
+        }
+
+        setRadiusLine(radius)
+    }
+
+
     return (
         <AirdropStyled ref={blockArea} className="section-map">
             <div className="section-map__top">
@@ -176,21 +235,39 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
                             <img src={mapPhoto} alt=""/>
                         </div>
 
-                        {airdropWsMessages?.airdrop?.game_state === "process" && <div className="trajectory"
-                              style={{width: planeDistance, top: (airdropWsMessages?.airdrop?.y_pos * 1480) + "px"}}>
-                            <div className="plane">
-                                <img src={planeIcon} alt="Plane" width="54"/>
-                            </div>
-                        </div>}
+                        {/*<div className="trajectory" style={{width: 1600 / 30 * (30 - 5), marginLeft: "0px", transition: airdropWsMessages?.airdrop?.game_state === "drop" ? "all 5s linear" : "all 1s linear", top: (1 * 1484) + "px"}}>*/}
+                        {(airdropWsMessages?.airdrop?.game_state === "process" || airdropWsMessages?.airdrop?.game_state === "drop") &&
+                            <div className="trajectory" style={{
+                                width: airdropWsMessages?.airdrop?.game_state === "drop" ? "1600px" : `${planeDistance}px`,
+                                transition: airdropWsMessages?.airdrop?.game_state === "drop" ? "all 5s linear" : "all 1s linear",
+                                top: (airdropWsMessages?.airdrop?.y_pos * 1484) + "px"
+                            }}>
+                                <div className="plane">
+                                    <img src={planeIcon} alt="Plane" width="54"/>
+                                </div>
+                            </div>}
 
                         <div className="section-map__map">
                             <ul className="map__points">
 
                                 {
-                                    airdropWsMessages?.airdrop?.players?.map((player: any, index: number) => <AirdropPlayersBags key={player.bags[index] + player.user.id} player={player}/>)
+                                    airdropWsMessages?.airdrop?.players?.map((player: any, index: number) =>
+                                        <AirdropPlayersBags key={player.bags[index] + player.user.id} player={player}/>)
                                 }
 
                             </ul>
+                        </div>
+
+                        {/*<div className="drop" style={{top: `${.5 * 1484}px`, left: `${.5 * 1484}px`, display: true ? "flex" :"none"}}>*/}
+                        <div className="drop" ref={airdropDrop} style={{
+                            top: `${airdropWsMessages?.airdrop?.y_pos * 1484}px`,
+                            left: `${airdropWsMessages?.airdrop?.x_pos * 1484}px`,
+                            display: airdropWsMessages?.airdrop?.game_state === "drop" || airdropWsMessages?.airdrop?.game_state === "ended" ? "flex" : "none"
+                        }}>
+                            <img src={dropCircle} alt=""/>
+                            <img src={dropCircle} alt=""/>
+
+                            <div className='line-to-winner line-to-winner_active' style={{transform: `rotate(-${radiusLine}deg)`}} ref={airdropLine}/>
                         </div>
 
                         <ul className="bags" ref={drop}>

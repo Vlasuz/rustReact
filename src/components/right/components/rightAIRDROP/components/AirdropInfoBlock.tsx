@@ -57,11 +57,11 @@ export const AirdropInfoBlock:React.FC<IAirdropInfoBlockProps> = () => {
                 </div>
 
                 {/*.section-right__airdrop .airdrop__timer-to-ready .line_done:after*/}
-                <div className={"fly__bottom" + (airdropWsMessages.airdrop.game_state === "process" ? " fly__bottom_plane" : "")}>
+                <div className={"fly__bottom" + (airdropWsMessages?.airdrop?.game_state === "process" ? " fly__bottom_plane" : "")}>
                     <div className="fly__timer">
                         <img src={lineAirdrop} alt="Ico"/>
                         <div className="line">
-                            <div className="line_done" style={{width: airdropWsMessages.airdrop.game_state === "process" ? (-(seconds * 100 / fixTimer[airdropWsMessages.airdrop.game_state]) + 100) + "%" : (seconds * 100 / fixTimer[airdropWsMessages.airdrop.game_state]) + "%"}}/>
+                            <div className="line_done" style={{width: airdropWsMessages?.airdrop?.game_state === "process" ? (-(seconds * 100 / fixTimer[airdropWsMessages?.airdrop?.game_state]) + 100) + "%" : (seconds * 100 / fixTimer[airdropWsMessages?.airdrop?.game_state]) + "%"}}/>
                         </div>
                     </div>
                 </div>
