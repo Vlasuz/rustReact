@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rustReact/static/css/main.f368d756.css",
-    "main.js": "/rustReact/static/js/main.52eb8a5f.js",
+    "main.js": "/rustReact/static/js/main.6edcbf3b.js",
     "static/media/persone-nsn.png": "/rustReact/static/media/persone-nsn.2abc923879141b078674.png",
     "static/media/persone-nns.png": "/rustReact/static/media/persone-nns.11ae7c22d114fdfca6f3.png",
     "static/media/persone-snn.png": "/rustReact/static/media/persone-snn.1a1feccade4b79b95990.png",
@@ -141,10 +141,10 @@
     "static/media/filter.svg": "/rustReact/static/media/filter.8d7f7f01d770e0fe3f14e9df4ca4f72b.svg",
     "static/media/half-circle.svg": "/rustReact/static/media/half-circle.5d288c0b801a1e6ff294c38e6dac4f54.svg",
     "main.f368d756.css.map": "/rustReact/static/css/main.f368d756.css.map",
-    "main.52eb8a5f.js.map": "/rustReact/static/js/main.52eb8a5f.js.map"
+    "main.6edcbf3b.js.map": "/rustReact/static/js/main.6edcbf3b.js.map"
   },
   "entrypoints": [
     "static/css/main.f368d756.css",
-    "static/js/main.52eb8a5f.js"
+    "static/js/main.6edcbf3b.js"
   ]
 }
