@@ -36,7 +36,7 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
         option: "2v2"
     })
 
-    const gameStep: string = "ended"
+    const [gameStep, setGameStep] = useState<string>("start")
     // start, waiting, process, ended
 
     return (
@@ -56,7 +56,7 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
                         <img src={bgd} alt="img"/>
                     </div>
 
-                    {gameStep === "start" && <BattleCreate setGameType={setGameType} gameType={gameType}/>}
+                    {gameStep === "start" && <BattleCreate setGameStep={setGameStep} setGameType={setGameType} gameType={gameType}/>}
 
                     <BattleArea gameType={gameType} blockArea={blockArea}/>
 

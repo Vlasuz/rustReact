@@ -100,5 +100,24 @@ export const FightItemStyled = styled.div`
       height: 36px;
     }
   }
+  
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+    padding-top: 0;
+    padding-right: 0;
+    .item__type_coins {
+      margin: 0;
+      -webkit-border-radius: 8px;-moz-border-radius: 8px;border-radius: 8px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .item__button {
+      max-width: calc(100% - 20px);
+      margin: 10px;
+    }
+    .item__user {
+      justify-content: center;
+    }
+  }
 
 `

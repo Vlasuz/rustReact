@@ -13,7 +13,7 @@ import {useDrop} from "react-dnd";
 import {ItemTypes} from "../../constants/ItemTypes";
 import {AirdropBagsItem} from "./components/AirdropBagsItem";
 import {useDispatch, useSelector} from "react-redux";
-import {removeAirdropBags} from "../../redux/toolkitSlice";
+import {addAirdropBagsMap, removeAirdropBagMap, removeAirdropBags} from "../../redux/toolkitSlice";
 import {AirdropSocketContext} from "../../App";
 import {AirdropPlayersBags} from "./components/AirdropPlayersBags";
 
@@ -113,7 +113,7 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
 
     useEffect(() => {
         console.log(airdropWsMessages?.airdrop?.game_state)
-        if(airdropWsMessages?.airdrop?.game_state === "ended") {
+        if (airdropWsMessages?.airdrop?.game_state === "ended") {
             console.log('aaa')
             lineToWinner(document.querySelector(".point_winner"))
         }
@@ -141,7 +141,8 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
         document.querySelectorAll('.bags li').forEach(item => item.style.transition = "none");
 
         if (Object.keys(oldItemCoods).length) {
-            return setBagsCoods(bagsCoods.filter((item: any) => item.x !== oldItemCoods.x && item.y !== oldItemCoods.y));
+
+            // return setBagsCoods(bagsCoods.filter((item: any) => item.x !== oldItemCoods.x && item.y !== oldItemCoods.y));
         }
 
         const block: any = document.querySelector('.bags')
@@ -153,6 +154,8 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
             const mouseY = event.pageY - rect.top - window.scrollY;
 
             setBagsCoods((prev: any) => [...prev, {x: mouseX / wheelValue, y: mouseY / wheelValue}])
+
+            dispatch(addAirdropBagsMap({x: mouseX, y: mouseY}));
         }
 
     }
@@ -169,7 +172,6 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
     const [radiusLine, setRadiusLine] = useState(0)
 
     const lineToWinner = (bag: any) => {
-        console.log('123')
         let dropX = +getComputedStyle(airdropDrop.current).left.replace('px', '') + 1
         let dropY = +getComputedStyle(airdropDrop.current).top.replace('px', '') + 1
         let bagX = +getComputedStyle(bag).left.replace('px', '')
@@ -188,8 +190,6 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
         let result = +Math.sqrt(Math.pow(bagX, 2) + Math.pow(bagY, 2)).toFixed(2)
         airdropLine.current.style.width = result + "px"
         airdropLine.current.classList.add('line-to-winner_active')
-
-        console.log(bagX, bagY)
 
         // @ts-ignore
         let radius = Math.asin(Math.abs(bagY) / result) * (180 / Math.PI).toFixed(2)
@@ -210,6 +210,17 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
     }
 
 
+    const handleTouchStart = (e: any) => {
+        e.preventDefault();
+        // @ts-ignore
+        document.querySelector('body').style.overflow = 'hidden'
+    }
+    const handleTouchEnd = (e: any) => {
+        e.preventDefault();
+        // @ts-ignore
+        document.querySelector('body').style.overflow = 'auto'
+    }
+
     return (
         <AirdropStyled ref={blockArea} className="section-map">
             <div className="section-map__top">
@@ -223,6 +234,8 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
             </div>
             <div ref={blockCenter}
                  onWheel={handleWheel}
+                 onTouchStart={handleTouchStart}
+                 onTouchEnd={handleTouchEnd}
                  style={{
                      transform: `scale(${wheelValue < 1 ? 1 : wheelValue > 3 ? 3 : wheelValue})`,
                      transition: "all .1s ease-out",
@@ -267,7 +280,8 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
                             <img src={dropCircle} alt=""/>
                             <img src={dropCircle} alt=""/>
 
-                            <div className='line-to-winner line-to-winner_active' style={{transform: `rotate(-${radiusLine}deg)`}} ref={airdropLine}/>
+                            <div className='line-to-winner line-to-winner_active'
+                                 style={{transform: `rotate(-${radiusLine}deg)`}} ref={airdropLine}/>
                         </div>
 
                         <ul className="bags" ref={drop}>

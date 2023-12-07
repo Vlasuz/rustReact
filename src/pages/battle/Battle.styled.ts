@@ -51,5 +51,21 @@ export const BattleStyled = styled.section`
     margin-top: 14px;
     height: calc(100% - 104px);
   }
+
+  @media screen and (max-width: 1250px) {
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 576px) {
+    .top {
+      flex-direction: column;
+    }
+    .create-battle {
+      max-width: 100%;
+      width: 100%;
+      margin: 0;
+      margin-top: 10px;
+    }
+  }
   
 `

@@ -25,5 +25,9 @@ export const ContainerStyled = styled.main`
     section {
         transition: all .3s ease;
     }
+  
+  @media screen and (max-width: 1250px) {
+    flex-direction: column;
+  }
     
 `

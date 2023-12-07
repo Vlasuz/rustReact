@@ -24,8 +24,13 @@ export const BattleTop:React.FC<IBattleTopProps> = () => {
 
             ws.onopen = () => setIsLoad(true);
             ws.onmessage = (e: MessageEvent) => {
-                console.log(e.data)
-                // setWinLinesList(prev => [...prev, e.data])
+                const data = JSON.parse(JSON.parse(e.data))
+
+                console.log(data)
+
+                setTimeout(() => {
+                    setWinLinesList(prev => [data.data, ...prev])
+                }, 11000)
             }
 
         }).catch(er => console.log("api/crate/items/win_line/", er))
@@ -37,16 +42,9 @@ export const BattleTop:React.FC<IBattleTopProps> = () => {
             <ul>
 
                 {
-                    winLinesList.map((item: IWinLineItem, index) => <HistoryItem key={index} type={"green"}/>)
+                    winLinesList.map((item: IWinLineItem, index) => <HistoryItem key={index} data={item} type={"green"}/>)
                 }
 
-                <HistoryItem type={"green"}/>
-                <HistoryItem type={"green"}/>
-                <HistoryItem type={"brown"}/>
-                <HistoryItem type={"green"}/>
-                <HistoryItem type={"green"}/>
-                <HistoryItem type={"green"}/>
-                <HistoryItem type={"green"}/>
             </ul>
         </BattleTopStyled>
     )

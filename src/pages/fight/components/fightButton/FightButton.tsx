@@ -35,7 +35,6 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
         </div>
 
     const isUserInGame = Object.keys(userData).length && (data.first_player.user.id === userData.id || data.second_player?.user.id === userData.id)
-    console.log(isUserInGame)
     const isGameRunning = !isUserInGame && !(data.game_state === "waiting" || data.game_state === "attack" || data.game_state === "defense" || data.game_state === "duel") ? "process" : ""
 
     const handlePressButton = () => {

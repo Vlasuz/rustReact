@@ -36,6 +36,7 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
     const navigate = useNavigate()
     const ws: any = useContext(WSFight)
     const userData = useSelector((state: any) => state.toolkit.user)
+    const settings = useSelector((state: any) => state.toolkit.siteSettings)
     const {fightId} = useParams()
 
     const handleExit = () => {
@@ -52,19 +53,11 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
     const attackSecond = !isYour ? gameData.fight?.first_player.attack : gameData.fight?.second_player.attack
     const defenseFirst = isYour ? gameData.fight?.first_player.defense : gameData.fight?.second_player.defense
 
-    const suitHead = (defenseFirst?.includes('head') || suit[0]) ? "S" : "N"
-    const suitBody = (defenseFirst?.includes('body') || suit[1]) ? "S" : "N"
-    const suitLegs = (defenseFirst?.includes('legs') || suit[2]) ? "S" : "N"
+    const chosenSkin = isYour ? gameData.fight?.first_player?.user?.chosen_skin : gameData.fight?.second_player?.user?.chosen_skin ?? settings.default_fight_skin
 
-    const suitImage: any = {
-        "SSN": personSSN,
-        "NNN": personNNN,
-        "SNN": personSNN,
-        "NSN": personNSN,
-        "NSS": personNSS,
-        "NNS": personNNS,
-        "SNS": personSNS,
-    }
+    const suitHead = (defenseFirst?.includes('head') || suit[0]) ? "x" : "i"
+    const suitBody = (defenseFirst?.includes('body') || suit[1]) ? "x" : "i"
+    const suitLegs = (defenseFirst?.includes('legs') || suit[2]) ? "x" : "i"
 
     const [isHoverButtonToSkin, setIsHoverButtonToSkin] = useState(10)
 
@@ -131,7 +124,7 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
                             <div className="line"></div>
                         </div>
                     </div>}
-                    <img src={suitImage[suitHead + suitBody + suitLegs]} className={"persone-img"} alt="Persone"/>
+                    <img src={getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs])} className={"persone-img"} alt="Persone"/>
                 </div>
             </div>
 

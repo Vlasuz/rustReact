@@ -401,5 +401,27 @@ export const HistoryStyle = styled.section`
             }
         }
     }
+  
+  @media screen and (max-width: 768px) {
+    .section-history__top {
+      flex-direction: column;
+    }
+    .section-history__center {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .section-history__sort {
+      margin-left: 0;
+      margin-top: 20px;
+    }
+    .section-history__top button {
+      width: 100%;
+      margin-bottom: 10px;
+      max-width: 100%;
+    }
+    .section-history__item {
+      min-width: 600px;
+    }
+  }
     
 `

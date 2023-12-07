@@ -92,6 +92,15 @@ export const DocsStyle = styled.div`
     opacity: 1;
     visibility: visible;
   }
+  
+  
+  @media screen and (max-width: 650px) {
+    margin-right: 0;
+    
+    .select__head {
+      padding: 7px;
+    }
+  }
 
 
 `

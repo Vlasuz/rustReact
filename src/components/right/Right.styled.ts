@@ -1327,5 +1327,14 @@ export const RightStyled = styled.section`
     }
     
   }
+  
+  
+  
+  
+  
+  @media screen and (max-width: 1250px) {
+    max-width: 100%;
+    margin: 0;
+  }
 
 `

@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import {styled} from 'styled-components';
 
 export const AsideStyled = styled.aside`
 
@@ -12,7 +12,7 @@ export const AsideStyled = styled.aside`
   flex-direction: column;
   margin-right: 14px;
 
-  .absolute-span{
+  .absolute-span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -31,7 +31,7 @@ export const AsideStyled = styled.aside`
     visibility: hidden;
     transition: all .3s ease;
   }
-  
+
   a:hover {
     .absolute-span {
       opacity: 1;
@@ -63,10 +63,14 @@ export const AsideStyled = styled.aside`
         opacity: 0;
         transition: all .3s ease;
       }
-      
+
       img {
         opacity: .4;
-        -webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease;
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        -ms-transition: all .3s ease;
+        -o-transition: all .3s ease;
+        transition: all .3s ease;
       }
 
       &:hover,
@@ -74,6 +78,7 @@ export const AsideStyled = styled.aside`
         &:after {
           opacity: 1;
         }
+
         img {
           opacity: 1;
         }
@@ -99,7 +104,7 @@ export const AsideStyled = styled.aside`
       margin-top: auto;
       transition: all .3s ease;
       text-align: center;
-      
+
       &:hover {
         filter: brightness(1.5);
       }
@@ -145,7 +150,7 @@ export const AsideStyled = styled.aside`
         }
 
         &:hover {
-          
+
           path {
             fill-opacity: 1
           }
@@ -186,7 +191,11 @@ export const AsideStyled = styled.aside`
 
       img {
         opacity: .4;
-        -webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease;
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        -ms-transition: all .3s ease;
+        -o-transition: all .3s ease;
+        transition: all .3s ease;
       }
 
       &:hover,
@@ -194,6 +203,7 @@ export const AsideStyled = styled.aside`
         &:after {
           opacity: 1;
         }
+
         img {
           opacity: 1;
         }
@@ -260,6 +270,113 @@ export const AsideStyled = styled.aside`
         }
       }
     }
+  }
+
+
+  @media screen and (max-width: 1250px) {
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 15px;
+    padding: 0;
+    -webkit-border-radius: 10px;-moz-border-radius: 10px;border-radius: 10px;
+    
+    .aside__plane {
+      padding: 10px;
+    }
+
+    .aside__list {
+      display: flex;
+      align-items: center;
+    }
+
+    .aside__center {
+      flex-direction: row;
+      margin: 0;
+      padding: 0;
+      height: auto;
+      margin-left: auto;
+      align-items: center;
+      -webkit-border-radius: 0 10px 10px 0;-moz-border-radius: 0 10px 10px 0;border-radius: 0 10px 10px 0;
+    }
+
+    .aside__fight {
+      height: 80px;
+      width: 80px;
+    }
+
+    .aside__author {
+      margin: 0;
+      padding: 0;
+    }
+
+    .aside__plane .timer {
+      margin-top: 5px;
+    }
+
+    .absolute-span {
+      top: 100%;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      transform: translateX(-50%);
+    }
+
+    .aside__list li {
+      &:first-child { 
+        a:before {
+          opacity: 0;
+        }
+      }
+    }
+    .aside__list a {
+      margin: 0 10px;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .aside__plane {
+      margin: 0;
+      //padding: 0;
+    }
+    .aside__fight {
+      margin: 0;
+      height: auto;
+      width: 150%;
+      min-width: auto;
+      img,
+      svg {
+        width: 20px;
+      }
+    }
+    .aside__list a {
+     margin: 0 5px; 
+      svg {
+        width: 20px;
+      }
+    }
+    .aside__author p span {
+      display: none;
+    }
+    
+    .aside__plane .timer-line img {
+      display: none;
+    }
+
+    .aside__author {
+      padding: 0 10px;
+    }
+    .aside__author p {
+      font-size: 9px;
+      white-space: pre-wrap;
+    }
+    .aside__author img {
+      width: 20px;
+      margin-bottom: 0px;
+    } 
   }
 
 `

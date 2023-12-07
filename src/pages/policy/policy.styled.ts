@@ -50,5 +50,12 @@ export const PolicyStyle = styled.section`
             }
         }
     }
+  
+  @media screen and (max-width: 576px) {
+    padding: 10px;
+    .section-terms__top {
+      padding: 10px;
+    }
+  }
     
 `

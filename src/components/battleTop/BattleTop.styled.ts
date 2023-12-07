@@ -28,5 +28,11 @@ export const BattleTopStyled = styled.div`
     position: relative;
     overflow: hidden;
   }
-
+  
+  @media screen and (max-width: 576px) {
+    &:after {
+      width: 70px;
+    }
+  }
+  
 `

@@ -2,6 +2,10 @@
     --cFF: #FFFFFF;
 }
 
+*{
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     background: #191A29;
@@ -36,11 +40,6 @@ li[draggable="true"]:active {cursor: grabbing;}
 @media screen and (max-width: 576px) {
     .header__right {
         min-width: 0 !important;
-    }
-    .header__logo span,
-    .header__lowright,
-    .music-volume {
-        display: none !important;
     }
 }
 .section-fight {

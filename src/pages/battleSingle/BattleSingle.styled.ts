@@ -142,7 +142,6 @@ export const BattleSingleStyled = styled.section`
 
       .create-game__button {
         border-radius: 8px;
-        background: rgba(54, 58, 81, 0.70);
         padding: 16px;
         width: 100%;
         display: flex;
@@ -155,6 +154,23 @@ export const BattleSingleStyled = styled.section`
         -ms-transition: all .3s ease;
         -o-transition: all .3s ease;
         transition: all .3s ease;
+        background: rgba(85, 98, 221, 0.8);
+        &:hover {
+          transform: scale(1.02);
+        }
+        &:active {
+          transform: scale(0.98);
+        }
+        &:disabled {
+          background: rgba(54, 58, 81, 0.70);
+          &:active,
+          &:hover {
+            transform: scale(1);
+          }
+          span {
+            color: #8088A8;
+          }
+        }
 
         img {
           margin-left: 15px;
@@ -168,7 +184,7 @@ export const BattleSingleStyled = styled.section`
         }
 
         span {
-          color: #8088A8;
+          color: #fff;
           font-size: 16px;
           font-weight: 700;
           -webkit-transition: all .3s ease;
@@ -176,22 +192,6 @@ export const BattleSingleStyled = styled.section`
           -ms-transition: all .3s ease;
           -o-transition: all .3s ease;
           transition: all .3s ease;
-        }
-
-        &:hover {
-          background: #363A51;
-
-          span {
-            color: #FFF;
-          }
-        }
-
-        &:active {
-          -webkit-transform: scale(0.95);
-          -moz-transform: scale(0.95);
-          -ms-transform: scale(0.95);
-          -o-transform: scale(0.95);
-          transform: scale(0.95);
         }
       }
     }
@@ -425,6 +425,7 @@ export const BattleSingleStyled = styled.section`
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 7px;
 
         span {
           color: #FFF;
@@ -503,6 +504,19 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
+      .loading {
+        p {
+          color: #A2ABC5;
+          font-family: Gotham Pro;
+          font-size: 13px;
+          font-weight: 500;
+          margin-top: 23px;
+          margin-bottom: -10px;
+        }
+        .load {
+          -webkit-transform: scale(1.8);-moz-transform: scale(1.8);-ms-transform: scale(1.8);-o-transform: scale(1.8);transform: scale(1.8);
+        }
+      }
       &__end,
       &__single {
         margin: 0 auto;
@@ -530,6 +544,13 @@ export const BattleSingleStyled = styled.section`
           left: 50%;
           -webkit-transform: translateX(-50%);-moz-transform: translateX(-50%);-ms-transform: translateX(-50%);-o-transform: translateX(-50%);transform: translateX(-50%);
           top: 100%;
+          opacity: 0;
+        }
+        
+        &_bottom {
+          &:after {
+            opacity: 1;
+          }
         }
       }
 
@@ -920,9 +941,18 @@ export const BattleSingleStyled = styled.section`
       }
       
     }
-    
-    
-
+  }
+  
+  
+  
+  @media screen and (max-width: 1250px) {
+    max-width: 100%;
+  }
+  @media screen and (max-width: 1024px) {
+    zoom: .5
+  }
+  @media screen and (max-width: 576px) {
+    zoom: .3
   }
 
 `

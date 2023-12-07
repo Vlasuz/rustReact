@@ -202,4 +202,44 @@ export const FaqStyle = styled.section`
         margin: 14px 0;
     }
     
+  
+  @media screen and (max-width: 1024px) {
+    .section-faq__catalog {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 12px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .section-faq__catalog {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 12px;
+    }
+    .section-faq__top {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .section-faq__top a {
+      margin-left: 0 !important;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .section-faq__catalog {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px;
+    }
+
+    .section-faq__item {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .section-faq__item .item__body {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
 `

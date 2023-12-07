@@ -19,22 +19,13 @@ import {getWsLink} from "./functions/getWsLink";
 
 // TODO АИРДРОП
 // TODO Сделать зум карты в airdrop
-// TODO Сделать таймер в правом меню + линия таймера
-// TODO Сделать смену типа таймера в правой части аирдропа
-// TODO Сделать таймер в sidebar + линия таймера
-// TODO Сделать массив игроко в аирдропе
-// TODO Сделать победителя в аирдропе
-// TODO Сделать анимацию линии от дропа до спальника (математика)
 // TODO Сделать звуки в аирдропе
 
 // TODO ОБЩИЕ
-// TODO Сделать В правом меню вывод крейтов
 
 // TODO СХВАТКА
 // TODO Сделать кучу анимаций в схватке
 // TODO Сделать звуки в схватке
-// TODO Проверить схватку на работоспособность
-// TODO Настроить таймер в схватке
 
 const wsAirdrop = new WebSocket(getWsLink("ws/api/airdrop/"))
 export const AirdropSocketContext: any = createContext(null)

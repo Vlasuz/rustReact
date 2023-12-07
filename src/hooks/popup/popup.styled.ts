@@ -2333,4 +2333,37 @@ export const PopupStyled = styled.div`
   //  font-weight: bold;
   //}
     
+  
+  @media screen and (max-width: 1024px) {
+    .popup-new-room .popup__content {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  @media screen and (max-width: 650px) {
+    .popup-new-room .inputs {
+      flex-direction: column;
+    }
+    .popup-new-room .inputs__item {
+      margin-top: 10px;
+    }
+    
+    .popup-add-coins-balance .balance__sum {
+      padding: 8px;
+    }
+    .balance__sum input {
+      width: 80px;
+      font-size: 14px;
+    }
+    
+    .popup-add-coins-balance .balance__sum span {
+      font-size: 14px;
+    }
+    
+    .popup-add-coins .var__item {
+      padding: 10px;
+    }
+  }
+  
+  
 `

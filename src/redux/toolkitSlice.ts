@@ -54,6 +54,9 @@ const toolkitSlice = createSlice({
         chosenCrate: <ICrate>{},
         crateRarities: [],
 
+        // BATTLES
+        battleCrates: <ICrate[]>[],
+
         // GENERAL
         pages: <IPages[]>[],
         rightBlock: <IAsideButtonToRight>{},
@@ -97,6 +100,22 @@ const toolkitSlice = createSlice({
         setUserOnline(state, action) {
             state.userOnline = action.payload
         },
+        setUserBalance(state, action) {
+            console.log(action.payload)
+            if(action.payload.sum) {
+                state.user.balance = state.user.balance + action.payload.money
+            } else {
+                state.user = {...state.user, balance: action.payload}
+            }
+        },
+
+        addBattleCrate(state, action) {
+            if(state.battleCrates.some(item => item.id === action.payload.id)) return;
+            state.battleCrates = [...state.battleCrates, action.payload]
+        },
+        removeBattleCrate(state, action) {
+            state.battleCrates = state.battleCrates.filter(item => item.id !== action.payload.id)
+        },
 
         setCrates(state, action) {
             state.crates = action.payload
@@ -113,7 +132,16 @@ const toolkitSlice = createSlice({
         },
 
         addAirdropBagsMap(state, action) {
-            state.airdropBagsMap = action.payload
+            if(action?.payload?.status === "saves") {
+                state.airdropBagsMap = action.payload.bags
+            } else {
+                state.airdropBagsMap = [...state.airdropBagsMap, action.payload]
+            }
+        },
+        removeAirdropBagMap(state, action) {
+            console.log(state.airdropBagsMap.map((item: any) => item))
+            console.log(state.airdropBagsMap.filter((item: any) => item.x !== action.payload.x && item.y !== action.payload.y))
+            state.airdropBagsMap = state.airdropBagsMap.filter((item: any) => item.x !== action.payload.x && item.y !== action.payload.y)
         },
         changeAirdropBagsMap(state) {
             state.airdropBags = 0
@@ -198,9 +226,6 @@ const toolkitSlice = createSlice({
 
         changeUserBalance(state, action) {
             state.user = {...state.user, balance: state.user.balance + action.payload}
-        },
-        setUserBalance(state, action) {
-            state.user = {...state.user, balance: action.payload}
         },
 
         setShopList(state, action) {
@@ -315,6 +340,9 @@ export const {
     changeUserBalance,
     setUserBalance,
 
+    addBattleCrate,
+    removeBattleCrate,
+
     setPages,
 
     setMutedUsers,
@@ -349,6 +377,7 @@ export const {
     setAirdropUserStatus,
     changeAirdropBagsMap,
     addAirdropBagsMap,
+    removeAirdropBagMap,
     clearAirdropBagsMap,
     setAirdropBags,
     removeAirdropBags,

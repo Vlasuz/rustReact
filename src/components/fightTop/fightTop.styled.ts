@@ -89,4 +89,32 @@ export const FightTopStyle = styled.div`
     }
   }
 
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+    height: auto;
+
+    .clothes-shop {
+      margin-left: 0;
+      margin-top: 10px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .create-game__button {
+      padding: 10px;
+      font-size: 11px;
+    }
+
+    .create-game {
+      padding: 10px;
+
+      p {
+        font-size: 11px;
+      }
+    }
+  }
+
+
 `

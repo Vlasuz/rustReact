@@ -11,6 +11,7 @@ export const useAirdropTimer = () => {
     const [milliseconds, setMilliseconds] = useState(0)
 
     useEffect(() => {
+        if(!isTimerStart) return;
         setSeconds(airdropWsMessages?.timer > 0 ? airdropWsMessages?.timer - 1 : 0)
         setTime(airdropWsMessages?.timer > 0 ? airdropWsMessages?.timer - 1 : 0)
         // @ts-ignore

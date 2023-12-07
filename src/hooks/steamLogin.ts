@@ -14,16 +14,18 @@ export const useSteamLogin = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    console.log(window.location.search)
+
     let auth_params = {
         'openid.ns': 'http://specs.openid.net/auth/2.0',
         'openid.mode': 'checkid_setup',
-        'openid.return_to': (window.location.href.includes('localhost') ? 'http://localhost:3000' : 'https://smallstash.gg') + location.pathname,
-        'openid.realm': (window.location.href.includes('localhost') ? 'http://localhost:3000' : 'https://smallstash.gg') + location.pathname,
+        'openid.return_to': window.location.href,
+        'openid.realm': window.location.href,
         'openid.identity': 'http://specs.openid.net/auth/2.0/identifier_select',
         'openid.claimed_id': 'http://specs.openid.net/auth/2.0/identifier_select'
     }
 
-    const steamData = window.location.href.replace('http://localhost:3000', '').replace(location.pathname, '')
+    const steamData = window.location.search
     const urlAxios = getApiLink(`api/auth/login/${steamData}`);
 
     useEffect(() => {

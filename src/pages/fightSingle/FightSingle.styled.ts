@@ -781,4 +781,20 @@ export const FightSingleStyled = styled.section`
     }
   }
 
+
+
+  @media screen and (max-width: 850px) {
+    flex-direction: column;
+
+    .section-fight__lft {
+      margin-bottom: 20px;
+    }
+    
+    .section-fight__center {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+    }
+  }
+  
 `

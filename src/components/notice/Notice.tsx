@@ -15,7 +15,7 @@ interface INoticeProps {
 export const Notice: React.FC<INoticeProps> = () => {
 
     const noticeSlug = useSelector((state: any) => state.toolkit.notice)
-    const [isShow, setisShow] = useState(false)
+    const [isShow, setIsShow] = useState(false)
     const dispatch = useDispatch()
 
     const notices: INotice[] = [
@@ -130,10 +130,10 @@ export const Notice: React.FC<INoticeProps> = () => {
         if(noticeSlug)
 
         setTimeout(() => {
-            setisShow(true)
+            setIsShow(true)
 
             setTimeout(() => {
-                setisShow(false)
+                setIsShow(false)
 
                 setTimeout(() => {
                     dispatch(setNotice(''))

@@ -16,6 +16,10 @@ export const RightItemsButton: React.FC<IAsideButtonToRight> = ({icon, title, sl
         dispatch(setSound(sound))
         document.querySelector('.postamat')?.classList.remove('postamat_active')
 
+        if(window.innerWidth <= 1250) {
+            window.scrollTo(0, 99999)
+        }
+
         setTimeout(() => {
             dispatch(setRightBlock({icon, title, slug}))
             setTimeout(() => {

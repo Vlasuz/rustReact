@@ -635,4 +635,12 @@ export const AirdropStyled = styled.section`
       opacity: 1;
     }
   }
+  
+  
+  
+  @media screen and (max-width: 1250px) {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  
 `

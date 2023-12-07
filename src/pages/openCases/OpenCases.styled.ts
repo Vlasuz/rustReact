@@ -317,13 +317,27 @@ export const OpenCasesStyled = styled.section`
 
     &__buy {
       border-radius: 10px;
-      background: rgba(46, 49, 69, 0.70);
       display: flex;
       align-items: center;
       justify-content: center;
       min-width: 295px;
       height: 50px;
       margin-right: 15px;
+      background: rgba(85, 98, 221, 0.8);
+      transition: all .3s ease;
+      &:hover {
+        transform: scale(1.02);
+      }
+      &:active {
+        transform: scale(0.99);
+      }
+      &:disabled {
+        background: rgba(46, 49, 69, 0.70);
+        &:hover,
+        &:active {
+          transform: scale(1);
+        }
+      }
 
       span {
         color: #FFF;
@@ -420,6 +434,9 @@ export const OpenCasesStyled = styled.section`
       overflow: hidden;
       grid-column-start: 1;
       grid-column-end: 3;
+      img {
+        width: 80px;
+      }
 
       .line__shadow {
         content: "";
@@ -454,6 +471,70 @@ export const OpenCasesStyled = styled.section`
         width: 100%;
         margin-left: 15px;
       }
+    }
+  }
+  
+  @media screen and (max-width: 1400px) {
+    .center__buy {
+      min-width: 155px;
+    }
+  }
+  @media screen and (max-width: 1250px) {
+    max-width: 100%;
+    .center__spin .spin__item:first-child {
+      margin-left: calc(-1 * (715px - 50vw));
+    }
+    .center__spin.active .spin__item:first-child {
+      margin-left: calc(-1 * ((164.3px * 50) - 50vw));  
+    }
+  }
+  @media screen and (max-width: 1024px) {
+    .active-case ul {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .center__buttons {
+      flex-wrap: wrap;
+    }
+    .center__count {
+      margin-bottom: 15px;
+    }
+    .center button {
+      margin-left: 0;
+      margin-right: 10px;
+    }
+    .center__buy {
+      min-width: 255px;
+      margin-bottom: 15px;
+    }
+    .center__count {
+      margin-right: auto;
+    }
+    .active-case ul {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  @media screen and (max-width: 576px) {
+    .active-case ul {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .center__spin:after,
+    .center__spin:before {
+      width: 50px;  
+    }
+    .center__spin.center__spin-won_item:before,
+    .center__spin.center__spin-won_item:after {
+      width: 80px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .active-case ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .active-case .case {
+      width: 100%;
+      max-width: 100%;
     }
   }
 

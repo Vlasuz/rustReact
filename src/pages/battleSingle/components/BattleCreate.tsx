@@ -6,14 +6,18 @@ import peopleDefault from "../../../assets/images/peopleDefault.svg";
 import boxGreen from "../../../assets/images/boxGreen.svg";
 import boxDefault from "../../../assets/images/boxDefault.svg";
 import coin from "../../../assets/images/header__coins.svg";
-import {IBattleCreate} from "../../../model";
+import {IBattleCreate, ICrate} from "../../../model";
+import {useSelector} from "react-redux";
 
 interface IBattleCreateProps {
     setGameType: any
     gameType: IBattleCreate
+    setGameStep: any
 }
 
-export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType}) => {
+export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType, setGameStep}) => {
+
+    const battleCrates: ICrate[] = useSelector((state: any) => state.toolkit.battleCrates)
 
     return (
         <div className="battle-area__create">
@@ -58,7 +62,7 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
                 </ul>
             </div>
 
-            <button className="create-game__button">
+            <button disabled={!battleCrates.length} onClick={_ => setGameStep("waiting")} className="create-game__button">
                 <span>Начать игру</span>
                 <img src={coin} alt=""/>
                 <p>500</p>

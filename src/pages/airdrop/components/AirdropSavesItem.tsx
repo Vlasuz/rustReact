@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {addAirdropBagsMap, setAirdropSaveZone1, setAirdropSaveZone2, setAirdropSaveZone3, setAirdropSaveZone4 } from '../../../redux/toolkitSlice';
+import {AirdropSocketContext} from "../../../App";
+import {IUser} from "../../../model";
 
 interface IAirdropSavesItemProps {
     save?: any
@@ -14,6 +16,8 @@ export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, saveZo
     let timeToSave: any;
 
     const dispatch = useDispatch()
+    const airdropWsMessages: any = useContext(AirdropSocketContext)
+    const userData = useSelector((state: any) => state.toolkit.user)
 
 
     useEffect(() => {
@@ -60,24 +64,26 @@ export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, saveZo
     }
 
     const handleSetBags = () => {
+        if(airdropWsMessages?.airdrop?.players.some((item: any) => item.user.id === userData.id)) return;
+
         if(saveZone === 1) {
             if(save.length) {
-                dispatch(addAirdropBagsMap(save))
+                dispatch(addAirdropBagsMap({status: "saves", bags: save}))
             }
         }
         if(saveZone === 2) {
             if(save.length) {
-                dispatch(addAirdropBagsMap(save))
+                dispatch(addAirdropBagsMap({status: "saves", bags: save}))
             }
         }
         if(saveZone === 3) {
             if(save.length) {
-                dispatch(addAirdropBagsMap(save))
+                dispatch(addAirdropBagsMap({status: "saves", bags: save}))
             }
         }
         if(saveZone === 4) {
             if(save.length) {
-                dispatch(addAirdropBagsMap(save))
+                dispatch(addAirdropBagsMap({status: "saves", bags: save}))
             }
         }
     }

@@ -7,7 +7,7 @@ export const BattleItemStyled = styled.li`
   height: 110px;
   padding-right: 15px;
   display: grid;
-  grid-template-columns: 130px 370px 260px 410px;
+  grid-template-columns: 130px 370px 260px 1fr;
   align-items: center;
   margin-bottom: 10px;
 
@@ -250,6 +250,38 @@ export const BattleItemStyled = styled.li`
       position: relative;
       z-index: 1;
     }
+  }
+  
+  @media screen and (max-width: 1600px) {
+    grid-template-columns: 130px 1fr 1fr;
+    grid-gap: 20px;
+    height: auto;
+  }
+  @media screen and (max-width: 1300px) {
+    grid-template-columns: 130px 1fr;
+    grid-gap: 20px;
+    height: auto;
+  }
+  @media screen and (max-width: 1250px) {
+    grid-template-columns: 130px 370px 260px 1fr;
+    grid-gap: 0px;
+    height: 110px;
+  }
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: 130px 1fr 1fr;
+    grid-gap: 20px;
+    height: auto;
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 200px 1fr;
+    grid-gap: 20px;
+    height: auto;
+  }
+  @media screen and (max-width: 576px) {
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    height: auto;
   }
 
 `

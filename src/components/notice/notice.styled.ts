@@ -5,7 +5,7 @@ export const NoticeStyle = styled.ul`
     bottom: 29px;
     left: 40%;
     max-width: 425px;
-    position: absolute;
+    position: fixed;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     transition: opacity .3s ease,visibility .3s ease;
@@ -29,7 +29,7 @@ export const NoticeStyle = styled.ul`
         line-height: 13px;
         margin-top: 10px;
         padding: 5px 20px;
-        position: absolute;
+        position: fixed;
         transition: opacity .3s ease,visibility .3s ease;
         opacity: 0;
         visibility: hidden;
@@ -44,5 +44,18 @@ export const NoticeStyle = styled.ul`
             visibility: visible;
         }
     }
+  
+  
+  @media screen and (max-width: 650px) {
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    -webkit-transform: translate(0,0);-moz-transform: translate(0,0);-ms-transform: translate(0,0);-o-transform: translate(0,0);transform: translate(0,0);
+    
+    .notice__item {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
     
 `

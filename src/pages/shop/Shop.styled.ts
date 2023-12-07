@@ -541,4 +541,26 @@ export const ShopStyle = styled.section`
     }
   }
 
+  
+  @media screen and (max-width: 800px) {
+    .section-shop__skins .skins__block {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .section-shop__skins .skins__back {
+      position: static;
+      margin-right: auto;
+      margin-bottom: 10px;
+    }
+    .section-shop__skins .skins__top {
+      flex-direction: column;
+    }
+    .section-shop__skins {
+      padding: 15px;
+    }
+  }
+  @media screen and (max-width: 650px) {
+    .section-shop__skins .skins__block {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
 `

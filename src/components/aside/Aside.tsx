@@ -45,6 +45,8 @@ export const Aside: React.FC<IAsideProps> = () => {
             handleChangePage("", {slug: "AIRDROP", title: "Аирдроп"})
         } else if (window.location.href.includes('open-cases')) {
             handleChangePage("", {slug: "CASES", title: "Кейсы"})
+        } else if (window.location.href.includes('battle')) {
+            handleChangePage("", {slug: "CASES", title: "Баттл"})
         }
     }, [])
 

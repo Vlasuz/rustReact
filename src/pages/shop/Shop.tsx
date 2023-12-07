@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ShopStyle } from './shop.styled'
+import { ShopStyle } from './Shop.styled'
 import { FightTop } from '../../components/fightTop/FightTop'
 import backIcon from './../../assets/images/back.svg'
 import coin from './../../assets/images/header__coins.svg'

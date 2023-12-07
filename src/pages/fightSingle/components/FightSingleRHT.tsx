@@ -19,6 +19,7 @@ import personNSS from "../../../assets/images/persone-nss.png";
 import personNNS from "../../../assets/images/persone-nns.png";
 import personSNS from "../../../assets/images/persone-sns.png";
 import {useSelector} from "react-redux";
+import {getApiLink} from "../../../functions/getApiLink";
 
 interface IFightSingleLFTProps {
     opponentPlayer: any,
@@ -31,7 +32,9 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
     const [suit, setSuit] = useState([false, false, false])
     const [suitType] = useState(["Голова", "Торс", "Ноги"])
     const [isFullSuit, setIsFullSuit] = useState(false)
+
     const userData = useSelector((state: any) => state.toolkit.user)
+    const settings = useSelector((state: any) => state.toolkit.siteSettings)
 
     const isYour = gameData.fight?.first_player.user.id === userData.id
     const attackFirst = isYour ? gameData.fight?.first_player.attack : gameData.fight?.second_player.attack
@@ -39,19 +42,11 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
 
     const ws: any = useContext(WSFight)
 
-    const suitHead = defenseSecond?.includes('head') ? "S" : "N"
-    const suitBody = defenseSecond?.includes('body') ? "S" : "N"
-    const suitLegs = defenseSecond?.includes('legs') ? "S" : "N"
+    const chosenSkin = !isYour ? gameData.fight?.first_player?.user?.chosen_skin : gameData.fight?.second_player?.user?.chosen_skin ?? settings.default_fight_skin
 
-    const suitImage: any = {
-        "SSN": personSSN,
-        "NNN": personNNN,
-        "SNN": personSNN,
-        "NSN": personNSN,
-        "NSS": personNSS,
-        "NNS": personNNS,
-        "SNS": personSNS,
-    }
+    const suitHead = defenseSecond?.includes('head') ? "x" : "i"
+    const suitBody = defenseSecond?.includes('body') ? "x" : "i"
+    const suitLegs = defenseSecond?.includes('legs') ? "x" : "i"
 
     useEffect(() => {
         setIsFullSuit(findTheSameElems(suit, true) === 2)
@@ -118,9 +113,7 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                             <div className="line"></div>
                         </div>
                     </div>}
-                    <img
-                        src={suitHead === "S" || suitBody === "S" || suitLegs === "S" ? suitImage[suitHead + suitBody + suitLegs] : personSilhouette}
-                        className={"persone-img"} alt="Persone"/>
+                    <img src={getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs])} className={"persone-img"} alt="Persone"/>
                 </div>
             </div>
 
