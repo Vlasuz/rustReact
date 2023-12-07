@@ -1,16 +1,9 @@
 {
   "files": {
     "main.css": "/rustReact/static/css/main.f368d756.css",
-    "main.js": "/rustReact/static/js/main.d722b1e0.js",
-    "static/media/persone-nsn.png": "/rustReact/static/media/persone-nsn.2abc923879141b078674.png",
-    "static/media/persone-nns.png": "/rustReact/static/media/persone-nns.11ae7c22d114fdfca6f3.png",
-    "static/media/persone-snn.png": "/rustReact/static/media/persone-snn.1a1feccade4b79b95990.png",
-    "static/media/persone-nnn.png": "/rustReact/static/media/persone-nnn.06c5d2ca06a4ab61a7f6.png",
+    "main.js": "/rustReact/static/js/main.a2e825f0.js",
     "static/media/bgdForBattle.jpg": "/rustReact/static/media/bgdForBattle.dff2b5e067ca46021d83.jpg",
     "static/media/map.png": "/rustReact/static/media/map.7a7b765ed46b2ad03d88.png",
-    "static/media/persone-nss.png": "/rustReact/static/media/persone-nss.b29904cca9b8eb074f16.png",
-    "static/media/persone-sns.png": "/rustReact/static/media/persone-sns.0ad9f9313b534780fe56.png",
-    "static/media/persone-ssn.png": "/rustReact/static/media/persone-ssn.94a8b3d530a3cbbcc7af.png",
     "static/media/sound-11.wav": "/rustReact/static/media/sound-11.66677eb1ea5d6f132651.wav",
     "static/media/sound-13-1.wav": "/rustReact/static/media/sound-13-1.4453665713ea7ea0794a.wav",
     "static/media/sound-13.wav": "/rustReact/static/media/sound-13.ce18f9cf10224b962cef.wav",
@@ -26,7 +19,6 @@
     "static/media/legs.png": "/rustReact/static/media/legs.ec660684690824c237d2.png",
     "static/media/legs-hit.png": "/rustReact/static/media/legs-hit.6dc64c7564e629f27d31.png",
     "static/media/sound-3.wav": "/rustReact/static/media/sound-3.45def37e7cd0b133c0f1.wav",
-    "static/media/persone-siluete.png": "/rustReact/static/media/persone-siluete.2f7d31583f71e49a44c3.png",
     "static/media/sound-16.wav": "/rustReact/static/media/sound-16.e603b438d45103c985f3.wav",
     "static/media/sound-2.wav": "/rustReact/static/media/sound-2.48669769a2d709c39076.wav",
     "static/media/body-hit.png": "/rustReact/static/media/body-hit.fa24bfa568e4f5d93bf1.png",
@@ -111,13 +103,13 @@
     "static/media/status-error.svg": "/rustReact/static/media/status-error.3038c4d52737fce9f6644501ada62226.svg",
     "static/media/error-red.svg": "/rustReact/static/media/error-red.519bfc4d86666b85d5090b622cf0933c.svg",
     "static/media/random.svg": "/rustReact/static/media/random.ffa84ec42e3607a7f492885506d28af8.svg",
+    "index.html": "/rustReact/index.html",
     "static/media/support.svg": "/rustReact/static/media/support.33ec1cf39e8183e68007fd7706ca1725.svg",
     "static/media/balance-add.svg": "/rustReact/static/media/balance-add.f86d567e261e353302bfe2834e761504.svg",
     "static/media/shield-map.svg": "/rustReact/static/media/shield-map.d28a70c00469c83f6a05d877bbdf626b.svg",
     "static/media/lock-map.svg": "/rustReact/static/media/lock-map.7e11f1e3425d192e8f97599120ba8705.svg",
     "static/media/lock.svg": "/rustReact/static/media/lock.881659f5f660453db92b91f4d43e0994.svg",
     "static/media/shield.svg": "/rustReact/static/media/shield.eb92b5938ea52d1fa691682ac6d4f166.svg",
-    "index.html": "/rustReact/index.html",
     "static/media/looser.svg": "/rustReact/static/media/looser.6e773c83124a9aec8e27ad0cfd6d7902.svg",
     "static/media/bullet.svg": "/rustReact/static/media/bullet.21b8684b2fab1d40957a1d68ff8b16d5.svg",
     "static/media/arr-td.svg": "/rustReact/static/media/arr-td.3f9b859569157603ff4ed5709fbcd9da.svg",
@@ -141,10 +133,10 @@
     "static/media/filter.svg": "/rustReact/static/media/filter.8d7f7f01d770e0fe3f14e9df4ca4f72b.svg",
     "static/media/half-circle.svg": "/rustReact/static/media/half-circle.5d288c0b801a1e6ff294c38e6dac4f54.svg",
     "main.f368d756.css.map": "/rustReact/static/css/main.f368d756.css.map",
-    "main.d722b1e0.js.map": "/rustReact/static/js/main.d722b1e0.js.map"
+    "main.a2e825f0.js.map": "/rustReact/static/js/main.a2e825f0.js.map"
   },
   "entrypoints": [
     "static/css/main.f368d756.css",
-    "static/js/main.d722b1e0.js"
+    "static/js/main.a2e825f0.js"
   ]
 }
