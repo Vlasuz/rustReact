@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/rustReact/static/css/main.f368d756.css",
-    "main.js": "/rustReact/static/js/main.a2e825f0.js",
+    "main.css": "/rustReact/static/css/main.c624810d.css",
+    "main.js": "/rustReact/static/js/main.18c18362.js",
     "static/media/bgdForBattle.jpg": "/rustReact/static/media/bgdForBattle.dff2b5e067ca46021d83.jpg",
     "static/media/map.png": "/rustReact/static/media/map.7a7b765ed46b2ad03d88.png",
     "static/media/sound-11.wav": "/rustReact/static/media/sound-11.66677eb1ea5d6f132651.wav",
@@ -132,11 +132,11 @@
     "static/media/blue-check.svg": "/rustReact/static/media/blue-check.25c14becb32455647e00fec2261e7ba9.svg",
     "static/media/filter.svg": "/rustReact/static/media/filter.8d7f7f01d770e0fe3f14e9df4ca4f72b.svg",
     "static/media/half-circle.svg": "/rustReact/static/media/half-circle.5d288c0b801a1e6ff294c38e6dac4f54.svg",
-    "main.f368d756.css.map": "/rustReact/static/css/main.f368d756.css.map",
-    "main.a2e825f0.js.map": "/rustReact/static/js/main.a2e825f0.js.map"
+    "main.c624810d.css.map": "/rustReact/static/css/main.c624810d.css.map",
+    "main.18c18362.js.map": "/rustReact/static/js/main.18c18362.js.map"
   },
   "entrypoints": [
-    "static/css/main.f368d756.css",
-    "static/js/main.a2e825f0.js"
+    "static/css/main.c624810d.css",
+    "static/js/main.18c18362.js"
   ]
 }
