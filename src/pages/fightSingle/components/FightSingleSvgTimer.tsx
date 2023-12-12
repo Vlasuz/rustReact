@@ -3,15 +3,19 @@ import React, {useEffect, useState} from 'react'
 interface IFightSingleSvgTimerProps {
     seconds: number
     gameState: any
+    isFight?: boolean
 }
 
-export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds, gameState}) => {
+export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds, gameState, isFight = true}) => {
 
     const [startFrom, setStartFrom] = useState(seconds + .5)
 
     useEffect(() => {
         setStartFrom(seconds + .5)
     }, [seconds])
+
+    const bigNumber = !isFight ? 180 : 520
+    const smallNumber = !isFight ? 30 : 37
 
     return (
         <div className={"svg_timer"}>
@@ -24,7 +28,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".9s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -35,7 +39,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".8s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -46,7 +50,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".7s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -57,7 +61,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".6s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -68,7 +72,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".5s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -79,7 +83,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".4s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -90,7 +94,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".3s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -101,7 +105,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".2s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -112,7 +116,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".1s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -123,7 +127,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin="0s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -150,7 +154,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".9s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -161,7 +165,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".8s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -172,7 +176,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".7s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -183,7 +187,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".6s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -194,7 +198,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".5s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -205,7 +209,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".4s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -216,7 +220,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".3s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -227,7 +231,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".2s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -238,7 +242,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin=".1s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>
@@ -249,7 +253,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
                             attributeName="stroke-dashoffset"
                             dur={startFrom * 1.35 + "s"}
                             begin="0s"
-                            values={`${520 - ((startFrom - 1) * 37)};520`}
+                            values={`${bigNumber - ((startFrom - 1) * smallNumber)};520`}
                             repeatCount="indefinite"
                         />}
                     </rect>

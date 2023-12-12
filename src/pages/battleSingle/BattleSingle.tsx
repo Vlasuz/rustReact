@@ -18,8 +18,9 @@ import {CrateItem} from "./components/CrateItem";
 import {BattleArea} from "./components/BattleArea";
 import {BattleCreate} from "./components/BattleCreate";
 import {BattleBottom} from "./components/BattleBottom";
-import {IBattleCreate} from "../../model";
+import {IBattleCreate, ICrate} from "../../model";
 import {NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 interface IBattleSingleProps {
 
@@ -37,7 +38,19 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
     })
 
     const [gameStep, setGameStep] = useState<string>("start")
-    // start, waiting, process, ended
+    // start, waiting, prepare, process, calculate, ended
+
+    useEffect(() => {
+        if(gameStep !== "waiting") return;
+
+        setTimeout(() => {
+            setGameStep("prepare")
+
+            setTimeout(() => {
+                setGameStep("process")
+            }, 5000)
+        }, 1000)
+    }, [gameStep])
 
     return (
         <GameState.Provider value={gameStep}>
@@ -58,7 +71,7 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
 
                     {gameStep === "start" && <BattleCreate setGameStep={setGameStep} setGameType={setGameType} gameType={gameType}/>}
 
-                    <BattleArea gameType={gameType} blockArea={blockArea}/>
+                    <BattleArea setGameStep={setGameStep} gameType={gameType} blockArea={blockArea}/>
 
                     <BattleBottom gameType={gameType}/>
                 </div>

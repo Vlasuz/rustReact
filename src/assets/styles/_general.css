@@ -578,6 +578,7 @@ li[draggable="true"]:active {cursor: grabbing;}
     color: #a2abc5;
     margin-top: 14px
 }
+.crate__single .center__running,
 .section-fight__center .center__running {
     text-align: center;
     display: -webkit-box;
@@ -595,33 +596,39 @@ li[draggable="true"]:active {cursor: grabbing;}
     flex-direction: column;
     height: 100%
 }
+.crate__single .center__running span,
 .section-fight__center .center__running span {
     font-weight: 400;
     font-size: 13px;
     line-height: 14px;
     color: #a2abc5
 }
+.crate__single .center__running .timer,
 .section-fight__center .center__running .timer {
     margin-top: 14px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex
 }
+.crate__single .center__running .timer small.dot,
 .section-fight__center .center__running .timer small.dot {
     color: #474854;
     font-weight: 400;
     font-size: 24px;
     line-height: 23px
 }
+.crate__single .center__running .timer span,
 .section-fight__center .center__running .timer span {
     font-weight: 700;
     font-size: 24px;
     line-height: 23px;
     color: #fff
 }
+.crate__single .center__running .timer .sec,
 .section-fight__center .center__running .timer .sec {
     min-width: 40px
 }
+.crate__single .center__running .timer .sec span,
 .section-fight__center .center__running .timer .sec span {
     color: #474854;
     font-weight: 400

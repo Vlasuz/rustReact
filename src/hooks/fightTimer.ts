@@ -2,11 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import {AirdropSocketContext} from "../App";
 import {WSFight} from "../pages/fightSingle/FightSingle";
 
-export const useFightTimer = () => {
-
-    const fightWsMessages: any = useContext(WSFight)
-
-    // console.log(fightWsMessages)
+export const useFightTimer = (localTimer: any, game?: any) => {
 
     const [isTimerStart, setIsTimerStart] = useState(false)
     const [time, setTime] = useState(0)
@@ -14,16 +10,16 @@ export const useFightTimer = () => {
     const [milliseconds, setMilliseconds] = useState(0)
 
     useEffect(() => {
-        setSeconds(fightWsMessages[1]?.timer > 0 ? fightWsMessages[1]?.timer - 1 : 0)
-        setTime(fightWsMessages[1]?.timer > 0 ? fightWsMessages[1]?.timer - 1 : 0)
+        setSeconds(localTimer > 0 ? localTimer - 1 : 0)
+        setTime(localTimer > 0 ? localTimer - 1 : 0)
 
-        if(fightWsMessages[1]?.timer === 0) {
+        if(localTimer === 0) {
             setMilliseconds(0)
         } else {
             setMilliseconds(99)
             setIsTimerStart(true)
         }
-    }, [fightWsMessages])
+    }, [localTimer, game])
 
     useEffect(() => {
         const intervalMillisec = setInterval(() => {
@@ -46,7 +42,7 @@ export const useFightTimer = () => {
             clearInterval(intervalMillisec);
             clearTimeout(timeoutId);
         };
-    }, [seconds, time, fightWsMessages]);
+    }, [seconds, time, localTimer, game]);
 
     useEffect(() => {
         const intervaSecond = setInterval(() => {
@@ -63,7 +59,7 @@ export const useFightTimer = () => {
             clearInterval(intervaSecond);
             clearTimeout(timeoutId);
         };
-    }, [time, fightWsMessages]);
+    }, [time, localTimer, game]);
 
     return {seconds, milliseconds}
 

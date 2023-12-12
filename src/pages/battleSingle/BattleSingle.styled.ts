@@ -517,6 +517,9 @@ export const BattleSingleStyled = styled.section`
           -webkit-transform: scale(1.8);-moz-transform: scale(1.8);-ms-transform: scale(1.8);-o-transform: scale(1.8);transform: scale(1.8);
         }
       }
+      &__single {
+        -webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px;
+      }
       &__end,
       &__single {
         margin: 0 auto;
@@ -748,10 +751,6 @@ export const BattleSingleStyled = styled.section`
         top: auto;
         //bottom: 120px;
 
-        .area__line {
-
-        }
-
         .big-line {
           bottom: 0;
           top: auto;
@@ -759,6 +758,12 @@ export const BattleSingleStyled = styled.section`
       }
     }
 
+    .area__line {
+      &_disabled {
+        opacity: 0;
+      }
+    }
+    
     &__bottom {
       position: absolute;
       bottom: 20px;
@@ -828,6 +833,22 @@ export const BattleSingleStyled = styled.section`
           left: 15px;
           bottom: -10px;
         }
+        
+        .textToCall {
+          opacity: 0;
+          position: absolute;
+          right: 0;
+          z-index: 2;
+          transition: all .3s ease;
+        }
+        .load {
+          transition: all .3s ease;
+        }
+        .botIcon {
+          position: absolute;
+          opacity: 0;
+          transition: all .3s ease;
+        }
 
         img {
           width: 65px;
@@ -892,6 +913,20 @@ export const BattleSingleStyled = styled.section`
           .user__photo {
             border: 2px dashed #343748;
           }
+          
+          &:hover {
+            cursor: pointer;
+            
+            .load {
+              opacity: 0;
+            }
+            .botIcon {
+              opacity: 1;
+            }
+            .textToCall {
+              opacity: 1;
+            }
+          }
         }
       }
 
@@ -941,6 +976,30 @@ export const BattleSingleStyled = styled.section`
       }
       
     }
+  }
+
+
+  .svg_timer {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+
+  .maskCircle{
+    width: 100px;
+    height: 100px;
+    fill: none;
+    stroke: #F5AD57;
+    stroke-width: 2;
+    stroke-dasharray: 3;
+    stroke-dashoffset: 110;
+  }
+  .maskCircle__inner{
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-dashoffset: 0;
+    stroke-dasharray: 370;
   }
   
   

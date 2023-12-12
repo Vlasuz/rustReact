@@ -7,20 +7,23 @@ import {IBattleCreate, ICrate} from "../../../model";
 
 import coins from "./../../../assets/images/header__coins.svg"
 import {GameState} from "../BattleSingle";
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Loader} from "../../../components/loader/Loader";
 import {LoadingStyled} from "../../../components/loading/loading.styled";
+import {useFightTimer} from "../../../hooks/fightTimer";
+import {FightSingleSvgTimer} from "../../fightSingle/components/FightSingleSvgTimer";
 
 interface IBattleAreaProps {
     blockArea: any
     gameType: IBattleCreate
+    setGameStep: any
 }
 
-export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType}) => {
+export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, setGameStep}) => {
 
     const [{x, y}, api] = useSpring(() => ({x: 0, y: 0,}))
 
-    const [coodY, setCoodY] = useState(0)
+    const [numberToOpen, setNumberToOpen] = useState(0)
 
     const blockCenter: any = useRef(null)
 
@@ -44,7 +47,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType}) =>
             offset[1] = 120
         }
 
-        if(gameStep !== "process") {
+        if (gameStep === "waiting" || gameStep === "start" || gameStep === "calculate" || gameStep === "ended") {
             api({
                 x: offset[0],
                 y: offset[1],
@@ -53,36 +56,55 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType}) =>
 
     })
 
+
     useEffect(() => {
-        if (gameStep !== "process") {
+        let coodYnew = 100
+        let cratesCount = 0;
+
+        if (gameStep === "prepare") {
+            api({
+                x: 0,
+                y: 120,
+            })
             return;
         } else if (gameStep === "process") {
-            api({
-                x: 0,
-                y: 0,
-            })
+
+            let intervalScrolling = setInterval(() => {
+
+                if (cratesCount < battleCrates.length) {
+                    coodYnew -= 140
+                } else if (cratesCount === battleCrates.length) {
+                    setGameStep("calculate")
+                    coodYnew -= 210
+                } else if (cratesCount === battleCrates.length + 1) {
+                    setGameStep("ended")
+                    coodYnew -= 192
+                }
+
+                cratesCount += 1;
+                setNumberToOpen(prev => prev + 1)
+
+                api({
+                    x: 0,
+                    y: coodYnew,
+                })
+
+                if (cratesCount >= battleCrates.length + 2) {
+                    clearInterval(intervalScrolling)
+                }
+
+                return (() => {
+                    clearInterval(intervalScrolling)
+                })
+            }, 2000)
         }
 
-        let coodYnew = 0
-
-        let intervalScrolling = setInterval(() => {
-            console.log(123)
-
-            coodYnew -= 100
-
-            api({
-                x: 0,
-                y: coodYnew,
-            })
-        }, 3000)
-
-        if (gameStep !== "process") {
-            return (() => {
-                clearInterval(intervalScrolling)
-            })
-        }
 
     }, [gameStep])
+
+    const timer = 5
+
+    const {seconds, milliseconds} = useFightTimer(timer, gameStep)
 
     return (
         <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()}
@@ -94,13 +116,26 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType}) =>
                 {gameStep === "waiting" &&
                     <div className="loading">
                         <LoadingStyled className="load">
-                            <div className="line" />
-                            <div className="line" />
-                            <div className="line" />
+                            <div className="line"/>
+                            <div className="line"/>
+                            <div className="line"/>
                         </LoadingStyled>
                         <p>Ожидание</p>
                     </div>
                 }
+
+                {gameStep === "prepare" && <FightSingleSvgTimer isFight={false} gameState={gameStep} seconds={+timer}/>}
+                {gameStep === "prepare" && <div className="center__running">
+                    <span>Начало</span>
+                    <div className="timer">
+                        <div className="min">
+                            <span>{seconds < 10 ? "0" + seconds : seconds}</span>
+                        </div>
+                        <div className="sec">
+                            <span>.{milliseconds < 10 ? "0" + milliseconds : milliseconds}</span>
+                        </div>
+                    </div>
+                </div>}
             </div>
 
             <div className={`lines-for-crate area-${gameType.type}-${gameType.option}`}>
@@ -117,113 +152,135 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType}) =>
                 <div className="area__line">
 
                     {
-                        battleCrates.map(item => <CrateItem data={item} key={item.id} />)
+                        battleCrates.map((item, index) => <CrateItem data={item} isOpened={numberToOpen <= index}
+                                                                     key={item.id}/>)
                     }
 
                     {gameStep === "start" && <div className="crate crate__empty">
                         <img src={CrateBig} alt=""/>
                     </div>}
                     <div className="crate crate__final">
-                        <div className="loading">
-                            <LoadingStyled className="load">
-                                <div className="line" />
-                                <div className="line" />
-                                <div className="line" />
-                            </LoadingStyled>
-                            <p>Ожидание</p>
-                        </div>
-                        {/*<span>*/}
-                        {/*    Выбивает*/}
-                        {/*</span>*/}
-                        {/*<div className="coins">*/}
-                        {/*    <img src={coins} alt=""/>*/}
-                        {/*    <span>*/}
-                        {/*        3000*/}
-                        {/*    </span>*/}
-                        {/*</div>*/}
+
+                        {(gameStep === "calculate" || gameStep === "ended") ? <>
+                            <span>
+                                Выбивает
+                            </span>
+                                <div className="coins">
+                                    <img src={coins} alt=""/>
+                                    <span>
+                                    3000
+                                </span>
+                                </div>
+                            </> :
+                            <div className="loading">
+                                <LoadingStyled className="load">
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                </LoadingStyled>
+                                <p>Ожидание</p>
+                            </div>
+                        }
+
                     </div>
                 </div>
                 <div className="area__line">
                     {
-                        battleCrates.map(item => <CrateItem data={item} key={item.id} />)
+                        battleCrates.map((item, index) => <CrateItem data={item} isOpened={numberToOpen <= index}
+                                                                     key={item.id}/>)
                     }
                     {gameStep === "start" && <div className="crate crate__empty">
                         <img src={CrateBig} alt=""/>
                     </div>}
                     <div className="crate crate__final">
 
-                        <div className="loading">
-                            <LoadingStyled className="load">
-                                <div className="line" />
-                                <div className="line" />
-                                <div className="line" />
-                            </LoadingStyled>
-                            <p>Ожидание</p>
-                        </div>
+                        {(gameStep === "calculate" || gameStep === "ended") ? <>
+                            <span>
+                                Выбивает
+                            </span>
+                                <div className="coins">
+                                    <img src={coins} alt=""/>
+                                    <span>
+                                    3000
+                                </span>
+                                </div>
+                            </> :
+                            <div className="loading">
+                                <LoadingStyled className="load">
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                </LoadingStyled>
+                                <p>Ожидание</p>
+                            </div>
+                        }
 
-                        {/*<span>*/}
-                        {/*    Выбивает*/}
-                        {/*</span>*/}
-                        {/*<div className="coins">*/}
-                        {/*    <img src={coins} alt=""/>*/}
-                        {/*    <span>*/}
-                        {/*        3000*/}
-                        {/*    </span>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
                 <div className="area__line">
                     {
-                        battleCrates.map(item => <CrateItem data={item} key={item.id} />)
+                        battleCrates.map((item, index) => <CrateItem data={item} isOpened={numberToOpen <= index}
+                                                                     key={item.id}/>)
                     }
                     {gameStep === "start" && <div className="crate crate__empty">
                         <img src={CrateBig} alt=""/>
                     </div>}
                     <div className="crate crate__final">
-                        <div className="loading">
-                            <LoadingStyled className="load">
-                                <div className="line" />
-                                <div className="line" />
-                                <div className="line" />
-                            </LoadingStyled>
-                            <p>Ожидание</p>
-                        </div>
-                        {/*<span>*/}
-                        {/*    Выбивает*/}
-                        {/*</span>*/}
-                        {/*<div className="coins">*/}
-                        {/*    <img src={coins} alt=""/>*/}
-                        {/*    <span>*/}
-                        {/*        3000*/}
-                        {/*    </span>*/}
-                        {/*</div>*/}
+
+                        {(gameStep === "calculate" || gameStep === "ended") ? <>
+                            <span>
+                                Выбивает
+                            </span>
+                                <div className="coins">
+                                    <img src={coins} alt=""/>
+                                    <span>
+                                    3000
+                                </span>
+                                </div>
+                            </> :
+                            <div className="loading">
+                                <LoadingStyled className="load">
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                </LoadingStyled>
+                                <p>Ожидание</p>
+                            </div>
+                        }
+
                     </div>
                 </div>
                 <div className="area__line">
                     {
-                        battleCrates.map(item => <CrateItem data={item} key={item.id} />)
+                        battleCrates.map((item, index) => <CrateItem data={item} isOpened={numberToOpen <= index}
+                                                                     key={item.id}/>)
                     }
                     {gameStep === "start" && <div className="crate crate__empty">
                         <img src={CrateBig} alt=""/>
                     </div>}
                     <div className="crate crate__final">
-                        <div className="loading">
-                            <LoadingStyled className="load">
-                                <div className="line" />
-                                <div className="line" />
-                                <div className="line" />
-                            </LoadingStyled>
-                            <p>Ожидание</p>
-                        </div>
-                        {/*<span>*/}
-                        {/*    Выбивает*/}
-                        {/*</span>*/}
-                        {/*<div className="coins">*/}
-                        {/*    <img src={coins} alt=""/>*/}
-                        {/*    <span>*/}
-                        {/*        3000*/}
-                        {/*    </span>*/}
-                        {/*</div>*/}
+
+                        {(gameStep === "calculate" || gameStep === "ended") ? <>
+                            <span>
+                                Выбивает
+                            </span>
+                                <div className="coins">
+                                    <img src={coins} alt=""/>
+                                    <span>
+                                    3000
+                                </span>
+                                </div>
+                            </> :
+                            <div className="loading">
+                                <LoadingStyled className="load">
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                </LoadingStyled>
+                                <p>Ожидание</p>
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -238,24 +295,29 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType}) =>
                 </div>
             </div>
 
-            <div className="crate crate__end">
-                <div className="loading">
-                    <LoadingStyled className="load">
-                        <div className="line" />
-                        <div className="line" />
-                        <div className="line" />
-                    </LoadingStyled>
-                    <p>Ожидание</p>
-                </div>
-                {/*<span>*/}
-                {/*    Выбивает*/}
-                {/*</span>*/}
-                {/*<div className="coins">*/}
-                {/*    <img src={coins} alt=""/>*/}
-                {/*    <span>*/}
-                {/*        30002*/}
-                {/*    </span>*/}
-                {/*</div>*/}
+            <div className={`crate crate__end ${gameStep === "ended" && "crate__end_bottom"}`}>
+
+                {gameStep === "ended" ? <>
+                            <span>
+                                Выбивает
+                            </span>
+                        <div className="coins">
+                            <img src={coins} alt=""/>
+                            <span>
+                                    3000
+                                </span>
+                        </div>
+                    </> :
+                    <div className="loading">
+                        <LoadingStyled className="load">
+                            <div className="line"/>
+                            <div className="line"/>
+                            <div className="line"/>
+                        </LoadingStyled>
+                        <p>Ожидание</p>
+                    </div>
+                }
+
             </div>
 
             {/*general-block-end_all-side*/}
@@ -264,7 +326,8 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType}) =>
             {/*general-block-end_left-half-side*/}
             {/*general-block-end_right-half-side*/}
             {gameStep === "ended" &&
-                <div className={`general-block general-block-end area-${gameType.type}-${gameType.option}`}>
+                <div
+                    className={`general-block general-block-end_left-side general-block-end area-${gameType.type}-${gameType.option}`}>
                     <div className="area__line">
                         <div className="crate crate__final">
                         <span>
@@ -291,7 +354,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType}) =>
                             </div>
                         </div>
                     </div>
-                    <div className="area__line">
+                    <div className="area__line area__line_disabled">
                         <div className="crate crate__final">
                         <span>
                             Выбивает
@@ -304,7 +367,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType}) =>
                             </div>
                         </div>
                     </div>
-                    <div className="area__line">
+                    <div className="area__line area__line_disabled">
                         <div className="crate crate__final">
                         <span>
                             Выбивает

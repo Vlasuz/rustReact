@@ -12,9 +12,10 @@ import { removeBattleCrate } from '../../../redux/toolkitSlice';
 
 interface ICrateItemProps {
     data: ICrate
+    isOpened: boolean
 }
 
-export const CrateItem:React.FC<ICrateItemProps> = ({data}) => {
+export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened}) => {
 
     const [count, setCount] = useState(1)
 
@@ -30,7 +31,7 @@ export const CrateItem:React.FC<ICrateItemProps> = ({data}) => {
 
     return (
         <div className="crate crate__start">
-            {(gameStep === "process" || gameStep === "waiting") && <div className="crate__lock">
+            {(gameStep === "process" || gameStep === "waiting" || gameStep === "prepare") && isOpened && <div className="crate__lock">
                 <img src={battleCaseLock} alt="Lock"/>
             </div>}
 

@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {LoadingStyled} from "../../../components/loading/loading.styled";
 import fightFinishIcon from "./../../../assets/images/fight-finish-icon.svg"
 import {FightSingleSvgTimer} from "./FightSingleSvgTimer";
 import {useAirdropTimer} from "../../../hooks/airdropTimer";
 import {useFightTimer} from "../../../hooks/fightTimer";
+import {WSFight} from "../FightSingle";
 
 interface IFightSingleCenterProps {
     gameState: string
@@ -12,7 +13,9 @@ interface IFightSingleCenterProps {
 
 export const FightSingleCenter: React.FC<IFightSingleCenterProps> = ({gameState, gameData}) => {
 
-    const {seconds, milliseconds} = useFightTimer()
+    const fightWsMessages: any = useContext(WSFight)
+
+    const {seconds, milliseconds} = useFightTimer(fightWsMessages[1]?.timer)
 
     return (
         <div className="section-fight__center">
