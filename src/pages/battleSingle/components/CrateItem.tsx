@@ -8,7 +8,7 @@ import battleCaseLock from "../../../assets/images/battle-case-lock.svg";
 import {GameState} from "../BattleSingle";
 import { useDispatch } from 'react-redux';
 import {ICrate} from "../../../model";
-import { removeBattleCrate } from '../../../redux/toolkitSlice';
+import {changeBattleCrate, removeBattleCrate } from '../../../redux/toolkitSlice';
 
 interface ICrateItemProps {
     data: ICrate
@@ -24,6 +24,8 @@ export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        dispatch(changeBattleCrate({crate: data, count: count}))
+
         if(count !== 0) return;
 
         dispatch(removeBattleCrate(data))

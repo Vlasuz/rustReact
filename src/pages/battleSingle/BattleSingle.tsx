@@ -3,24 +3,11 @@ import {BattleSingleStyled} from "./BattleSingle.styled";
 import {BattleTop} from "../../components/battleTop/BattleTop";
 
 import bgd from './../../assets/images/bgdForBattle.jpg'
-import battleAreaBottom from './../../assets/images/battleAreaBottom.svg'
-import coin from './../../assets/images/header__coins.svg'
-import CrateBig from './../../assets/images/CrateBig.svg'
-import swordsDefault from './../../assets/images/swordsDefault.svg'
-import swordsOrange from './../../assets/images/swordsOrange.svg'
-import peopleDefault from './../../assets/images/peopleDefault.svg'
-import peopleBlue from './../../assets/images/peopleBlue.svg'
-import boxDefault from './../../assets/images/boxDefault.svg'
-import boxGreen from './../../assets/images/boxGreen.svg'
-import {useDrag} from "react-use-gesture";
-import {animated, useSpring} from '@react-spring/web';
-import {CrateItem} from "./components/CrateItem";
 import {BattleArea} from "./components/BattleArea";
 import {BattleCreate} from "./components/BattleCreate";
 import {BattleBottom} from "./components/BattleBottom";
 import {IBattleCreate, ICrate} from "../../model";
 import {NavLink} from "react-router-dom";
-import {useSelector} from "react-redux";
 
 interface IBattleSingleProps {
 
@@ -40,17 +27,17 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
     const [gameStep, setGameStep] = useState<string>("start")
     // start, waiting, prepare, process, calculate, ended
 
-    useEffect(() => {
-        if(gameStep !== "waiting") return;
-
-        setTimeout(() => {
-            setGameStep("prepare")
-
-            setTimeout(() => {
-                setGameStep("process")
-            }, 5000)
-        }, 1000)
-    }, [gameStep])
+    // useEffect(() => {
+    //     if(gameStep !== "waiting") return;
+    //
+    //     setTimeout(() => {
+    //         setGameStep("prepare")
+    //
+    //         setTimeout(() => {
+    //             setGameStep("process")
+    //         }, 5000)
+    //     }, 1000)
+    // }, [gameStep])
 
     return (
         <GameState.Provider value={gameStep}>

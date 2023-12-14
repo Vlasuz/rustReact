@@ -10,7 +10,7 @@ interface IGetInventoryProps {
 
 export const getInventory = ({dispatch}: IGetInventoryProps) => {
 
-    if(!getCookies('access_token')) return;
+    if(!getCookies('access_token_rust')) return;
 
     getBearer({type: 'get'})
     axios.get(getApiLink('api/items/inventory/')).then(({data}) => {

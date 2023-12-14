@@ -36,7 +36,7 @@ export const useSteamLogin = () => {
 
             dispatch(setUser(data.user))
             navigate(location.pathname)
-            setCookie('access_token', data.access_token)
+            setCookie('access_token_rust', data.access_token)
 
         })
         

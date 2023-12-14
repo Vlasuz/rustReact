@@ -17,7 +17,7 @@ export const ChatItem: React.FC<IChatItemProps> = ({data}) => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isVanish, setisVanish] = useState(false)
-    const [cookies] = useState(getCookies('access_token'))
+    const [cookies] = useState(getCookies('access_token_rust'))
     const ws: any = useContext(ChatWsContext);
     const thisItem: any = useRef(null)
     const mutedUsers = useSelector((state: any) => state.toolkit.mutedUsers)

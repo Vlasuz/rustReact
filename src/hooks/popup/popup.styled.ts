@@ -2364,6 +2364,112 @@ export const PopupStyled = styled.div`
       padding: 10px;
     }
   }
-  
+
+
+
+
+  .hash-info input,
+  .id-info input{
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+  }
+  .hash-info .copy:hover img,
+  .id-info .copy:hover img{
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    transform: scale(1.05);
+  }
+  .hash-info .copy:active img,
+  .id-info .copy:active img{
+    -webkit-transform: scale(.9);
+    -moz-transform: scale(.9);
+    -ms-transform: scale(.9);
+    -o-transform: scale(.9);
+    transform: scale(.9);
+  }
+  .hash-info .copy,
+  .id-info .copy{
+    position: relative;
+  }
+  .hash-info .copy img,
+  .id-info .copy img{
+    width: 19px;
+    margin-left: auto;
+    cursor: pointer;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+  }
+  .hash-info .copy span,
+  .id-info .copy span{
+    position: absolute;
+    white-space: nowrap;
+    bottom: 130%;
+    right: 0%;
+    font-size: 12px;
+    background: #3a3d4f;
+    padding: 10px 20px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+  }
+  .hash-info .copy.copied span,
+  .id-info .copy.copied span{
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .hash-info,
+  .id-info{
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+  .popup-fair-game__border ul li span{
+    margin-left: 4px;
+    white-space: nowrap;
+    max-width: 500px;
+    overflow: auto;
+  }
+  .popup-fair-game__border ul li p{
+    display: flex;
+    width: 94%;
+  }
+
+
+  .popup-fair-game__border {
+    padding: 20px;
+    border: 1px dashed rgba(162,171,197,.15);
+    border-radius: 10px;
+    margin-bottom: 30px
+  }
+  .popup-fair-game__border h3 {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 14px;
+    color: #fff;
+    margin-bottom: 14px
+  }
+  .popup-fair-game__text p span,
+  .popup-fair-game__border p {
+    color: #f5ad57
+  }
+  .popup-fair-game__border span {
+    color: #fff
+  }
   
 `

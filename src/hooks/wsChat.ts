@@ -17,7 +17,7 @@ export const useWsChat = () => {
         ws.current.onopen = () => {
             ws.current.send(JSON.stringify({
                 "type": "auth",
-                "token": getCookies('access_token')
+                "token": getCookies('access_token_rust')
             }))
 
             dispatch(setOpenWsChat())

@@ -112,9 +112,7 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
     }, [airdropWsMessages])
 
     useEffect(() => {
-        console.log(airdropWsMessages?.airdrop?.game_state)
         if (airdropWsMessages?.airdrop?.game_state === "ended") {
-            console.log('aaa')
             lineToWinner(document.querySelector(".point_winner"))
         }
     }, [airdropWsMessages])

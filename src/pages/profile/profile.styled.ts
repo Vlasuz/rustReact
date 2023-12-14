@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 
+import arrPF from './../../assets/images/arr-td.svg'
+
 export const ProfileStyle = styled.section`
 
 
@@ -659,16 +661,18 @@ export const ProfileStyle = styled.section`
         opacity: 0;
         visibility: hidden;
         transition: all .3s ease;
-
+        cursor: pointer;
+        
         &:after {
           content: '';
-          background: url('../img/arr-td.svg') no-repeat;
+          background: url(${arrPF}) no-repeat;
           width: 5px;
-          height: 7px;
+          height: 10px;
           margin-left: auto;
           background-size: 5px;
           background-position: center;
           display: block;
+          margin-top: -2px;
         }
       }
     }

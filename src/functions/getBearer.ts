@@ -6,7 +6,7 @@ interface getBearerProps {
 }
 
 export const getBearer = ({ type }: getBearerProps) => {
-    const access_token = getCookies('access_token');
+    const access_token = getCookies('access_token_rust');
 
     const types: any = {
         'get': axios.defaults.headers.get['Authorization'] = `Bearer ${access_token}`,

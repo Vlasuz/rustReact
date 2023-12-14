@@ -29,7 +29,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     const gameStep = useContext(GameState)
 
-    const battleCrates: ICrate[] = useSelector((state: any) => state.toolkit.battleCrates)
+    const battleCrates: any = useSelector((state: any) => state.toolkit.battleCrates)
 
     const bindDrag = useDrag(({offset}) => {
 
@@ -152,7 +152,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                 <div className="area__line">
 
                     {
-                        battleCrates.map((item, index) => <CrateItem data={item} isOpened={numberToOpen <= index}
+                        battleCrates.map((item: any, index: number) => <CrateItem data={item.crate} isOpened={numberToOpen <= index}
                                                                      key={item.id}/>)
                     }
 
@@ -186,7 +186,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                 </div>
                 <div className="area__line">
                     {
-                        battleCrates.map((item, index) => <CrateItem data={item} isOpened={numberToOpen <= index}
+                        battleCrates.map((item: any, index: number) => <CrateItem data={item.crate} isOpened={numberToOpen <= index}
                                                                      key={item.id}/>)
                     }
                     {gameStep === "start" && <div className="crate crate__empty">
@@ -219,7 +219,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                 </div>
                 <div className="area__line">
                     {
-                        battleCrates.map((item, index) => <CrateItem data={item} isOpened={numberToOpen <= index}
+                        battleCrates.map((item: any, index: number) => <CrateItem data={item.crate} isOpened={numberToOpen <= index}
                                                                      key={item.id}/>)
                     }
                     {gameStep === "start" && <div className="crate crate__empty">
@@ -252,7 +252,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                 </div>
                 <div className="area__line">
                     {
-                        battleCrates.map((item, index) => <CrateItem data={item} isOpened={numberToOpen <= index}
+                        battleCrates.map((item: any, index: number) => <CrateItem data={item.crate} isOpened={numberToOpen <= index}
                                                                      key={item.id}/>)
                     }
                     {gameStep === "start" && <div className="crate crate__empty">

@@ -39,8 +39,11 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
         setTypeOfCreate(type)
     }
 
+
     const handleCreateFight = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+
 
         axios.post(getApiLink("api/fight/room/create"), {
             "coins": coinsValue,

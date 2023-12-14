@@ -320,6 +320,7 @@ export interface ICrateItem {
     rarity: number
     price: number
 }
+
 export interface ICrate {
     id: string
     name: string
@@ -327,10 +328,35 @@ export interface ICrate {
     price: number
     items: ICrateItem[]
 }
+
 export interface IWinLineItem {
     crate: ICrate
     user: IUser
     item: IProduct
     amount: number
+}
+
+export interface IBattleGame {
+    bet: number
+    crates: {
+        crate: ICrate
+        count: number
+        opened: number
+    }[]
+    id: string
+    mode: string
+    players: {
+        items: ICrateItem[]
+        position: number
+        user: IUser
+        win: number
+    }
+    status: string
+    winners: {
+        items: ICrateItem[]
+        position: number
+        user: IUser
+        win: number
+    }[]
 }
 

@@ -38,7 +38,7 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
         dispatch(setAirdropBags(countOfBags))
     }
     const handleJoinGame = () => {
-        if(isPressJoin) return;
+        if (isPressJoin) return;
         setIsPressJoin(true)
 
         const bagsListForRequest = airdropBagsMap.map((item: any) => {
@@ -48,7 +48,7 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
         axios.post(getApiLink("api/airdrop/bags/choose?game_id=" + airdropWsMessages?.airdrop?.id), {
             "bags": bagsListForRequest
         }).then(({data}) => {
-            if(data.status) {
+            if (data.status) {
                 dispatch((setAirdropUserStatus("member")))
                 dispatch(clearAirdropBagsMap())
                 setPointOfGame("member")
@@ -65,14 +65,20 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
     }
 
     useEffect(() => {
-        if(airdropWsMessages?.airdrop?.players.some((player: any) => player.user.id === userInfo.id)) {
+        if (airdropWsMessages?.airdrop?.players.some((player: any) => player.user.id === userInfo.id)) {
             setPointOfGame("member")
         }
 
-        if(airdropWsMessages?.airdrop?.game_state === "prepare") {
+        if (airdropWsMessages?.airdrop?.game_state === "prepare") {
             setPointOfGame('choose')
         }
     }, [airdropWsMessages, userInfo])
+
+    useEffect(() => {
+        if (airdropBagsMap.length === 0) return;
+
+        setPointOfGame("dragging")
+    }, [airdropBagsMap])
 
     const isUserAuthMainClass = !Object.keys(userInfo).length ? " no-auth" : ""
 

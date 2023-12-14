@@ -22,7 +22,7 @@ export const ChatForm: React.FC<IChatFormProps> = ({ setIsOpenSmiles }) => {
         event.preventDefault()
         if (!messageValue.length) return;
 
-        if(!getCookies('access_token')) {
+        if(!getCookies('access_token_rust')) {
             return dispatch(setNotice('forChattingAuth'))
         }
 

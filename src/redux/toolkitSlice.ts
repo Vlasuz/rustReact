@@ -74,6 +74,7 @@ const toolkitSlice = createSlice({
         sound: <string>'',
         isOpenWsChat: <boolean>false,
         popup: <string>'',
+        popupData: <any>{},
 
         trigger: <ITrigger>{type: '', status: true}
     },
@@ -110,11 +111,20 @@ const toolkitSlice = createSlice({
         },
 
         addBattleCrate(state, action) {
-            if(state.battleCrates.some(item => item.id === action.payload.id)) return;
+            if(state.battleCrates.some((item: any) => item.crate.id === action.payload.crate.id)) return;
             state.battleCrates = [...state.battleCrates, action.payload]
         },
+        changeBattleCrate(state, action) {
+            state.battleCrates = state.battleCrates.filter((item: any) => {
+                if(item.crate.id === action.payload.crate.id) {
+                    return item.count = action.payload.count
+                } else {
+                    return item
+                }
+            })
+        },
         removeBattleCrate(state, action) {
-            state.battleCrates = state.battleCrates.filter(item => item.id !== action.payload.id)
+            state.battleCrates = state.battleCrates.filter((item: any) => item.crate.id !== action.payload.id)
         },
 
         setCrates(state, action) {
@@ -312,6 +322,9 @@ const toolkitSlice = createSlice({
         setPopup(state, action) {
             state.popup = action.payload
         },
+        setPopupData(state, action) {
+            state.popupData = action.payload
+        },
         setFightItemData(state, action) {
             state.fightItemData = action.payload
         },
@@ -341,6 +354,7 @@ export const {
     setUserBalance,
 
     addBattleCrate,
+    changeBattleCrate,
     removeBattleCrate,
 
     setPages,
@@ -393,6 +407,7 @@ export const {
 
     setOpenWsChat,
     setPopup,
+    setPopupData,
 
     setFightItemData,
 

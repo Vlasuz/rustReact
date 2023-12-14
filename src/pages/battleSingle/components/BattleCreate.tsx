@@ -8,6 +8,10 @@ import boxDefault from "../../../assets/images/boxDefault.svg";
 import coin from "../../../assets/images/header__coins.svg";
 import {IBattleCreate, ICrate} from "../../../model";
 import {useSelector} from "react-redux";
+import axios from "axios";
+import {getApiLink} from "../../../functions/getApiLink";
+import {getBearer} from "../../../functions/getBearer";
+import {useNavigate} from "react-router";
 
 interface IBattleCreateProps {
     setGameType: any
@@ -15,9 +19,53 @@ interface IBattleCreateProps {
     setGameStep: any
 }
 
+interface IGameType {
+    [key: string]: string
+}
+
 export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType, setGameStep}) => {
 
     const battleCrates: ICrate[] = useSelector((state: any) => state.toolkit.battleCrates)
+
+    const navigate = useNavigate()
+
+    const gameTypes: IGameType = {
+        "1v1": "two_way",
+        "1v1v1": "three_way",
+        "4way": "four_way",
+        "2v2": "two_v_two",
+        "2p": "two_p",
+        "3p": "three_p",
+        "4p": "four_p",
+    }
+
+    const handleCreateGame = () => {
+        const requestData = {
+            "mode": gameTypes[gameType.option],
+            "crates": battleCrates.map((item: any) => {
+                return {
+                    crate_id: item.crate.id,
+                    count: item.count
+                }
+            })
+        }
+
+        getBearer({type: "post"})
+        axios.post(getApiLink("api/battle/create/"), requestData).then(({data}) => {
+            console.log(data)
+            setGameStep("waiting")
+
+            const ws = new WebSocket(getApiLink(`ws/api/battle/game/${data.id}/`, true))
+
+            ws.onopen = () => console.log('open')
+            ws.onmessage = (e) => {
+                console.log(e.data)
+            }
+            ws.onerror = (e) => console.log('error', e)
+
+            // navigate("/battle/"+data.id)
+        })
+    }
 
     return (
         <div className="battle-area__create">
@@ -62,7 +110,7 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
                 </ul>
             </div>
 
-            <button disabled={!battleCrates.length} onClick={_ => setGameStep("waiting")} className="create-game__button">
+            <button disabled={!battleCrates.length} onClick={handleCreateGame} className="create-game__button">
                 <span>Начать игру</span>
                 <img src={coin} alt=""/>
                 <p>500</p>

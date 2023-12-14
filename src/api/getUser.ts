@@ -11,7 +11,7 @@ interface IGetUserProps {
 
 export const getUser = ({ dispatch }: IGetUserProps) => {
 
-    if(!getCookies('access_token')) return;
+    if(!getCookies('access_token_rust')) return;
 
     getBearer({type: 'post'})
     axios.post(getApiLink('api/auth/session/')).then(({ data }) => {

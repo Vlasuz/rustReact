@@ -7,6 +7,8 @@ import fail from './../../../../assets/images/fail.svg'
 import victory from './../../../../assets/images/victory.svg'
 import no_photo from './../../../../assets/images/non-photo.png'
 import { NavLink } from 'react-router-dom'
+import {setPopup, setPopupData} from "../../../../redux/toolkitSlice";
+import { useDispatch } from 'react-redux'
 
 interface ITableForAirdropProps {
     tableValue: string
@@ -16,6 +18,14 @@ interface ITableForAirdropProps {
 }
 
 export const TableForAirdrop: React.FC<ITableForAirdropProps> = ({ tableValue, tableData, gameData, user }) => {
+
+    const dispatch = useDispatch()
+
+    const handleOpenPF = (dataItem: any) => {
+        dispatch(setPopup('popup-fair-game'))
+        dispatch(setPopupData(dataItem))
+    }
+
 
     return (
         <div className={"tabs__item tabs__item-airdrop" + (tableValue.toLowerCase().includes(tableData.slug?.toLowerCase()) ? " tabs__item_active" : "")}>
@@ -84,7 +94,7 @@ export const TableForAirdrop: React.FC<ITableForAirdropProps> = ({ tableValue, t
                                     <div className="td">
                                         <div className="shield">
                                             <img src={shield} alt="Shield" />
-                                            <a href="#">
+                                            <a onClick={_ => handleOpenPF(item)}>
                                                 {smallHash}
                                             </a>
                                         </div>

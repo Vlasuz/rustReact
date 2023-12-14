@@ -12,7 +12,7 @@ interface IHandleExit {
 export function handleExit({event, dispatch, navigate}: IHandleExit) {
     event.preventDefault()
 
-    setCookie('access_token', '')
+    setCookie('access_token_rust', '')
 
     if(window.location.href.includes('profile')) {
         navigate('/')

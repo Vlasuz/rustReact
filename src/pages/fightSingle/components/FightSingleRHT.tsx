@@ -18,8 +18,9 @@ import personNSN from "../../../assets/images/persone-nsn.png";
 import personNSS from "../../../assets/images/persone-nss.png";
 import personNNS from "../../../assets/images/persone-nns.png";
 import personSNS from "../../../assets/images/persone-sns.png";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getApiLink} from "../../../functions/getApiLink";
+import {setSound} from "../../../redux/toolkitSlice";
 
 interface IFightSingleLFTProps {
     opponentPlayer: any,
@@ -42,6 +43,8 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
 
     const ws: any = useContext(WSFight)
 
+    const dispatch = useDispatch()
+
     const chosenSkin = !isYour ? gameData.fight?.first_player?.user?.chosen_skin : gameData.fight?.second_player?.user?.chosen_skin ?? settings.default_fight_skin
 
     const suitHead = defenseSecond?.includes('head') ? "x" : "i"
@@ -58,7 +61,19 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                 "legs": suit[2]
             }))
         }
+
+        // dispatch(setSound("sound7"))
     }, [suit])
+
+    useEffect(() => {
+        if(suit[2]) dispatch(setSound("sound7"))
+    }, [suit[2]])
+    useEffect(() => {
+        if(suit[1]) dispatch(setSound("sound7"))
+    }, [suit[1]])
+    useEffect(() => {
+        if(suit[0]) dispatch(setSound("sound8"))
+    }, [suit[0]])
 
     const [isHoverButtonToSkin, setIsHoverButtonToSkin] = useState(10)
 

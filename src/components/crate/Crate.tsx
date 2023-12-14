@@ -25,7 +25,7 @@ export const Crate:React.FC<ICrateProps> = ({data}) => {
     const handleChoose = () => {
 
         if(location.pathname.includes('battle')) {
-            dispatch(addBattleCrate(data))
+            dispatch(addBattleCrate({crate: data, count: 1}))
         } else {
             dispatch(setChosenCrates(data))
         }

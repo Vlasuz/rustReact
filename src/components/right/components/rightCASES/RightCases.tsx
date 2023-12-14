@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { RightShopStyle } from './rightCases.styled'
+import { RightShopStyle } from './RightCases.styled'
 import { Search } from '../search/Search'
 import { Filter } from '../filter/Filter'
 import { Range } from '../range/Range'

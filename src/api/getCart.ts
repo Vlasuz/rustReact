@@ -10,7 +10,7 @@ interface IGetCartProps {
 
 export const getCart = ({dispatch}: IGetCartProps) => {
 
-    if(!getCookies('access_token')) return;
+    if(!getCookies('access_token_rust')) return;
 
     getBearer({type: 'get'})
     axios.get(getApiLink('api/basket/')).then(({data}) => {

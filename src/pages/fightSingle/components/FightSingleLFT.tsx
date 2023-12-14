@@ -23,7 +23,8 @@ import winnerIcon from "../../../assets/images/victory-cup.svg";
 import {findTheSameElems} from "../../../functions/fingTheSameElems";
 import {WSFight} from "../FightSingle";
 import bullet from "../../../assets/images/bullet.svg";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setSound} from "../../../redux/toolkitSlice";
 
 interface IFightSingleLFTProps {
     mainPlayer: any
@@ -59,6 +60,8 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
     const suitBody = (defenseFirst?.includes('body') || suit[1]) ? "x" : "i"
     const suitLegs = (defenseFirst?.includes('legs') || suit[2]) ? "x" : "i"
 
+    const dispatch = useDispatch()
+
     const [isHoverButtonToSkin, setIsHoverButtonToSkin] = useState(10)
 
     useEffect(() => {
@@ -72,6 +75,16 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
             }))
         }
     }, [suit])
+
+    useEffect(() => {
+        if(suit[2]) dispatch(setSound("sound9"))
+    }, [suit[2]])
+    useEffect(() => {
+        if(suit[1]) dispatch(setSound("sound9"))
+    }, [suit[1]])
+    useEffect(() => {
+        if(suit[0]) dispatch(setSound("sound9"))
+    }, [suit[0]])
 
     useEffect(() => {
         if(gameState === "duel") {

@@ -17,6 +17,7 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import {Withdraw} from "../../components/popups/Withdraw";
 import {WithdrawBots} from "../../components/popups/WithdrawBots";
+import {PopupCheckTrustGame} from "../../components/popups/PopupCheckTrustGame";
 
 export const usePopups = () => {
 
@@ -40,6 +41,7 @@ export const usePopups = () => {
         "popup-entry-clothes": <StartFightClothes/>,
         "popup-pull-search": <Withdraw/>,
         "popup-pull": <WithdrawBots/>,
+        "popup-fair-game": <PopupCheckTrustGame/>,
     }
 
     useEffect(() => {

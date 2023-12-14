@@ -22,7 +22,7 @@ export const RightCasesItem: React.FC<IRightShopItemProps> = ({ data, searchValu
     const cart = useSelector((state: any) => state.toolkit.shopCart)
 
     const handleAddToCart = () => {
-        if(!getCookies('access_token')) {
+        if(!getCookies('access_token_rust')) {
             return dispatch(setNotice('beforeYouNeedAuth'))
         }
 

@@ -29,7 +29,7 @@ export const ChatSmiles: React.FC<IChatSmilesProps> = ({ isOpenSmiles, setIsOpen
     const handleSendSmile = (item: ISmilesSticker) => {
         setIsOpenSmiles(false)
 
-        if(!getCookies('access_token')) {
+        if(!getCookies('access_token_rust')) {
             return dispatch(setNotice('forChattingAuth'))
         }
 
