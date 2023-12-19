@@ -61,6 +61,8 @@ export const useFightTimer = (localTimer: any, game?: any) => {
         };
     }, [time, localTimer, game]);
 
+    if(game === "waiting") return {seconds: 0, milliseconds: 0};
+
     return {seconds, milliseconds}
 
 }

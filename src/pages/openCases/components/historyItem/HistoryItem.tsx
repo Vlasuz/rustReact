@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import itemIcon from "../../../../assets/images/weapon.png";
 import coins from "../../../../assets/images/header__coins.svg";
 import userPhoto from "../../../../assets/images/user2.png";
@@ -7,12 +7,26 @@ import {HistoryItemStyled} from "./HitoryItem.styled";
 interface IOpenCasesItemProps {
     type: string
     data: any
+    isLoad: boolean
 }
 
-export const HistoryItem:React.FC<IOpenCasesItemProps> = ({type, data}) => {
+export const HistoryItem:React.FC<IOpenCasesItemProps> = ({type, data, isLoad}) => {
+
+    const liBlock: any = useRef(null)
+
+    useEffect(() => {
+        if(isLoad) {
+            setTimeout(() => {
+                liBlock.current.classList.remove("is-new")
+            }, 100)
+        } else {
+            liBlock.current.classList.remove("is-new")
+        }
+
+    }, [])
 
     return (
-        <HistoryItemStyled className={type === "green" ? " item__green" : " item__brown"}>
+        <HistoryItemStyled ref={liBlock} className={ `is-new ${type === "green" && "item__green"} ${type === "brown" && "item__brown"}`}>
             <div className="item__image">
                 <img src={data.item.item.image} alt=""/>
             </div>

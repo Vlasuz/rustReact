@@ -100,7 +100,6 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
 
     useEffect(() => {
         axios.get(getApiLink("api/crate/items/rarities/")).then(({data}) => {
-            console.log(data)
             setItemRarities(data)
         })
     }, [])
@@ -109,7 +108,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     return (
         <OpenCasesStyled>
 
-            <BattleTop/>
+            <BattleTop isClicked={isClicked}/>
 
             <div className={"center"}>
                 {countOfCases === 1 && <div

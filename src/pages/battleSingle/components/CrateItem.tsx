@@ -7,15 +7,16 @@ import battleCaseLock from "../../../assets/images/battle-case-lock.svg";
 
 import {GameState} from "../BattleSingle";
 import { useDispatch } from 'react-redux';
-import {ICrate} from "../../../model";
+import {ICrate, ICrateItem} from "../../../model";
 import {changeBattleCrate, removeBattleCrate } from '../../../redux/toolkitSlice';
 
 interface ICrateItemProps {
     data: ICrate
     isOpened: boolean
+    openedItem: any
 }
 
-export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened}) => {
+export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened, openedItem}) => {
 
     const [count, setCount] = useState(1)
 
@@ -31,10 +32,12 @@ export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened}) => {
         dispatch(removeBattleCrate(data))
     }, [count])
 
+    const isHaveItem = openedItem && Object.keys(openedItem).length
+
     return (
         <div className="crate crate__start">
             {(gameStep === "process" || gameStep === "waiting" || gameStep === "prepare") && isOpened && <div className="crate__lock">
-                <img src={battleCaseLock} alt="Lock"/>
+                <img src={isHaveItem ? openedItem.item.item.image : battleCaseLock} alt="Lock"/>
             </div>}
 
             {gameStep === "start" && <div className="top">
@@ -54,12 +57,14 @@ export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened}) => {
                 </button>
             </div>}
             <div className="crate__image">
-                <img src={`https://api.smallstash.gg/${data?.icon}`} alt=""/>
+                <img src={isHaveItem ? openedItem.item.item.image : battleCaseLock} alt=""/>
             </div>
             <div className="price">
                 <img src={coin} alt=""/>
                 <span>
-                    {data?.price}
+                    {
+                        isHaveItem ? openedItem.item.price : data?.price
+                    }
                 </span>
             </div>
         </div>

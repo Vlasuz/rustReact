@@ -202,7 +202,7 @@ export const BattleSingleStyled = styled.section`
       display: flex;
       justify-content: space-between;
 
-      &.area-team-2v2 {
+      &.area-2v2 {
         .area__line:nth-child(1) {
           margin-left: 50px;
         }
@@ -220,8 +220,8 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-group-2p,
-      &.area-regular-1v1 {
+      &.area-2p,
+      &.area-1v1 {
         .area__line:nth-child(1) {
           margin-left: 50px;
         }
@@ -239,8 +239,8 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-group-3p,
-      &.area-regular-1v1v1 {
+      &.area-3p,
+      &.area-1v1v1 {
         .area__line:nth-child(1) {
           margin-left: 50px;
         }
@@ -254,8 +254,8 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-group-4p,
-      &.area-regular-4way {
+      &.area-4p,
+      &.area-4way {
         .area__line:nth-child(1) {
           margin-left: 50px;
         }
@@ -265,17 +265,17 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-group-2p {
+      &.area-2p {
         justify-content: space-between;
         margin: 0 165px;
       }
 
-      &.area-group-3p {
+      &.area-3p {
         justify-content: space-between;
         margin: 0 90px;
       }
 
-      &.area-group-4p {
+      &.area-4p {
         justify-content: space-between;
         margin: 0 55px;
       }
@@ -633,15 +633,15 @@ export const BattleSingleStyled = styled.section`
         width: calc(100% - 100px);
       }
 
-      &.area-group-2p .big-line {
+      &.area-2p .big-line {
         width: calc(100% - 430px);
       }
 
-      &.area-group-3p .big-line {
+      &.area-3p .big-line {
         width: calc(100% - 283px);
       }
 
-      &.area-group-4p .big-line {
+      &.area-4p .big-line {
         width: calc(100% - 210px);
       }
 
@@ -656,7 +656,7 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-team-2v2 {
+      &.area-2v2 {
         .area__line:nth-child(1) {
           margin-left: 50px;
         }
@@ -674,7 +674,7 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-group-2p {
+      &.area-2p {
         .area__line:nth-child(2) {
           display: none;
         }
@@ -684,7 +684,7 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-regular-1v1 {
+      &.area-1v1 {
         .area__line:nth-child(1) {
           margin-left: 50px;
         }
@@ -702,13 +702,13 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-group-3p {
+      &.area-3p {
         .area__line:nth-child(2) {
           display: none;
         }
       }
 
-      &.area-regular-1v1v1 {
+      &.area-1v1v1 {
         .area__line:nth-child(1) {
           margin-left: 50px;
         }
@@ -722,7 +722,7 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-regular-4way {
+      &.area-4way {
         .area__line:nth-child(1) {
           margin-left: 50px;
         }
@@ -732,17 +732,17 @@ export const BattleSingleStyled = styled.section`
         }
       }
 
-      &.area-group-2p .lines {
+      &.area-2p .lines {
         justify-content: space-between;
         margin: 0 215px;
       }
 
-      &.area-group-3p .lines {
+      &.area-3p .lines {
         justify-content: space-between;
         margin: 0 140px;
       }
 
-      &.area-group-4p .lines {
+      &.area-4p .lines {
         justify-content: space-between;
         margin: 0 105px;
       }
@@ -798,9 +798,9 @@ export const BattleSingleStyled = styled.section`
         width: 100%;
         margin-top: -20px;
 
-        &.bottom__group-4p,
-        &.bottom__group-3p,
-        &.bottom__group-2p {
+        &.bottom__4p,
+        &.bottom__3p,
+        &.bottom__2p {
           justify-content: space-around;
         }
       }

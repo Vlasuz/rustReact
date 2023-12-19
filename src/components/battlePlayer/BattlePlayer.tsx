@@ -1,20 +1,55 @@
 import React, {useEffect, useState} from 'react'
 import {LoadingStyled} from "../loading/loading.styled";
 import userIcon from "../../assets/images/user2.png";
+import {IUser} from "../../model";
+import axios from "axios";
+import {getApiLink} from "../../functions/getApiLink";
+import {useParams} from "react-router";
+import {getBearer} from "../../functions/getBearer";
+import getCookies from "../../functions/getCookie";
 
 interface IBattlePlayerProps {
     color: string
-    position: string
-    isHaveUser: boolean
+    position: number
+    direction: string
+    player: any
 }
 
-export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, isHaveUser}) => {
+export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, player, direction}) => {
+
+    const isHaveUser = player && Object.keys(player).length
+
+    const {battleId}: any = useParams()
+
+    const handleJoin = () => {
+        getBearer({type: "post"})
+        axios.post(getApiLink(`api/battle/join/?game_id=${battleId}&position=${position}`)).then(({data}) => {
+            console.log(data)
+            connectToSocket(battleId)
+        }).catch(er => console.log(getApiLink(`api/battle/join/?game_id=${battleId}&position=${position}`), er))
+    }
+
+    const connectToSocket = (gameId: string) => {
+        const ws = new WebSocket(getApiLink(`ws/api/battle/game/${gameId}/`, true))
+
+        ws.onopen = () => {
+            getCookies("access_token_rust") && ws.send(`{"type":"auth", "token":"${getCookies("access_token_rust")}"}`)
+            console.log('open')
+        }
+        ws.onmessage = (e: any) => {
+            const data = JSON.parse(JSON.parse(e.data))
+
+            console.log('MAIN MESS',data)
+        }
+        ws.onclose = (e: any) => console.log('close', e)
+        ws.onerror = (e: any) => console.log('error', e)
+    }
 
     return (
-        <div className={`person person_${color} person_${position} ${!isHaveUser && "person_loading"}`}>
+        <div onClick={handleJoin} className={`person person_${color} person_${direction} ${!isHaveUser && "person_loading"}`}>
             <div className="user__photo">
                 {
-                    isHaveUser ? <img src={userIcon} alt="user"/>
+                    isHaveUser ? <img src={player.user.avatar} alt="user"/>
                         :
                         <LoadingStyled className="load">
                             <div className="line"/>
@@ -31,7 +66,7 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, isH
             </div>
             <span className={"textToCall"}>call a bot</span>
             <span>
-                {isHaveUser ? "Username" : "..."}
+                {isHaveUser ? player.user.name : "..."}
             </span>
         </div>
     )

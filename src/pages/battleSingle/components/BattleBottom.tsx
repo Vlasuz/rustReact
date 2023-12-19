@@ -13,19 +13,19 @@ import { BattleGroup4p } from './BattleGroup4p';
 import { BattleGroup3p } from './BattleGroup3p';
 
 interface IBattleBottomProps {
-    gameType: IBattleCreate
+    gameType: string
 }
 
 export const BattleBottom:React.FC<IBattleBottomProps> = ({gameType}) => {
 
     const playersType: any = {
-        "team-2v2": <BattleTeam2v2/>,
-        "regular-1v1": <BattleRegular1v1/>,
-        "regular-1v1v1": <BattleRegular1v1v1/>,
-        "regular-4way": <BattleRegular4way/>,
-        "group-2p": <BattleGroup2p/>,
-        "group-3p": <BattleGroup3p/>,
-        "group-4p": <BattleGroup4p/>,
+        "2v2": <BattleTeam2v2/>,
+        "1v1": <BattleRegular1v1/>,
+        "1v1v1": <BattleRegular1v1v1/>,
+        "4way": <BattleRegular4way/>,
+        "2p": <BattleGroup2p/>,
+        "3p": <BattleGroup3p/>,
+        "4p": <BattleGroup4p/>,
     }
 
     return (
@@ -35,8 +35,10 @@ export const BattleBottom:React.FC<IBattleBottomProps> = ({gameType}) => {
             </div>
 
             {
-                playersType[`${gameType.type}-${gameType.option}`]
+                // playersType[`${gameType}`]
             }
+
+            <BattleRegular1v1/>
         </div>
     )
 }
