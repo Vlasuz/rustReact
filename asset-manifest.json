@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rustReact/static/css/main.c624810d.css",
-    "main.js": "/rustReact/static/js/main.e751e11b.js",
+    "main.js": "/rustReact/static/js/main.a8380940.js",
     "static/media/bgdForBattle.jpg": "/rustReact/static/media/bgdForBattle.dff2b5e067ca46021d83.jpg",
     "static/media/map.png": "/rustReact/static/media/map.7a7b765ed46b2ad03d88.png",
     "static/media/sound-11.wav": "/rustReact/static/media/sound-11.66677eb1ea5d6f132651.wav",
@@ -81,6 +81,7 @@
     "static/media/openCases.svg": "/rustReact/static/media/openCases.b88eec7373ddee771ee44767ead50869.svg",
     "static/media/cart.svg": "/rustReact/static/media/cart.114df9c568b5f35cc10e23b5de05c4d5.svg",
     "static/media/basket.svg": "/rustReact/static/media/basket.3876bb4335f071585bbef800daac9ad5.svg",
+    "static/media/copy-icon.svg": "/rustReact/static/media/copy-icon.8a90c9be5d697767d93603205ccaeeef.svg",
     "static/media/vk-wh.svg": "/rustReact/static/media/vk-wh.e492f3281546afb95b83db25949a9a4e.svg",
     "static/media/users.svg": "/rustReact/static/media/users.88a2a8dbb54b6ccdbb9af6e5aacc5ae9.svg",
     "static/media/discord-wh.svg": "/rustReact/static/media/discord-wh.4e669fb81fff04f52e216adda3f61006.svg",
@@ -133,10 +134,10 @@
     "static/media/filter.svg": "/rustReact/static/media/filter.8d7f7f01d770e0fe3f14e9df4ca4f72b.svg",
     "static/media/half-circle.svg": "/rustReact/static/media/half-circle.5d288c0b801a1e6ff294c38e6dac4f54.svg",
     "main.c624810d.css.map": "/rustReact/static/css/main.c624810d.css.map",
-    "main.e751e11b.js.map": "/rustReact/static/js/main.e751e11b.js.map"
+    "main.a8380940.js.map": "/rustReact/static/js/main.a8380940.js.map"
   },
   "entrypoints": [
     "static/css/main.c624810d.css",
-    "static/js/main.e751e11b.js"
+    "static/js/main.a8380940.js"
   ]
 }
