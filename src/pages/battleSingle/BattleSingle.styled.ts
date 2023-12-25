@@ -12,7 +12,7 @@ export const BattleSingleStyled = styled.section`
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    
+
     &__back {
       position: absolute;
       top: 20px;
@@ -20,11 +20,11 @@ export const BattleSingleStyled = styled.section`
       z-index: 2;
       display: flex;
       align-items: center;
-      
+
       svg {
         display: block;
       }
-      
+
       span {
         color: rgba(162, 171, 197, 0.50);
         font-size: 14px;
@@ -155,18 +155,23 @@ export const BattleSingleStyled = styled.section`
         -o-transition: all .3s ease;
         transition: all .3s ease;
         background: rgba(85, 98, 221, 0.8);
+
         &:hover {
           transform: scale(1.02);
         }
+
         &:active {
           transform: scale(0.98);
         }
+
         &:disabled {
           background: rgba(54, 58, 81, 0.70);
+
           &:active,
           &:hover {
             transform: scale(1);
           }
+
           span {
             color: #8088A8;
           }
@@ -293,10 +298,10 @@ export const BattleSingleStyled = styled.section`
           bottom: -30px;
         }
       }
-      
+
       &-end {
         position: relative;
-        
+
         &:after {
           content: '';
           height: 2px;
@@ -311,41 +316,47 @@ export const BattleSingleStyled = styled.section`
           transform: translateX(-50%);
           width: calc(100% - 210px);
         }
-        
+
         &_left-half-side {
           &:after {
             background: linear-gradient(to right, transparent 33.3%, rgba(245, 173, 87, 0.50) calc(33.3% + 1px), rgba(245, 173, 87, 0.50) calc(50% + 1px), transparent 50%);
           }
         }
+
         &_right-half-side {
           &:after {
             background: linear-gradient(to left, transparent 33.3%, rgba(245, 173, 87, 0.50) calc(33.3% + 1px), rgba(245, 173, 87, 0.50) calc(50% + 1px), transparent 50%);
           }
         }
+
         &_left-side {
           &:after {
             background: linear-gradient(to right, rgba(245, 173, 87, 0.50) calc(50% + 1px), transparent 50%);
           }
         }
+
         &_right-side {
           &:after {
             background: linear-gradient(to left, rgba(245, 173, 87, 0.50) calc(50% + 1px), transparent 50%);
           }
         }
+
         &_all-side {
           &:after {
             background: rgba(245, 173, 87, 0.50);
           }
         }
-        
+
         .crate__final {
           background: rgba(245, 173, 87, 0.25);
+
           .coins {
             span {
               color: #F5AD57;
             }
           }
         }
+
         .crate__final:before {
           content: '';
           background: rgba(245, 173, 87, 0.50);
@@ -354,6 +365,7 @@ export const BattleSingleStyled = styled.section`
           position: absolute;
           bottom: -120px
         }
+
         .crate__final:after {
           height: 50px;
           top: -50px;
@@ -382,7 +394,7 @@ export const BattleSingleStyled = styled.section`
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      
+
       &__lock {
         display: flex;
         align-items: center;
@@ -392,12 +404,16 @@ export const BattleSingleStyled = styled.section`
         left: 0;
         width: 100%;
         height: 100%;
-        -webkit-border-radius: 8px;-moz-border-radius: 8px;border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
         overflow: hidden;
+
         img {
           position: relative;
           z-index: 2;
         }
+
         &:after {
           content: '';
           background: #26293B;
@@ -513,13 +529,22 @@ export const BattleSingleStyled = styled.section`
           margin-top: 23px;
           margin-bottom: -10px;
         }
+
         .load {
-          -webkit-transform: scale(1.8);-moz-transform: scale(1.8);-ms-transform: scale(1.8);-o-transform: scale(1.8);transform: scale(1.8);
+          -webkit-transform: scale(1.8);
+          -moz-transform: scale(1.8);
+          -ms-transform: scale(1.8);
+          -o-transform: scale(1.8);
+          transform: scale(1.8);
         }
       }
+
       &__single {
-        -webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius: 20px;
       }
+
       &__end,
       &__single {
         margin: 0 auto;
@@ -537,7 +562,7 @@ export const BattleSingleStyled = styled.section`
         margin-bottom: 0;
         width: 150px;
         height: 150px;
-        
+
         &:after {
           content: '';
           background: rgba(245, 173, 87, 0.50);
@@ -545,11 +570,15 @@ export const BattleSingleStyled = styled.section`
           height: 50px;
           position: absolute;
           left: 50%;
-          -webkit-transform: translateX(-50%);-moz-transform: translateX(-50%);-ms-transform: translateX(-50%);-o-transform: translateX(-50%);transform: translateX(-50%);
+          -webkit-transform: translateX(-50%);
+          -moz-transform: translateX(-50%);
+          -ms-transform: translateX(-50%);
+          -o-transform: translateX(-50%);
+          transform: translateX(-50%);
           top: 100%;
           opacity: 0;
         }
-        
+
         &_bottom {
           &:after {
             opacity: 1;
@@ -763,7 +792,7 @@ export const BattleSingleStyled = styled.section`
         opacity: 0;
       }
     }
-    
+
     &__bottom {
       position: absolute;
       bottom: 20px;
@@ -833,7 +862,7 @@ export const BattleSingleStyled = styled.section`
           left: 15px;
           bottom: -10px;
         }
-        
+
         .textToCall {
           opacity: 0;
           position: absolute;
@@ -841,9 +870,11 @@ export const BattleSingleStyled = styled.section`
           z-index: 2;
           transition: all .3s ease;
         }
+
         .load {
           transition: all .3s ease;
         }
+
         .botIcon {
           position: absolute;
           opacity: 0;
@@ -911,20 +942,53 @@ export const BattleSingleStyled = styled.section`
 
         &_loading {
           .user__photo {
+            position: relative;
             border: 2px dashed #343748;
           }
-          
+
+          .non-player-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg {
+              position: absolute;
+              opacity: 0;
+              transition: all .3s ease;
+            }
+            img {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+              transition: all .3s ease;
+              filter: blur(3px) brightness(.5);
+            }
+          }
+
           &:hover {
             cursor: pointer;
-            
+
             .load {
               opacity: 0;
             }
+
             .botIcon {
               opacity: 1;
             }
+
             .textToCall {
               opacity: 1;
+            }
+
+            .non-player-loading {
+              img {
+                opacity: 1;
+              }
+              svg {
+                opacity: 1;
+              }
             }
           }
         }
@@ -974,7 +1038,7 @@ export const BattleSingleStyled = styled.section`
       .crate__single {
         display: none;
       }
-      
+
     }
   }
 
@@ -985,7 +1049,7 @@ export const BattleSingleStyled = styled.section`
     left: 8px;
   }
 
-  .maskCircle{
+  .maskCircle {
     width: 100px;
     height: 100px;
     fill: none;
@@ -994,16 +1058,16 @@ export const BattleSingleStyled = styled.section`
     stroke-dasharray: 3;
     stroke-dashoffset: 110;
   }
-  .maskCircle__inner{
+
+  .maskCircle__inner {
     fill: none;
     stroke: white;
     stroke-width: 2;
     stroke-dashoffset: 0;
     stroke-dasharray: 370;
   }
-  
-  
-  
+
+
   @media screen and (max-width: 1250px) {
     max-width: 100%;
   }

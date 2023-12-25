@@ -6,32 +6,40 @@ import peopleDefault from "../../../assets/images/peopleDefault.svg";
 import boxGreen from "../../../assets/images/boxGreen.svg";
 import boxDefault from "../../../assets/images/boxDefault.svg";
 import coin from "../../../assets/images/header__coins.svg";
-import {IBattleCreate, ICrate} from "../../../model";
 import {useSelector} from "react-redux";
 import axios from "axios";
 import {getApiLink} from "../../../functions/getApiLink";
 import {getBearer} from "../../../functions/getBearer";
-import {useNavigate, useParams} from "react-router";
-import getCookies from "../../../functions/getCookie";
+import {useLocation, useNavigate, useParams} from "react-router";
 
 interface IBattleCreateProps {
     setGameType: any
     gameType: string
-    setGameStep: any
-    setWebSocket: any
+    connectToSocket: any
+    setIsBattleAuthor: any
 }
 
 interface IGameType {
     [key: string]: string
 }
 
-export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType, setGameStep, setWebSocket}) => {
+export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType, connectToSocket, setIsBattleAuthor}) => {
 
-    const battleCrates: ICrate[] = useSelector((state: any) => state.toolkit.battleCrates)
+    const battleCrates: any = useSelector((state: any) => state.toolkit.battleCrates)
 
-    const {battleId} = useParams()
+    const [finalPriceForBattle, setFinalPriceForBattle] = useState(0)
 
-    const navigate = useNavigate()
+    useEffect(() => {
+        const sum = battleCrates.length && battleCrates.length > 1 ? battleCrates?.reduce(function (previousValue: any, currentValue: any, index: any, array: any) {
+            const prPrice = previousValue?.count * previousValue?.crate.price
+            const crPrice = currentValue?.count * currentValue?.crate.price
+
+            return prPrice + crPrice;
+        }) : battleCrates[0]?.count * battleCrates[0]?.crate.price
+
+        setFinalPriceForBattle(sum)
+
+    }, [battleCrates])
 
     const gameTypes: IGameType = {
         "1v1": "two_way",
@@ -41,15 +49,6 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
         "2p": "two_p",
         "3p": "three_p",
         "4p": "four_p",
-    }
-    const gameTypesReverse: IGameType = {
-        "two_way": "1v1",
-        "three_way": "1v1v1",
-        "four_way": "4way",
-        "two_v_two": "2v2",
-        "two_p": "2p",
-        "three_p": "3p",
-        "four_p": "4p",
     }
 
     const handleCreateGame = () => {
@@ -66,39 +65,16 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
         getBearer({type: "post"})
         axios.post(getApiLink("api/battle/create/"), requestData).then(({data}) => {
             console.log(data)
-            // setGameStep("waiting")
 
-            connectToSocket(data.id)
+            connectToSocket(data.id, true)
 
-            // navigate("/battle/"+data.id)
+            const newURL = "/battle/"+data.id;
+            window.history.replaceState(null, '', newURL);
         })
     }
 
-    useEffect(() => {
-        if(!battleId) return;
-
-        connectToSocket(battleId)
-    }, [battleId])
 
 
-    const connectToSocket = (gameId: string) => {
-        const ws = new WebSocket(getApiLink(`ws/api/battle/game/${gameId}/`, true))
-
-        ws.onopen = () => {
-            getCookies("access_token_rust") && ws.send(`{"type":"auth", "token":"${getCookies("access_token_rust")}"}`)
-            console.log('open')
-        }
-        ws.onmessage = (e: any) => {
-            const data = JSON.parse(JSON.parse(e.data))
-
-            console.log('MAIN MESS',data)
-            setGameStep(data.battle.status)
-            setGameType(gameTypesReverse[data.battle.mode])
-            setWebSocket(data)
-        }
-        ws.onclose = (e: any) => console.log('close', e)
-        ws.onerror = (e: any) => console.log('error', e)
-    }
 
     return (
         <div className="battle-area__create">
@@ -146,7 +122,9 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
             <button disabled={!battleCrates.length} onClick={handleCreateGame} className="create-game__button">
                 <span>Начать игру</span>
                 <img src={coin} alt=""/>
-                <p>500</p>
+                <p>
+                    {!!finalPriceForBattle ? finalPriceForBattle : 0}
+                </p>
             </button>
         </div>
     )

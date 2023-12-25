@@ -350,7 +350,7 @@ export interface IBattleGame {
         position: number
         user: IUser
         win: number
-    }
+    }[]
     status: string
     winners: {
         items: ICrateItem[]

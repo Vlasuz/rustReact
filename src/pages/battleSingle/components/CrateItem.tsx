@@ -9,11 +9,13 @@ import {GameState} from "../BattleSingle";
 import { useDispatch } from 'react-redux';
 import {ICrate, ICrateItem} from "../../../model";
 import {changeBattleCrate, removeBattleCrate } from '../../../redux/toolkitSlice';
+import {log} from "util";
+import {getApiLink} from "../../../functions/getApiLink";
 
 interface ICrateItemProps {
     data: ICrate
     isOpened: boolean
-    openedItem: any
+    openedItem?: any
 }
 
 export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened, openedItem}) => {
@@ -37,7 +39,7 @@ export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened, openedItem}
     return (
         <div className="crate crate__start">
             {(gameStep === "process" || gameStep === "waiting" || gameStep === "prepare") && isOpened && <div className="crate__lock">
-                <img src={isHaveItem ? openedItem.item.item.image : battleCaseLock} alt="Lock"/>
+                <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt="Lock"/>
             </div>}
 
             {gameStep === "start" && <div className="top">
@@ -57,13 +59,13 @@ export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened, openedItem}
                 </button>
             </div>}
             <div className="crate__image">
-                <img src={isHaveItem ? openedItem.item.item.image : battleCaseLock} alt=""/>
+                {isHaveItem ? <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt=""/> : <img src={getApiLink(`/${data.icon}`)} alt=""/>}
             </div>
             <div className="price">
                 <img src={coin} alt=""/>
                 <span>
                     {
-                        isHaveItem ? openedItem.item.price : data?.price
+                        isHaveItem ? openedItem?.item?.price : data?.price
                     }
                 </span>
             </div>

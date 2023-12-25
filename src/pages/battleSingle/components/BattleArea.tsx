@@ -25,10 +25,12 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     const [{x, y}, api] = useSpring(() => ({x: 0, y: 0,}))
 
-    const [numberToOpen, setNumberToOpen] = useState(0)
-
     const blockCenter: any = useRef(null)
 
+    const [isCanDrag, setIsCanDrag] = useState(false)
+    const [openedCount, setOpenedCount] = useState(0)
+
+    const webSocket: any = useContext(GameSocket)
     const gameStep = useContext(GameState)
 
     const battleCrates: any = useSelector((state: any) => state.toolkit.battleCrates)
@@ -49,7 +51,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
             offset[1] = 120
         }
 
-        if (gameStep === "waiting" || gameStep === "start" || gameStep === "calculate" || gameStep === "end") {
+        if (isCanDrag) {
             api({
                 x: offset[0],
                 y: offset[1],
@@ -58,51 +60,61 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     })
 
+    const [coodYnew, setCoodYnew] = useState(100)
+
+    console.log(coodYnew)
 
     useEffect(() => {
-        let coodYnew = 100
-        let cratesCount = 0;
 
-        if (gameStep === "prepare") {
-            api({
-                x: 0,
-                y: 120,
-            })
+        setIsCanDrag(true)
+
+        if (webSocket?.battle?.status === "process" && webSocket?.battle?.crates[0]?.opened === 0) {
+            setIsCanDrag(false)
+            setCoodYnew(120)
             return;
-        } else if (gameStep === "process") {
+        } else if (webSocket?.battle?.status === "process") {
 
-            let intervalScrolling = setInterval(() => {
+            setIsCanDrag(false)
+            setCoodYnew(prev => prev -= 140)
 
-                if (cratesCount < allGameCrates.length) {
-                    coodYnew -= 140
-                } else if (cratesCount === allGameCrates.length) {
-                    setGameStep("calculate")
-                    coodYnew -= 210
-                } else if (cratesCount === allGameCrates.length + 1) {
-                    setGameStep("end")
-                    coodYnew -= 192
-                }
+        } else if (webSocket?.battle?.status === "end") {
 
-                cratesCount += 1;
-                setNumberToOpen(prev => prev + 1)
+            setIsCanDrag(false)
+            setCoodYnew(prev => prev -= 140)
 
-                api({
-                    x: 0,
-                    y: coodYnew,
-                })
 
-                if (cratesCount >= allGameCrates.length + 2) {
-                    clearInterval(intervalScrolling)
-                }
+            setTimeout(() => {
+                setCoodYnew(prev => prev -= 200)
 
-                return (() => {
-                    clearInterval(intervalScrolling)
-                })
-            }, 2000)
+                setTimeout(() => {
+                    setCoodYnew(prev => prev -= 180)
+
+                    setTimeout(() => {
+                        setCoodYnew(prev => prev -= 50)
+
+                        setIsCanDrag(true)
+                    }, 3000)
+                }, 3000)
+            }, 3000)
+
         }
 
+        const openedCount = webSocket?.battle?.crates?.length > 1 ? webSocket?.battle?.crates?.reduce((prev: any, current: any) => {
+            return prev + current.opened;
+        }, 0) : webSocket?.battle?.crates[0].opened
 
-    }, [gameStep])
+        setCoodYnew(-(openedCount * 140) + 120)
+
+        setOpenedCount(openedCount)
+
+    }, [webSocket])
+
+    useEffect(() => {
+        api({
+            x: 0,
+            y: coodYnew,
+        })
+    }, [coodYnew])
 
     const wsMessage: any = useContext(GameSocket)
 
@@ -127,11 +139,15 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     }, [wsMessage])
 
-
-
-    const webSocket: any = useContext(GameSocket)
     const position1 = webSocket?.battle?.players.filter((item: any) => item.position === 1)[0]
     const position2 = webSocket?.battle?.players.filter((item: any) => item.position === 2)[0]
+
+
+    const winnerPosition1v1 = webSocket?.battle?.winners.length && gameType === "1v1" && position1?.user?.id === webSocket?.battle?.winners[0]?.user?.id ? "general-block-end_left-side" : "general-block-end_right-side"
+    const isWinnerPosition1In1v1 = webSocket?.battle?.winners.length && gameType === "1v1" && position1?.user?.id === webSocket?.battle?.winners[0]?.user?.id
+
+    console.log(allGameCrates)
+    console.log(webSocket?.battle)
 
     return (
         <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()}
@@ -155,8 +171,15 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                     {
                         allGameCrates.map((item: any, index: number) => <CrateItem data={item}
                                                                                    openedItem={position1.items[index]}
-                                                                                   isOpened={numberToOpen <= index}
+                                                                                   isOpened={!(index < openedCount)}
                                                                                    key={item.id + index}/>)
+                    }
+
+                    {
+                        gameStep === "start" && battleCrates.map((item: any, index: number) => <CrateItem
+                            data={item.crate}
+                            isOpened={false}
+                            key={item.id + index}/>)
                     }
 
                     {gameStep === "start" && <div className="crate crate__empty">
@@ -191,9 +214,46 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                 </div>
                 <div className="area__line">
                     {
+                        allGameCrates?.map((item: any, index: number) => <CrateItem data={item}
+                                                                                    openedItem={position2?.items[index]}
+                                                                                    isOpened={!(index < openedCount)}
+                                                                                    key={item?.id + index}/>)
+                    }
+                    {gameStep === "start" && <div className="crate crate__empty">
+                        <img src={CrateBig} alt=""/>
+                    </div>}
+                    <div className="crate crate__final">
+
+                        {(gameStep === "calculate" || gameStep === "end") ? <>
+                            <span>
+                                Выбивает
+                            </span>
+                                <div className="coins">
+                                    <img src={coins} alt=""/>
+                                    <span>
+                                        {
+                                            position2.win
+                                        }
+                                    </span>
+                                </div>
+                            </> :
+                            <div className="loading">
+                                <LoadingStyled className="load">
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                    <div className="line"/>
+                                </LoadingStyled>
+                                <p>Ожидание</p>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div className="area__line">
+                    {
                         allGameCrates.map((item: any, index: number) => <CrateItem data={item}
-                                                                                   openedItem={position2.items[index]}
-                                                                                   isOpened={numberToOpen <= index}
+                                                                                   openedItem={position2?.items[index]}
+                                                                                   isOpened={!(index < openedCount)}
                                                                                    key={item.id + index}/>)
                     }
                     {gameStep === "start" && <div className="crate crate__empty">
@@ -229,45 +289,8 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                 <div className="area__line">
                     {
                         allGameCrates.map((item: any, index: number) => <CrateItem data={item}
-                                                                                   openedItem={position2.items[index]}
-                                                                                   isOpened={numberToOpen <= index}
-                                                                                   key={item.id + index}/>)
-                    }
-                    {gameStep === "start" && <div className="crate crate__empty">
-                        <img src={CrateBig} alt=""/>
-                    </div>}
-                    <div className="crate crate__final">
-
-                        {(gameStep === "calculate" || gameStep === "end") ? <>
-                            <span>
-                                Выбивает
-                            </span>
-                                <div className="coins">
-                                    <img src={coins} alt=""/>
-                                    <span>
-                                        {
-                                            position2.win
-                                        }
-                                    </span>
-                                </div>
-                            </> :
-                            <div className="loading">
-                                <LoadingStyled className="load">
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                </LoadingStyled>
-                                <p>Ожидание</p>
-                            </div>
-                        }
-
-                    </div>
-                </div>
-                <div className="area__line">
-                    {
-                        allGameCrates.map((item: any, index: number) => <CrateItem data={item}
-                                                                                   openedItem={position2.items[index]}
-                                                                                   isOpened={numberToOpen <= index}
+                                                                                   openedItem={position2?.items[index]}
+                                                                                   isOpened={!(index < openedCount)}
                                                                                    key={item.id + index}/>)
                     }
                     {gameStep === "start" && <div className="crate crate__empty">
@@ -320,7 +343,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                             </span>
                         <div className="coins">
                             <img src={coins} alt=""/>
-                                <span>
+                            <span>
                                     {
                                         position1.win + position2.win
                                     }
@@ -344,10 +367,12 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
             {/*general-block-end_right-side*/}
             {/*general-block-end_left-half-side*/}
             {/*general-block-end_right-half-side*/}
+
+
             {gameStep === "end" &&
                 <div
-                    className={`general-block general-block-end_left-side general-block-end area-${gameType}`}>
-                    <div className="area__line">
+                    className={`general-block ${winnerPosition1v1} general-block-end area-${gameType}`}>
+                    <div className={`area__line ${!isWinnerPosition1In1v1 && "area__line_disabled"}`}>
                         <div className="crate crate__final">
                         <span>
                             Выбивает
@@ -362,7 +387,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                             </div>
                         </div>
                     </div>
-                    <div className="area__line">
+                    <div className={`area__line ${!isWinnerPosition1In1v1 && "area__line_disabled"}`}>
                         <div className="crate crate__final">
                         <span>
                             Выбивает
@@ -371,13 +396,13 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                                 <img src={coins} alt=""/>
                                 <span>
                                 {
-                                    position2.win
+                                    position1.win + position2.win
                                 }
                             </span>
                             </div>
                         </div>
                     </div>
-                    <div className="area__line area__line_disabled">
+                    <div className={`area__line ${isWinnerPosition1In1v1 && "area__line_disabled"}`}>
                         <div className="crate crate__final">
                         <span>
                             Выбивает
@@ -386,13 +411,13 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                                 <img src={coins} alt=""/>
                                 <span>
                                 {
-                                    position2.win
+                                    position1.win + position2.win
                                 }
                             </span>
                             </div>
                         </div>
                     </div>
-                    <div className="area__line area__line_disabled">
+                    <div className={`area__line ${isWinnerPosition1In1v1 && "area__line_disabled"}`}>
                         <div className="crate crate__final">
                         <span>
                             Выбивает
@@ -401,7 +426,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                                 <img src={coins} alt=""/>
                                 <span>
                                 {
-                                    position2.win
+                                    position1.win + position2.win
                                 }
                             </span>
                             </div>

@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import CrateBig from "../../../assets/images/CrateBig.svg";
 import {LoadingStyled} from "../../../components/loading/loading.styled";
 import {FightSingleSvgTimer} from "../../fightSingle/components/FightSingleSvgTimer";
 import {useFightTimer} from "../../../hooks/fightTimer";
+import {GameSocket} from "../BattleSingle";
 
 interface IBattleAreaTopBigProps {
     gameStep: any
@@ -10,7 +11,8 @@ interface IBattleAreaTopBigProps {
 
 export const BattleAreaTopBig: React.FC<IBattleAreaTopBigProps> = ({gameStep}) => {
 
-    const timer = 5
+    const webSocket: any = useContext(GameSocket)
+    const timer = webSocket?.timer ? webSocket?.timer : 5
     const {seconds, milliseconds} = useFightTimer(timer, gameStep)
 
     return (
@@ -28,8 +30,8 @@ export const BattleAreaTopBig: React.FC<IBattleAreaTopBigProps> = ({gameStep}) =
                 </div>
             }
 
-            {gameStep === "prepare" && <FightSingleSvgTimer isFight={false} gameState={gameStep} seconds={+timer}/>}
-            {gameStep === "prepare" && <div className="center__running">
+            {!webSocket?.battle?.players[0]?.item?.length && gameStep === "process" && <FightSingleSvgTimer isFight={false} gameState={gameStep} seconds={+timer}/>}
+            {!webSocket?.battle?.players[0]?.item?.length && gameStep === "process" && <div className="center__running">
                 <span>Начало</span>
                 <div className="timer">
                     <div className="min">

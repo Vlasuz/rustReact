@@ -25,15 +25,18 @@ import {getWsLink} from "./functions/getWsLink";
 
 // TODO СХВАТКА
 // TODO Сделать кучу анимаций в схватке
-// TODO Сделать звуки в схватке
 
 const wsAirdrop = new WebSocket(getWsLink("ws/api/airdrop/"))
+
 export const AirdropSocketContext: any = createContext(null)
+export const IsJoinToGame: any = createContext(null)
 
 function App() {
 
-    const dispatch = useDispatch()
     const [isLoad, setIsLoad] = useState(true)
+    const [isJoinToGame, setIsJoinToGame] = useState(false)
+
+    const dispatch = useDispatch()
     const {popup} = usePopups()
     const isTechnicalTime = useSelector((state: any) => state.toolkit.siteSettings)?.technical_break
     const userData = useSelector((state: any) => state.toolkit.user)
@@ -63,21 +66,23 @@ function App() {
     if (isTechnicalTime) return <Technical/>;
 
     return (
-        <AirdropSocketContext.Provider value={airdropWsMessage}>
-            <DndProvider backend={HTML5Backend}>
-                <AppStyled className="App">
+        <IsJoinToGame.Provider value={{isJoinToGame, setIsJoinToGame}}>
+            <AirdropSocketContext.Provider value={airdropWsMessage}>
+                <DndProvider backend={HTML5Backend}>
+                    <AppStyled className="App">
 
-                    <Header/>
-                    <Container/>
-                    <Notice/>
+                        <Header/>
+                        <Container/>
+                        <Notice/>
 
-                    <Loader/>
+                        <Loader/>
 
-                    {popup}
+                        {popup}
 
-                </AppStyled>
-            </DndProvider>
-        </AirdropSocketContext.Provider>
+                    </AppStyled>
+                </DndProvider>
+            </AirdropSocketContext.Provider>
+        </IsJoinToGame.Provider>
     );
 }
 

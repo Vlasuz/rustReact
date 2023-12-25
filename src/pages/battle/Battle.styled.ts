@@ -4,9 +4,18 @@ export const BattleStyled = styled.section`
 
   max-width: calc(100% - 114px - 470px);
   
+  .list > ul {
+    height: calc(100vh - 220px);
+    overflow: auto;
+  }
+  
   .top {
     display: flex;
     align-items: center;
+  }
+  
+  .player + .player {
+    margin-left: 10px;
   }
   
   .create-battle {
