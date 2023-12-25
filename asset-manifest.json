@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rustReact/static/css/main.c624810d.css",
-    "main.js": "/rustReact/static/js/main.a8380940.js",
+    "main.js": "/rustReact/static/js/main.3740a78f.js",
     "static/media/bgdForBattle.jpg": "/rustReact/static/media/bgdForBattle.dff2b5e067ca46021d83.jpg",
     "static/media/map.png": "/rustReact/static/media/map.7a7b765ed46b2ad03d88.png",
     "static/media/sound-11.wav": "/rustReact/static/media/sound-11.66677eb1ea5d6f132651.wav",
@@ -59,7 +59,6 @@
     "static/media/GothamPro-Light.woff2": "/rustReact/static/media/GothamPro-Light.f0d40f548df730bbaf61.woff2",
     "static/media/head-hit.png": "/rustReact/static/media/head-hit.b7beac4adaa84cbe28c2.png",
     "static/media/sound-18.wav": "/rustReact/static/media/sound-18.7c4481ed8f30de49c81f.wav",
-    "static/media/case-magma.png": "/rustReact/static/media/case-magma.7645fc2c95ed0bc2d454.png",
     "static/media/non-photo.png": "/rustReact/static/media/non-photo.6787cdde6ac790c7eded.png",
     "static/media/CrateBig.svg": "/rustReact/static/media/CrateBig.111d88c078dcca28a404834720523994.svg",
     "static/media/sound-10.wav": "/rustReact/static/media/sound-10.155af76e495ef666dd65.wav",
@@ -134,10 +133,10 @@
     "static/media/filter.svg": "/rustReact/static/media/filter.8d7f7f01d770e0fe3f14e9df4ca4f72b.svg",
     "static/media/half-circle.svg": "/rustReact/static/media/half-circle.5d288c0b801a1e6ff294c38e6dac4f54.svg",
     "main.c624810d.css.map": "/rustReact/static/css/main.c624810d.css.map",
-    "main.a8380940.js.map": "/rustReact/static/js/main.a8380940.js.map"
+    "main.3740a78f.js.map": "/rustReact/static/js/main.3740a78f.js.map"
   },
   "entrypoints": [
     "static/css/main.c624810d.css",
-    "static/js/main.a8380940.js"
+    "static/js/main.3740a78f.js"
   ]
 }
