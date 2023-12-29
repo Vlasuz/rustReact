@@ -334,6 +334,7 @@ export interface IWinLineItem {
     user: IUser
     item: IProduct
     amount: number
+    id: string
 }
 
 export interface IBattleGame {

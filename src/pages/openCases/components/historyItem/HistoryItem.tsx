@@ -3,30 +3,20 @@ import itemIcon from "../../../../assets/images/weapon.png";
 import coins from "../../../../assets/images/header__coins.svg";
 import userPhoto from "../../../../assets/images/user2.png";
 import {HistoryItemStyled} from "./HitoryItem.styled";
+import {CSSTransition} from "react-transition-group";
 
 interface IOpenCasesItemProps {
     type: string
     data: any
-    isLoad: boolean
 }
 
-export const HistoryItem:React.FC<IOpenCasesItemProps> = ({type, data, isLoad}) => {
+export const HistoryItem: React.FC<IOpenCasesItemProps> = ({type, data}) => {
 
-    const liBlock: any = useRef(null)
-
-    useEffect(() => {
-        if(isLoad) {
-            setTimeout(() => {
-                liBlock.current.classList.remove("is-new")
-            }, 100)
-        } else {
-            liBlock.current.classList.remove("is-new")
-        }
-
-    }, [])
 
     return (
-        <HistoryItemStyled ref={liBlock} className={ `is-new ${type === "green" && "item__green"} ${type === "brown" && "item__brown"}`}>
+
+        <HistoryItemStyled
+            className={`${type === "green" && "item__green"} ${type === "brown" && "item__brown"}`}>
             <div className="item__image">
                 <img src={data.item.item.image} alt=""/>
             </div>
@@ -41,5 +31,6 @@ export const HistoryItem:React.FC<IOpenCasesItemProps> = ({type, data, isLoad}) 
                 </div>
             </div>
         </HistoryItemStyled>
+
     )
 }

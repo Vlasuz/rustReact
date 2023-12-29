@@ -108,7 +108,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     return (
         <OpenCasesStyled>
 
-            <BattleTop isClicked={isClicked}/>
+            <BattleTop isFastActive={isFastActive}/>
 
             <div className={"center"}>
                 {countOfCases === 1 && <div

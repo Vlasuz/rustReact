@@ -19,11 +19,17 @@ export const HistoryItemStyled = styled.li`
   min-width: 205px;
   max-width: 205px;
 
-  &.is-new {
+  &.enter-active {
     max-width: 0;
     min-width: 0;
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
     margin: 0;
+    height: 70px;
+    transition: all .0s ease;
+  }
+
+  &:first-child {
   }
 
   &:after {

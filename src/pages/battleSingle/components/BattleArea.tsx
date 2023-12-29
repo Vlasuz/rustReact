@@ -10,10 +10,8 @@ import {GameSocket, GameState} from "../BattleSingle";
 import {useSelector} from 'react-redux';
 import {Loader} from "../../../components/loader/Loader";
 import {LoadingStyled} from "../../../components/loading/loading.styled";
-import {useFightTimer} from "../../../hooks/fightTimer";
-import {FightSingleSvgTimer} from "../../fightSingle/components/FightSingleSvgTimer";
-import {log} from "util";
 import {BattleAreaTopBig} from "./BattleAreaTopBig";
+import { CSSTransition } from 'react-transition-group';
 
 interface IBattleAreaProps {
     blockArea: any
@@ -62,7 +60,8 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     const [coodYnew, setCoodYnew] = useState(100)
 
-    console.log(coodYnew)
+    const [isGoCalc, setIsGoCalc] = useState(false)
+    const [isGoCalcWinner, setIsGoCalcWinner] = useState(false)
 
     useEffect(() => {
 
@@ -89,12 +88,15 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                 setTimeout(() => {
                     setCoodYnew(prev => prev -= 180)
 
+                    setIsGoCalc(true)
+
                     setTimeout(() => {
                         setCoodYnew(prev => prev -= 50)
 
+                        setIsGoCalcWinner(true)
                         setIsCanDrag(true)
-                    }, 3000)
-                }, 3000)
+                    }, 1500)
+                }, 1500)
             }, 3000)
 
         }
@@ -148,6 +150,54 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     console.log(allGameCrates)
     console.log(webSocket?.battle)
+
+    const [currentSum, setCurrentSum] = useState(0);
+
+    useEffect(() => {
+        if(!isGoCalc) return ;
+
+        const targetSum = position1.win + position2.win; // Ваша целевая сумма
+        const animationDuration = 1000; // Время анимации в миллисекундах
+
+        const start = Date.now();
+        const increment = targetSum / animationDuration;
+
+        const animationInterval = setInterval(() => {
+            const elapsedTime = Date.now() - start;
+            const newSum = Math.min(increment * elapsedTime, targetSum);
+            setCurrentSum(newSum);
+
+            if (newSum === targetSum) {
+                clearInterval(animationInterval);
+            }
+        }, 16); // Примерно 60 кадров в секунду
+
+        return () => clearInterval(animationInterval);
+    }, [isGoCalc]);
+
+
+    const [currentSumWinner, setCurrentSumWinner] = useState(0);
+    useEffect(() => {
+        if(!isGoCalcWinner) return ;
+
+        const targetSum = position1?.win + position2?.win; // Ваша целевая сумма
+        const animationDuration = 1000; // Время анимации в миллисекундах
+
+        const start = Date.now();
+        const increment = targetSum / animationDuration;
+
+        const animationInterval = setInterval(() => {
+            const elapsedTime = Date.now() - start;
+            const newSum = Math.min(increment * elapsedTime, targetSum);
+            setCurrentSumWinner(newSum);
+
+            if (newSum === targetSum) {
+                clearInterval(animationInterval);
+            }
+        }, 16); // Примерно 60 кадров в секунду
+
+        return () => clearInterval(animationInterval);
+    }, [isGoCalcWinner]);
 
     return (
         <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()}
@@ -343,11 +393,19 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                             </span>
                         <div className="coins">
                             <img src={coins} alt=""/>
-                            <span>
+
+                            <CSSTransition
+                                in={true} // Устанавливаем в true, чтобы активировать анимацию при появлении элемента
+                                timeout={1000} // Время анимации в миллисекундах
+                                classNames="sum-animation" // Название класса для анимации
+                                unmountOnExit
+                            >
+                                <span>
                                     {
-                                        position1.win + position2.win
+                                        currentSum.toFixed(0)
                                     }
                                 </span>
+                            </CSSTransition>
                         </div>
                     </> :
                     <div className="loading">
@@ -379,11 +437,18 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                         </span>
                             <div className="coins">
                                 <img src={coins} alt=""/>
+                                <CSSTransition
+                                in={true} // Устанавливаем в true, чтобы активировать анимацию при появлении элемента
+                                timeout={1000} // Время анимации в миллисекундах
+                                classNames="sum-animation" // Название класса для анимации
+                                unmountOnExit
+                            >
                                 <span>
                                     {
-                                        position1.win + position2.win
+                                        currentSumWinner.toFixed(0)
                                     }
                                 </span>
+                            </CSSTransition>
                             </div>
                         </div>
                     </div>
@@ -394,11 +459,18 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                         </span>
                             <div className="coins">
                                 <img src={coins} alt=""/>
+                                <CSSTransition
+                                in={true} // Устанавливаем в true, чтобы активировать анимацию при появлении элемента
+                                timeout={1000} // Время анимации в миллисекундах
+                                classNames="sum-animation" // Название класса для анимации
+                                unmountOnExit
+                            >
                                 <span>
                                 {
-                                    position1.win + position2.win
+                                    currentSumWinner.toFixed(0)
                                 }
                             </span>
+                            </CSSTransition>
                             </div>
                         </div>
                     </div>
@@ -409,11 +481,18 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                         </span>
                             <div className="coins">
                                 <img src={coins} alt=""/>
+                                <CSSTransition
+                                in={true} // Устанавливаем в true, чтобы активировать анимацию при появлении элемента
+                                timeout={1000} // Время анимации в миллисекундах
+                                classNames="sum-animation" // Название класса для анимации
+                                unmountOnExit
+                            >
                                 <span>
                                 {
-                                    position1.win + position2.win
+                                    currentSumWinner.toFixed(0)
                                 }
                             </span>
+                            </CSSTransition>
                             </div>
                         </div>
                     </div>
@@ -424,11 +503,18 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                         </span>
                             <div className="coins">
                                 <img src={coins} alt=""/>
+                                <CSSTransition
+                                in={true} // Устанавливаем в true, чтобы активировать анимацию при появлении элемента
+                                timeout={1000} // Время анимации в миллисекундах
+                                classNames="sum-animation" // Название класса для анимации
+                                unmountOnExit
+                            >
                                 <span>
                                 {
-                                    position1.win + position2.win
+                                    currentSumWinner.toFixed(0)
                                 }
                             </span>
+                            </CSSTransition>
                             </div>
                         </div>
                     </div>

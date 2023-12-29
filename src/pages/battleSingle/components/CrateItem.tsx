@@ -1,15 +1,13 @@
 import React, {createContext, useContext, useEffect, useState} from 'react'
 
-import caseIcon from "../../../assets/images/case-magma.png";
+import lineToOpen from "../../../assets/images/lineToOpenCrate.png";
 import coin from "../../../assets/images/header__coins.svg";
-import battleCaseUnlock from "../../../assets/images/battle-case-unlock.svg";
 import battleCaseLock from "../../../assets/images/battle-case-lock.svg";
 
 import {GameState} from "../BattleSingle";
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {ICrate, ICrateItem} from "../../../model";
-import {changeBattleCrate, removeBattleCrate } from '../../../redux/toolkitSlice';
-import {log} from "util";
+import {changeBattleCrate, removeBattleCrate} from '../../../redux/toolkitSlice';
 import {getApiLink} from "../../../functions/getApiLink";
 
 interface ICrateItemProps {
@@ -18,7 +16,7 @@ interface ICrateItemProps {
     openedItem?: any
 }
 
-export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened, openedItem}) => {
+export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem}) => {
 
     const [count, setCount] = useState(1)
 
@@ -29,7 +27,7 @@ export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened, openedItem}
     useEffect(() => {
         dispatch(changeBattleCrate({crate: data, count: count}))
 
-        if(count !== 0) return;
+        if (count !== 0) return;
 
         dispatch(removeBattleCrate(data))
     }, [count])
@@ -38,9 +36,10 @@ export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened, openedItem}
 
     return (
         <div className="crate crate__start">
-            {(gameStep === "process" || gameStep === "waiting" || gameStep === "prepare") && isOpened && <div className="crate__lock">
-                <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt="Lock"/>
-            </div>}
+            {(gameStep === "process" || gameStep === "waiting" || gameStep === "prepare") && isOpened &&
+                <div className="crate__lock">
+                    <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt="Lock"/>
+                </div>}
 
             {gameStep === "start" && <div className="top">
                 <button className="minus" onClick={_ => setCount(prev => prev - 1)}>
@@ -59,7 +58,27 @@ export const CrateItem:React.FC<ICrateItemProps> = ({data, isOpened, openedItem}
                 </button>
             </div>}
             <div className="crate__image">
-                {isHaveItem ? <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt=""/> : <img src={getApiLink(`/${data.icon}`)} alt=""/>}
+
+                <div className={`openedItem ${isHaveItem && "opened"}`}>
+                    <div className="lock">
+                        <img src={getApiLink(`/${data.icon}`)} alt=""/>
+                    </div>
+                    {isHaveItem && <div className="line">
+                        <img src={lineToOpen} alt=""/>
+                    </div>}
+                    <div className="item">
+                        <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt=""/>
+                    </div>
+                </div>
+
+                {/*{isHaveItem ?*/}
+                {/*    <div className="openedItem">*/}
+                {/*        <div className="lock">*/}
+                {/*            <img src={getApiLink(`/${data.icon}`)} alt=""/>*/}
+                {/*        </div>*/}
+                {/*        <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt=""/>*/}
+                {/*    </div>*/}
+                {/*    : <img src={getApiLink(`/${data.icon}`)} alt=""/>}*/}
             </div>
             <div className="price">
                 <img src={coin} alt=""/>

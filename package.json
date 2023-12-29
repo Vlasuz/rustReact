@@ -1,7 +1,6 @@
 {
   "name": "rust",
   "version": "0.1.0",
-  "homepage": "https://vlasuz.github.io/rustReact",
   "private": true,
   "dependencies": {
     "@react-spring/web": "^9.7.3",

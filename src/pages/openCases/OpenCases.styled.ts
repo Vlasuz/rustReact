@@ -429,7 +429,7 @@ export const OpenCasesStyled = styled.section`
       display: flex;
       align-items: center;
       justify-content: center;
-      max-width: 295px;
+      //max-width: 295px;
       position: relative;
       overflow: hidden;
       grid-column-start: 1;

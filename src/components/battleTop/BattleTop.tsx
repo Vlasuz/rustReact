@@ -4,36 +4,38 @@ import {BattleTopStyled} from "./BattleTop.styled";
 import axios, {AxiosResponse} from "axios";
 import {getApiLink} from "../../functions/getApiLink";
 import {IWinLineItem} from "../../model";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 interface IBattleTopProps {
-    isClicked?: boolean
+    isFastActive?: boolean
 }
 
-export const BattleTop: React.FC<IBattleTopProps> = ({isClicked}) => {
+export const BattleTop: React.FC<IBattleTopProps> = ({isFastActive}) => {
 
-    const [winLinesList, setWinLinesList] = useState<IWinLineItem[]>([])
-    const [isLoad, setIsLoad] = useState(false)
-    const [newItems, setNewItems] = useState<IWinLineItem[]>([])
+    const [winLinesList, setWinLinesList] = useState<IWinLineItem[]>([]);
+    const [isLoadComplete, setIsLoadComplete] = useState(false);
+    const [newItem, setNewItem] = useState<IWinLineItem | undefined>();
 
     useEffect(() => {
-        if (isLoad) return
+        // if (isLoad) return
 
         axios.get(getApiLink("api/crate/items/win_line/")).then((response: AxiosResponse) => {
-            setWinLinesList(response.data)
+            setWinLinesList(response.data);
+            setTimeout(() => {
+                setIsLoadComplete(true);
+            }, 100)
 
             console.log(response.data)
 
             const ws: WebSocket = new WebSocket(getApiLink("ws/api/crate/win_line/", true))
 
-            ws.onopen = () => setIsLoad(true);
+            // ws.onopen = () => setIsLoad(true);
             ws.onmessage = (e: MessageEvent) => {
                 const data = JSON.parse(JSON.parse(e.data))
 
                 console.log(data.data)
 
-                // setTimeout(() => {
-                    setNewItems(prev => [...prev, data.data])
-                // }, 11000)
+                setNewItem(data.data)
             }
 
         }).catch(er => console.log("api/crate/items/win_line/", er))
@@ -41,32 +43,39 @@ export const BattleTop: React.FC<IBattleTopProps> = ({isClicked}) => {
     }, [])
 
     useEffect(() => {
-        if (!isClicked) return;
+        if (!newItem) return;
 
         setTimeout(() => {
-            const newArray = [...newItems, ...winLinesList]
+            setWinLinesList((prev: any) => [newItem, ...prev])
+            setNewItem(undefined)
+        }, isFastActive ? 1000 : 11000)
+    }, [newItem])
 
-            // setWinLinesList(newArray)
-            // setNewItems([])
-        }, 6000)
-    }, [isClicked])
+    console.log(winLinesList)
+
+    // TODO поменять item?.item?.price на item?.item?.rarity
 
     return (
         <BattleTopStyled className="history">
-            <ul>
-
-                {
-                    !!newItems.length && newItems.map((item: IWinLineItem, index) => <HistoryItem key={index}
-                                                                                                  isLoad={isLoad}
-                                                                                                  data={item}
-                                                                                                  type={item?.item?.rarity && +item?.item?.rarity < 999 ? "green" : "brown"}/>)
-                }
-                {
-                    winLinesList.map((item: IWinLineItem, index) => <HistoryItem key={index} isLoad={isLoad} data={item}
-                                                                                 type={+item.item.rarity < 999 ? "green" : "brown"}/>)
-                }
-
-            </ul>
+            <TransitionGroup>
+                <ul>
+                    {winLinesList.map((item: IWinLineItem) => (
+                        <CSSTransition
+                            key={item?.id}
+                            in={true}
+                            timeout={300}
+                            classNames={!isLoadComplete ? "sum-animation" : ""}
+                            unmountOnExit
+                        >
+                            <HistoryItem
+                                key={item?.id}
+                                data={item}
+                                type={+item?.item?.price < 50 ? "green" : "brown"}
+                            />
+                        </CSSTransition>
+                    ))}
+                </ul>
+            </TransitionGroup>
         </BattleTopStyled>
     )
 }

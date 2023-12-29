@@ -16,6 +16,7 @@ import {BattleMode1V1V1} from "../battleTypes/BattleMode1v1v1";
 import {getBearer} from "../../../../functions/getBearer";
 import axios from "axios";
 import getCookies from "../../../../functions/getCookie";
+import {log} from "util";
 
 interface IBattleItemProps {
     itemData: IBattleGame
@@ -44,6 +45,18 @@ export const BattleItem: React.FC<IBattleItemProps> = ({itemData}) => {
         "three_way": <BattleMode1V1V1 itemData={itemData}/>
     }
 
+    const gameRounds = itemData?.crates?.reduce((accumulator: number, currentValue: any) => {
+        const prSum = +accumulator + +currentValue?.count;
+        return prSum;
+    }, 0);
+    const gameRoundsOpened = itemData?.crates?.reduce((accumulator: number, currentValue: any) => {
+        const prSum = +accumulator + +currentValue?.opened;
+        return prSum;
+    }, 0);
+    console.log(gameRounds, gameRoundsOpened)
+
+    console.log(itemData)
+
     return (
         <BattleItemStyled className={`game_${itemData.status}`}>
             <NavLink to={`/battle/${itemData.id}`} className="type">
@@ -65,7 +78,7 @@ export const BattleItem: React.FC<IBattleItemProps> = ({itemData}) => {
                     </span>
                 </div>
                 <div className="button__status">
-                    14 Rounds
+                    {gameRoundsOpened ? `${gameRoundsOpened}/${gameRounds}` : `${gameRounds} Rounds`}
                 </div>
             </NavLink>
 

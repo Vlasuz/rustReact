@@ -361,9 +361,9 @@ export const BattleSingleStyled = styled.section`
           content: '';
           background: rgba(245, 173, 87, 0.50);
           width: 2px;
-          height: 120px;
+          height: 600px;
           position: absolute;
-          bottom: -120px
+          bottom: -600px
         }
 
         .crate__final:after {
@@ -423,6 +423,7 @@ export const BattleSingleStyled = styled.section`
           left: 0;
           width: 100%;
           height: 100%;
+          z-index: 1;
         }
       }
 
@@ -816,6 +817,7 @@ export const BattleSingleStyled = styled.section`
         position: absolute;
         bottom: 0;
         left: 0;
+        width: 100%;
       }
 
       .bottom__people {
@@ -950,11 +952,13 @@ export const BattleSingleStyled = styled.section`
             display: flex;
             align-items: center;
             justify-content: center;
+
             svg {
               position: absolute;
               opacity: 0;
               transition: all .3s ease;
             }
+
             img {
               position: absolute;
               left: 0;
@@ -986,6 +990,7 @@ export const BattleSingleStyled = styled.section`
               img {
                 opacity: 1;
               }
+
               svg {
                 opacity: 1;
               }
@@ -1065,6 +1070,75 @@ export const BattleSingleStyled = styled.section`
     stroke-width: 2;
     stroke-dashoffset: 0;
     stroke-dasharray: 370;
+  }
+
+
+  .openedItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .lock {
+      position: absolute;
+      height: 50px;
+      width: 50px;
+      z-index: 0;
+      transition: all .3s ease;
+    }
+    
+    .line {
+      position: absolute;
+      z-index: 0;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: calc(100% + 20px);
+    }
+
+    .item {
+      filter: blur(10px);
+      opacity: 0;
+      transition: all .3s ease;
+    }
+
+    &.opened {
+      .lock {
+        animation: openedLock .3s 2.2s forwards;
+      }
+      .line {
+        animation: openedLine .3s 2.2s forwards;
+      }
+      .item {
+        animation: openedItem .3s 2.2s forwards;
+      }
+    }
+  }
+
+  @keyframes openedLine {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes openedLock {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes openedItem {
+    from {
+      filter: blur(10px);
+      opacity: 0;
+    }
+    to {
+      filter: blur(0px);
+      opacity: 1;
+    }
   }
 
 
