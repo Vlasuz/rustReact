@@ -16,7 +16,7 @@ export const BattleRegular1v1:React.FC<IBattleRegular1v1Props> = () => {
     const position2 = webSocket?.battle?.players.filter((item: any) => item.position === 2)[0]
 
     return (
-        <div className={`bottom__people bottom__team-2v2`}>
+        <div className={`bottom__people bottom__team-1v1`}>
             <BattlePlayer color={"blue"} position={1} direction={"left"} player={position1} />
             <strong>
                 VS

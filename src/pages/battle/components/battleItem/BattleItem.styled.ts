@@ -7,7 +7,7 @@ export const BattleItemStyled = styled.li`
   height: 110px;
   padding-right: 15px;
   display: grid;
-  grid-template-columns: 130px 370px 260px 1fr;
+  grid-template-columns: 130px 1fr 260px 1fr;
   align-items: center;
   margin-bottom: 10px;
 
@@ -26,12 +26,30 @@ export const BattleItemStyled = styled.li`
 
     img {
       margin-right: 10px;
+      width: 20px;
     }
 
     span {
       color: var(--Orange, #F5AD57);
       font-size: 12px;
       font-weight: 700;
+    }
+    
+    
+    &.two_p,
+    &.three_p,
+    &.four_p {
+      background: rgba(146, 193, 69, 0.10);
+      span {
+        color: #92C145;
+      }
+    }
+    
+    &.two_v_two {
+      background: rgba(85, 98, 221, 0.10);
+      span {
+        color: #5562DD;
+      }
     }
   }
 

@@ -46,7 +46,7 @@ export const Aside: React.FC<IAsideProps> = () => {
         } else if (window.location.href.includes('open-cases')) {
             handleChangePage("", {slug: "CASES", title: "Кейсы"})
         } else if (window.location.href.includes('battle')) {
-            handleChangePage("", {slug: "CASES", title: "Баттл"})
+            handleChangePage("", {slug: "CASES", title: "Баттл"}, true)
         }
     }, [])
 
@@ -65,7 +65,7 @@ export const Aside: React.FC<IAsideProps> = () => {
                     Кейсы
                 </span>
             </NavLink>
-            <NavLink to={'/battle'} onClick={_ => handleChangePage("sound12", {slug: "CASES", title: "Баттл"})} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
+            <NavLink to={'/battle'} onClick={_ => handleChangePage("sound12", {slug: "CASES", title: "Баттл"}, true)} className={({isActive}) => "aside__fight" + (isActive ? " aside__fight_active" : "")}>
                 <img src={battle} alt="Fight" />
                 <span className="absolute-span">
                     Баттл

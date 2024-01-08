@@ -18,6 +18,10 @@ export const BattleStyled = styled.section`
     margin-left: 10px;
   }
   
+  .player__photo {
+    display: flex;
+  }
+  
   .create-battle {
     border-radius: 10px;
     background: #202232;
@@ -59,6 +63,12 @@ export const BattleStyled = styled.section`
     padding: 10px;
     margin-top: 14px;
     height: calc(100% - 104px);
+  }
+  
+  .players {
+    b:last-child {
+      display: none;
+    }
   }
 
   @media screen and (max-width: 1250px) {

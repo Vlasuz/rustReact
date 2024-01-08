@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { EmptyInventoryStyle } from './emptyInventory.styled'
 import { setTrigger, setRightBlock } from '../../../../redux/toolkitSlice'
+import {Translate} from "../../../translate/Translate";
 
 interface IEmptyInventoryProps {
 
@@ -26,9 +27,15 @@ export const EmptyInventory: React.FC<IEmptyInventoryProps> = () => {
 
     return (
         <EmptyInventoryStyle>
-            <h3>Инвентарь пуст</h3>
-            <p>Купите предметы в магазине или пополните через свой инвентарь в стиме</p>
-            <a href="#" onClick={e => {handleChange(e)}}>В магазин</a>
+            <h3>
+                <Translate>storage_empty_title</Translate>
+            </h3>
+            <p>
+                <Translate>storage_empty_text</Translate>
+            </p>
+            <a href="#" onClick={e => {handleChange(e)}}>
+                <Translate>storage_empty_button</Translate>
+            </a>
         </EmptyInventoryStyle>
     )
 }

@@ -28,6 +28,7 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
     const battleCrates: any = useSelector((state: any) => state.toolkit.battleCrates)
 
     const [finalPriceForBattle, setFinalPriceForBattle] = useState(0)
+    const [isClickedCreate, setIsClickedCreate] = useState(false)
 
     useEffect(() => {
         const sum = battleCrates.length && battleCrates.length > 1 ? battleCrates?.reduce(function (previousValue: any, currentValue: any, index: any, array: any) {
@@ -52,6 +53,8 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
     }
 
     const handleCreateGame = () => {
+        setIsClickedCreate(true)
+
         const requestData = {
             "mode": gameTypes[gameType],
             "crates": battleCrates.map((item: any) => {
@@ -119,7 +122,7 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
                 </ul>
             </div>
 
-            <button disabled={!battleCrates.length} onClick={handleCreateGame} className="create-game__button">
+            <button disabled={!battleCrates.length || isClickedCreate} onClick={handleCreateGame} className="create-game__button">
                 <span>Начать игру</span>
                 <img src={coin} alt=""/>
                 <p>

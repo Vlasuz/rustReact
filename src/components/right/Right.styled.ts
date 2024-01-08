@@ -109,11 +109,10 @@ export const RightStyled = styled.section`
   }
 
   .postamat {
-    padding-top: 24px;
     background: #202232;
     padding: 15px;
     height: 100%;
-    border-radius: 0 0px 10px 10px;
+    border-radius: 10px;
 
     opacity: 0;
 
@@ -404,6 +403,20 @@ export const RightStyled = styled.section`
     }
   }
 
+  &.section-right_chat {
+    border-radius: 10px 0 0 10px;
+    
+    .section-right__switcher,
+    .section-right__item,
+    .section-right__item:before,
+    .section-right__item:after {
+      -webkit-border-radius: 10px 0 10px 10px;-moz-border-radius: 10px 0 10px 10px;border-radius: 10px 0 10px 10px;
+    }
+    .section-right__top {
+      background: linear-gradient(to left, #202232 85%, transparent);
+    }
+  }
+  
   .section-right {
 
     &__rules {
@@ -1203,8 +1216,9 @@ export const RightStyled = styled.section`
     &__top {
       display: flex;
       align-items: center;
-      background: #202232;
+      //background: #202232;
       margin: 0 -4px;
+      background: linear-gradient(to right, #202232 85%, transparent);
 
       .top__item {
         width: 100%;
@@ -1311,6 +1325,7 @@ export const RightStyled = styled.section`
       height: 100%;
       background: #202232;
       transition: all .3s ease;
+      border-radius: 0 10px 10px 0;
     }
 
     &__item {

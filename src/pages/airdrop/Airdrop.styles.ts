@@ -307,6 +307,7 @@ export const AirdropStyled = styled.section`
     width: 100%;
     height: 100%;
     min-width: 1500px;
+    max-width: 1500px;
 
     cursor: grab;
 
@@ -634,6 +635,18 @@ export const AirdropStyled = styled.section`
       /*width: 100%;*/
       opacity: 1;
     }
+  }
+  
+  
+  .scrolling {
+    background: #13404d;
+  }
+  .moving {
+    padding: 1000px;
+    margin: -1000px;
+  }
+  .transform-scale {
+    position: relative;
   }
   
   

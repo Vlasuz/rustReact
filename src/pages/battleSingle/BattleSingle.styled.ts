@@ -227,45 +227,45 @@ export const BattleSingleStyled = styled.section`
 
       &.area-2p,
       &.area-1v1 {
-        .area__line:nth-child(1) {
+        .area__line:first-child {
           margin-left: 50px;
         }
 
-        .area__line:nth-child(2) {
-          display: none;
-        }
+        //.area__line:nth-child(2) {
+        //  display: none;
+        //}
+        //
+        //.area__line:nth-child(3) {
+        //  display: none;
+        //}
 
-        .area__line:nth-child(3) {
-          display: none;
-        }
-
-        .area__line:nth-child(4) {
+        .area__line:last-child {
           margin-right: 50px;
         }
       }
 
       &.area-3p,
       &.area-1v1v1 {
-        .area__line:nth-child(1) {
+        .area__line:first-child {
           margin-left: 50px;
         }
 
-        .area__line:nth-child(2) {
-          display: none;
-        }
+        //.area__line:nth-child(2) {
+        //  display: none;
+        //}
 
-        .area__line:nth-child(4) {
+        .area__line:last-child {
           margin-right: 50px;
         }
       }
 
       &.area-4p,
       &.area-4way {
-        .area__line:nth-child(1) {
+        .area__line:first-child {
           margin-left: 50px;
         }
 
-        .area__line:nth-child(4) {
+        .area__line:last-child {
           margin-right: 50px;
         }
       }

@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react'
 import battleAreaBottom from "../../../assets/images/battleAreaBottom.svg";
-import userIcon from './../../../assets/images/user2.png'
-import {Loading} from "../../../components/loading/Loading";
-import {LoadingStyled} from "../../../components/loading/loading.styled";
-import {IBattleCreate} from "../../../model";
 import {BattleTeam2v2} from "./BattleTeam2v2";
 import {BattleRegular1v1} from "./BattleRegular1v1";
 import {BattleRegular1v1v1} from "./BattleRegular1v1v1";

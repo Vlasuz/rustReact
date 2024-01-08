@@ -72,7 +72,7 @@ export const Right: React.FC<IRightProps> = () => {
     }, [trigger])
 
     return (
-        <RightStyled>
+        <RightStyled className={`${blockValue.body === 'chat' && "section-right_chat"}`}>
             <div className="section-right__top">
                 <button onClick={_ => handleSwitch('no_chat')}
                         className={"top__item" + (blockValue.header === 'no_chat' ? ' top__item_active' : '')}>
@@ -91,7 +91,7 @@ export const Right: React.FC<IRightProps> = () => {
                     </div>
                 </button>
             </div>
-            <div className="section-right__switcher">
+            <div className={`section-right__switcher`}>
                 {blockValue.body === 'no_chat' && rightBlock[activeRightBlock.slug]}
                 {blockValue.body === 'chat' && <Chat
                     className={"section-right__item" + (blockValue.block === 'chat' ? ' section-right_active' : '') + isHideBlock}/>}

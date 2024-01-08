@@ -1,17 +1,15 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
-import {CrateItem} from "./CrateItem";
-import CrateBig from "../../../assets/images/CrateBig.svg";
 import {animated, useSpring} from "@react-spring/web";
 import {useDrag} from "react-use-gesture";
-import {IBattleCreate, ICrate, ICrateItem} from "../../../model";
+import {ICrate} from "../../../model";
 
 import coins from "./../../../assets/images/header__coins.svg"
 import {GameSocket, GameState} from "../BattleSingle";
-import {useSelector} from 'react-redux';
-import {Loader} from "../../../components/loader/Loader";
 import {LoadingStyled} from "../../../components/loading/loading.styled";
 import {BattleAreaTopBig} from "./BattleAreaTopBig";
-import { CSSTransition } from 'react-transition-group';
+import {CSSTransition} from 'react-transition-group';
+import {BattleAreaLine} from "./BattleAreaLine";
+import {BattleAreaBottom} from "./BattleAreaBottom";
 
 interface IBattleAreaProps {
     blockArea: any
@@ -30,8 +28,6 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     const webSocket: any = useContext(GameSocket)
     const gameStep = useContext(GameState)
-
-    const battleCrates: any = useSelector((state: any) => state.toolkit.battleCrates)
 
     const bindDrag = useDrag(({offset}) => {
 
@@ -61,7 +57,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
     const [coodYnew, setCoodYnew] = useState(100)
 
     const [isGoCalc, setIsGoCalc] = useState(false)
-    const [isGoCalcWinner, setIsGoCalcWinner] = useState(false)
+    const [blocksOpen, setBlocksOpen] = useState(0)
 
     useEffect(() => {
 
@@ -78,22 +74,31 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
         } else if (webSocket?.battle?.status === "end") {
 
+            // if(webSocket?.timer !== 0) {
+            //     setIsCanDrag(true)
+            //     setIsGoCalc(true)
+            //     setBlocksOpen(3)
+            //     return;
+            // }
+
             setIsCanDrag(false)
             setCoodYnew(prev => prev -= 140)
 
 
             setTimeout(() => {
                 setCoodYnew(prev => prev -= 200)
+                setBlocksOpen(1)
 
                 setTimeout(() => {
                     setCoodYnew(prev => prev -= 180)
+                    setBlocksOpen(2)
 
                     setIsGoCalc(true)
 
                     setTimeout(() => {
                         setCoodYnew(prev => prev -= 50)
+                        setBlocksOpen(3)
 
-                        setIsGoCalcWinner(true)
                         setIsCanDrag(true)
                     }, 1500)
                 }, 1500)
@@ -141,22 +146,21 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     }, [wsMessage])
 
-    const position1 = webSocket?.battle?.players.filter((item: any) => item.position === 1)[0]
-    const position2 = webSocket?.battle?.players.filter((item: any) => item.position === 2)[0]
+    // const position1 = webSocket?.battle?.players.filter((item: any) => item.position === 1)[0]
+    // const position2 = webSocket?.battle?.players.filter((item: any) => item.position === 2)[0]
+    // const position3 = webSocket?.battle?.players.filter((item: any) => item.position === 3)[0]
+    // const position4 = webSocket?.battle?.players.filter((item: any) => item.position === 4)[0]
 
 
-    const winnerPosition1v1 = webSocket?.battle?.winners.length && gameType === "1v1" && position1?.user?.id === webSocket?.battle?.winners[0]?.user?.id ? "general-block-end_left-side" : "general-block-end_right-side"
-    const isWinnerPosition1In1v1 = webSocket?.battle?.winners.length && gameType === "1v1" && position1?.user?.id === webSocket?.battle?.winners[0]?.user?.id
-
-    console.log(allGameCrates)
-    console.log(webSocket?.battle)
-
-    const [currentSum, setCurrentSum] = useState(0);
+    const [finalAmount, setFinalAmount] = useState(0)
 
     useEffect(() => {
         if(!isGoCalc) return ;
 
-        const targetSum = position1.win + position2.win; // Ваша целевая сумма
+        const targetSum = webSocket?.battle?.players.reduce((current: any, player: any) => {
+            current += player.win
+            return current
+        }, 0); // Ваша целевая сумма
         const animationDuration = 1000; // Время анимации в миллисекундах
 
         const start = Date.now();
@@ -165,7 +169,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
         const animationInterval = setInterval(() => {
             const elapsedTime = Date.now() - start;
             const newSum = Math.min(increment * elapsedTime, targetSum);
-            setCurrentSum(newSum);
+            setFinalAmount(newSum);
 
             if (newSum === targetSum) {
                 clearInterval(animationInterval);
@@ -176,28 +180,16 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
     }, [isGoCalc]);
 
 
-    const [currentSumWinner, setCurrentSumWinner] = useState(0);
-    useEffect(() => {
-        if(!isGoCalcWinner) return ;
+    const typeModes: { [key: string]: number } = {
+        "two_way": 2,
+        "three_way": 3,
+        "four_way": 4,
+        "two_v_two": 4,
+        "two_p": 2,
+        "three_p": 3,
+        "four_p": 4,
+    }
 
-        const targetSum = position1?.win + position2?.win; // Ваша целевая сумма
-        const animationDuration = 1000; // Время анимации в миллисекундах
-
-        const start = Date.now();
-        const increment = targetSum / animationDuration;
-
-        const animationInterval = setInterval(() => {
-            const elapsedTime = Date.now() - start;
-            const newSum = Math.min(increment * elapsedTime, targetSum);
-            setCurrentSumWinner(newSum);
-
-            if (newSum === targetSum) {
-                clearInterval(animationInterval);
-            }
-        }, 16); // Примерно 60 кадров в секунду
-
-        return () => clearInterval(animationInterval);
-    }, [isGoCalcWinner]);
 
     return (
         <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()}
@@ -216,163 +208,13 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
             </div>
 
             <div className={`general-block area-${gameType}`}>
-                <div className="area__line">
 
-                    {
-                        allGameCrates.map((item: any, index: number) => <CrateItem data={item}
-                                                                                   openedItem={position1.items[index]}
-                                                                                   isOpened={!(index < openedCount)}
-                                                                                   key={item.id + index}/>)
-                    }
+                {
+                    Array.from({ length: typeModes[webSocket?.battle?.mode] }, (_, index) => index + 1)?.map(item =>
+                        <BattleAreaLine blocksOpen={blocksOpen} openedCount={openedCount} position={webSocket?.battle?.players.filter((plr: any) => plr.position === item)[0]}/>
+                    )
+                }
 
-                    {
-                        gameStep === "start" && battleCrates.map((item: any, index: number) => <CrateItem
-                            data={item.crate}
-                            isOpened={false}
-                            key={item.id + index}/>)
-                    }
-
-                    {gameStep === "start" && <div className="crate crate__empty">
-                        <img src={CrateBig} alt=""/>
-                    </div>}
-                    <div className="crate crate__final">
-
-                        {(gameStep === "calculate" || gameStep === "end") ? <>
-                            <span>
-                                Выбивает
-                            </span>
-                                <div className="coins">
-                                    <img src={coins} alt=""/>
-                                    <span>
-                                        {
-                                            position1.win
-                                        }
-                                    </span>
-                                </div>
-                            </> :
-                            <div className="loading">
-                                <LoadingStyled className="load">
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                </LoadingStyled>
-                                <p>Ожидание</p>
-                            </div>
-                        }
-
-                    </div>
-                </div>
-                <div className="area__line">
-                    {
-                        allGameCrates?.map((item: any, index: number) => <CrateItem data={item}
-                                                                                    openedItem={position2?.items[index]}
-                                                                                    isOpened={!(index < openedCount)}
-                                                                                    key={item?.id + index}/>)
-                    }
-                    {gameStep === "start" && <div className="crate crate__empty">
-                        <img src={CrateBig} alt=""/>
-                    </div>}
-                    <div className="crate crate__final">
-
-                        {(gameStep === "calculate" || gameStep === "end") ? <>
-                            <span>
-                                Выбивает
-                            </span>
-                                <div className="coins">
-                                    <img src={coins} alt=""/>
-                                    <span>
-                                        {
-                                            position2.win
-                                        }
-                                    </span>
-                                </div>
-                            </> :
-                            <div className="loading">
-                                <LoadingStyled className="load">
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                </LoadingStyled>
-                                <p>Ожидание</p>
-                            </div>
-                        }
-
-                    </div>
-                </div>
-                <div className="area__line">
-                    {
-                        allGameCrates.map((item: any, index: number) => <CrateItem data={item}
-                                                                                   openedItem={position2?.items[index]}
-                                                                                   isOpened={!(index < openedCount)}
-                                                                                   key={item.id + index}/>)
-                    }
-                    {gameStep === "start" && <div className="crate crate__empty">
-                        <img src={CrateBig} alt=""/>
-                    </div>}
-                    <div className="crate crate__final">
-
-                        {(gameStep === "calculate" || gameStep === "end") ? <>
-                            <span>
-                                Выбивает
-                            </span>
-                                <div className="coins">
-                                    <img src={coins} alt=""/>
-                                    <span>
-                                        {
-                                            position2.win
-                                        }
-                                    </span>
-                                </div>
-                            </> :
-                            <div className="loading">
-                                <LoadingStyled className="load">
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                </LoadingStyled>
-                                <p>Ожидание</p>
-                            </div>
-                        }
-
-                    </div>
-                </div>
-                <div className="area__line">
-                    {
-                        allGameCrates.map((item: any, index: number) => <CrateItem data={item}
-                                                                                   openedItem={position2?.items[index]}
-                                                                                   isOpened={!(index < openedCount)}
-                                                                                   key={item.id + index}/>)
-                    }
-                    {gameStep === "start" && <div className="crate crate__empty">
-                        <img src={CrateBig} alt=""/>
-                    </div>}
-                    <div className="crate crate__final">
-
-                        {(gameStep === "calculate" || gameStep === "end") ? <>
-                            <span>
-                                Выбивает
-                            </span>
-                                <div className="coins">
-                                    <img src={coins} alt=""/>
-                                    <span>
-                                        {
-                                            position2.win
-                                        }
-                                    </span>
-                                </div>
-                            </> :
-                            <div className="loading">
-                                <LoadingStyled className="load">
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                    <div className="line"/>
-                                </LoadingStyled>
-                                <p>Ожидание</p>
-                            </div>
-                        }
-
-                    </div>
-                </div>
             </div>
 
             <div className={`lines-for-crate lines-for-crate-end area-${gameType}`}>
@@ -385,9 +227,9 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                 </div>
             </div>
 
-            <div className={`crate crate__end ${gameStep === "end" && "crate__end_bottom"}`}>
+            <div className={`crate crate__end ${(gameStep === "end" && blocksOpen >= 3) && "crate__end_bottom"}`}>
 
-                {gameStep === "end" ? <>
+                {(gameStep === "end" && blocksOpen >= 2) ? <>
                             <span>
                                 Выбивает
                             </span>
@@ -402,7 +244,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                             >
                                 <span>
                                     {
-                                        currentSum.toFixed(0)
+                                        finalAmount.toFixed(0)
                                     }
                                 </span>
                             </CSSTransition>
@@ -420,105 +262,8 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
             </div>
 
-            {/*general-block-end_all-side*/}
-            {/*general-block-end_left-side*/}
-            {/*general-block-end_right-side*/}
-            {/*general-block-end_left-half-side*/}
-            {/*general-block-end_right-half-side*/}
 
-
-            {gameStep === "end" &&
-                <div
-                    className={`general-block ${winnerPosition1v1} general-block-end area-${gameType}`}>
-                    <div className={`area__line ${!isWinnerPosition1In1v1 && "area__line_disabled"}`}>
-                        <div className="crate crate__final">
-                        <span>
-                            Выбивает
-                        </span>
-                            <div className="coins">
-                                <img src={coins} alt=""/>
-                                <CSSTransition
-                                in={true} // Устанавливаем в true, чтобы активировать анимацию при появлении элемента
-                                timeout={1000} // Время анимации в миллисекундах
-                                classNames="sum-animation" // Название класса для анимации
-                                unmountOnExit
-                            >
-                                <span>
-                                    {
-                                        currentSumWinner.toFixed(0)
-                                    }
-                                </span>
-                            </CSSTransition>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={`area__line ${!isWinnerPosition1In1v1 && "area__line_disabled"}`}>
-                        <div className="crate crate__final">
-                        <span>
-                            Выбивает
-                        </span>
-                            <div className="coins">
-                                <img src={coins} alt=""/>
-                                <CSSTransition
-                                in={true} // Устанавливаем в true, чтобы активировать анимацию при появлении элемента
-                                timeout={1000} // Время анимации в миллисекундах
-                                classNames="sum-animation" // Название класса для анимации
-                                unmountOnExit
-                            >
-                                <span>
-                                {
-                                    currentSumWinner.toFixed(0)
-                                }
-                            </span>
-                            </CSSTransition>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={`area__line ${isWinnerPosition1In1v1 && "area__line_disabled"}`}>
-                        <div className="crate crate__final">
-                        <span>
-                            Выбивает
-                        </span>
-                            <div className="coins">
-                                <img src={coins} alt=""/>
-                                <CSSTransition
-                                in={true} // Устанавливаем в true, чтобы активировать анимацию при появлении элемента
-                                timeout={1000} // Время анимации в миллисекундах
-                                classNames="sum-animation" // Название класса для анимации
-                                unmountOnExit
-                            >
-                                <span>
-                                {
-                                    currentSumWinner.toFixed(0)
-                                }
-                            </span>
-                            </CSSTransition>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={`area__line ${isWinnerPosition1In1v1 && "area__line_disabled"}`}>
-                        <div className="crate crate__final">
-                        <span>
-                            Выбивает
-                        </span>
-                            <div className="coins">
-                                <img src={coins} alt=""/>
-                                <CSSTransition
-                                in={true} // Устанавливаем в true, чтобы активировать анимацию при появлении элемента
-                                timeout={1000} // Время анимации в миллисекундах
-                                classNames="sum-animation" // Название класса для анимации
-                                unmountOnExit
-                            >
-                                <span>
-                                {
-                                    currentSumWinner.toFixed(0)
-                                }
-                            </span>
-                            </CSSTransition>
-                            </div>
-                        </div>
-                    </div>
-                </div>}
+            {(gameStep === "end" && blocksOpen >= 3) && <BattleAreaBottom gameType={gameType} blocksOpen={blocksOpen}/>}
 
         </animated.div>
     )

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
-import userIcon from "../../../assets/images/user2.png";
-import {LoadingStyled} from "../../../components/loading/loading.styled";
+import React, {useContext} from 'react'
+import {BattlePlayer} from "../../../components/battlePlayer/BattlePlayer";
+import {GameSocket} from "../BattleSingle";
 
 interface IBattleGroup3pProps {
 
@@ -8,34 +8,17 @@ interface IBattleGroup3pProps {
 
 export const BattleGroup3p:React.FC<IBattleGroup3pProps> = () => {
 
+    const webSocket: any = useContext(GameSocket)
+
+    const position1 = webSocket?.battle?.players.filter((item: any) => item.position === 1)[0]
+    const position2 = webSocket?.battle?.players.filter((item: any) => item.position === 2)[0]
+    const position3 = webSocket?.battle?.players.filter((item: any) => item.position === 3)[0]
+
     return (
-        <div className={`bottom__people bottom__group-2p`}>
-            <div className="person person_blue person_left">
-                <div className="user__photo">
-                    <img src={userIcon} alt="user"/>
-                </div>
-                <span>saitama</span>
-            </div>
-            <div className="person person_blue person_left person_loading">
-                <div className="user__photo">
-                    <LoadingStyled className="load">
-                        <div className="line" />
-                        <div className="line" />
-                        <div className="line" />
-                    </LoadingStyled>
-                </div>
-                <span>...</span>
-            </div>
-            <div className="person person_blue person_left person_loading">
-                <div className="user__photo">
-                    <LoadingStyled className="load">
-                        <div className="line" />
-                        <div className="line" />
-                        <div className="line" />
-                    </LoadingStyled>
-                </div>
-                <span>...</span>
-            </div>
+        <div className={`bottom__people bottom__2p`}>
+            <BattlePlayer color={"blue"} position={1} direction={"left"} player={position1} />
+            <BattlePlayer color={"blue"} position={2} direction={"left"} player={position2} />
+            <BattlePlayer color={"blue"} position={3} direction={"left"} player={position3} />
         </div>
     )
 }

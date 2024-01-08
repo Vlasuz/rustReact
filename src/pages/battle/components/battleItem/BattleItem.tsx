@@ -1,22 +1,19 @@
 import React, {useEffect} from 'react'
 import {BattleItemStyled} from "./BattleItem.styled";
-import userPhoto from './../../../../assets/images/user2.png'
 import coins from './../../../../assets/images/header__coins.svg'
-import caseIcon from './../../../../assets/images/case-magma.png'
-import battleIconFight from './../../../../assets/images/battleIconFight.svg'
-import {Loading} from "../../../../components/loading/Loading";
-import {LoadingStyled} from "../../../../components/loading/loading.styled";
-import {useSelector} from "react-redux";
+import swordsIcon from './../../../../assets/images/battleIconFight.svg'
+import peopleBlue from "../../../../assets/images/peopleBlue.svg";
+import boxGreen from "../../../../assets/images/boxGreen.svg";
 import {IBattleGame, IUser} from "../../../../model";
 import {NavLink} from "react-router-dom";
 import {getApiLink} from '../../../../functions/getApiLink';
 import {BattleMode1V1} from "../battleTypes/BattleMode1v1";
 import { BattleMode2V2 } from '../battleTypes/BattleMode2v2';
 import {BattleMode1V1V1} from "../battleTypes/BattleMode1v1v1";
-import {getBearer} from "../../../../functions/getBearer";
-import axios from "axios";
-import getCookies from "../../../../functions/getCookie";
-import {log} from "util";
+import {BattleMode4Way} from "../battleTypes/BattleMode4way";
+import {BattleMode2P} from "../battleTypes/BattleMode2p";
+import {BattleMode3P} from "../battleTypes/BattleMode3p";
+import {BattleMode4P} from "../battleTypes/BattleMode4p";
 
 interface IBattleItemProps {
     itemData: IBattleGame
@@ -30,19 +27,44 @@ export const BattleItem: React.FC<IBattleItemProps> = ({itemData}) => {
     }, 0);
 
     const gameTypesReverse: any = {
-        "two_way": "1v1",
-        "three_way": "1v1v1",
-        "four_way": "4way",
-        "two_v_two": "2v2",
-        "two_p": "2p",
-        "three_p": "3p",
-        "four_p": "4p",
+        "two_way": {
+            title: "1v1",
+            icon: swordsIcon,
+        },
+        "three_way": {
+            title: "1v1v1",
+            icon: swordsIcon,
+        },
+        "four_way": {
+            title: "4way",
+            icon: swordsIcon,
+        },
+        "two_v_two": {
+            title: "2v2",
+            icon: peopleBlue,
+        },
+        "two_p": {
+            title: "2p",
+            icon: boxGreen,
+        },
+        "three_p": {
+            title: "3p",
+            icon: boxGreen,
+        },
+        "four_p": {
+            title: "4p",
+            icon: boxGreen,
+        },
     }
 
     const gameMode: any = {
         "two_way": <BattleMode1V1 itemData={itemData}/>,
+        "three_way": <BattleMode1V1V1 itemData={itemData}/>,
+        "four_way": <BattleMode4Way itemData={itemData}/>,
         "two_v_two": <BattleMode2V2 itemData={itemData}/>,
-        "three_way": <BattleMode1V1V1 itemData={itemData}/>
+        "two_p": <BattleMode2P itemData={itemData}/>,
+        "three_p": <BattleMode3P itemData={itemData}/>,
+        "four_p": <BattleMode4P itemData={itemData}/>,
     }
 
     const gameRounds = itemData?.crates?.reduce((accumulator: number, currentValue: any) => {
@@ -53,16 +75,13 @@ export const BattleItem: React.FC<IBattleItemProps> = ({itemData}) => {
         const prSum = +accumulator + +currentValue?.opened;
         return prSum;
     }, 0);
-    console.log(gameRounds, gameRoundsOpened)
-
-    console.log(itemData)
 
     return (
         <BattleItemStyled className={`game_${itemData.status}`}>
-            <NavLink to={`/battle/${itemData.id}`} className="type">
-                <img src={battleIconFight} alt="Icon"/>
+            <NavLink to={`/battle/${itemData.id}`} className={`type ${itemData.mode}`}>
+                <img src={gameTypesReverse[itemData.mode].icon} alt="Icon"/>
                 <span>
-                    {gameTypesReverse[itemData.mode]} Battle
+                    {gameTypesReverse[itemData.mode].title} Battle
                 </span>
             </NavLink>
 
