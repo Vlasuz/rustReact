@@ -34,7 +34,6 @@ export const BattleBottom:React.FC<IBattleBottomProps> = ({gameType}) => {
                 playersType[`${gameType}`]
             }
 
-            {/*<BattleRegular1v1/>*/}
         </div>
     )
 }

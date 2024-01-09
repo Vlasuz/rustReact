@@ -25,15 +25,11 @@ export const BattleTop: React.FC<IBattleTopProps> = ({isFastActive}) => {
                 setIsLoadComplete(true);
             }, 100)
 
-            console.log(response.data)
-
             const ws: WebSocket = new WebSocket(getApiLink("ws/api/crate/win_line/", true))
 
             // ws.onopen = () => setIsLoad(true);
             ws.onmessage = (e: MessageEvent) => {
                 const data = JSON.parse(JSON.parse(e.data))
-
-                console.log(data.data)
 
                 setNewItem(data.data)
             }
@@ -50,8 +46,6 @@ export const BattleTop: React.FC<IBattleTopProps> = ({isFastActive}) => {
             setNewItem(undefined)
         }, isFastActive ? 1000 : 11000)
     }, [newItem])
-
-    console.log(winLinesList)
 
     // TODO поменять item?.item?.price на item?.item?.rarity
 

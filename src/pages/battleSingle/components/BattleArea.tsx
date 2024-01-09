@@ -10,6 +10,9 @@ import {BattleAreaTopBig} from "./BattleAreaTopBig";
 import {CSSTransition} from 'react-transition-group';
 import {BattleAreaLine} from "./BattleAreaLine";
 import {BattleAreaBottom} from "./BattleAreaBottom";
+import {CrateItem} from "./CrateItem";
+import CrateBig from "../../../assets/images/CrateBig.svg";
+import {useSelector} from 'react-redux';
 
 interface IBattleAreaProps {
     blockArea: any
@@ -19,7 +22,7 @@ interface IBattleAreaProps {
 
 export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, setGameStep}) => {
 
-    const [{x, y}, api] = useSpring(() => ({x: 0, y: 0,}))
+    const [{x, y}, api] = useSpring(() => ({x: 0, y: 105,}))
 
     const blockCenter: any = useRef(null)
 
@@ -127,6 +130,8 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     const [allGameCrates, setAllGameCrates] = useState<ICrate[]>([])
 
+    const battleCrates: any = useSelector((state: any) => state.toolkit.battleCrates)
+
     useEffect(() => {
         if (!wsMessage?.battle?.crates) return;
 
@@ -146,16 +151,11 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     }, [wsMessage])
 
-    // const position1 = webSocket?.battle?.players.filter((item: any) => item.position === 1)[0]
-    // const position2 = webSocket?.battle?.players.filter((item: any) => item.position === 2)[0]
-    // const position3 = webSocket?.battle?.players.filter((item: any) => item.position === 3)[0]
-    // const position4 = webSocket?.battle?.players.filter((item: any) => item.position === 4)[0]
-
 
     const [finalAmount, setFinalAmount] = useState(0)
 
     useEffect(() => {
-        if(!isGoCalc) return ;
+        if (!isGoCalc) return;
 
         const targetSum = webSocket?.battle?.players.reduce((current: any, player: any) => {
             current += player.win
@@ -210,10 +210,24 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
             <div className={`general-block area-${gameType}`}>
 
                 {
-                    Array.from({ length: typeModes[webSocket?.battle?.mode] }, (_, index) => index + 1)?.map(item =>
-                        <BattleAreaLine blocksOpen={blocksOpen} openedCount={openedCount} position={webSocket?.battle?.players.filter((plr: any) => plr.position === item)[0]}/>
+                    Array.from({length: typeModes[webSocket?.battle?.mode]}, (_, index) => index + 1)?.map(item =>
+                        <BattleAreaLine blocksOpen={blocksOpen} openedCount={openedCount}
+                                        position={webSocket?.battle?.players.filter((plr: any) => plr.position === item)[0]}/>
                     )
                 }
+
+                {gameStep === "start" && <div className="area__line">
+                    {
+                        battleCrates.map((item: any, index: number) => <CrateItem
+                            data={item.crate}
+                            isOpened={false}
+                            key={item.id + index}/>)
+                    }
+
+                    <div className="crate crate__empty">
+                        <img src={CrateBig} alt=""/>
+                    </div>
+                </div>}
 
             </div>
 

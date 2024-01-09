@@ -7,6 +7,8 @@ import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
 import {IBattleGame} from "../../model";
 import {getWsLink} from "../../functions/getWsLink";
+import {setTrigger} from "../../redux/toolkitSlice";
+import { useDispatch } from 'react-redux';
 
 interface IBattleProps {
 
@@ -47,12 +49,18 @@ export const Battle: React.FC<IBattleProps> = () => {
         })
     }, [])
 
+    const dispatch = useDispatch()
+
+    const navigateToCreateBattle = () => {
+        dispatch(setTrigger("CHANGE_RIGHT_BLOCK"))
+    }
+
     return (
         <BattleStyled>
             <div className="top">
                 <BattleTop/>
                 <div className="create-battle">
-                    <NavLink to={"/battle/create-battle"}>
+                    <NavLink onClick={navigateToCreateBattle} to={"/battle/create-battle"}>
                         Создать игру
                     </NavLink>
                 </div>

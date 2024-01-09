@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useRef, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {Header} from './components/header/Header';
 import {AppStyled} from './App.styled';
 import {Container} from './components/container/Container';
@@ -45,7 +45,6 @@ import {getWsLink} from "./functions/getWsLink";
 // TODO Сделать так, если нажимаешь вызвать бота, то что бы вызывался бот а не ты начинал играть сам с собой (ПОТОМ)
 // TODO Починить таймер
 // TODO Не показывать цену продукта пока не прокрутится кейс
-// TODO Починить создания батлов
 
 const wsAirdrop = new WebSocket(getWsLink("ws/api/airdrop/"))
 
@@ -60,7 +59,6 @@ function App() {
     const dispatch = useDispatch()
     const {popup} = usePopups()
     const isTechnicalTime = useSelector((state: any) => state.toolkit.siteSettings)?.technical_break
-    const userData = useSelector((state: any) => state.toolkit.user)
 
     const [airdropWsMessage, setAirdropWsMessage] = useState({})
 

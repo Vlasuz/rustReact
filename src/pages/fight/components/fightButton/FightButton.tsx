@@ -29,10 +29,13 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
         )
     }
 
-    const userLooser =
-        <div className="looser">
-            <img src={looser} alt="Ico"/>
-        </div>
+    const userLooser = () => {
+        return (
+            <div className="looser">
+                <img src={looser} alt="Ico"/>
+            </div>
+        )
+    }
 
     const isUserInGame = Object.keys(userData).length && (data.first_player.user.id === userData.id || data.second_player?.user.id === userData.id)
     const isGameRunning = !isUserInGame && !(data.game_state === "waiting" || data.game_state === "attack" || data.game_state === "defense" || data.game_state === "duel") ? "process" : ""
@@ -56,6 +59,8 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
         }
     }
 
+    console.log(data)
+
     const buttonContent = () => {
         if (isUserInGame) {
             return (
@@ -63,8 +68,8 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
             )
         } else if (data.winner !== null) {
             return (<>
-                {data.winner.id === data.first_player.user.id ? userWinner(data.first_player) : userLooser}
-                {data.winner.id === data.second_player?.user?.id ? userWinner(data.second_player) : userLooser}
+                {data.winner.user.id === data.first_player?.user?.id ? userWinner(data.first_player) : userLooser()}
+                {data.winner.user.id === data.second_player?.user?.id ? userWinner(data.second_player) : userLooser()}
             </>)
         } else if (data.winner === null) {
             return (<>
@@ -76,7 +81,7 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
     }
 
     return (
-        <FightButtonStyled onClick={_ => handlePressButton()} className={"item__button " + isGameRunning}>
+        <FightButtonStyled onClick={_ => handlePressButton()} className={"item__button " + data.winner !== null ? "finish" : isGameRunning}>
 
             {buttonContent()}
 

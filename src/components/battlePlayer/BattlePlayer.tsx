@@ -69,7 +69,7 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, pla
             </div>
             {isYourGame && <span className={"textToCall"}>call a bot</span>}
             <span>
-                {isHaveUser ? player?.user?.name : isYourGame ? "..." : user?.name}
+                {isHaveUser ? player?.user?.name : "..."}
             </span>
         </div>
     )

@@ -6,7 +6,6 @@ import bgd from './../../assets/images/bgdForBattle.jpg'
 import {BattleArea} from "./components/BattleArea";
 import {BattleCreate} from "./components/BattleCreate";
 import {BattleBottom} from "./components/BattleBottom";
-import {IBattleCreate, ICrate} from "../../model";
 import {NavLink} from "react-router-dom";
 import {getApiLink} from "../../functions/getApiLink";
 import getCookies from "../../functions/getCookie";
@@ -26,26 +25,11 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
     const {battleId} = useParams()
 
     const [webSocket, setWebSocket]: any = useState(null)
-    const [gameType, setGameType] = useState<string>("1v1")
+    const [gameType, setGameType] = useState<string>("2v2")
     const [gameStep, setGameStep] = useState<string>("start")
     const [isBattleAuthor, setIsBattleAuthor] = useState(false)
-    const [isLoad, setIsLoad] = useState(false)
 
     const blockArea: any = useRef(null)
-
-    // start, waiting, prepare, process, calculate, ended
-
-    // useEffect(() => {
-    //     if(gameStep !== "waiting") return;
-    //
-    //     setTimeout(() => {
-    //         setGameStep("prepare")
-    //
-    //         setTimeout(() => {
-    //             setGameStep("process")
-    //         }, 5000)
-    //     }, 1000)
-    // }, [gameStep])
 
     useEffect(() => {
         setGameStep(webSocket?.battle?.status ?? "start")

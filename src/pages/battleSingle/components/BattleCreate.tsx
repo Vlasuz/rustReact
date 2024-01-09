@@ -10,7 +10,6 @@ import {useSelector} from "react-redux";
 import axios from "axios";
 import {getApiLink} from "../../../functions/getApiLink";
 import {getBearer} from "../../../functions/getBearer";
-import {useLocation, useNavigate, useParams} from "react-router";
 
 interface IBattleCreateProps {
     setGameType: any
