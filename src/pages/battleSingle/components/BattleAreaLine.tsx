@@ -4,7 +4,6 @@ import CrateBig from "../../../assets/images/CrateBig.svg";
 import coins from "../../../assets/images/header__coins.svg";
 import {LoadingStyled} from "../../../components/loading/loading.styled";
 import {GameSocket, GameState} from "../BattleSingle";
-import {useSelector} from "react-redux";
 import {ICrate} from "../../../model";
 
 interface IBattleAreaLineProps {

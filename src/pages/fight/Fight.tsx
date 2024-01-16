@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FightStyled } from './fight.styled'
+import { FightStyled } from './Fight.styled'
 
 import { FightItem } from './components/fightItem/FightItem'
 import { fightsList } from '../../data/fights'

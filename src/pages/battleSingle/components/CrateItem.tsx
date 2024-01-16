@@ -4,8 +4,8 @@ import lineToOpen from "../../../assets/images/lineToOpenCrate.png";
 import coin from "../../../assets/images/header__coins.svg";
 import battleCaseLock from "../../../assets/images/battle-case-lock.svg";
 
-import {GameState} from "../BattleSingle";
-import {useDispatch} from 'react-redux';
+import {GameSocket, GameState} from "../BattleSingle";
+import {useDispatch, useSelector} from 'react-redux';
 import {ICrate, ICrateItem} from "../../../model";
 import {changeBattleCrate, removeBattleCrate} from '../../../redux/toolkitSlice';
 import {getApiLink} from "../../../functions/getApiLink";
@@ -21,6 +21,27 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
     const [count, setCount] = useState(1)
 
     const gameStep = useContext(GameState)
+    const webSocket: any = useContext(GameSocket)
+
+    const crates: ICrate[] = useSelector((state: any) => state.toolkit.crates)
+
+    const [itemsToRoll, setItemsToRoll] = useState<any>([])
+    useEffect(() => {
+        setItemsToRoll([])
+        if (!data || !Object.keys(data).length) return
+
+        for (let i = 0; i < 10; i++) {
+            const randomIndex = Math.floor(Math.random() * data.items.length);
+            const randomItem = data.items[randomIndex];
+
+            setItemsToRoll((prev: any) => [...prev, randomItem])
+        }
+
+    }, [data, crates])
+
+    useEffect(() => {
+        setItemsToRoll((prev: any) => [...prev.slice(0, 8), openedItem?.item, ...prev.slice(9)])
+    }, [openedItem])
 
     const dispatch = useDispatch()
 
@@ -33,6 +54,21 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
     }, [count])
 
     const isHaveItem = openedItem && Object.keys(openedItem).length
+    const isEndGame = webSocket?.battle?.status === "end" && webSocket?.timer < 0
+
+    const [isShowItem, setIsShowItem] = useState(isEndGame)
+    const [isSpinItem, setIsSpinItem] = useState(false)
+
+    useEffect(() => {
+        if(!isHaveItem) return;
+
+        setTimeout(() => {
+            setIsSpinItem(true)
+        },10)
+        setTimeout(() => {
+            setIsShowItem(true)
+        }, 4000)
+    }, [isHaveItem, data])
 
     return (
         <div className="crate crate__start">
@@ -60,15 +96,25 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
             <div className="crate__image">
 
                 <div className={`openedItem ${isHaveItem && "opened"}`}>
-                    <div className="lock">
+                    {!isHaveItem && <div className="lock">
                         <img src={getApiLink(`/${data.icon}`)} alt=""/>
-                    </div>
-                    {isHaveItem && <div className="line">
+                    </div>}
+                    {!(gameStep === "waiting" || gameStep === "prepare") && isSpinItem && !isShowItem && !isEndGame && <div className="line">
                         <img src={lineToOpen} alt=""/>
                     </div>}
-                    <div className="item">
+                    {isShowItem && <div className="item">
                         <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt=""/>
-                    </div>
+                    </div>}
+
+                    {!isEndGame && isHaveItem && <div className={`items ${isSpinItem && "items_scroll"} ${isShowItem && "items_hidden"}`}>
+                        {
+                            itemsToRoll.map((item: any, index: number) =>
+                                <div key={index} className="item">
+                                    <img src={item?.item?.image} alt=""/>
+                                </div>
+                            )
+                        }
+                    </div>}
                 </div>
 
                 {/*{isHaveItem ?*/}
@@ -80,14 +126,16 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
                 {/*    </div>*/}
                 {/*    : <img src={getApiLink(`/${data.icon}`)} alt=""/>}*/}
             </div>
-            <div className="price">
+
+
+            {isHaveItem && isShowItem && <div className="price">
                 <img src={coin} alt=""/>
                 <span>
                     {
                         isHaveItem ? openedItem?.item?.price : data?.price
                     }
                 </span>
-            </div>
+            </div>}
         </div>
     )
 }

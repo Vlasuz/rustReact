@@ -13,6 +13,7 @@ export const BattleAreaTopBig: React.FC<IBattleAreaTopBigProps> = ({gameStep}) =
 
     const webSocket: any = useContext(GameSocket)
     const timer = webSocket?.timer ? webSocket?.timer : 5
+    // const timer = 5
     const {seconds, milliseconds} = useFightTimer(timer, gameStep)
 
     return (
@@ -30,7 +31,7 @@ export const BattleAreaTopBig: React.FC<IBattleAreaTopBigProps> = ({gameStep}) =
                 </div>
             }
 
-            {!webSocket?.battle?.players[0]?.item?.length && gameStep === "process" && <FightSingleSvgTimer isFight={false} gameState={gameStep} seconds={+timer}/>}
+            {!webSocket?.battle?.players[0]?.item?.length && gameStep === "process" && <FightSingleSvgTimer isFight={true} gameState={gameStep} seconds={+timer}/>}
             {!webSocket?.battle?.players[0]?.item?.length && gameStep === "process" && <div className="center__running">
                 <span>Начало</span>
                 <div className="timer">

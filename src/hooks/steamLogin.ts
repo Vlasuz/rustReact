@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { getApiLink } from "../functions/getApiLink"
 import setCookie from "../functions/setCookie"
 import { setUser } from "../redux/toolkitSlice"
+import {log} from "util";
 
 export const useSteamLogin = () => {
     // http://localhost:3000
@@ -34,6 +35,7 @@ export const useSteamLogin = () => {
 
         axios.post(urlAxios).then(({data}) => {
 
+            console.log(data)
             dispatch(setUser(data.user))
             navigate(location.pathname)
             setCookie('access_token_rust', data.access_token)

@@ -16,14 +16,14 @@ export const BattleMode4Way: React.FC<IBattleMode4WayProps> = ({itemData}) => {
             {
                 membersCount.map(item => {
                     return (
-                        <>
+                        <React.Fragment key={item}>
                             <BattlePlayer
                                 itemData={itemData}
                                 isWinner={!!(itemData?.winners?.length && itemData.winners[0].position === item)}
                                 numberOfPosition={item}
                             />
                             <b>VS</b>
-                        </>
+                        </React.Fragment>
                     )
                 })
             }

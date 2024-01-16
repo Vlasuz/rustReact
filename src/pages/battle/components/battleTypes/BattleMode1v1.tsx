@@ -16,14 +16,14 @@ export const BattleMode1V1: React.FC<IBattleMode1V1Props> = ({itemData}) => {
             {
                 membersCount.map(item => {
                     return (
-                        <>
+                        <React.Fragment key={item}>
                             <BattlePlayer
                                 itemData={itemData}
                                 isWinner={itemData?.winners?.some(win => win.position === item)}
                                 numberOfPosition={item}
                             />
                             <b>VS</b>
-                        </>
+                        </React.Fragment>
                     )
                 })
             }

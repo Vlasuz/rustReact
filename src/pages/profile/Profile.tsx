@@ -40,7 +40,8 @@ export const Profile: React.FC<IProfileProps> = () => {
         setIsLoadingGames(true)
         setTimeout(() => {
             axios.get(getApiLink(`api/user/games/?id=${userId ?? userData.id}`)).then(({data}) => {
-    
+
+                console.log(data)
                 dispatch(setUserGames(data))
                 setIsLoadingGames(false)
         

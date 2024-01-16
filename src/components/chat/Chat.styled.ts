@@ -163,7 +163,7 @@ export const ChatStyle = styled.div`
     background: linear-gradient(180deg, #202232 0%, rgba(32, 34, 50, 0) 100%);
     width: 100%;
     height: 100px;
-    top: 57px;
+    top: 56px;
     left: 0;
     position: absolute;
     pointer-events: none;

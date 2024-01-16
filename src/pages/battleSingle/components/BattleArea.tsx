@@ -77,12 +77,12 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
         } else if (webSocket?.battle?.status === "end") {
 
-            // if(webSocket?.timer !== 0) {
-            //     setIsCanDrag(true)
-            //     setIsGoCalc(true)
-            //     setBlocksOpen(3)
-            //     return;
-            // }
+            if(webSocket?.timer !== 0) {
+                setIsCanDrag(true)
+                setIsGoCalc(true)
+                setBlocksOpen(3)
+                return;
+            }
 
             setIsCanDrag(false)
             setCoodYnew(prev => prev -= 140)
@@ -105,7 +105,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                         setIsCanDrag(true)
                     }, 1500)
                 }, 1500)
-            }, 3000)
+            }, 5000)
 
         }
 
@@ -211,7 +211,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
                 {
                     Array.from({length: typeModes[webSocket?.battle?.mode]}, (_, index) => index + 1)?.map(item =>
-                        <BattleAreaLine blocksOpen={blocksOpen} openedCount={openedCount}
+                        <BattleAreaLine key={item} blocksOpen={blocksOpen} openedCount={openedCount}
                                         position={webSocket?.battle?.players.filter((plr: any) => plr.position === item)[0]}/>
                     )
                 }

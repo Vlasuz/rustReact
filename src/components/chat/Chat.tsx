@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { ChatStyle } from './chat.styled'
+import { ChatStyle } from './Chat.styled'
 import { ChatItem } from './components/ChatItem'
 import { chatData } from '../../data/chat'
 import { useDispatch, useSelector } from 'react-redux'

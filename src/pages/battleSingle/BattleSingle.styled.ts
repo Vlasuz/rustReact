@@ -394,6 +394,38 @@ export const BattleSingleStyled = styled.section`
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      
+      //overflow: hidden;
+      
+      .items {
+        position: absolute;
+        transition: all 3s ease;
+        top: 0;
+        height: 110px;
+        overflow: hidden;
+        
+        &_scroll {
+          .item:first-child {
+            margin-top: -745px;
+            transition: all 3s ease;
+          }
+        }
+        
+        &_hidden {
+          opacity: 0;
+          transition: all .3s ease;
+        }
+        .item {
+          height: 80px;
+          width: 80px;
+          margin: 15px 0;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+      }
 
       &__lock {
         display: flex;
@@ -890,7 +922,7 @@ export const BattleSingleStyled = styled.section`
         }
 
         span {
-          padding: 7px 15px;
+          padding: 7px 10px;
           border-radius: 8px;
           background: #363A51;
           color: #8088A8;
@@ -899,7 +931,9 @@ export const BattleSingleStyled = styled.section`
           font-weight: 500;
           display: block;
           margin-left: -5px;
-          min-width: 110px;
+          width: 120px;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         &_left {
@@ -1096,20 +1130,33 @@ export const BattleSingleStyled = styled.section`
     }
 
     .item {
-      filter: blur(10px);
-      opacity: 0;
+      //filter: blur(10px);
+      //opacity: 0;
       transition: all .3s ease;
     }
 
-    &.opened {
+    //&.opened {
+    //  .lock {
+    //    animation: openedLock .3s 4s forwards;
+    //  }
+    //  .line {
+    //    animation: openedLine .3s 4s forwards;
+    //  }
+    //  .item {
+    //    animation: openedItem .3s 4s forwards;
+    //  }
+    //}
+
+    &.finish-open {
       .lock {
-        animation: openedLock .3s 2.2s forwards;
+        opacity: 0 !important;
       }
       .line {
-        animation: openedLine .3s 2.2s forwards;
+        opacity: 0 !important;
       }
       .item {
-        animation: openedItem .3s 2.2s forwards;
+        filter: blur(0px) !important;
+        opacity: 1 !important;
       }
     }
   }

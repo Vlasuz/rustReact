@@ -8,10 +8,10 @@ interface IFightSingleSvgTimerProps {
 
 export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds, gameState, isFight = true}) => {
 
-    const [startFrom, setStartFrom] = useState(seconds + .5)
+    const [startFrom, setStartFrom] = useState(5)
 
     useEffect(() => {
-        setStartFrom(seconds + .5)
+        setStartFrom(5)
     }, [seconds])
 
     const bigNumber = !isFight ? 180 : 520
@@ -20,7 +20,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
     return (
         <div className={"svg_timer"}>
 
-            {gameState === "prepare" && <svg className={"svgTimer"} width="110" height="110" viewBox="-1 -1 110 110">
+            {gameState === "process" && <svg className={"svgTimer"} width="110" height="110" viewBox="-1 -1 110 110">
 
                 <mask id="msk1">
                     <rect className="maskCircle maskCircle__inner" strokeOpacity=".1" rx="20">

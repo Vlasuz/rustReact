@@ -40,8 +40,6 @@ export const Tables: React.FC<ITablesProps> = ({ games, user, isLoadingGames }) 
     const getTableData = (game: string) => games.filter((item: IUserGames) => item.slug.includes(game))[0]
     const getTableGames = (game: string) => games.filter((item: IUserGames) => item.slug.includes(game))[0].data
 
-    console.log(games)
-
     return (
         <div className="section-block">
             <ul className="tabs">

@@ -16,13 +16,13 @@ export const BattleMode2P: React.FC<IBattleMode2PProps> = ({itemData}) => {
             {
                 membersCount.map(item => {
                     return (
-                        <>
+                        <React.Fragment key={item}>
                             <BattlePlayer
                                 itemData={itemData}
                                 isWinner={!!(itemData?.winners?.length && itemData.winners[0].position === item)}
                                 numberOfPosition={item}
                             />
-                        </>
+                        </React.Fragment>
                     )
                 })
             }
