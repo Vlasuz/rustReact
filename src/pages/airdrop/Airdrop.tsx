@@ -13,9 +13,10 @@ import {useDrop} from "react-dnd";
 import {ItemTypes} from "../../constants/ItemTypes";
 import {AirdropBagsItem} from "./components/AirdropBagsItem";
 import {useDispatch, useSelector} from "react-redux";
-import {addAirdropBagsMap, removeAirdropBagMap, removeAirdropBags} from "../../redux/toolkitSlice";
+import {addAirdropBagsMap, removeAirdropBagMap, removeAirdropBags, setSound} from "../../redux/toolkitSlice";
 import {AirdropSocketContext} from "../../App";
 import {AirdropPlayersBags} from "./components/AirdropPlayersBags";
+import {ConfettiFireworks} from "../../components/confetti/ConfettiFireworks";
 
 
 interface IAirdropProps {
@@ -25,7 +26,7 @@ interface IAirdropProps {
 export const Airdrop: React.FC<IAirdropProps> = () => {
 
 
-    const [{x, y}, api] = useSpring(() => ({x: 0, y: 0,}))
+    const [{x, y}, api] = useSpring(() => ({x: 100, y: -100,}))
 
     const dispatch = useDispatch()
 
@@ -40,8 +41,8 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
 
     const bindDrag = useDrag(({offset}) => {
 
-        const maxScrollHeight = (blockCenter.current.getBoundingClientRect().height / wheelValue) - blockArea.current.getBoundingClientRect().height
-        const maxScrollWidth = (blockMap.current.getBoundingClientRect().width / wheelValue) - blockArea.current.getBoundingClientRect().width
+        // const maxScrollHeight = (blockCenter.current.getBoundingClientRect().height / wheelValue) - blockArea.current.getBoundingClientRect().height
+        // const maxScrollWidth = (blockMap.current.getBoundingClientRect().width / wheelValue) - blockArea.current.getBoundingClientRect().width
         //
         // if (offset[0] < -maxScrollWidth) {
         //     offset[0] = -maxScrollWidth
@@ -63,22 +64,22 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
 
     })
 
-    // let sum = 0;
+    let sum = 0;
     const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-        //
-        // let count = e.deltaY / 2000;
-        // sum -= count;
-        //
-        // setWheelValue(sum => sum - count);
-        //
-        // if (wheelValue >= 1 && wheelValue < 3) {
-        //
-        // } else if (wheelValue <= 1) {
-        //     setWheelValue(1)
-        // } else if (wheelValue > 3){
-        //     setWheelValue(3)
-        // }
-        // return;
+
+        let count = e.deltaY / 2000;
+        sum -= count;
+
+        setWheelValue(sum => sum - count);
+
+        if (wheelValue >= 1 && wheelValue < 3) {
+
+        } else if (wheelValue <= 1) {
+            setWheelValue(1)
+        } else if (wheelValue > 3){
+            setWheelValue(3)
+        }
+        return;
 
     }
 
@@ -120,7 +121,9 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
 
     const [bagsCoods, setBagsCoods] = useState<any>([])
     const [oldItemCoods, setOldItemCoods] = useState<any>({})
+
     const airdropBags = useSelector((state: any) => state.toolkit.airdropBagsMap)
+    const userInfo = useSelector((state: any) => state.toolkit.user)
 
     const [{isOver}, drop] = useDrop(() => ({
         accept: ItemTypes.BAG,
@@ -151,9 +154,12 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
             const mouseX = event.pageX - rect.left - window.scrollX;
             const mouseY = event.pageY - rect.top - window.scrollY;
 
-            setBagsCoods((prev: any) => [...prev, {x: mouseX / wheelValue, y: mouseY / wheelValue}])
+            // @ts-ignore
+            const scaleValue: any = document.querySelector(".scrolling").getAttribute("data-scale")
 
-            dispatch(addAirdropBagsMap({x: mouseX, y: mouseY}));
+            setBagsCoods((prev: any) => [...prev, {x: mouseX / scaleValue, y: mouseY / scaleValue}])
+
+            dispatch(addAirdropBagsMap({x: mouseX / scaleValue, y: mouseY / scaleValue}));
         }
 
     }
@@ -219,8 +225,34 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
         document.querySelector('body').style.overflow = 'auto'
     }
 
+    const [isActiveConfetti, setIsActiveConfetti] = useState(false)
+
+    useEffect(() => {
+
+        if(airdropWsMessages?.airdrop?.game_state === "process") {
+            setTimeout(() => {
+                dispatch(setSound('sound11'))
+            }, 400)
+        }
+
+        if(airdropWsMessages?.airdrop?.game_state === "ended") {
+            if(airdropWsMessages?.airdrop?.winner.user.id === userInfo.id) {
+                setIsActiveConfetti(true)
+
+                setTimeout(() => {
+                    setIsActiveConfetti(false)
+                }, 500)
+            }
+        }
+
+    }, [airdropWsMessages])
+
+
     return (
         <AirdropStyled ref={blockArea} className="section-map">
+
+            {isActiveConfetti && <ConfettiFireworks timeToEnd={5}/>}
+
             <div className="section-map__top">
                 <div className="section-map__game-is">Игра#{airdropWsMessages?.airdrop?.game_id}</div>
                 <div className="section-map__code">
@@ -234,6 +266,7 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
                  onWheel={handleWheel}
                  onTouchStart={handleTouchStart}
                  onTouchEnd={handleTouchEnd}
+                 data-scale={wheelValue < 1 ? 1 : wheelValue > 3 ? 3 : wheelValue}
                  style={{
                      transform: `scale(${wheelValue < 1 ? 1 : wheelValue > 3 ? 3 : wheelValue})`,
                      transition: "all .1s ease-out",

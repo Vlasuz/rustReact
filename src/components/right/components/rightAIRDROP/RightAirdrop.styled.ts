@@ -149,5 +149,18 @@ export const RightAirdropStyled = styled.div`
     position: relative;
   }
 
+  .move__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    button {
+      background: transparent;
+      border: none;
+      color: #A2ABC5;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
 
 `

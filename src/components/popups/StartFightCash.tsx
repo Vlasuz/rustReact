@@ -5,10 +5,11 @@ import {IFightItem, IProduct} from "../../model";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
-import {setPopup} from "../../redux/toolkitSlice";
+import {setPopup, setUserBalance} from "../../redux/toolkitSlice";
 import {PopupsContext} from "../../context/popupsContext";
 import {useNavigate} from "react-router";
 import {prettyCoinValues} from "../../functions/prettyCoinValues";
+import {getBearer} from "../../functions/getBearer";
 
 interface IStartFightCashProps {
 
@@ -23,6 +24,7 @@ export const StartFightCash: React.FC<IStartFightCashProps> = () => {
 
     const handleStartGame = () => {
 
+        getBearer({type: "post"})
         axios.post(getApiLink("api/fight/room/join?game_id="+fightItemData.id), {
             coins: fightItemData.first_player.coins,
         }).then(({data}) => {
@@ -32,6 +34,12 @@ export const StartFightCash: React.FC<IStartFightCashProps> = () => {
             setTimeout(() => {
                 dispatch(setPopup(''))
             }, 300)
+
+            dispatch(setUserBalance({
+                sum: true,
+                money: -data.first_player.coins
+            }))
+
             navigate('/fight/'+fightItemData.id)
 
         }).catch(er => console.log(er))

@@ -1,13 +1,14 @@
 import React, {useContext, useEffect} from 'react'
 import {LoadingStyled} from "../../../components/loading/loading.styled";
 import {IBattleGame, IUser} from "../../../model";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getBearer} from "../../../functions/getBearer";
 import axios from "axios";
 import {getApiLink} from "../../../functions/getApiLink";
 import {useNavigate} from "react-router";
 import {IsJoinToGame} from "../../../App";
 import {NavLink} from "react-router-dom";
+import {setUserBalance} from "../../../redux/toolkitSlice";
 
 interface IBattlePlayerProps {
     isWinner: boolean
@@ -22,7 +23,7 @@ const ButtonWithoutPlayer = ({joinToGame}: any) => {
     const userInfo: IUser = useSelector((state: any) => state.toolkit.user)
 
     return (
-        <button onClick={joinToGame} className="player__photo player__photo_loading">
+        <button onClick={userInfo?.id && joinToGame} className={`player__photo player__photo_loading ${!userInfo?.id && "not-auth"}`}>
             <LoadingStyled className="load">
                 <div className="line"/>
                 <div className="line"/>
@@ -52,6 +53,7 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({isWinner, numberOfPo
 
     const userInfo: IUser = useSelector((state: any) => state.toolkit.user)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const {setIsJoinToGame}: any = useContext(IsJoinToGame)
 
     const joinToGame = () => {
@@ -60,6 +62,7 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({isWinner, numberOfPo
         getBearer({type: "post"})
         axios.post(getApiLink(`api/battle/join/?game_id=${itemData.id}&position=${numberOfPosition}`)).then(({data}) => {
             navigate(`/battle/${itemData?.id}`)
+            dispatch(setUserBalance({sum: true, money: -data.bet}))
             setIsJoinToGame(true)
         }).catch(er => console.log(getApiLink(`api/battle/join/?game_id=${itemData.id}&position=${numberOfPosition}`), er))
     }

@@ -17,7 +17,8 @@ import {useDispatch, useSelector } from 'react-redux';
 import {CaseRollingBlock} from "./components/caseRollingBlock/CaseRollingBlock";
 import {getBearer} from "../../functions/getBearer";
 import {useCrateRarity} from "../../hooks/crateRarity";
-import {setNotice, setUserBalance} from "../../redux/toolkitSlice";
+import {setNotice, setSound, setUserBalance} from "../../redux/toolkitSlice";
+import {ConfettiFireworks} from "../../components/confetti/ConfettiFireworks";
 
 interface IOpenCasesProps {
 
@@ -31,6 +32,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     const [isActiveSpin, setIsActiveSpin] = useState(false)
     const [winnerItem, setWinnerItem]: any = useState({})
     const [isClicked, setIsClicked] = useState(false)
+    const [isBlockButton, setIsBlockButton] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -40,7 +42,13 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     const {crateRarity}: any = useCrateRarity({crate: chosenCrate})
 
     const handlePlayDemo = () => {
-        setIsActiveSpin(true)
+        setIsActiveSpin(false)
+        setIsWonItemActive(false)
+        setIsBlockButton(true)
+
+        setTimeout(() => {
+            setIsActiveSpin(true)
+        }, 10)
     }
 
     useEffect(() => {
@@ -52,15 +60,23 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
             }
 
             setTimeout(() => {
-                setIsActiveSpin(false)
-                setIsWonItemActive(false)
-
+                setIsBlockButton(false)
                 clearTimeout(timeForSpin)
-            }, 5000)
+            }, 1000)
+
+            dispatch(setSound('sound13'))
+
+            setIsActiveConfetti(true)
+            setTimeout(() => {
+                setIsClicked(false)
+                setIsActiveConfetti(false)
+            }, 1000)
+
         }, isFastActive ? 1000 : 11000)
     }, [isActiveSpin])
 
     const handlePlay = () => {
+
         if(!Object.keys(userData).length) {
             return dispatch(setNotice('beforeYouNeedAuth'))
         }
@@ -72,7 +88,13 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
             console.log(data)
             if(data.status === false) return setIsClicked(false);
 
-            setIsActiveSpin(true)
+            setIsActiveSpin(false)
+            setIsWonItemActive(false)
+            setIsBlockButton(true)
+
+            setTimeout(() => {
+                setIsActiveSpin(true)
+            }, 10)
 
             dispatch(setUserBalance({sum: true, money: -(countOfCases * chosenCrate.price)}))
             setWinnerItem(data.items)
@@ -85,9 +107,6 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     dispatch(setUserBalance({sum: true, money: data?.items[i]?.price}))
                 }
 
-                setTimeout(() => {
-                    setIsClicked(false)
-                }, 5000)
 
                 clearTimeout(timeToFinal)
             }, isFastActive ? 1000 : 11000)
@@ -104,11 +123,63 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
         })
     }, [])
 
+    const [isActiveConfetti, setIsActiveConfetti] = useState(false)
+
+
+
+
+
+    useEffect(() => {
+        if (!isActiveSpin) return;
+
+        let a = 100;
+        let elapsedTime = 0;
+
+        // @ts-ignore
+        const firstPositionWinnerBlock = document.querySelector(".spin__item:nth-child(54)").getBoundingClientRect().left;
+
+        const targetSum = 54;
+        const animationDuration = isFastActive ? 1000 : 11000;
+
+        const animate = () => {
+            // @ts-ignore
+            const positionWinnerBlock = document.querySelector(".spin__item:nth-child(54)").getBoundingClientRect().left;
+
+            // dispatch(setSound('soundSpinTick'));
+            // setTimeout(() => {
+            //     dispatch(setSound(''));
+            // }, 2);
+
+            console.log(positionWinnerBlock, firstPositionWinnerBlock);
+
+            elapsedTime += a;
+
+            if (elapsedTime < animationDuration) {
+                setTimeout(() => {
+                    a += 15; // Увеличиваем время задержки перед каждым вызовом
+                    animate();
+                }, a);
+            }
+        };
+
+        animate();
+
+        return () => {
+            // Дополнительный код при завершении анимации, если необходимо
+        };
+    }, [isActiveSpin, isFastActive]);
+
+
+
+
+
 
     return (
         <OpenCasesStyled>
 
             <BattleTop isFastActive={isFastActive}/>
+
+            {isActiveConfetti && <ConfettiFireworks/>}
 
             <div className={"center"}>
                 {countOfCases === 1 && <div
@@ -131,30 +202,30 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     </div>
                 </div>}
                 <div className="center__buttons">
-                    <button onClick={handlePlay} disabled={isClicked} className="center__buy">
+                    <button onClick={handlePlay} disabled={isBlockButton || isClicked} className="center__buy">
                         <p>Купить</p>
                         <img src={coins} alt="coin"/>
                         <span>
-                            {chosenCrate?.price}
+                            {chosenCrate?.price * countOfCases}
                         </span>
                     </button>
                     <div className="center__count">
                         <span>Количество</span>
                         <ul>
-                            <li onClick={_ => !isActiveSpin && setCountOfCases(1)}
+                            <li onClick={_ => !isBlockButton && setCountOfCases(1)}
                                 className={countOfCases >= 1 ? "active" : ""}/>
-                            <li onClick={_ => !isActiveSpin && setCountOfCases(2)}
+                            <li onClick={_ => !isBlockButton && setCountOfCases(2)}
                                 className={countOfCases >= 2 ? "active" : ""}/>
-                            <li onClick={_ => !isActiveSpin && setCountOfCases(3)}
+                            <li onClick={_ => !isBlockButton && setCountOfCases(3)}
                                 className={countOfCases >= 3 ? "active" : ""}/>
-                            <li onClick={_ => !isActiveSpin && setCountOfCases(4)}
+                            <li onClick={_ => !isBlockButton && setCountOfCases(4)}
                                 className={countOfCases >= 4 ? "active" : ""}/>
-                            <li onClick={_ => !isActiveSpin && setCountOfCases(5)}
+                            <li onClick={_ => !isBlockButton && setCountOfCases(5)}
                                 className={countOfCases >= 5 ? "active" : ""}/>
                         </ul>
                     </div>
 
-                    <button className={"center__fast" + (isFastActive ? " active" : "")} onClick={_ => !isActiveSpin && setIsFastActive(prev => !prev)}>
+                    <button className={"center__fast" + (isFastActive ? " active" : "")} onClick={_ => !isBlockButton && setIsFastActive(prev => !prev)}>
                         <span>Быстрый прокрут</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="31" viewBox="0 0 25 31" fill="none">
                             <path
@@ -162,7 +233,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                                 fill={isFastActive ? "#A2ABC5" : "#61667B"} stroke={isFastActive ? "#A2ABC5" : "#61667B"} strokeWidth="2"/>
                         </svg>
                     </button>
-                    <button onClick={handlePlayDemo} className="center__demo">
+                    <button onClick={_ => !isBlockButton && handlePlayDemo()} className="center__demo">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <path
                                 d="M14.1113 7.41255L5.67383 2.26216C5.53329 2.17309 5.37098 2.12435 5.20461 2.12125C5.03825 2.11815 4.87424 2.16081 4.73047 2.24458C4.58458 2.32462 4.46296 2.44251 4.37841 2.58583C4.29386 2.72916 4.2495 2.89263 4.25 3.05903V13.3715C4.2495 13.5379 4.29386 13.7014 4.37841 13.8447C4.46296 13.9881 4.58458 14.1059 4.73047 14.186C4.87424 14.2698 5.03825 14.3124 5.20461 14.3093C5.37098 14.3062 5.53329 14.2575 5.67383 14.1684L14.1113 9.01802C14.2496 8.93459 14.364 8.81685 14.4434 8.6762C14.5228 8.53556 14.5646 8.37679 14.5646 8.21528C14.5646 8.05377 14.5228 7.895 14.4434 7.75436C14.364 7.61372 14.2496 7.49598 14.1113 7.41255Z"

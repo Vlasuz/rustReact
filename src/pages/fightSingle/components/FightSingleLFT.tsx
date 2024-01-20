@@ -24,7 +24,7 @@ import {findTheSameElems} from "../../../functions/fingTheSameElems";
 import {WSFight} from "../FightSingle";
 import bullet from "../../../assets/images/bullet.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {setSound} from "../../../redux/toolkitSlice";
+import {setSound, setUserBalance} from "../../../redux/toolkitSlice";
 
 interface IFightSingleLFTProps {
     mainPlayer: any
@@ -42,7 +42,16 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
 
     const handleExit = () => {
         axios.delete(getApiLink("api/fight/room/cancel?game_id=" + fightId)).then(({data}) => {
-            if (data.status) navigate("/")
+            if (data.status === false) return;
+
+            console.log()
+
+            dispatch(setUserBalance({
+                sum: true,
+                money: gameData.data[0].coins
+            }))
+
+            navigate("/")
         }).catch(er => console.log(er))
     }
 
@@ -66,7 +75,7 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
 
     useEffect(() => {
         setIsFullSuit(findTheSameElems(suit, true) === 2)
-        if(suit[0]||suit[1]||suit[2]) {
+        if (suit[0] || suit[1] || suit[2]) {
             ws[0].send(JSON.stringify({
                 "type": "defense",
                 "head": suit[0],
@@ -77,17 +86,17 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
     }, [suit])
 
     useEffect(() => {
-        if(suit[2]) dispatch(setSound("sound9"))
+        if (suit[2]) dispatch(setSound("sound9"))
     }, [suit[2]])
     useEffect(() => {
-        if(suit[1]) dispatch(setSound("sound9"))
+        if (suit[1]) dispatch(setSound("sound9"))
     }, [suit[1]])
     useEffect(() => {
-        if(suit[0]) dispatch(setSound("sound9"))
+        if (suit[0]) dispatch(setSound("sound9"))
     }, [suit[0]])
 
     useEffect(() => {
-        if(gameState === "duel") {
+        if (gameState === "duel") {
             setSuit([false, false, false])
         }
     }, [gameState])
@@ -137,7 +146,8 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
                             <div className="line"></div>
                         </div>
                     </div>}
-                    <img src={getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs])} className={"persone-img"} alt="Persone"/>
+                    <img src={getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs])} className={"persone-img"}
+                         alt="Persone"/>
                 </div>
             </div>
 
@@ -147,8 +157,11 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
 
             {(gameState === "duel" || gameState === "ended") &&
                 <div className="section-fight__bottom section-fight__bottom_finish">
-                    <div className={"bottom__status" + (isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
-                        {gameState === "ended" && <img src={gameData.fight.winner?.user?.id === userData?.id ? winnerIcon : looserIcon} alt={"winner"}/>}
+                    <div
+                        className={"bottom__status" + (isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
+                        {gameState === "ended" &&
+                            <img src={gameData.fight.winner?.user?.id === userData?.id ? winnerIcon : looserIcon}
+                                 alt={"winner"}/>}
                     </div>
                 </div>}
 

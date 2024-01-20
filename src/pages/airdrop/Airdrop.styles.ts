@@ -334,7 +334,7 @@ export const AirdropStyled = styled.section`
       overflow: hidden;
       z-index: 10;
 
-      cursor: grab;
+      cursor: default;
 
       &:active {
         cursor: grabbing;

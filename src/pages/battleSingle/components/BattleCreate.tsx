@@ -6,10 +6,11 @@ import peopleDefault from "../../../assets/images/peopleDefault.svg";
 import boxGreen from "../../../assets/images/boxGreen.svg";
 import boxDefault from "../../../assets/images/boxDefault.svg";
 import coin from "../../../assets/images/header__coins.svg";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {getApiLink} from "../../../functions/getApiLink";
 import {getBearer} from "../../../functions/getBearer";
+import {setUserBalance} from "../../../redux/toolkitSlice";
 
 interface IBattleCreateProps {
     setGameType: any
@@ -26,18 +27,22 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
 
     const battleCrates: any = useSelector((state: any) => state.toolkit.battleCrates)
 
+    const dispatch = useDispatch()
+
     const [finalPriceForBattle, setFinalPriceForBattle] = useState(0)
     const [isClickedCreate, setIsClickedCreate] = useState(false)
 
     useEffect(() => {
-        const sum = battleCrates.length && battleCrates.length > 1 ? battleCrates?.reduce(function (previousValue: any, currentValue: any, index: any, array: any) {
-            const prPrice = previousValue?.count * previousValue?.crate.price
-            const crPrice = currentValue?.count * currentValue?.crate.price
+        let sum = 0;
 
-            return prPrice + crPrice;
-        }) : battleCrates[0]?.count * battleCrates[0]?.crate.price
+        battleCrates?.forEach(function (currentValue: any) {
+            const prPrice = currentValue?.count * currentValue?.crate?.price;
+            sum += prPrice;
+        });
 
-        setFinalPriceForBattle(sum)
+        console.log(sum);
+        setFinalPriceForBattle(sum);
+
 
     }, [battleCrates])
 
@@ -67,6 +72,10 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
         getBearer({type: "post"})
         axios.post(getApiLink("api/battle/create/"), requestData).then(({data}) => {
             console.log(data)
+
+            if(data?.id) {
+                dispatch(setUserBalance({sum: true, money: -data.bet}))
+            }
 
             connectToSocket(data.id, true)
 

@@ -4,15 +4,17 @@ import { setSound } from "../redux/toolkitSlice"
 
 interface useSoundsProps {
     value: number
+    music?: string
 }
 
-export const useSounds = ({value}: useSoundsProps) => {
-    const sound = useSelector((state: any) => state.toolkit.sound)
+export const useSounds = ({value, music}: useSoundsProps) => {
+    const toolkitSound = useSelector((state: any) => state.toolkit.sound)
+    const sound = music ?? toolkitSound;
     const audioBlock: any = useRef(null)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (!sound) return;
+        if (!sound || value === 0) return;
 
         audioBlock.current.volume = value / 100
         audioBlock.current.currentTime = 0

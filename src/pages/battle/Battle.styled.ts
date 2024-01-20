@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import arrow from './../../assets/images/lobbyBattleCaseArrow.png'
 
 export const BattleStyled = styled.section`
 
@@ -68,6 +69,22 @@ export const BattleStyled = styled.section`
   .players {
     b:last-child {
       display: none;
+    }
+  }
+  
+  .cases .opened {
+    opacity: .5;
+  }
+  .cases .current {
+    position: relative;
+    &:after {
+      content: '';
+      background: url(${arrow});
+      display: block;
+      position: absolute;
+      top: -15px;
+      width: 30px;
+      height: 35px;
     }
   }
 

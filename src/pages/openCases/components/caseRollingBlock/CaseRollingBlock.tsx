@@ -35,8 +35,8 @@ export const CaseRollingBlock:React.FC<ICaseRollingBlockProps> = ({winnerItem, i
                     const isWinnerItem = winnerItem && !!(Object.keys(winnerItem).length && index === 54)
 
                     return (
-                        <li key={index} style={{transition: isActiveSpin ? (!isFastActive ? "all 10s ease-in-out" : "all .5s ease-in-out") : ""}}
-                            className={"spin__item" + (isWonItemActive && index === 54 ? " won_the_price" : "")}>
+                        <li key={index} style={{transitionDuration: isActiveSpin ? (!isFastActive ? "10s" : ".5s") : ""}}
+                            className={`spin__item ${isActiveSpin && "spin-active"} ${isWonItemActive && index === 54 && " won_the_price"}`}>
 
                             <img src={isWinnerItem ? winnerItem.item.image : item?.item?.image} alt=""/>
 

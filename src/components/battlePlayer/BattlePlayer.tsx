@@ -4,11 +4,12 @@ import userIcon from "../../assets/images/user2.png";
 import {IUser} from "../../model";
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {getBearer} from "../../functions/getBearer";
 import getCookies from "../../functions/getCookie";
 import {GameSocket, GameWS} from "../../pages/battleSingle/BattleSingle";
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUserBalance} from "../../redux/toolkitSlice";
 
 interface IBattlePlayerProps {
     color: string
@@ -24,20 +25,37 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, pla
 
     const user: IUser = useSelector((state: any) => state.toolkit.user)
 
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const isHaveUser = player && Object.keys(player).length
     const isYourGame = webSocket?.battle?.players.filter((item: any) => item.position === 1)[0]?.user?.id === user?.id
 
     const {battleId}: any = useParams()
 
     const handleJoin = () => {
+        if(player?.user?.avatar) {
+            return navigate(`/user/${user.id}`)
+        }
+
         getBearer({type: "post"})
         axios.post(getApiLink(`api/battle/join/?game_id=${battleId}&position=${position}`)).then(({data}) => {
             ws.send(`{"type":"auth", "token":"${getCookies("access_token_rust")}"}`)
+            dispatch(setUserBalance({sum: true, money: -data.bet}))
         }).catch(er => console.log(getApiLink(`api/battle/join/?game_id=${battleId}&position=${position}`), er))
     }
 
+    const handleCallBot = () => {
+
+        getBearer({type: "post"})
+        axios.post(getApiLink(`api/battle/call_bot/?game_id=${webSocket?.battle?.id}&position=${position}`)).then(({data}) => {
+            console.log(data)
+        })
+
+    }
+
     return (
-        <div onClick={handleJoin}
+        <div onClick={!isHaveUser && isYourGame ? handleCallBot : handleJoin}
              className={`person person_${color} person_${direction} ${!isHaveUser && "person_loading"}`}>
             <div className="user__photo">
                 {

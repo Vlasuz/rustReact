@@ -12,6 +12,7 @@ import {setPopup, setPopupZoneItems} from "../../../redux/toolkitSlice";
 import axios from "axios";
 import {getApiLink} from "../../../functions/getApiLink";
 import {prettyCoinValues} from "../../../functions/prettyCoinValues";
+import {getBearer} from "../../../functions/getBearer";
 
 interface IStartFightClothesProps {
 
@@ -34,7 +35,7 @@ export const StartFightClothes: React.FC<IStartFightClothesProps> = () => {
     const handleStartGame = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        console.log(popupZoneItems.map((item: IProduct) => item.id))
+        getBearer({type: "post"})
         axios.post(getApiLink("api/fight/room/join?game_id="+fightItemData.id), {
             // coins: fightItemData.first_player.coins,
             items: popupZoneItems.map((item: IProduct) => item.id)

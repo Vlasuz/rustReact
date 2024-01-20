@@ -13,8 +13,8 @@ export const getUser = ({ dispatch }: IGetUserProps) => {
 
     if(!getCookies('access_token_rust')) return;
 
-    getBearer({type: 'post'})
-    axios.post(getApiLink('api/auth/session/')).then(({ data }) => {
+    getBearer({type: 'get'})
+    axios.get(getApiLink('api/user/me/')).then(({ data }) => {
 
         dispatch(setUser(data))
         dispatch(setMutedUsers(data.muted_users))

@@ -20,6 +20,9 @@ export const BattleSingleStyled = styled.section`
       z-index: 2;
       display: flex;
       align-items: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
 
       svg {
         display: block;
@@ -872,6 +875,7 @@ export const BattleSingleStyled = styled.section`
         position: relative;
         display: flex;
         align-items: flex-end;
+        cursor: pointer;
 
         .user__photo {
           background: #212232;

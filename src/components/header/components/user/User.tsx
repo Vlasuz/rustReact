@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import user from './../../../../assets/images/user.jpeg'
 import coin from './../../../../assets/images/header__coins.svg'
 import { NavLink } from 'react-router-dom'
@@ -17,12 +17,55 @@ export const User: React.FC<IUserProps> = () => {
     const { userData } = useUserData()
     const dispatch = useDispatch()
 
+    const [isNewSum, setIsNewSum] = useState(userData.balance)
+
+    useEffect(() => {
+        const targetSum = userData?.balance ? +userData.balance : 0;
+        const oldSum: any = isNewSum;
+        const isIncreasing = targetSum > oldSum;
+
+        if (targetSum === oldSum) return;
+
+        const difference = Math.abs(targetSum - oldSum);
+
+        const animationDuration = 150;
+        const start = Date.now();
+        const increment = difference / animationDuration;
+
+        const animationInterval = setInterval(() => {
+            const elapsedTime = Date.now() - start;
+            let newSum;
+
+            if (isIncreasing) {
+                // Увеличение баланса
+                newSum = Math.min(increment * elapsedTime + oldSum, targetSum);
+            } else {
+                // Уменьшение баланса
+                newSum = Math.max(oldSum - increment * elapsedTime, targetSum);
+            }
+
+            const formattedSum = newSum.toFixed(0);
+            setIsNewSum(+formattedSum);
+
+            if ((isIncreasing && newSum >= targetSum) || (!isIncreasing && newSum <= targetSum)) {
+                clearInterval(animationInterval);
+            }
+        }, 16);
+
+        return () => clearInterval(animationInterval);
+    }, [userData.balance, isNewSum]);
+
+
+
+
+
     return (
         <>
             <button className="header__coins" onClick={_ => dispatch(setPopup('popup-add-coins'))}>
                 <img src={coin} alt="Coins" />
                 <span>
-                    {prettyCoinValues(userData.balance)}
+                    {/*{prettyCoinValues(userData.balance)}*/}
+                    {prettyCoinValues(isNewSum && +isNewSum?.toFixed(2))}
                 </span>
                 <div className="ico">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -104,8 +104,8 @@ export const BattleItem: React.FC<IBattleItemProps> = ({itemData}) => {
             <ul className="cases">
 
                 {
-                    itemData?.crates?.map(item =>
-                        <li key={item.crate.id}>
+                    itemData?.crates?.map((item, index) =>
+                        <li className={itemData.status === "process" ? (itemData?.crates[index - 1] ? (itemData?.crates[index - 1].opened === itemData?.crates[index - 1].count ? "current" : "not-opened") : item.count === item.opened ? "opened" : "current") : ""} key={item.crate.id}>
                             <div className="case__top">
                                 <div className="case__rarity"/>
                                 <div className="case__count">{item.count}x</div>

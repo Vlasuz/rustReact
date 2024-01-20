@@ -29,6 +29,9 @@ export const OpenCasesStyled = styled.section`
 
           &:first-child {
             margin-left: calc(-1 * ((170.1px * 50) - 50vw));
+            //transition-duration: 10s;
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.1, 0.4, 0.5, 1);
           }
         }
       }
@@ -275,7 +278,7 @@ export const OpenCasesStyled = styled.section`
         
         opacity: 0;
         visibility: hidden;
-        -webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease;
+        transition: all .3s ease;
       }
       &:hover {
         span {
@@ -284,7 +287,7 @@ export const OpenCasesStyled = styled.section`
         }
       }
       path{
-        -webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease;
+        transition: all .3s ease;
       }
       svg {
         display: block;

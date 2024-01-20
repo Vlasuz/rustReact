@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import {animated, useSpring} from "@react-spring/web";
 import {useDrag} from "react-use-gesture";
-import {ICrate} from "../../../model";
+import {ICrate, IUser} from "../../../model";
 
 import coins from "./../../../assets/images/header__coins.svg"
 import {GameSocket, GameState} from "../BattleSingle";
@@ -12,19 +12,25 @@ import {BattleAreaLine} from "./BattleAreaLine";
 import {BattleAreaBottom} from "./BattleAreaBottom";
 import {CrateItem} from "./CrateItem";
 import CrateBig from "../../../assets/images/CrateBig.svg";
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUserBalance} from "../../../redux/toolkitSlice";
 
 interface IBattleAreaProps {
     blockArea: any
     gameType: string
     setGameStep: any
+    setIsYouWin: any
 }
 
-export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, setGameStep}) => {
+export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, setGameStep, setIsYouWin}) => {
 
     const [{x, y}, api] = useSpring(() => ({x: 0, y: 105,}))
 
     const blockCenter: any = useRef(null)
+
+    const dispatch = useDispatch()
+
+    const userData: IUser = useSelector((state: any) => state.toolkit.user)
 
     const [isCanDrag, setIsCanDrag] = useState(false)
     const [openedCount, setOpenedCount] = useState(0)
@@ -77,7 +83,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
         } else if (webSocket?.battle?.status === "end") {
 
-            if(webSocket?.timer !== 0) {
+            if (webSocket?.timer !== 0) {
                 setIsCanDrag(true)
                 setIsGoCalc(true)
                 setBlocksOpen(3)
@@ -103,6 +109,22 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                         setBlocksOpen(3)
 
                         setIsCanDrag(true)
+
+                        setIsYouWin(webSocket?.battle?.winners?.some((item: any) => item.user.id === userData.id))
+                        setTimeout(() => {
+                            setIsYouWin(false)
+                        }, 500)
+
+                        if (webSocket?.battle?.winners.length && (webSocket?.timer === 0 || webSocket?.timer === -1)) {
+                            if (!webSocket?.battle?.winners?.filter((item: any) => item.user.id === userData.id)[0]?.total_win) return;
+
+                            dispatch(setUserBalance({
+                                sum: true,
+                                money: webSocket?.battle?.winners?.filter((item: any) => item.user.id === userData.id)[0]?.total_win
+                            }))
+
+                        }
+
                     }, 1500)
                 }, 1500)
             }, 5000)
@@ -221,7 +243,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                         battleCrates.map((item: any, index: number) => <CrateItem
                             data={item.crate}
                             isOpened={false}
-                            key={item.id + index}/>)
+                            key={item.crate.id}/>)
                     }
 
                     <div className="crate crate__empty">

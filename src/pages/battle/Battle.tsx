@@ -39,13 +39,14 @@ export const Battle: React.FC<IBattleProps> = () => {
             "new_room": handleNewRoom,
         }
 
-        types[data.type]()
+        types[data?.type] && types[data?.type]()
     }
 
 
     useEffect(() => {
         axios.get(getApiLink("api/battle/list/")).then(({data}) => {
             setBattleLobby(data)
+            console.log(data)
         })
     }, [])
 

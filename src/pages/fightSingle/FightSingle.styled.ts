@@ -8,14 +8,14 @@ export const FightSingleStyled = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   .svg_timer {
     position: absolute;
     top: 8px;
     left: 8px;
   }
 
-  .maskCircle{
+  .maskCircle {
     width: 100px;
     height: 100px;
     fill: none;
@@ -24,14 +24,15 @@ export const FightSingleStyled = styled.section`
     stroke-dasharray: 3;
     stroke-dashoffset: 110;
   }
-  .maskCircle__inner{
+
+  .maskCircle__inner {
     fill: none;
     stroke: white;
     stroke-width: 2;
     stroke-dashoffset: 0;
     stroke-dasharray: 370;
   }
-  
+
   .section-fight {
 
     &__bottom {
@@ -102,7 +103,7 @@ export const FightSingleStyled = styled.section`
         padding: 19px;
         transition: all .3s ease;
         cursor: pointer;
-        
+
         &.button_hidden {
           opacity: 0;
           visibility: hidden;
@@ -289,12 +290,13 @@ export const FightSingleStyled = styled.section`
       //    transform: rotate(180deg) !important;
       //  }
       //}
-      
+
     }
 
     &__user {
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       &_hidden {
         opacity: 0;
@@ -576,6 +578,7 @@ export const FightSingleStyled = styled.section`
         z-index: 1;
         display: none;
         opacity: 0;
+        width: fit-content;
 
         &_good {
           display: flex;
@@ -632,13 +635,14 @@ export const FightSingleStyled = styled.section`
             border-radius: 50%;
           }
         }
-        
+
         img {
           width: 17px;
         }
 
         &_active {
           display: flex;
+
           &:nth-child(1) {
             animation: attackRight 1.5s .5s ease-out forwards;
           }
@@ -664,15 +668,27 @@ export const FightSingleStyled = styled.section`
         }
 
         &:nth-child(1) {
-          top: 23px;
+          bottom: 463px;
+
+          @media screen and (max-width: 992px) {
+            top: 23px;
+          }
         }
 
         &:nth-child(2) {
-          top: 127px;
+          bottom: 340px;
+
+          @media screen and (max-width: 992px) {
+            top: 127px;
+          }
         }
 
         &:nth-child(3) {
-          top: 262px;
+          bottom: 140px;
+
+          @media screen and (max-width: 992px) {
+            top: 262px;
+          }
         }
       }
 
@@ -750,7 +766,7 @@ export const FightSingleStyled = styled.section`
           }
         }
       }
-      
+
     }
   }
 
@@ -782,19 +798,18 @@ export const FightSingleStyled = styled.section`
   }
 
 
-
   @media screen and (max-width: 850px) {
     flex-direction: column;
 
     .section-fight__lft {
       margin-bottom: 20px;
     }
-    
+
     .section-fight__center {
       position: fixed;
       bottom: 10px;
       right: 10px;
     }
   }
-  
+
 `

@@ -7,7 +7,7 @@ import {AirdropMember} from "./components/AirdropMember";
 import {AirdropMoveBags} from "./components/AirdropMoveBags";
 import {AirdropInfoBlock} from "./components/AirdropInfoBlock";
 import {useDispatch, useSelector} from 'react-redux';
-import {clearAirdropBagsMap, setAirdropBags, setAirdropUserStatus} from '../../../../redux/toolkitSlice';
+import {clearAirdropBagsMap, setAirdropBags, setAirdropUserStatus, setSound} from '../../../../redux/toolkitSlice';
 import axios from "axios";
 import {getApiLink} from "../../../../functions/getApiLink";
 import {AirdropSocketContext} from "../../../../App";
@@ -53,6 +53,7 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
                 dispatch(clearAirdropBagsMap())
                 setPointOfGame("member")
                 setIsPressJoin(false)
+                dispatch(setSound("sound9"))
             }
         }).catch(er => console.log('airdrop', er))
 
@@ -60,7 +61,7 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
 
     const steps: any = {
         "choose": <AirdropBags handleBuyBags={handleBuyBags} setBags={setCountOfBags}/>,
-        "dragging": <AirdropMoveBags handleJoinGame={handleJoinGame}/>,
+        "dragging": <AirdropMoveBags setPointOfGame={setPointOfGame} handleJoinGame={handleJoinGame}/>,
         "member": <AirdropMember/>,
     }
 
@@ -79,6 +80,19 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
 
         setPointOfGame("dragging")
     }, [airdropBagsMap])
+
+    useEffect(() => {
+        dispatch(setSound('sound10'))
+
+        if(airdropWsMessages?.airdrop?.game_state === "ended") {
+            if(airdropWsMessages?.airdrop?.winner.user.id === userInfo.id) {
+                dispatch(setSound('sound13'))
+            } else {
+                dispatch(setSound('sound17'))
+            }
+        }
+
+    }, [airdropWsMessages?.airdrop?.game_state])
 
     const isUserAuthMainClass = !Object.keys(userInfo).length ? " no-auth" : ""
 

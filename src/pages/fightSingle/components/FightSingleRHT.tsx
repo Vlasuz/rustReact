@@ -11,13 +11,6 @@ import looserIcon from "./../../../assets/images/fight-looser.svg"
 import winnerIcon from "../../../assets/images/victory-cup.svg";
 import bullet from "../../../assets/images/bullet.svg";
 import {WSFight} from "../FightSingle";
-import personSSN from "../../../assets/images/persone-ssn.png";
-import personNNN from "../../../assets/images/persone-nnn.png";
-import personSNN from "../../../assets/images/persone-snn.png";
-import personNSN from "../../../assets/images/persone-nsn.png";
-import personNSS from "../../../assets/images/persone-nss.png";
-import personNNS from "../../../assets/images/persone-nns.png";
-import personSNS from "../../../assets/images/persone-sns.png";
 import {useDispatch, useSelector} from "react-redux";
 import {getApiLink} from "../../../functions/getApiLink";
 import {setSound} from "../../../redux/toolkitSlice";
@@ -128,7 +121,7 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                             <div className="line"></div>
                         </div>
                     </div>}
-                    <img src={getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs])} className={"persone-img"} alt="Persone"/>
+                    <img src={chosenSkin?.gallery ? getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs]) : personSilhouette} className={"persone-img"} alt="Persone"/>
                 </div>
             </div>
 

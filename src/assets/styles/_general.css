@@ -1058,8 +1058,8 @@ li[draggable="true"]:active {cursor: grabbing;}
 
 @media screen and (min-width: 1980px) {
     .section-fight__persone{
-        transform: scale(1.5);
-        margin-bottom: 25vh;
+        /*transform: scale(1.5);*/
+        /*margin-bottom: 25vh;*/
     }
     .section-fight__persone .attacked__bullet,
     .section-fight__persone-hit .attacked__bullet{
@@ -1196,4 +1196,8 @@ li[draggable="true"]:active {cursor: grabbing;}
         margin-right: 5px;
         font-size: 12px;
     }
+}
+
+canvas {
+    width: 100%;
 }

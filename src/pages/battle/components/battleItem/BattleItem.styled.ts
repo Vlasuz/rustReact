@@ -184,7 +184,7 @@ export const BattleItemStyled = styled.li`
         align-items: center;
         justify-content: center;
         border: 1px dashed rgba(162, 171, 197, 0.15);
-        cursor: pointer;
+        cursor: default;
 
         .noname {
           position: absolute;
@@ -235,7 +235,8 @@ export const BattleItemStyled = styled.li`
           }
         }
 
-        &:hover {
+        &:not(&.not-auth):hover {
+          cursor: pointer;
           .entry,
           .noname,
           &:after {

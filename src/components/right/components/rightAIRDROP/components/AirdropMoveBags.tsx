@@ -1,16 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import randomIcon from './../../../../../assets/images/random.svg'
-import {useDrag} from "react-dnd";
-import {ItemTypes} from "../../../../../constants/ItemTypes";
 import {AirdropMoveBagsItem} from "./AirdropMoveBagsItem";
 import {useDispatch, useSelector} from "react-redux";
-import {changeAirdropBagsMap, removeAirdropBags} from '../../../../../redux/toolkitSlice';
+import {
+    changeAirdropBagsMap,
+    clearAirdropBagsMap,
+    removeAirdropBags,
+    setAirdropUserStatus
+} from '../../../../../redux/toolkitSlice';
 
 interface IAirdropMoveBagsProps {
     handleJoinGame: any
+    setPointOfGame: any
 }
 
-export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({handleJoinGame}) => {
+export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({handleJoinGame, setPointOfGame}) => {
 
     const airdropBags = useSelector((state: any) => state.toolkit.airdropBags)
     const dispatch = useDispatch()
@@ -33,9 +37,20 @@ export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({handleJoinGame
         dispatch(removeAirdropBags(1))
     }
 
+    const handleCancelGame = () => {
+        dispatch((setAirdropUserStatus("choose")))
+        dispatch(clearAirdropBagsMap())
+        setPointOfGame("choose")
+    }
+
     return (
         <div className="airdrop__move">
-            <h3>Перетащите спальники:</h3>
+            <div className="move__top">
+                <h3>Перетащите спальники:</h3>
+                <button onClick={handleCancelGame}>
+                    x
+                </button>
+            </div>
             <ul>
 
                 {

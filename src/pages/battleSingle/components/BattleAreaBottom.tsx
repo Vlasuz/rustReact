@@ -65,7 +65,7 @@ export const BattleAreaBottom: React.FC<IBattleAreaBottomProps> = ({blocksOpen, 
                     <BattleAreaBottomBox
                         key={item}
                         isWinner={webSocket?.battle?.winners.some((win: any) => win.position === item)}
-                        winnerCoins={webSocket?.battle?.winners.filter((win: any) => win.position === item && win)[0]?.win}
+                        winnerCoins={webSocket?.battle?.winners.filter((win: any) => win.position === item && win)[0]?.total_win}
                         blocksOpen={blocksOpen}
                     />
                 )

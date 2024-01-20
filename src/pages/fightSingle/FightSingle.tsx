@@ -9,6 +9,7 @@ import {FightSingleCenter} from "./components/FightSingleCenter";
 import {FightSingleRHT} from "./components/FightSingleRHT";
 import {FightSingleLFT} from "./components/FightSingleLFT";
 import {setSound} from "../../redux/toolkitSlice";
+import {ConfettiFireworks} from "../../components/confetti/ConfettiFireworks";
 
 interface IFightSingleProps {
 
@@ -43,8 +44,6 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
         ws.current.onmessage = (e: any) => {
             const data = JSON.parse(JSON.parse(e.data))
 
-            console.log(data)
-
             if (data.type === "defense" || data.type === "attack") return;
 
             setGameData(data)
@@ -53,6 +52,10 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
             if (data.fight?.game_state === "ended") {
                 if (data?.fight?.winner?.user?.id === userData?.id) {
                     dispatch(setSound('sound13'))
+                    setIsActiveConfetti(true)
+                    setTimeout(() => {
+                        setIsActiveConfetti(false)
+                    }, 500)
                 } else {
                     dispatch(setSound('sound17'))
                 }
@@ -77,9 +80,14 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
 
     }, [ws, userData])
 
+    const [isActiveConfetti, setIsActiveConfetti] = useState(false)
+
     return (
         <WSFight.Provider value={[ws.current, gameData]}>
             <FightSingleStyled className="section-fight">
+
+                {isActiveConfetti && <ConfettiFireworks timeToEnd={5}/>}
+
                 <FightSingleLFT gameState={gameState} mainPlayer={mainPlayer} gameData={gameData}/>
 
                 <FightSingleCenter gameState={gameState} gameData={gameData}/>

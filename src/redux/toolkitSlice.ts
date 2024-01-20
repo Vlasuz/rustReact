@@ -102,7 +102,6 @@ const toolkitSlice = createSlice({
             state.userOnline = action.payload
         },
         setUserBalance(state, action) {
-            console.log(action.payload)
             if(action.payload.sum) {
                 state.user.balance = state.user.balance + action.payload.money
             } else {

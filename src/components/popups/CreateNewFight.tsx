@@ -9,7 +9,7 @@ import {ZoneOfProducts} from "./components/zoneOfProducts";
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
 import {useNavigate} from "react-router";
-import {setFightItemData, setPopup, setPopupZoneItems} from "../../redux/toolkitSlice";
+import {setFightItemData, setPopup, setPopupZoneItems, setUserBalance} from "../../redux/toolkitSlice";
 import {PopupsContext} from "../../context/popupsContext";
 import {prettyCoinValues} from "../../functions/prettyCoinValues";
 
@@ -55,6 +55,11 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
             setTimeout(() => {
                 dispatch(setPopup(''))
             }, 300)
+
+            dispatch(setUserBalance({
+                sum: true,
+                money: -data.first_player.coins
+            }))
 
             navigate("/fight/"+data.id)
         }).catch(er => console.log(er))
