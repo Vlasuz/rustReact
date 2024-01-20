@@ -35,9 +35,9 @@ export const TableForFight: React.FC<ITableForFightProps> = ({ tableValue, table
                             const date = item.created_at.slice(0, item.created_at.indexOf(' '));
                             const isWinnerIcon = item.winner?.user && item.winner.user?.id === user?.id ? victory : fail
                             const isWinnerText = item.winner?.user && item.winner.user?.id === user?.id ? 'Winner' : 'Looser'
-                            const bank = item.first_player.coins + item.second_player.coins
-                            const opponentAvatar = item.first_player.user?.id !== user?.id ? item.first_player.user?.avatar : item.second_player.user?.avatar ?? no_photo
-                            const opponentProfile =`/user/${item.first_player.user?.id !== user?.id ? item.first_player.user?.id : item.second_player.user?.id}` ?? '/user-undefined/'
+                            const bank = item.first_player?.coins + item.second_player?.coins
+                            const opponentAvatar = item?.first_player?.user?.id !== user?.id ? item?.first_player?.user?.avatar : item.second_player.user?.avatar ?? no_photo
+                            const opponentProfile =`/user/${item?.first_player?.user?.id !== user?.id ? item?.first_player?.user?.id : item.second_player.user?.id}` ?? '/user-undefined/'
 
                             return (
                                 <div key={item.id} className="tr">
@@ -61,7 +61,7 @@ export const TableForFight: React.FC<ITableForFightProps> = ({ tableValue, table
                                         <div className="td__coins">
                                             <img src={coin} alt="Ico" />
                                             <span>
-                                                {item.first_player.coins}
+                                                {item.first_player?.coins}
                                             </span>
                                         </div>
                                     </div>

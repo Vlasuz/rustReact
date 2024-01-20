@@ -28,11 +28,8 @@ import {getWsLink} from "./functions/getWsLink";
 
 // TODO СХВАТКА
 // TODO Начисления баланса юзеру после победы
-// TODO Сделать вызов бота (ПОТОМ)
-// TODO Сделать иконку вызов бота
 
 // TODO БАТТЛЫ
-// TODO Сделать вызов бота (ПОТОМ)
 
 const wsAirdrop = new WebSocket(getWsLink("ws/api/airdrop/"))
 

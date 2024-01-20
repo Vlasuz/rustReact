@@ -35,23 +35,23 @@ export const Profile: React.FC<IProfileProps> = () => {
     const [isLoadingGames, setIsLoadingGames] = useState(false)
     const user = Object.keys(elseUser).length ? elseUser : userData
 
-    useEffect(() => {
-        
-        setIsLoadingGames(true)
-        setTimeout(() => {
-            axios.get(getApiLink(`api/user/games/?id=${userId ?? userData.id}`)).then(({data}) => {
-
-                console.log(data)
-                dispatch(setUserGames(data))
-                setIsLoadingGames(false)
-        
-            }).catch(error => {
-                console.log('Error with get user games: ', error)
-                setIsLoadingGames(false)
-            })
-        }, 300)
-
-    }, [])
+    // useEffect(() => {
+    //
+    //     setIsLoadingGames(true)
+    //     setTimeout(() => {
+    //         axios.get(getApiLink(`api/user/games/?id=${userId ?? userData.id}`)).then(({data}) => {
+    //
+    //             console.log(data)
+    //             dispatch(setUserGames(data))
+    //             setIsLoadingGames(false)
+    //
+    //         }).catch(error => {
+    //             console.log('Error with get user games: ', error)
+    //             setIsLoadingGames(false)
+    //         })
+    //     }, 300)
+    //
+    // }, [])
 
     return (
         <ProfileStyle className={"section-blocks"}>

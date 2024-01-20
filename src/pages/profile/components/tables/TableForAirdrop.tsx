@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { IUser, IUserGames, IUserHistoryAirdrop, IUserHistoryFight } from '../../../../model'
 import { useUserData } from '../../../../hooks/userData'
 import coin from './../../../../assets/images/header__coins.svg'
@@ -9,10 +9,12 @@ import no_photo from './../../../../assets/images/non-photo.png'
 import { NavLink } from 'react-router-dom'
 import {setPopup, setPopupData} from "../../../../redux/toolkitSlice";
 import { useDispatch } from 'react-redux'
+import axios from "axios";
+import {getApiLink} from "../../../../functions/getApiLink";
 
 interface ITableForAirdropProps {
     tableValue: string
-    tableData: IUserGames
+    tableData: any
     gameData: IUserHistoryAirdrop[]
     user: IUser
 }

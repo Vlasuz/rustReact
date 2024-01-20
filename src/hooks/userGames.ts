@@ -20,6 +20,16 @@ export const useUserGames = ({user}: useUserDataProps) => {
             title: "Схватка",
             slug: "fight",
             data: userGames.fight_games
+        },
+        {
+            title: "Крейты",
+            slug: "crates",
+            data: userGames.fight_games
+        },
+        {
+            title: "Батлы",
+            slug: "battle",
+            data: userGames.fight_games
         }
     ]
 
