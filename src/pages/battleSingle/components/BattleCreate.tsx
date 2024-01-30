@@ -16,14 +16,13 @@ interface IBattleCreateProps {
     setGameType: any
     gameType: string
     connectToSocket: any
-    setIsBattleAuthor: any
 }
 
 interface IGameType {
     [key: string]: string
 }
 
-export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType, connectToSocket, setIsBattleAuthor}) => {
+export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType, connectToSocket}) => {
 
     const battleCrates: any = useSelector((state: any) => state.toolkit.battleCrates)
 

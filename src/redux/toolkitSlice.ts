@@ -194,13 +194,18 @@ const toolkitSlice = createSlice({
         setAirdropSaveZone2(state, action) {
             if(action.payload === "clear") {
                 state.airdropSaveZone2 = []
+            } else if(action.payload !== "") {
+                state.airdropSaveZone2 = JSON.parse(action.payload)
             } else {
                 state.airdropSaveZone2 = state.airdropBagsMap
             }
         },
         setAirdropSaveZone3(state, action) {
+            console.log(action.payload)
             if(action.payload === "clear") {
                 state.airdropSaveZone3 = []
+            } else if(action.payload !== "") {
+                state.airdropSaveZone3 = JSON.parse(action.payload)
             } else {
                 state.airdropSaveZone3 = state.airdropBagsMap
             }
@@ -208,6 +213,8 @@ const toolkitSlice = createSlice({
         setAirdropSaveZone4(state, action) {
             if(action.payload === "clear") {
                 state.airdropSaveZone4 = []
+            } else if(action.payload !== "") {
+                state.airdropSaveZone4 = JSON.parse(action.payload)
             } else {
                 state.airdropSaveZone4 = state.airdropBagsMap
             }

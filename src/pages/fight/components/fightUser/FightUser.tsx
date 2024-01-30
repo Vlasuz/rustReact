@@ -42,7 +42,7 @@ export const FightUser: React.FC<IFightUserProps> = ({ fight_user, user_winner }
 
             {
                 fight_user === null ? userLoading :
-                    <NavLink to={"/user/"+fight_user.id}>
+                    <NavLink to={"/user/"+fight_user.user.id}>
                         <div className="user__photo">
                             <img src={fight_user.user.avatar} alt="Photo" />
                         </div>

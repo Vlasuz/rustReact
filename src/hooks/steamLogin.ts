@@ -6,6 +6,7 @@ import { getApiLink } from "../functions/getApiLink"
 import setCookie from "../functions/setCookie"
 import { setUser } from "../redux/toolkitSlice"
 import {log} from "util";
+import {getBearer} from "../functions/getBearer";
 
 export const useSteamLogin = () => {
     // http://localhost:3000
@@ -33,13 +34,17 @@ export const useSteamLogin = () => {
 
         if(!steamData.includes('openid')) return;
 
+        getBearer({type: "post"})
         axios.post(urlAxios).then(({data}) => {
 
             console.log(data)
             dispatch(setUser(data.user))
             navigate(location.pathname)
             setCookie('access_token_rust', data.access_token)
+            setCookie('refresh_token_rust', data.refresh_token)
 
+        }).catch(er => {
+            console.log(er)
         })
         
     }, [])

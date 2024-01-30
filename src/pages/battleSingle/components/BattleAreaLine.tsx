@@ -5,6 +5,7 @@ import coins from "../../../assets/images/header__coins.svg";
 import {LoadingStyled} from "../../../components/loading/loading.styled";
 import {GameSocket, GameState} from "../BattleSingle";
 import {ICrate} from "../../../model";
+import {useParams} from "react-router";
 
 interface IBattleAreaLineProps {
     blocksOpen: number

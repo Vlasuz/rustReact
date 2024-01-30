@@ -75,8 +75,6 @@ export const TableForBattle: React.FC<ITableForBattleProps> = ({tableValue, tabl
                                 },
                             }
 
-                            console.log(item)
-
                             return (
                                 <div key={item.id} className="tr">
                                     <div className="td">

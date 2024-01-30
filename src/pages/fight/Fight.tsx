@@ -31,7 +31,7 @@ export const Fight: React.FC<IMainProps> = () => {
             const message = JSON.parse(JSON.parse(e.data))
 
             if(message.type === "new_room") {
-                setFightList(prev => [...prev, message.data])
+                setFightList(prev => [message.data, ...prev])
             } else if (message.type === "remove_room") {
                 setFightList(prev => prev.filter(prevItem => prevItem.id !== message.data.id))
             } else if (message.type === "change_room") {
@@ -50,7 +50,7 @@ export const Fight: React.FC<IMainProps> = () => {
 
                 <Loading>
 
-                    {fightList.map((item: IFightItem, index: number) => <FightItem key={index} data={item} />)}
+                    {fightList.map((item: IFightItem, index: number) => <FightItem key={item.id} data={item} />)}
 
                 </Loading>
 

@@ -14,6 +14,7 @@ import {CrateItem} from "./CrateItem";
 import CrateBig from "../../../assets/images/CrateBig.svg";
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserBalance} from "../../../redux/toolkitSlice";
+import {useParams} from "react-router";
 
 interface IBattleAreaProps {
     blockArea: any
@@ -27,6 +28,8 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
     const [{x, y}, api] = useSpring(() => ({x: 0, y: 105,}))
 
     const blockCenter: any = useRef(null)
+
+    const {battleId} = useParams()
 
     const dispatch = useDispatch()
 
@@ -212,6 +215,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
         "four_p": 4,
     }
 
+    console.log(webSocket?.battle?.mode)
 
     return (
         <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()}
@@ -232,15 +236,15 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
             <div className={`general-block area-${gameType}`}>
 
                 {
-                    Array.from({length: typeModes[webSocket?.battle?.mode]}, (_, index) => index + 1)?.map(item =>
+                    webSocket?.battle?.mode && Array.from({length: typeModes[webSocket?.battle?.mode]}, (_, index) => index + 1)?.map(item =>
                         <BattleAreaLine key={item} blocksOpen={blocksOpen} openedCount={openedCount}
                                         position={webSocket?.battle?.players.filter((plr: any) => plr.position === item)[0]}/>
                     )
                 }
 
-                {gameStep === "start" && <div className="area__line">
+                {battleId === "create-battle" && gameStep === "start" && <div className="area__line">
                     {
-                        battleCrates.map((item: any, index: number) => <CrateItem
+                        battleCrates.map((item: any) => <CrateItem
                             data={item.crate}
                             isOpened={false}
                             key={item.crate.id}/>)

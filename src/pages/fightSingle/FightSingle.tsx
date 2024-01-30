@@ -63,7 +63,7 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
 
                 ws.current.close()
                 setTimeout(() => {
-                    navigate("/")
+                    // navigate("/")
                 }, 5000)
             }
 

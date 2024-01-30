@@ -12,6 +12,8 @@ import {useNavigate} from "react-router";
 import {setFightItemData, setPopup, setPopupZoneItems, setUserBalance} from "../../redux/toolkitSlice";
 import {PopupsContext} from "../../context/popupsContext";
 import {prettyCoinValues} from "../../functions/prettyCoinValues";
+import {getBearer} from "../../functions/getBearer";
+import {RefreshToken} from "../../api/refreshToken";
 
 interface ICreateNewFightProps {
 
@@ -43,8 +45,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
     const handleCreateFight = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-
-
+        // getBearer({type: "post"})
         axios.post(getApiLink("api/fight/room/create"), {
             "coins": coinsValue,
             "items": popupZoneItems.map((item: IProduct) => item.id)
@@ -62,7 +63,9 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
             }))
 
             navigate("/fight/"+data.id)
-        }).catch(er => console.log(er))
+        }).catch(er => {
+            er.response.status === 401 && RefreshToken({dispatch})
+        })
     }
 
     useEffect(() => {

@@ -9,6 +9,7 @@ import {LazyLoadImage} from 'react-lazy-load-image-component';
 import {LoadingStyled} from '../../../components/loading/loading.styled'
 import {changeUserBalance} from '../../../redux/toolkitSlice'
 import {prettyCoinValues} from "../../../functions/prettyCoinValues";
+import {getBearer} from "../../../functions/getBearer";
 
 interface ISkinItemProps {
     skin: ISkin
@@ -27,6 +28,7 @@ export const SkinItem: React.FC<ISkinItemProps> = ({skin, chosenSkin, setChosenS
 
         setIsSettingSkin(true)
 
+        getBearer({type: "post"})
         axios.post(getApiLink(`api/fight/shop/choose?skin_id=${skin.id}`)).then(({data}) => {
             if (data.status) {
                 setChosenSkin(skin.id)
@@ -37,6 +39,7 @@ export const SkinItem: React.FC<ISkinItemProps> = ({skin, chosenSkin, setChosenS
 
     const handleBuy = () => {
         setIsSettingSkin(true)
+        getBearer({type: "post"})
         axios.post(getApiLink(`api/fight/shop/buy?skin_id=${skin.id}`)).then(({data}) => {
             if (data.status) {
                 setSkinBought((prev: any) => [...prev, skin])

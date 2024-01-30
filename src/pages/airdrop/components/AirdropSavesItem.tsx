@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addAirdropBagsMap, setAirdropSaveZone1, setAirdropSaveZone2, setAirdropSaveZone3, setAirdropSaveZone4, setAirdropUserStatus } from '../../../redux/toolkitSlice';
 import {AirdropSocketContext} from "../../../App";
 import {IUser} from "../../../model";
+import setCookie from "../../../functions/setCookie";
 
 interface IAirdropSavesItemProps {
     save?: any
@@ -18,6 +19,7 @@ export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, saveZo
     const dispatch = useDispatch()
     const airdropWsMessages: any = useContext(AirdropSocketContext)
     const userData = useSelector((state: any) => state.toolkit.user)
+    const airdropBagsMap = useSelector((state: any) => state.toolkit.airdropBagsMap)
 
 
     useEffect(() => {
@@ -26,29 +28,37 @@ export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, saveZo
             if(saveZone === 1) {
                 if(save.length === 0) {
                     dispatch(setAirdropSaveZone1(""))
+                    setCookie("airdrop_save_bags_1", JSON.stringify(airdropBagsMap))
                 } else {
                     dispatch(setAirdropSaveZone1('clear'))
+                    setCookie("airdrop_save_bags_1", "")
                 }
             }
             if(saveZone === 2) {
                 if(save.length === 0) {
                     dispatch(setAirdropSaveZone2(""))
+                    setCookie("airdrop_save_bags_2", JSON.stringify(airdropBagsMap))
                 } else {
                     dispatch(setAirdropSaveZone2('clear'))
+                    setCookie("airdrop_save_bags_2", "")
                 }
             }
             if(saveZone === 3) {
                 if(save.length === 0) {
                     dispatch(setAirdropSaveZone3(""))
+                    setCookie("airdrop_save_bags_3", JSON.stringify(airdropBagsMap))
                 } else {
                     dispatch(setAirdropSaveZone3('clear'))
+                    setCookie("airdrop_save_bags_3", "")
                 }
             }
             if(saveZone === 4) {
                 if(save.length === 0) {
                     dispatch(setAirdropSaveZone4(""))
+                    setCookie("airdrop_save_bags_4", JSON.stringify(airdropBagsMap))
                 } else {
                     dispatch(setAirdropSaveZone4('clear'))
+                    setCookie("airdrop_save_bags_4", "")
                 }
             }
 

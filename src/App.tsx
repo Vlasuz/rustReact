@@ -24,7 +24,6 @@ import {getWsLink} from "./functions/getWsLink";
 // TODO Рефреш токен
 
 // TODO ЮЗЕР
-// TODO Добавить таблицу с баттлами (ПОТОМ)
 
 // TODO СХВАТКА
 // TODO Начисления баланса юзеру после победы

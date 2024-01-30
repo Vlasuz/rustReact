@@ -3,14 +3,13 @@ import {IUser, IUserGames, IUserHistory, IUserHistoryAirdrop, IUserHistoryFight}
 import {TableForAirdrop} from './tables/TableForAirdrop'
 import {TableForFight} from './tables/TableForFight'
 import {LoadingStyled} from '../../../components/loading/loading.styled'
-import axios from "axios";
-import {getApiLink} from "../../../functions/getApiLink";
 import {TableForCrate} from "./tables/TableForCrate";
 import {TableForBattle} from "./tables/TableForBattle";
 import {getTableAirdrop} from "../../../api/getTableAirdrop";
 import {getTableFight} from "../../../api/getTableFight";
 import {getTableCrates} from "../../../api/getTableCrates";
 import {getTableBattle} from "../../../api/getTableBattle";
+import {useParams} from "react-router";
 
 interface ITablesProps {
     games: IUserHistoryAirdrop[] | IUserHistoryFight[] | any
@@ -49,6 +48,8 @@ export const Tables: React.FC<ITablesProps> = ({games, user, isLoadingGames}) =>
     const getTableData = (game: string) => games.filter((item: IUserGames) => item.slug.includes(game))[0]
     // const getTableGames = (game: string) => games.filter((item: IUserGames) => item.slug.includes(game))[0].data
 
+    const {userId} = useParams()
+
 
     const [gameAirdropTableInfo, setGameAirdropTableInfo]: any = useState(null)
     const [isLoadAirdrop, setIsLoadAirdrop] = useState(false)
@@ -59,10 +60,10 @@ export const Tables: React.FC<ITablesProps> = ({games, user, isLoadingGames}) =>
     const [gameBattleTableInfo, setGameBattleTableInfo]: any = useState(null)
     const [isLoadBattle, setIsLoadBattle] = useState(false)
     useEffect(() => {
-        getTableBattle({setGame: setGameBattleTableInfo, setLoad: setIsLoadBattle})
-        getTableAirdrop({setGame: setGameAirdropTableInfo, setLoad: setIsLoadAirdrop})
-        getTableFight({setGame: setGameFightTableInfo, setLoad: setIsLoadFight})
-        getTableCrates({setGame: setGameCrateTableInfo, setLoad: setIsLoadCrate})
+        getTableBattle({setGame: setGameBattleTableInfo, setLoad: setIsLoadBattle, userId: userId ?? user.id})
+        getTableAirdrop({setGame: setGameAirdropTableInfo, setLoad: setIsLoadAirdrop, userId: userId ?? user.id})
+        getTableFight({setGame: setGameFightTableInfo, setLoad: setIsLoadFight, userId: userId ?? user.id})
+        getTableCrates({setGame: setGameCrateTableInfo, setLoad: setIsLoadCrate, userId: userId ?? user.id})
     }, [])
 
 

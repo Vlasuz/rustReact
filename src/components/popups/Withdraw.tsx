@@ -5,6 +5,7 @@ import {LoadingStyled} from "../loading/loading.styled";
 import {setPopup, setWithdrawInfo} from "../../redux/toolkitSlice";
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
+import {getBearer} from "../../functions/getBearer";
 
 interface IWithdrawProps {
 
@@ -16,6 +17,7 @@ export const Withdraw: React.FC<IWithdrawProps> = () => {
     const inventoryWithdraw = useSelector((state: any) => state.toolkit.inventoryWithdraw).map((item: any) => item.id)
 
     useEffect(() => {
+        getBearer({type: "post"})
         axios.post(getApiLink("api/trade/create/withdraw/"), inventoryWithdraw).then(({data}) => {
             console.log(data)
             dispatch(setWithdrawInfo(data))

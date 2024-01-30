@@ -18,9 +18,9 @@ export const User: React.FC<IUserProps> = ({userData}) => {
 
     return (
         <div className="top-gamer">
-            <button className="top-gamer__vertical" onClick={_ => dispatch(setPopup('popup-change-status'))}>
+            <button className="top-gamer__vertical" onClick={_ => !userId && dispatch(setPopup('popup-change-status'))}>
                 <span>
-                    {userData.status}
+                    {userData.status ? userData.status : "..."}
                 </span>
             </button>
             <div className="top-gamer__info">

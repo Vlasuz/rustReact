@@ -40,8 +40,6 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
     const isUserInGame = Object.keys(userData).length && (data.first_player.user.id === userData.id || data.second_player?.user.id === userData.id)
     const isGameRunning = !isUserInGame && !(data.game_state === "waiting" || data.game_state === "attack" || data.game_state === "defense" || data.game_state === "duel") ? "process" : ""
 
-    console.log(isUserInGame)
-
     const handlePressButton = () => {
         if (isUserInGame) {
             dispatch(setFightItemData(data))
@@ -60,8 +58,6 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
             dispatch(setFightItemData(data))
         }
     }
-
-    console.log(data)
 
     const buttonContent = () => {
         if (isUserInGame && data.game_state !== "ended") {
@@ -83,7 +79,7 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
     }
 
     return (
-        <FightButtonStyled onClick={_ => data.winner === null && handlePressButton()} className={"item__button " + data.winner !== null ? "finish" : isGameRunning}>
+        <FightButtonStyled onClick={_ => data.winner === null && handlePressButton()} className={"item__button " + (data.winner !== null ? "finish" : isGameRunning)}>
 
             {buttonContent()}
 

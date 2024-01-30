@@ -1,6 +1,4 @@
-import { useDispatch } from "react-redux"
 import setCookie from "./setCookie"
-import { useNavigate } from "react-router"
 import {clearUserInventory, setUser} from "../redux/toolkitSlice"
 
 interface IHandleExit {
@@ -12,7 +10,8 @@ interface IHandleExit {
 export function handleExit({event, dispatch, navigate}: IHandleExit) {
     event.preventDefault()
 
-    setCookie('access_token_rust', '')
+    setCookie('access_token_rust', "")
+    setCookie('refresh_token_rust', "")
 
     if(window.location.href.includes('profile')) {
         navigate('/')

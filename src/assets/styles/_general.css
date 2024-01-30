@@ -694,7 +694,7 @@ li[draggable="true"]:active {cursor: grabbing;}
     right: 0;
     z-index: 2;
     display: none !important;
-    opacity: 0
+    opacity: 0;
 }
 .section-fight__persone .attacked__bullet:nth-child(1) {
     -webkit-animation: attackRight 1.5s .5s ease-out forwards;
@@ -709,15 +709,9 @@ li[draggable="true"]:active {cursor: grabbing;}
     animation: attackRight 1.5s 1.5s ease-out forwards
 }
 .section-fight__persone .attacked__bullet_good {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center
+    /*justify-content: center*/
 }
 .section-fight__persone .attacked__bullet_good:after {
     content: "";
@@ -744,15 +738,8 @@ li[draggable="true"]:active {cursor: grabbing;}
     border-radius: 50%
 }
 .section-fight__persone .attacked__bullet_bad {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center
 }
 .section-fight__persone .attacked__bullet_bad:after {
     content: "";
@@ -935,124 +922,6 @@ li[draggable="true"]:active {cursor: grabbing;}
     100% {
         right: 120px;
         opacity: 1
-    }
-}
-
-
-@media screen and (max-height: 860px) {
-    .section-fight__persone .persone__start .persone-img{
-        width: 1050px;
-    }
-    .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
-        bottom: 398px;
-        width: 280px;
-    }
-    .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
-        bottom: 260px;
-        width: 291px;
-    }
-    .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
-        bottom: -17px;
-        width: 282px;
-    }
-}
-@media screen and (max-height: 800px) {
-    .section-fight__persone .persone__start .persone-img{
-        width: 950px;
-    }
-    .section-fight__persone .persone__green img, .section-fight__persone .persone__red img{
-        width: 270px;
-    }
-    .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
-        bottom: 351px;
-        width: 260px;
-    }
-    .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
-        bottom: 236px;
-        width: 250px;
-    }
-    .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
-        bottom: -17px;
-        width: 253px;
-    }
-
-    .section-fight__persone .attacked__bullet:nth-child(1),
-    .section-fight__persone-hit .attacked__bullet:nth-child(1){
-        bottom: 380px;
-    }
-    .section-fight__persone .attacked__bullet:nth-child(2),
-    .section-fight__persone-hit .attacked__bullet:nth-child(2){
-        bottom: 290px;
-    }
-    .section-fight__persone .attacked__bullet:nth-child(3),
-    .section-fight__persone-hit .attacked__bullet:nth-child(3){
-        bottom: 140px;
-    }
-}
-@media screen and (max-height: 750px) {
-    .section-fight__persone .persone__start .persone-img{
-        width: 850px;
-    }
-    .section-fight__persone .persone__green img, .section-fight__persone .persone__red img{
-        width: 240px;
-    }
-    .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
-        bottom: 308px;
-        width: 225px;
-    }
-    .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
-        bottom: 200px;
-        width: 231px;
-    }
-    .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
-        bottom: -23px;
-        width: 227px;
-    }
-
-    .section-fight__persone .attacked__bullet:nth-child(1),
-    .section-fight__persone-hit .attacked__bullet:nth-child(1){
-        bottom: 335px;
-    }
-    .section-fight__persone .attacked__bullet:nth-child(2),
-    .section-fight__persone-hit .attacked__bullet:nth-child(2){
-        bottom: 250px;
-    }
-    .section-fight__persone .attacked__bullet:nth-child(3),
-    .section-fight__persone-hit .attacked__bullet:nth-child(3){
-        bottom: 120px;
-    }
-}
-@media screen and (max-height: 700px) {
-    .section-fight__persone .persone__start .persone-img{
-        width: 750px;
-    }
-    .section-fight__persone .persone__green img, .section-fight__persone .persone__red img{
-        width: 210px;
-    }
-    .section-fight__persone .persone__green img:nth-child(1), .section-fight__persone .persone__red img:nth-child(1){
-        bottom: 264px;
-        width: 197px;
-    }
-    .section-fight__persone .persone__green img:nth-child(2), .section-fight__persone .persone__red img:nth-child(2){
-        bottom: 170px;
-        width: 200px;
-    }
-    .section-fight__persone .persone__green img:nth-child(3), .section-fight__persone .persone__red img:nth-child(3){
-        bottom: -30px;
-        width: 200px;
-    }
-
-    .section-fight__persone .attacked__bullet:nth-child(1),
-    .section-fight__persone-hit .attacked__bullet:nth-child(1){
-        bottom: 285px;
-    }
-    .section-fight__persone .attacked__bullet:nth-child(2),
-    .section-fight__persone-hit .attacked__bullet:nth-child(2){
-        bottom: 220px;
-    }
-    .section-fight__persone .attacked__bullet:nth-child(3),
-    .section-fight__persone-hit .attacked__bullet:nth-child(3){
-        bottom: 100px;
     }
 }
 

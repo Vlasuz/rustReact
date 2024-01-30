@@ -7,6 +7,7 @@ import {closePopup} from "../../functions/closePopup";
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
 import {IUser} from "../../model";
+import {getBearer} from "../../functions/getBearer";
 
 interface IChangeUserSloganProps {
 
@@ -22,6 +23,7 @@ export const ChangeUserSlogan: React.FC<IChangeUserSloganProps> = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
+        getBearer({type: "post"})
         axios.post(getApiLink('api/user/change_status/?status='+sloganValue)).then(({data}) => {
             console.log(data)
 

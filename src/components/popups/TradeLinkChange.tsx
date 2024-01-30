@@ -5,6 +5,7 @@ import {getApiLink} from "../../functions/getApiLink";
 import {PopupsContext} from "../../context/popupsContext";
 import {useDispatch} from "react-redux";
 import {setPopup} from "../../redux/toolkitSlice";
+import {getBearer} from "../../functions/getBearer";
 
 interface ITradeLinkChangeProps {
 
@@ -21,6 +22,7 @@ export const TradeLinkChange: React.FC<ITradeLinkChangeProps> = () => {
         e.preventDefault()
         setIsError(false)
 
+        getBearer({type: "post"})
         axios.post(getApiLink('api/user/change_trade_link/'), {"trade_link": tradeLink}).then(({data}) => {
 
             if(data.status) {

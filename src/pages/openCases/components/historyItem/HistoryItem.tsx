@@ -4,6 +4,7 @@ import coins from "../../../../assets/images/header__coins.svg";
 import userPhoto from "../../../../assets/images/user2.png";
 import {HistoryItemStyled} from "./HitoryItem.styled";
 import {CSSTransition} from "react-transition-group";
+import {NavLink} from "react-router-dom";
 
 interface IOpenCasesItemProps {
     type: string
@@ -25,10 +26,10 @@ export const HistoryItem: React.FC<IOpenCasesItemProps> = ({type, data}) => {
                     <img src={coins} alt=""/>
                     <span>{data.item.price}</span>
                 </div>
-                <div className="item__author">
+                <NavLink to={`/user/${data.user.id}`} className="item__author">
                     <img src={data.user.avatar} alt=""/>
                     <span>{data.user.name}</span>
-                </div>
+                </NavLink>
             </div>
         </HistoryItemStyled>
 

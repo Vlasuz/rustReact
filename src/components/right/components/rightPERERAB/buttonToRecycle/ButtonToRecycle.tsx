@@ -8,6 +8,7 @@ import { getApiLink } from '../../../../../functions/getApiLink'
 import { useDispatch } from 'react-redux'
 import { setNotice, setPererabZoneItems, setSound, setUserBalance } from '../../../../../redux/toolkitSlice'
 import { LoadingStyled } from '../../../../loading/loading.styled'
+import {getBearer} from "../../../../../functions/getBearer";
 
 interface IButtonToRecycleProps {
     pererabZoneItems: IProduct[]
@@ -27,6 +28,7 @@ export const ButtonToRecycle: React.FC<IButtonToRecycleProps> = ({ pererabZoneIt
     const handleRecycle = () => {
         setIsRecycling(true)
 
+        getBearer({type: "post"})
         axios.post(getApiLink(`api/items/recycle/`), pererabZoneItems.map(item => item.id)).then(({ data }) => {
             dispatch(setUserBalance(data.balance))
             dispatch(setNotice('recycled'))
