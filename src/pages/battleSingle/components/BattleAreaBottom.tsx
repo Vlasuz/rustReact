@@ -29,7 +29,7 @@ export const BattleAreaBottom: React.FC<IBattleAreaBottomProps> = ({blocksOpen, 
     const typeClasses: {[key: string]: { playersCount: number, winnerClass: string}} = {
         "two_way": {
             playersCount: 2,
-            winnerClass: webSocket?.battle?.winners.some((win: any) => win.position === 1) ? "general-block-end_left-side" : "general-block-end_right-side"
+            winnerClass: webSocket?.battle?.winners.length === 2 ? "general-block-end_all-side" : webSocket?.battle?.winners.some((win: any) => win.position === 1) ? "general-block-end_left-side" : "general-block-end_right-side"
         },
         "three_way": {
             playersCount: 3,

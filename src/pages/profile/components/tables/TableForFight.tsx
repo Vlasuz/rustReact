@@ -30,7 +30,7 @@ export const TableForFight: React.FC<ITableForFightProps> = ({ tableValue, table
                 <div className="tbody">
 
                     {
-                        gameData?.map((item: IUserHistoryFight) => {
+                        gameData?.map((item: IUserHistoryFight, index: number) => {
                             const time = item.created_at.slice(item.created_at.indexOf(' '));
                             const date = item.created_at.slice(0, item.created_at.indexOf(' '));
                             const isWinnerIcon = item.winner?.user && item.winner.user?.id === user?.id ? victory : fail
@@ -40,7 +40,7 @@ export const TableForFight: React.FC<ITableForFightProps> = ({ tableValue, table
                             const opponentProfile =`/user/${item?.first_player?.user?.id !== user?.id ? item?.first_player?.user?.id : item.second_player.user?.id}` ?? '/user-undefined/'
 
                             return (
-                                <div key={item.id} className="tr">
+                                <div key={item.id + index} className="tr">
                                     <div className="td">
                                         {time}
                                         <span>{date}</span>

@@ -35,7 +35,7 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, pla
 
     const handleJoin = () => {
         if(player?.user?.avatar) {
-            return navigate(`/user/${user.id}`)
+            return navigate(`/user/${player?.user?.id}`)
         }
 
         getBearer({type: "post"})

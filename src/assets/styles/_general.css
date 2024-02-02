@@ -87,8 +87,21 @@ li[draggable="true"]:active {cursor: grabbing;}
 .section-fight__bottom_finish .bottom__status_winner {
     background: -webkit-gradient(linear,left top,left bottom,from(rgba(245,173,87,0)),to(rgba(245,173,87,.15)));
     background: -o-linear-gradient(top,rgba(245,173,87,0) 0,rgba(245,173,87,.15) 100%);
-    background: linear-gradient(180deg,rgba(245,173,87,0) 0,rgba(245,173,87,.15) 100%)
+    background: linear-gradient(180deg,rgba(245,173,87,0) 0,rgba(245,173,87,.15) 100%);
 }
+.section-fight__bottom_finish .bottom__status_winner img {
+    animation: winnerCupTrigger .2s infinite linear alternate-reverse;
+}
+
+@keyframes winnerCupTrigger {
+    from {
+        transform: translateX(-10px) rotate(10deg);
+    }
+    to {
+        transform: translateX(10px) rotate(-10deg);
+    }
+}
+
 .section-fight__bottom_finish .bottom__status_looser {
     background: -webkit-gradient(linear,left top,left bottom,from(rgba(162,171,197,0)),to(rgba(162,171,197,.15)));
     background: -o-linear-gradient(top,rgba(162,171,197,0) 0,rgba(162,171,197,.15) 100%);

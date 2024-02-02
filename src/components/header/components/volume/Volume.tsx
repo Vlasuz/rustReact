@@ -5,6 +5,7 @@ import music from './../../../../assets/images/music.svg'
 import { useMusicVolume } from '../../../../hooks/changeMusicValue'
 import { useSounds } from '../../../../hooks/sounds'
 import { soundList } from '../../../../data/soundList'
+import getCookies from "../../../../functions/getCookie";
 
 interface IVolumeProps {
 

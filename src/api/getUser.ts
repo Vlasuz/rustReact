@@ -4,6 +4,7 @@ import { getApiLink } from "../functions/getApiLink";
 import { setMutedUsers, setUser } from "../redux/toolkitSlice";
 import { getUserGames } from "./getUserGames";
 import {getBearer} from "../functions/getBearer";
+import {RefreshToken} from "./refreshToken";
 
 interface IGetUserProps {
     dispatch?: any
@@ -21,6 +22,7 @@ export const getUser = ({ dispatch }: IGetUserProps) => {
 
     }).catch(error => {
         console.log('Error with get user: ', error)
+        error.response.status === 401 && RefreshToken({dispatch})
     })
     
 };

@@ -23,6 +23,8 @@ interface IFightSingleLFTProps {
 
 export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, gameState, gameData}) => {
 
+    console.log(gameState)
+
     const [suit, setSuit] = useState([false, false, false])
     const [suitType] = useState(["Голова", "Торс", "Ноги"])
     const [isFullSuit, setIsFullSuit] = useState(false)
@@ -54,18 +56,16 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                 "legs": suit[2]
             }))
         }
-
-        // dispatch(setSound("sound7"))
     }, [suit])
 
     useEffect(() => {
-        if(suit[2]) dispatch(setSound("sound7"))
+        if (suit[2]) dispatch(setSound("sound7"))
     }, [suit[2]])
     useEffect(() => {
-        if(suit[1]) dispatch(setSound("sound7"))
+        if (suit[1]) dispatch(setSound("sound7"))
     }, [suit[1]])
     useEffect(() => {
-        if(suit[0]) dispatch(setSound("sound8"))
+        if (suit[0]) dispatch(setSound("sound8"))
     }, [suit[0]])
 
     const [isHoverButtonToSkin, setIsHoverButtonToSkin] = useState(10)
@@ -85,9 +85,26 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
 
     const isWinner = gameData.fight?.winner?.user?.id !== userData?.id
 
+    useEffect(() => {
+        const canvas = document.querySelector('.canvas_winner');
+        if (!canvas) return;
+
+        setInterval(() => {
+            // @ts-ignore
+            canvas.confetti = canvas.confetti || confetti.create(canvas, {resize: true});
+
+            // @ts-ignore
+            canvas.confetti({
+                spread: 70,
+                origin: {y: 1.2}
+            });
+        }, 1000)
+
+    }, [gameState])
+
     return (
         <div className="section-fight__rht">
-            <FightSingleTop player={opponentPlayer}/>
+            <FightSingleTop player={opponentPlayer} gameData={gameData}/>
             <div className="section-fight__persone section-fight__persone-hit">
                 {gameState === "prepare" && <div className="persone__green">
                     <img className={"head" + (isHoverButtonToSkin === 0 ? " img_hover" : suit[0] ? " img_clicked" : "")}
@@ -121,7 +138,9 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                             <div className="line"></div>
                         </div>
                     </div>}
-                    <img src={chosenSkin?.gallery ? getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs]) : personSilhouette} className={"persone-img"} alt="Persone"/>
+                    <img
+                        src={gameState === "ended" || gameState === "duel" ? chosenSkin?.gallery ? getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs]) : getApiLink(settings.default_fight_skin.gallery[suitHead + suitBody + suitLegs]) : personSilhouette}
+                        className={"persone-img"} alt="Persone"/>
                 </div>
             </div>
 
@@ -131,7 +150,9 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
 
             {(gameState === "duel" || gameState === "ended") &&
                 <div className="section-fight__bottom section-fight__bottom_finish">
-                    <div className={"bottom__status" + (gameData.fight?.winner?.user?.id && isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
+                    {gameData.fight?.winner?.user?.id && isWinner && <canvas className="canvas_winner"></canvas>}
+                    <div
+                        className={"bottom__status" + (gameData.fight?.winner?.user?.id && isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
                         {gameState === "ended" && <img src={isWinner ? winnerIcon : looserIcon} alt={"winner"}/>}
                     </div>
                 </div>}

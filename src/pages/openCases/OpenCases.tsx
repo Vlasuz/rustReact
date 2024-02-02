@@ -85,7 +85,6 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
 
         getBearer({type: "post"})
         axios.post(getApiLink(`api/crate/open/?count=${countOfCases}&crate_id=${chosenCrate.id}`)).then(({data}) => {
-            console.log(data)
             if(data.status === false) return setIsClicked(false);
 
             setIsActiveSpin(false)
@@ -99,9 +98,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
             dispatch(setUserBalance({sum: true, money: -(countOfCases * chosenCrate.price)}))
             setWinnerItem(data.items)
 
-            console.log(data)
             const timeToFinal = setTimeout(() => {
-                console.log(data?.items)
 
                 for(let i = 0; i < data?.items.length; i++) {
                     dispatch(setUserBalance({sum: true, money: data?.items[i]?.price}))
@@ -150,8 +147,6 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
             //     dispatch(setSound(''));
             // }, 2);
 
-            console.log(positionWinnerBlock, firstPositionWinnerBlock);
-
             elapsedTime += a;
 
             if (elapsedTime < animationDuration) {
@@ -194,11 +189,11 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     <img src={spinArrow} alt=">" className="spin__arrow_lft"/>
                     <img src={spinArrow} alt="<" className="spin__arrow_rht"/>
                     <div className="spins">
-                        {countOfCases >= 2 && <CaseRollingBlock winnerItem={winnerItem[0]} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
-                        {countOfCases >= 2 && <CaseRollingBlock winnerItem={winnerItem[1]} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
-                        {countOfCases >= 3 && <CaseRollingBlock winnerItem={winnerItem[2]} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
-                        {countOfCases >= 4 && <CaseRollingBlock winnerItem={winnerItem[3]} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
-                        {countOfCases >= 5 && <CaseRollingBlock winnerItem={winnerItem[4]} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 2 && <CaseRollingBlock winnerItem={winnerItem[0]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 2 && <CaseRollingBlock winnerItem={winnerItem[1]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 3 && <CaseRollingBlock winnerItem={winnerItem[2]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 4 && <CaseRollingBlock winnerItem={winnerItem[3]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 5 && <CaseRollingBlock winnerItem={winnerItem[4]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
                     </div>
                 </div>}
                 <div className="center__buttons">

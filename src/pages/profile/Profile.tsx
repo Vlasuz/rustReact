@@ -35,8 +35,6 @@ export const Profile: React.FC<IProfileProps> = () => {
     const {games} = useUserGames({user})
     const [isLoadingGames, setIsLoadingGames] = useState(false)
 
-    console.log(elseUser)
-
     useEffect(() => {
 
         setIsLoadingGames(true)

@@ -8,7 +8,7 @@ import {IUser} from "../../model";
 import {FightSingleCenter} from "./components/FightSingleCenter";
 import {FightSingleRHT} from "./components/FightSingleRHT";
 import {FightSingleLFT} from "./components/FightSingleLFT";
-import {setSound} from "../../redux/toolkitSlice";
+import {setSound, setUserBalance} from "../../redux/toolkitSlice";
 import {ConfettiFireworks} from "../../components/confetti/ConfettiFireworks";
 
 interface IFightSingleProps {
@@ -30,6 +30,7 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
     const dispatch = useDispatch()
 
     const userData: IUser = useSelector((state: any) => state.toolkit.user)
+    const settings = useSelector((state: any) => state.toolkit.siteSettings)
 
     useEffect(() => {
 
@@ -46,6 +47,7 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
 
             if (data.type === "defense" || data.type === "attack") return;
 
+                    console.log(data)
             setGameData(data)
             setGameState(data.fight?.game_state ?? "waiting")
 
@@ -56,6 +58,13 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
                     setTimeout(() => {
                         setIsActiveConfetti(false)
                     }, 500)
+
+                    if(data?.timer < 0) return;
+
+                    dispatch(setUserBalance({
+                        sum: true,
+                        money: data?.fight?.winner?.coins * 2 - ((data?.fight?.winner?.coins * 2) * settings.fight_commission / 100)
+                    }))
                 } else {
                     dispatch(setSound('sound17'))
                 }
@@ -78,7 +87,8 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
             }
         }
 
-    }, [ws, userData])
+    }, [ws])
+
 
     const [isActiveConfetti, setIsActiveConfetti] = useState(false)
 

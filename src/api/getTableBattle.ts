@@ -1,9 +1,14 @@
 import axios from "axios";
 import {getApiLink} from "../functions/getApiLink";
+import { setUserGames } from "../redux/toolkitSlice";
 
-export const getTableBattle = async ({setGame, setLoad, userId}: any) => {
+export const getTableBattle = async ({dispatch, setGame, setLoad, userId}: any) => {
     await axios.get(getApiLink(`api/user/games/battle/${userId?.length ? `?id=${userId}` : ""}`)).then(({data}) => {
         setGame(data)
         setLoad(true)
+        dispatch(setUserGames({
+            type: "battle",
+            data
+        }))
     })
 }

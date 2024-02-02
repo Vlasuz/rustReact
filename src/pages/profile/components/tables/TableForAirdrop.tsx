@@ -46,7 +46,7 @@ export const TableForAirdrop: React.FC<ITableForAirdropProps> = ({ tableValue, t
                 <div className="tbody">
 
                     {
-                        gameData?.map((item: IUserHistoryAirdrop) => {
+                        gameData?.map((item: IUserHistoryAirdrop, index: number) => {
                             const time = item.created_at.slice(item.created_at.indexOf(' '));
                             const date = item.created_at.slice(0, item.created_at.indexOf(' '));
                             const avatar = item.winner.user?.avatar ?? no_photo
@@ -57,7 +57,7 @@ export const TableForAirdrop: React.FC<ITableForAirdropProps> = ({ tableValue, t
                             const smallHash = item.random_hash.slice(0, 5) + '...' + item.random_hash.slice(item.random_hash.length - 6)
 
                             return (
-                                <div key={item.id} className="tr">
+                                <div key={item.id + index} className="tr">
                                     <div className="td">
                                         {time}
                                         <span>{date}</span>

@@ -39,7 +39,7 @@ export const VolumeStyled = styled.div`
             appearance: none;
             outline: none;
             overflow: hidden;
-            height: 3px;
+            height: 5px;
             border-radius: 10px;
         }
         input[type=range]::-webkit-slider-runnable-track {

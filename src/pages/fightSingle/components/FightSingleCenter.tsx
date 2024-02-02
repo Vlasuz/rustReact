@@ -17,6 +17,8 @@ export const FightSingleCenter: React.FC<IFightSingleCenterProps> = ({gameState,
 
     const {seconds, milliseconds} = useFightTimer(fightWsMessages[1]?.timer)
 
+    const millisecondsWithTest = milliseconds < 0 ? 99 - milliseconds : milliseconds
+
     return (
         <div className="section-fight__center">
             {(gameState === "ended" || gameState === "duel") && <div className="center__finish">
@@ -42,7 +44,7 @@ export const FightSingleCenter: React.FC<IFightSingleCenterProps> = ({gameState,
                         <span>{seconds < 10 ? "0" + seconds : seconds}</span>
                     </div>
                     <div className="sec">
-                        <span>.{milliseconds < 10 ? "0" + milliseconds : milliseconds}</span>
+                        <span>.{millisecondsWithTest < 10 ? "0" + millisecondsWithTest : millisecondsWithTest}</span>
                     </div>
                 </div>
             </div>}

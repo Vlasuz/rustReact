@@ -17,18 +17,8 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from 'react-dnd';
 import {getWsLink} from "./functions/getWsLink";
 
-// TODO АИРДРОП
-
-// TODO ОБЩИЕ
-// TODO Починить таймер что бы не было минусов
-// TODO Рефреш токен
-
-// TODO ЮЗЕР
-
 // TODO СХВАТКА
 // TODO Начисления баланса юзеру после победы
-
-// TODO БАТТЛЫ
 
 const wsAirdrop = new WebSocket(getWsLink("ws/api/airdrop/"))
 

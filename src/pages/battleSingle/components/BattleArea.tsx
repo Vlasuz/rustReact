@@ -73,6 +73,10 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
     useEffect(() => {
 
+        const openedCount = webSocket?.battle?.crates?.length > 1 ? webSocket?.battle?.crates?.reduce((prev: any, current: any) => {
+            return prev + current.opened;
+        }, 0) : webSocket?.battle?.crates[0].opened
+
         setIsCanDrag(true)
 
         if (webSocket?.battle?.status === "process" && webSocket?.battle?.crates[0]?.opened === 0) {
@@ -90,6 +94,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                 setIsCanDrag(true)
                 setIsGoCalc(true)
                 setBlocksOpen(3)
+                setCoodYnew(-(openedCount * 140 + 140 + 200) + 120)
                 return;
             }
 
@@ -108,7 +113,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                     setIsGoCalc(true)
 
                     setTimeout(() => {
-                        setCoodYnew(prev => prev -= 50)
+                        setCoodYnew(prev => prev -= 200)
                         setBlocksOpen(3)
 
                         setIsCanDrag(true)
@@ -133,10 +138,6 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
             }, 5000)
 
         }
-
-        const openedCount = webSocket?.battle?.crates?.length > 1 ? webSocket?.battle?.crates?.reduce((prev: any, current: any) => {
-            return prev + current.opened;
-        }, 0) : webSocket?.battle?.crates[0].opened
 
         setCoodYnew(-(openedCount * 140) + 120)
 

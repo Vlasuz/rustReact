@@ -20,7 +20,7 @@ export const FightSingleSvgTimer:React.FC<IFightSingleSvgTimerProps> = ({seconds
     return (
         <div className={"svg_timer"}>
 
-            {gameState === "process" && <svg className={"svgTimer"} width="110" height="110" viewBox="-1 -1 110 110">
+            {(gameState === "process" || gameState === "end") && <svg className={"svgTimer"} width="110" height="110" viewBox="-1 -1 110 110">
 
                 <mask id="msk1">
                     <rect className="maskCircle maskCircle__inner" strokeOpacity=".1" rx="20">

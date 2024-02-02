@@ -13,8 +13,10 @@ export const BattleAreaTopBig: React.FC<IBattleAreaTopBigProps> = ({gameStep}) =
 
     const webSocket: any = useContext(GameSocket)
     const timer = webSocket?.timer ? webSocket?.timer : 5
-    // const timer = 5
     const {seconds, milliseconds} = useFightTimer(timer, gameStep)
+
+    const millisecondsWithTest = milliseconds < 0 ? 99 + milliseconds : milliseconds
+    console.log(milliseconds)
 
     return (
         <div className="crate crate__single">
@@ -31,15 +33,15 @@ export const BattleAreaTopBig: React.FC<IBattleAreaTopBigProps> = ({gameStep}) =
                 </div>
             }
 
-            {!webSocket?.battle?.players[0]?.item?.length && gameStep === "process" && <FightSingleSvgTimer isFight={true} gameState={gameStep} seconds={+timer}/>}
-            {!webSocket?.battle?.players[0]?.item?.length && gameStep === "process" && <div className="center__running">
+            {(!webSocket?.battle?.players[0]?.item?.length && (gameStep === "process" || gameStep === "end")) && <FightSingleSvgTimer isFight={true} gameState={gameStep} seconds={+timer}/>}
+            {(!webSocket?.battle?.players[0]?.item?.length && (gameStep === "process" || gameStep === "end")) && <div className="center__running">
                 <span>Начало</span>
                 <div className="timer">
                     <div className="min">
                         <span>{seconds < 10 ? "0" + seconds : seconds}</span>
                     </div>
                     <div className="sec">
-                        <span>.{milliseconds < 10 ? "0" + milliseconds : milliseconds}</span>
+                        <span>.{millisecondsWithTest < 10 ? "0" + millisecondsWithTest : millisecondsWithTest}</span>
                     </div>
                 </div>
             </div>}

@@ -44,8 +44,6 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
         axios.delete(getApiLink("api/fight/room/cancel?game_id=" + fightId)).then(({data}) => {
             if (data.status === false) return;
 
-            console.log()
-
             dispatch(setUserBalance({
                 sum: true,
                 money: gameData.data[0].coins
@@ -110,9 +108,26 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
 
     const isWinner = gameData.fight?.winner?.user?.id === userData?.id
 
+    useEffect(() => {
+        const canvas = document.querySelector('.canvas_winner');
+        if (!canvas) return;
+
+        setInterval(() => {
+            // @ts-ignore
+            canvas.confetti = canvas.confetti || confetti.create(canvas, {resize: true});
+
+            // @ts-ignore
+            canvas.confetti({
+                spread: 70,
+                origin: {y: 1.2}
+            });
+        }, 1000)
+
+    }, [gameState])
+
     return (
         <div className="section-fight__lft">
-            <FightSingleTop player={mainPlayer}/>
+            <FightSingleTop player={mainPlayer} gameData={gameData}/>
             <div className="section-fight__persone">
                 {gameState === "prepare" && <div className="persone__green">
                     <img className={"head" + (isHoverButtonToSkin === 0 ? " img_hover" : "")}
@@ -146,8 +161,10 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
                             <div className="line"></div>
                         </div>
                     </div>}
-                    <img src={getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs])} className={"persone-img"}
-                         alt="Persone"/>
+                    <img
+                        src={chosenSkin?.gallery ? getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs]) : getApiLink(settings?.default_fight_skin?.gallery[suitHead + suitBody + suitLegs])}
+                        className={"persone-img"}
+                        alt="Persone"/>
                 </div>
             </div>
 
@@ -157,6 +174,7 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
 
             {(gameState === "duel" || gameState === "ended") &&
                 <div className="section-fight__bottom section-fight__bottom_finish">
+                    {gameData.fight?.winner?.user?.id && isWinner && <canvas className="canvas_winner"></canvas>}
                     <div
                         className={"bottom__status" + (isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
                         {gameState === "ended" &&

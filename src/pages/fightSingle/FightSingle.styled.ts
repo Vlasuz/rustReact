@@ -8,6 +8,11 @@ export const FightSingleStyled = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  .canvas_winner {
+    position: absolute;
+    bottom: 0;
+  }
 
   .svg_timer {
     position: absolute;

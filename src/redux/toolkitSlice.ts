@@ -24,7 +24,7 @@ const toolkitSlice = createSlice({
         // USER
         user: <IUser>{},
         userInventory: <IProduct[]>[],
-        userGames: <IUserHistory | unknown>[],
+        userGames: <any[]>[],
         userHistory: <IUserHistoryBalance[]>[],
         userOnline: <number>0,
 
@@ -83,7 +83,12 @@ const toolkitSlice = createSlice({
             state.user = action.payload
         },
         setUserGames(state, action) {
-            state.userGames = action.payload
+            if(state.userGames.some(item => item.type === action.payload.type)) return;
+
+            state.userGames = [...state.userGames, action.payload]
+        },
+        deleteUserGames(state) {
+            state.userGames = []
         },
         setUserInventory(state, action) {
             if (action.payload.status === 'delete') {
@@ -349,6 +354,7 @@ export const {
 
     setUser,
     setUserGames,
+    deleteUserGames,
     setUserInventory,
     clearUserInventory,
     setUserHistory,

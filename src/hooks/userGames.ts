@@ -8,28 +8,28 @@ interface useUserDataProps {
 }
 
 export const useUserGames = ({user}: useUserDataProps) => {
-    const userGames: IUserHistory = useSelector((state: any) => state.toolkit.userGames)
+    const userGames: any = useSelector((state: any) => state.toolkit.userGames)
 
     const games: IUserGames[] = [
         {
             title: "Аирдроп",
             slug: "airdrop",
-            data: userGames.airdrop_games
+            data: userGames.filter((item: any) => item.type === "airdrop")[0]?.data
         },
         {
             title: "Схватка",
             slug: "fight",
-            data: userGames.fight_games
+            data: userGames.filter((item: any) => item.type === "fight")[0]?.data
         },
         {
             title: "Крейты",
-            slug: "crates",
-            data: userGames.fight_games
+            slug: "crate",
+            data: userGames.filter((item: any) => item.type === "crate")[0]?.data
         },
         {
             title: "Батлы",
             slug: "battle",
-            data: userGames.fight_games
+            data: userGames.filter((item: any) => item.type === "battle")[0]?.data
         }
     ]
 

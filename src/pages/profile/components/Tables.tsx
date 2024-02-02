@@ -10,6 +10,8 @@ import {getTableFight} from "../../../api/getTableFight";
 import {getTableCrates} from "../../../api/getTableCrates";
 import {getTableBattle} from "../../../api/getTableBattle";
 import {useParams} from "react-router";
+import { useDispatch } from 'react-redux'
+import { deleteUserGames } from '../../../redux/toolkitSlice'
 
 interface ITablesProps {
     games: IUserHistoryAirdrop[] | IUserHistoryFight[] | any
@@ -22,11 +24,11 @@ export const Tables: React.FC<ITablesProps> = ({games, user, isLoadingGames}) =>
     const [table, setTable] = useState('AIRDROP')
 
     const handleChangeTable = (item: IUserGames) => {
-        document.querySelector('.tabs__item_active')?.classList.add('tabs__item_hide')
+        // document.querySelector('.tabs__item_active')?.classList.add('tabs__item_hide')
 
-        setTimeout(() => {
             setTable(item.slug)
-            document.querySelector('.tabs__item_active')?.classList.remove('tabs__item_hide')
+        setTimeout(() => {
+            // document.querySelector('.tabs__item_active')?.classList.remove('tabs__item_hide')
         }, 300)
     }
 
@@ -46,10 +48,10 @@ export const Tables: React.FC<ITablesProps> = ({games, user, isLoadingGames}) =>
     }
 
     const getTableData = (game: string) => games.filter((item: IUserGames) => item.slug.includes(game))[0]
-    // const getTableGames = (game: string) => games.filter((item: IUserGames) => item.slug.includes(game))[0].data
 
     const {userId} = useParams()
 
+    const dispatch = useDispatch()
 
     const [gameAirdropTableInfo, setGameAirdropTableInfo]: any = useState(null)
     const [isLoadAirdrop, setIsLoadAirdrop] = useState(false)
@@ -60,10 +62,11 @@ export const Tables: React.FC<ITablesProps> = ({games, user, isLoadingGames}) =>
     const [gameBattleTableInfo, setGameBattleTableInfo]: any = useState(null)
     const [isLoadBattle, setIsLoadBattle] = useState(false)
     useEffect(() => {
-        getTableBattle({setGame: setGameBattleTableInfo, setLoad: setIsLoadBattle, userId: userId ?? user.id})
-        getTableAirdrop({setGame: setGameAirdropTableInfo, setLoad: setIsLoadAirdrop, userId: userId ?? user.id})
-        getTableFight({setGame: setGameFightTableInfo, setLoad: setIsLoadFight, userId: userId ?? user.id})
-        getTableCrates({setGame: setGameCrateTableInfo, setLoad: setIsLoadCrate, userId: userId ?? user.id})
+        dispatch(deleteUserGames())
+        getTableBattle({dispatch, setGame: setGameBattleTableInfo, setLoad: setIsLoadBattle, userId: userId ?? user.id})
+        getTableAirdrop({dispatch, setGame: setGameAirdropTableInfo, setLoad: setIsLoadAirdrop, userId: userId ?? user.id})
+        getTableFight({dispatch, setGame: setGameFightTableInfo, setLoad: setIsLoadFight, userId: userId ?? user.id})
+        getTableCrates({dispatch, setGame: setGameCrateTableInfo, setLoad: setIsLoadCrate, userId: userId ?? user.id})
     }, [])
 
 
@@ -86,18 +89,18 @@ export const Tables: React.FC<ITablesProps> = ({games, user, isLoadingGames}) =>
             <div className="tabs__block">
 
 
-                {isLoadAirdrop ? gameAirdropTableInfo?.length ?
+                {table.toLowerCase() === "airdrop" && (isLoadAirdrop ? gameAirdropTableInfo?.length ?
                     <TableForAirdrop user={user} tableValue={table} tableData={getTableData('airdrop')}
-                                     gameData={gameAirdropTableInfo}/> : dataEmpty(table, getTableData('airdrop')) : loading}
-                {isLoadFight ? gameFightTableInfo?.length ?
+                                     gameData={gameAirdropTableInfo}/> : dataEmpty(table, getTableData('airdrop')) : loading)}
+                {table.toLowerCase() === "fight" && (isLoadFight ? gameFightTableInfo?.length ?
                     <TableForFight user={user} tableValue={table} tableData={getTableData('fight')}
-                                   gameData={gameFightTableInfo}/> : dataEmpty(table, getTableData('fight')) : loading}
-                {isLoadCrate ? gameCrateTableInfo?.length ?
+                                   gameData={gameFightTableInfo}/> : dataEmpty(table, getTableData('fight')) : loading)}
+                {table.toLowerCase() === "crate" && (isLoadCrate ? gameCrateTableInfo?.length ?
                     <TableForCrate user={user} tableValue={table} tableData={getTableData('crate')}
-                                   gameData={gameCrateTableInfo}/> : dataEmpty(table, getTableData('crate')) : loading}
-                {isLoadBattle ? gameBattleTableInfo?.length ?
+                                   gameData={gameCrateTableInfo}/> : dataEmpty(table, getTableData('crate')) : loading)}
+                {table.toLowerCase() === "battle" && (isLoadBattle ? gameBattleTableInfo?.length ?
                     <TableForBattle user={user} tableValue={table} tableData={getTableData('battle')}
-                                   gameData={gameBattleTableInfo}/> : dataEmpty(table, getTableData('battle')) : loading}
+                                   gameData={gameBattleTableInfo}/> : dataEmpty(table, getTableData('battle')) : loading)}
 
             </div>
         </div>
