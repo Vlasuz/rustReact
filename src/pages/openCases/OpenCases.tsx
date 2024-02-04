@@ -13,12 +13,13 @@ import {CaseItem} from "./components/caseItem/CaseItem";
 import {BattleTop} from "../../components/battleTop/BattleTop";
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
-import {useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {CaseRollingBlock} from "./components/caseRollingBlock/CaseRollingBlock";
 import {getBearer} from "../../functions/getBearer";
 import {useCrateRarity} from "../../hooks/crateRarity";
 import {setNotice, setSound, setUserBalance} from "../../redux/toolkitSlice";
 import {ConfettiFireworks} from "../../components/confetti/ConfettiFireworks";
+import {log} from "util";
 
 interface IOpenCasesProps {
 
@@ -52,10 +53,10 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     }
 
     useEffect(() => {
-        if(!isActiveSpin) return;
+        if (!isActiveSpin) return;
 
         let timeForSpin = setTimeout(() => {
-            if(isActiveSpin) {
+            if (isActiveSpin) {
                 setIsWonItemActive(true)
             }
 
@@ -64,28 +65,31 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                 clearTimeout(timeForSpin)
             }, 1000)
 
-            dispatch(setSound('sound13'))
+            // dispatch(setSound('sound13'))
 
-            setIsActiveConfetti(true)
-            setTimeout(() => {
-                setIsClicked(false)
-                setIsActiveConfetti(false)
-            }, 1000)
+            // setIsActiveConfetti(true)
+            // setTimeout(() => {
+            //     setIsClicked(false)
+            //     setIsActiveConfetti(false)
+            // }, 1000)
 
         }, isFastActive ? 1000 : 11000)
     }, [isActiveSpin])
 
     const handlePlay = () => {
 
-        if(!Object.keys(userData).length) {
+        if (!Object.keys(userData).length) {
             return dispatch(setNotice('beforeYouNeedAuth'))
         }
 
         setIsClicked(true)
 
+        const sortedItems = [...chosenCrate?.items]?.sort((a, b) => +b.price - +a.price);
+        const maxPriceItem = sortedItems[0].price;
+
         getBearer({type: "post"})
         axios.post(getApiLink(`api/crate/open/?count=${countOfCases}&crate_id=${chosenCrate.id}`)).then(({data}) => {
-            if(data.status === false) return setIsClicked(false);
+            if (data.status === false) return setIsClicked(false);
 
             setIsActiveSpin(false)
             setIsWonItemActive(false)
@@ -98,11 +102,47 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
             dispatch(setUserBalance({sum: true, money: -(countOfCases * chosenCrate.price)}))
             setWinnerItem(data.items)
 
+            const winnerMaxPriceItem = data.items.sort((a: any, b: any) => +b.price - +a.price)[0].price
+
             const timeToFinal = setTimeout(() => {
 
-                for(let i = 0; i < data?.items.length; i++) {
+                for (let i = 0; i < data?.items.length; i++) {
                     dispatch(setUserBalance({sum: true, money: data?.items[i]?.price}))
                 }
+
+                if (winnerMaxPriceItem === maxPriceItem) {
+                    dispatch(setSound('sound13'))
+
+                    setIsActiveConfetti(true)
+                    setTimeout(() => {
+                        setIsActiveConfetti(false)
+                    }, 1000)
+                } else if (winnerMaxPriceItem > chosenCrate.price) {
+                    dispatch(setSound('sound13_1'))
+
+                    const canvas = document.querySelector('.canvas_winner');
+                    if (!canvas) return;
+
+                    // @ts-ignore
+                    canvas.confetti = canvas.confetti || confetti.create(canvas, {resize: true});
+
+                    // @ts-ignore
+                    canvas.confetti({
+                        spread: 70,
+                        origin: {y: 1.2}
+                    });
+
+                } else {
+                    dispatch(setSound('sound17'))
+                }
+
+                if (isActiveSpin) {
+                    setIsWonItemActive(true)
+                }
+
+                setIsClicked(false)
+
+                setIsBlockButton(false)
 
 
                 clearTimeout(timeToFinal)
@@ -121,9 +161,6 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     }, [])
 
     const [isActiveConfetti, setIsActiveConfetti] = useState(false)
-
-
-
 
 
     useEffect(() => {
@@ -165,10 +202,6 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     }, [isActiveSpin, isFastActive]);
 
 
-
-
-
-
     return (
         <OpenCasesStyled>
 
@@ -181,7 +214,9 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     className={"center__spin" + (isActiveSpin ? " active" : "") + (isWonItemActive ? " center__spin-won_item" : "")}>
                     <div className="spin__bgd"/>
                     <img src={spinArrow} alt="^" className="spin__arrow"/>
-                    <CaseRollingBlock winnerItem={winnerItem[0]} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>
+                    <CaseRollingBlock winnerItem={winnerItem[0]} isActiveSpin={isActiveSpin} isFastActive={isFastActive}
+                                      isWonItemActive={isWonItemActive}/>
+                    <canvas className="canvas_winner"></canvas>
                 </div>}
                 {countOfCases >= 2 && <div
                     className={"center__spin center__spin_more" + (isActiveSpin ? " active" : "") + (isWonItemActive ? " center__spin-won_item" : "")}>
@@ -189,12 +224,23 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     <img src={spinArrow} alt=">" className="spin__arrow_lft"/>
                     <img src={spinArrow} alt="<" className="spin__arrow_rht"/>
                     <div className="spins">
-                        {countOfCases >= 2 && <CaseRollingBlock winnerItem={winnerItem[0]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
-                        {countOfCases >= 2 && <CaseRollingBlock winnerItem={winnerItem[1]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
-                        {countOfCases >= 3 && <CaseRollingBlock winnerItem={winnerItem[2]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
-                        {countOfCases >= 4 && <CaseRollingBlock winnerItem={winnerItem[3]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
-                        {countOfCases >= 5 && <CaseRollingBlock winnerItem={winnerItem[4]} isMultiple={true} isActiveSpin={isActiveSpin} isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 2 &&
+                            <CaseRollingBlock winnerItem={winnerItem[0]} isMultiple={true} isActiveSpin={isActiveSpin}
+                                              isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 2 &&
+                            <CaseRollingBlock winnerItem={winnerItem[1]} isMultiple={true} isActiveSpin={isActiveSpin}
+                                              isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 3 &&
+                            <CaseRollingBlock winnerItem={winnerItem[2]} isMultiple={true} isActiveSpin={isActiveSpin}
+                                              isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 4 &&
+                            <CaseRollingBlock winnerItem={winnerItem[3]} isMultiple={true} isActiveSpin={isActiveSpin}
+                                              isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
+                        {countOfCases >= 5 &&
+                            <CaseRollingBlock winnerItem={winnerItem[4]} isMultiple={true} isActiveSpin={isActiveSpin}
+                                              isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
                     </div>
+                    <canvas className="canvas_winner"></canvas>
                 </div>}
                 <div className="center__buttons">
                     <button onClick={handlePlay} disabled={isBlockButton || isClicked} className="center__buy">
@@ -220,12 +266,14 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                         </ul>
                     </div>
 
-                    <button className={"center__fast" + (isFastActive ? " active" : "")} onClick={_ => !isBlockButton && setIsFastActive(prev => !prev)}>
+                    <button className={"center__fast" + (isFastActive ? " active" : "")}
+                            onClick={_ => !isBlockButton && setIsFastActive(prev => !prev)}>
                         <span>Быстрый прокрут</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="31" viewBox="0 0 25 31" fill="none">
                             <path
                                 d="M16.017 7.30957H10.2472C10.0279 7.30957 9.83426 7.45242 9.76951 7.66189L6.81351 17.2237C6.71407 17.5454 6.95452 17.8714 7.2912 17.8714H11.1762C11.5342 17.8714 11.7762 18.2367 11.6367 18.5663L9.9938 22.447C9.77484 22.9642 10.4436 23.3938 10.8229 22.9797L17.6187 15.5609C17.9125 15.2402 17.685 14.7232 17.25 14.7232H13.5065C13.1227 14.7232 12.882 14.3086 13.0723 13.9753L16.4512 8.05749C16.6415 7.72416 16.4008 7.30957 16.017 7.30957Z"
-                                fill={isFastActive ? "#A2ABC5" : "#61667B"} stroke={isFastActive ? "#A2ABC5" : "#61667B"} strokeWidth="2"/>
+                                fill={isFastActive ? "#A2ABC5" : "#61667B"}
+                                stroke={isFastActive ? "#A2ABC5" : "#61667B"} strokeWidth="2"/>
                         </svg>
                     </button>
                     <button onClick={_ => !isBlockButton && handlePlayDemo()} className="center__demo">
@@ -251,12 +299,15 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                         <span>
                             {chosenCrate?.name}
                         </span>
-                        <div className="line" style={{background: crateRarity?.color}} />
-                        <div className="line__shadow" style={{background: `linear-gradient(0deg, ${crateRarity?.color} 0%, transparent 100%)`}} />
+                        <div className="line" style={{background: crateRarity?.color}}/>
+                        <div className="line__shadow"
+                             style={{background: `linear-gradient(0deg, ${crateRarity?.color} 0%, transparent 100%)`}}/>
                     </li>
 
                     {
-                        chosenCrate?.items?.map((item: ICrateItem) => <CaseItem key={item.id} itemRarities={itemRarities} data={item} />)
+                        chosenCrate?.items?.map((item: ICrateItem) => <CaseItem key={item.id}
+                                                                                itemRarities={itemRarities}
+                                                                                data={item}/>)
                     }
 
                 </ul>

@@ -41,11 +41,12 @@ export const FightSingleStyled = styled.section`
   .section-fight {
 
     &__bottom {
-      margin-bottom: 38px;
+      //margin-bottom: -70px;
       position: relative;
 
       &_finish {
         margin: 0;
+        padding-top: 0;
 
         .bottom__status {
           width: calc(100% + 40px);
@@ -256,7 +257,8 @@ export const FightSingleStyled = styled.section`
 
     &__lft {
       background: #212232 url(${bgFight}) no-repeat;
-      background-position: bottom;
+      background-position: center bottom;
+      background-size: contain;
       border-radius: 10px;
       height: calc(100vh - 96px);
       width: 100%;
@@ -267,11 +269,19 @@ export const FightSingleStyled = styled.section`
       display: flex;
       flex-direction: column;
       overflow: hidden;
+
+      @media screen and (min-width: 2250px) {
+        background-size: 820px;
+      }
+      @media screen and (max-width: 576px) {
+        background-size: 140%;
+      }
     }
 
     &__rht {
       background: #212232 url(${bgFight}) no-repeat;
-      background-position: bottom;
+      background-position: center bottom;
+      background-size: contain;
       border-radius: 10px;
       height: calc(100vh - 96px);
       width: 100%;
@@ -281,6 +291,13 @@ export const FightSingleStyled = styled.section`
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      
+      @media screen and (min-width: 2250px) {
+        background-size: 820px;
+      }
+      @media screen and (max-width: 576px) {
+        background-size: 140%;
+      }
 
       //.attacked__bullet {
       //  left: 0;
@@ -789,6 +806,11 @@ export const FightSingleStyled = styled.section`
   }
 
 
+  @media screen and (max-width: 1800px) {
+    .section-fight__persone {
+      margin-bottom: 30px;
+    }
+  }
 
   @media screen and (max-height: 860px) {
     .section-fight__persone .persone__start .persone-img{

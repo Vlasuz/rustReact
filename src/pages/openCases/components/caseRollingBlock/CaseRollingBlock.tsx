@@ -59,7 +59,6 @@ export const CaseRollingBlock:React.FC<ICaseRollingBlockProps> = ({winnerItem, i
         })
     }, [])
 
-    console.log(itemsToRoll)
     return (
         <ul>
             {

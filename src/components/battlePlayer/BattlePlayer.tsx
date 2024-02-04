@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {LoadingStyled} from "../loading/loading.styled";
-import userIcon from "../../assets/images/user2.png";
+import nonPhoto from "./../../assets/images/non-photo.png"
 import {IUser} from "../../model";
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
@@ -9,7 +9,7 @@ import {getBearer} from "../../functions/getBearer";
 import getCookies from "../../functions/getCookie";
 import {GameSocket, GameWS} from "../../pages/battleSingle/BattleSingle";
 import {useDispatch, useSelector} from 'react-redux';
-import {setUserBalance} from "../../redux/toolkitSlice";
+import {setNotice, setUserBalance} from "../../redux/toolkitSlice";
 
 interface IBattlePlayerProps {
     color: string
@@ -38,6 +38,10 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, pla
             return navigate(`/user/${player?.user?.id}`)
         }
 
+        if (!Object.keys(user).length) {
+            return dispatch(setNotice("beforeYouNeedAuth"))
+        }
+
         getBearer({type: "post"})
         axios.post(getApiLink(`api/battle/join/?game_id=${battleId}&position=${position}`)).then(({data}) => {
             ws.send(`{"type":"auth", "token":"${getCookies("access_token_rust")}"}`)
@@ -59,11 +63,11 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, pla
              className={`person person_${color} person_${direction} ${!isHaveUser && "person_loading"}`}>
             <div className="user__photo">
                 {
-                    isHaveUser ? <img src={player.user.avatar} alt="user"/>
+                    isHaveUser ? <img src={player.user.avatar ?? nonPhoto} alt="user"/>
                         :
                         <div className="non-player-loading">
                             {!isYourGame && <>
-                                <img src={user?.avatar} alt=""/>
+                                <img src={user?.avatar ?? nonPhoto} alt=""/>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
                                      fill="none">
                                     <path

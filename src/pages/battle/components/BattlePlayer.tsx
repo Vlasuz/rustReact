@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import {LoadingStyled} from "../../../components/loading/loading.styled";
 import {IBattleGame, IUser} from "../../../model";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,7 +8,8 @@ import {getApiLink} from "../../../functions/getApiLink";
 import {useNavigate} from "react-router";
 import {IsJoinToGame} from "../../../App";
 import {NavLink} from "react-router-dom";
-import {setUserBalance} from "../../../redux/toolkitSlice";
+import {setNotice, setUserBalance} from "../../../redux/toolkitSlice";
+import nonPhoto from "./../../../assets/images/non-photo.png"
 
 interface IBattlePlayerProps {
     isWinner: boolean
@@ -23,7 +24,7 @@ const ButtonWithoutPlayer = ({joinToGame}: any) => {
     const userInfo: IUser = useSelector((state: any) => state.toolkit.user)
 
     return (
-        <button onClick={userInfo?.id && joinToGame} className={`player__photo player__photo_loading ${!userInfo?.id && "not-auth"}`}>
+        <button onClick={joinToGame} className={`player__photo player__photo_loading`}>
             <LoadingStyled className="load">
                 <div className="line"/>
                 <div className="line"/>
@@ -37,7 +38,7 @@ const ButtonWithoutPlayer = ({joinToGame}: any) => {
                         fill="#92C145"/>
                 </svg>
             </div>
-            <img src={userInfo?.avatar} className={"noname"} alt="Photo"/>
+            <img src={userInfo?.avatar ?? nonPhoto} className={"noname"} alt="Photo"/>
         </button>
     )
 }
@@ -58,6 +59,10 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({isWinner, numberOfPo
 
     const joinToGame = () => {
         if (itemData.players.some(item => item.user.id === userInfo.id)) navigate(`/battle/${itemData?.id}`)
+
+        if (!Object.keys(userInfo).length) {
+            return dispatch(setNotice("beforeYouNeedAuth"))
+        }
 
         getBearer({type: "post"})
         axios.post(getApiLink(`api/battle/join/?game_id=${itemData.id}&position=${numberOfPosition}`)).then(({data}) => {

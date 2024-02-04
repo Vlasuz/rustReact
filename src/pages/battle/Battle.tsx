@@ -1,14 +1,14 @@
-import React, {createContext, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {BattleStyled} from "./Battle.styled";
 import {BattleTop} from "../../components/battleTop/BattleTop";
 import {BattleItem} from "./components/battleItem/BattleItem";
-import {NavLink} from "react-router-dom";
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
-import {IBattleGame} from "../../model";
+import {IBattleGame, IUser} from "../../model";
 import {getWsLink} from "../../functions/getWsLink";
-import {setTrigger} from "../../redux/toolkitSlice";
-import { useDispatch } from 'react-redux';
+import {setNotice, setTrigger} from "../../redux/toolkitSlice";
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from "react-router";
 
 interface IBattleProps {
 
@@ -46,13 +46,19 @@ export const Battle: React.FC<IBattleProps> = () => {
     useEffect(() => {
         axios.get(getApiLink("api/battle/list/")).then(({data}) => {
             setBattleLobby(data)
-            console.log(data)
         })
     }, [])
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
+    const userInfo: IUser = useSelector((state: any) => state.toolkit.user)
 
     const navigateToCreateBattle = () => {
+        if (!Object.keys(userInfo).length) {
+            return dispatch(setNotice("beforeYouNeedAuth"))
+        }
+
+        navigate("/battle/create-battle")
         dispatch(setTrigger("CHANGE_RIGHT_BLOCK"))
     }
 
@@ -61,9 +67,9 @@ export const Battle: React.FC<IBattleProps> = () => {
             <div className="top">
                 <BattleTop/>
                 <div className="create-battle">
-                    <NavLink onClick={navigateToCreateBattle} to={"/battle/create-battle"}>
+                    <button onClick={navigateToCreateBattle}>
                         Создать игру
-                    </NavLink>
+                    </button>
                 </div>
             </div>
 

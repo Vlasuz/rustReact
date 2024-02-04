@@ -59,7 +59,7 @@ export const HeaderStyled = styled.header`
       border: none;
       cursor: pointer;
       align-items: center;
-      min-width: 143px;
+      min-width: 155px;
       margin-right: 14px;
       position: relative;
       transition: all .3s ease;

@@ -4,6 +4,13 @@ import bgdSpin from './../../assets/images/bgd-spin.jpg'
 export const OpenCasesStyled = styled.section`
 
   max-width: calc(100% - 114px - 470px);
+  
+  .canvas_winner {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+  }
 
   .center {
     padding: 20px 28px 20px;
