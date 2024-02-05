@@ -20,8 +20,16 @@ export function useMusicVolume() {
     const handleSwitch = () => {
         if(value > 0) {
             setValue(0)
+            setCookie("volume_music_rust", JSON.stringify(0))
         } else {
-            setValue(getCookies("volume_music_rust") ? +JSON.parse(`${getCookies("volume_music_rust")}`) : 50)
+
+            if(+JSON.parse(`${getCookies("volume_music_rust")}`) !== 0) {
+                setValue(+JSON.parse(`${getCookies("volume_music_rust")}`))
+            } else {
+                setValue(50)
+                setCookie("volume_music_rust", JSON.stringify(50))
+            }
+
         }
     }
 

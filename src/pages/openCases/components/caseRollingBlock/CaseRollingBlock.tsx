@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import coins from "../../../../assets/images/header__coins.svg";
-import {ICrate, ICrateItem} from "../../../../model";
 import {useSelector} from "react-redux";
-import {useCrateRarity} from "../../../../hooks/crateRarity";
 import axios from "axios";
 import {getApiLink} from "../../../../functions/getApiLink";
+import useSound from 'use-sound';
+import spinTick from "./../../../../assets/audio/sound-spin-tick.webm"
 
 interface ICaseRollingBlockProps {
     isActiveSpin: boolean
@@ -59,15 +59,17 @@ export const CaseRollingBlock:React.FC<ICaseRollingBlockProps> = ({winnerItem, i
         })
     }, [])
 
+
     return (
         <ul>
+
             {
                 itemsToRoll.map((item: any, index: number) => {
                     const isWinnerItem = winnerItem && !!(Object.keys(winnerItem).length && index === 54)
                     const rarityColor = itemRarities?.filter((item2: any) => item.price > item2.price_from && item.price < item2.price_to && item)[0]?.color
 
                     return (
-                        <li key={index} style={{transitionDuration: transitionDuration, marginLeft: !isMultiple && isActiveSpin && index === 0 ? marginLeftSpin : "", marginTop: isMultiple && isActiveSpin && index === 0 ? marginLeftSpin : ""}}
+                        <li key={item.id + index} style={{transitionDuration: transitionDuration, marginLeft: !isMultiple && isActiveSpin && index === 0 ? marginLeftSpin : "", marginTop: isMultiple && isActiveSpin && index === 0 ? marginLeftSpin : ""}}
                             className={`spin__item ${isActiveSpin && "spin-active"} ${isWonItemActive && index === 54 && " won_the_price"}`}>
 
                             <span style={{background: isWonItemActive && index === 54 ? `linear-gradient(0deg, ${rarityColor} 0%, rgba(146, 193, 69, 0.00) 100%)` : ""}} className={`rarity`}></span>

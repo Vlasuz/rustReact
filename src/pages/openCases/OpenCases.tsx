@@ -1,14 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {OpenCasesStyled} from "./OpenCases.styled";
 import coins from './../../assets/images/header__coins.svg'
-import caseMagma from './../../assets/images/case-magma.png'
-import itemIcon from './../../assets/images/weapon.png'
 import spinArrow from './../../assets/images/spin-arrow.png'
-import {HistoryItem} from "./components/historyItem/HistoryItem";
-import {Product} from "../../components/product/Product";
-import {ICrate, ICrateItem, IProduct} from "../../model";
-import green_check from "../../assets/images/green-check.svg";
-import coin from "../../assets/images/header__coins.svg";
+import {ICrate, ICrateItem} from "../../model";
 import {CaseItem} from "./components/caseItem/CaseItem";
 import {BattleTop} from "../../components/battleTop/BattleTop";
 import axios from "axios";
@@ -19,7 +13,9 @@ import {getBearer} from "../../functions/getBearer";
 import {useCrateRarity} from "../../hooks/crateRarity";
 import {setNotice, setSound, setUserBalance} from "../../redux/toolkitSlice";
 import {ConfettiFireworks} from "../../components/confetti/ConfettiFireworks";
-import {log} from "util";
+import useSound from "use-sound";
+import spinTick from "../../assets/audio/sound-spin-tick.webm";
+import getCookies from "../../functions/getCookie";
 
 interface IOpenCasesProps {
 
@@ -40,6 +36,12 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     const chosenCrate: ICrate = useSelector((state: any) => state.toolkit.chosenCrate)
     const userData = useSelector((state: any) => state.toolkit.user)
 
+    // Play sound - tick for spin
+    const [play] = useSound(
+        spinTick,
+        { volume: (+JSON.parse(`${getCookies("volume_music_rust")}`) / 100) }
+    );
+
     const {crateRarity}: any = useCrateRarity({crate: chosenCrate})
 
     const handlePlayDemo = () => {
@@ -50,7 +52,53 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
         setTimeout(() => {
             setIsActiveSpin(true)
         }, 10)
+
     }
+
+    const intervalRef: any = useRef(null);
+
+    let countOfCompleted = 0
+
+    const playWithInterval = () => {
+
+        const element = document.querySelectorAll(".spin__item")[5].getBoundingClientRect()
+        const isHorizontalSpin = countOfCases === 1
+
+        const sumForMinus = countOfCompleted * 140
+        const countMinusForZeroHorizontal = window.innerWidth <= 1250 ? 792.99 : 907.99
+        const countMinusForZeroVertical = window.innerHeight <= 1250 ? 1050 : 949.99
+
+        const startPosition = Math.abs((isHorizontalSpin ? element.left : element.top) - (isHorizontalSpin ? countMinusForZeroHorizontal : countMinusForZeroVertical)) - sumForMinus
+
+        if(startPosition > 160) {
+            countOfCompleted += isFastActive ? 7 : 1
+            play();
+        }
+
+        intervalRef.current = setTimeout(playWithInterval, 1);
+    };
+
+    useEffect(() => {
+        if (!isActiveSpin) {
+            clearTimeout(intervalRef.current);
+            intervalRef.current = null;
+            return;
+        }
+
+        playWithInterval();
+
+        const stopIntervalTimeout = setTimeout(() => {
+            clearTimeout(intervalRef.current);
+            intervalRef.current = null;
+        }, isFastActive ? 1000 : 11000);
+
+        // Cleanup the interval and the stop timeout when the component unmounts or isActiveSpin changes
+        return () => {
+            clearTimeout(intervalRef.current);
+            clearTimeout(stopIntervalTimeout);
+            intervalRef.current = null; // Set to null to signify that it has been stopped
+        };
+    }, [isActiveSpin]);
 
     useEffect(() => {
         if (!isActiveSpin) return;
@@ -64,14 +112,6 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                 setIsBlockButton(false)
                 clearTimeout(timeForSpin)
             }, 1000)
-
-            // dispatch(setSound('sound13'))
-
-            // setIsActiveConfetti(true)
-            // setTimeout(() => {
-            //     setIsClicked(false)
-            //     setIsActiveConfetti(false)
-            // }, 1000)
 
         }, isFastActive ? 1000 : 11000)
     }, [isActiveSpin])
@@ -168,39 +208,21 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
 
         let a = 100;
         let elapsedTime = 0;
-
-        // @ts-ignore
-        const firstPositionWinnerBlock = document.querySelector(".spin__item:nth-child(54)").getBoundingClientRect().left;
-
-        const targetSum = 54;
         const animationDuration = isFastActive ? 1000 : 11000;
 
         const animate = () => {
-            // @ts-ignore
-            const positionWinnerBlock = document.querySelector(".spin__item:nth-child(54)").getBoundingClientRect().left;
-
-            // dispatch(setSound('soundSpinTick'));
-            // setTimeout(() => {
-            //     dispatch(setSound(''));
-            // }, 2);
-
             elapsedTime += a;
 
             if (elapsedTime < animationDuration) {
                 setTimeout(() => {
-                    a += 15; // Увеличиваем время задержки перед каждым вызовом
+                    a += 15;
                     animate();
                 }, a);
             }
         };
 
         animate();
-
-        return () => {
-            // Дополнительный код при завершении анимации, если необходимо
-        };
     }, [isActiveSpin, isFastActive]);
-
 
     return (
         <OpenCasesStyled>

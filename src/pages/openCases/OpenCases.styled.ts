@@ -10,6 +10,7 @@ export const OpenCasesStyled = styled.section`
     bottom: 0;
     left: 0;
     z-index: 2;
+    height: 100%;
   }
 
   .center {

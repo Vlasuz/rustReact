@@ -25,6 +25,7 @@ import {WSFight} from "../FightSingle";
 import bullet from "../../../assets/images/bullet.svg";
 import {useDispatch, useSelector} from "react-redux";
 import {setSound, setUserBalance} from "../../../redux/toolkitSlice";
+import {getBearer} from "../../../functions/getBearer";
 
 interface IFightSingleLFTProps {
     mainPlayer: any
@@ -41,6 +42,7 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
     const {fightId} = useParams()
 
     const handleExit = () => {
+        getBearer({type: "delete"})
         axios.delete(getApiLink("api/fight/room/cancel?game_id=" + fightId)).then(({data}) => {
             if (data.status === false) return;
 
