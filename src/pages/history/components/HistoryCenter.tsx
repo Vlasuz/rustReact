@@ -40,6 +40,9 @@ export const HistoryCenter: React.FC<IHistoryCenterProps> = ({ setHistoryFilter 
                 <li className={filterByHtml === 'pins' ? "li_active" : ""}>
                     <button onClick={_ => handleChangeFilter('pins')}>Деньгами</button>
                 </li>
+                <li className={filterByHtml === 'bonus' ? "li_active" : ""}>
+                    <button onClick={_ => handleChangeFilter('bonus')}>Бонусами</button>
+                </li>
             </ul>
             <FilterSort setHistoryFilter={setHistoryFilter} />
         </div>

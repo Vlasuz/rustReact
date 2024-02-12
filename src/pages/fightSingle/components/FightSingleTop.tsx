@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import userPhoto from "../../../assets/images/user.jpeg";
-import clothesIcon from "../../../assets/images/clothes.svg";
-import weaponIcon from "../../../assets/images/weapon.png";
+import botPhoto from "./../../../assets/images/bot.svg";
 import coins from "../../../assets/images/header__coins.svg";
 import {useToggleModal} from "../../../hooks/toggleModal";
 import {FightSingleItems} from "./FightSingleItems";
@@ -35,6 +33,8 @@ export const FightSingleTop: React.FC<IFightSingleTopProps> = ({player, gameData
     }
 
     const handleGoToUser = () => {
+        if(player?.is_bot) return;
+
         navigate(`/user/${player?.user?.id}`)
     }
 
@@ -48,8 +48,6 @@ export const FightSingleTop: React.FC<IFightSingleTopProps> = ({player, gameData
 
         setGameCoins(player?.user?.id === gameData?.fight?.winner?.user?.id ? gameData?.fight?.winner?.coins * 2 : 0)
     }, [gameData])
-
-
 
 
 
@@ -91,12 +89,11 @@ export const FightSingleTop: React.FC<IFightSingleTopProps> = ({player, gameData
     }, [gameCoins]);
 
 
-
     return (
         <div className="section-fight__top">
             <div className={`section-fight__user ${!isHavePlayer && "section-fight__user_call-bot"}`} onClick={!isHavePlayer ? handleCallBot : handleGoToUser}>
                 <div className="user__photo">
-                    {isHavePlayer ? <img src={player?.user?.avatar} alt="User"/> :
+                    {isHavePlayer ? <img src={player?.is_bot ? botPhoto : player?.user?.avatar} alt="User"/> :
                         <svg xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 41 41" fill="none">
                             <g clipPath="url(#clip0_626_30351)">
                                 <rect x="0.0317383" y="0.568848" width="40" height="40" rx="10" fill="#191A29"/>

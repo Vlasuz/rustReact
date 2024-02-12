@@ -9,6 +9,7 @@ import { FightTop } from '../../components/fightTop/FightTop'
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
 import {getWsLink} from "../../functions/getWsLink";
+import {retry} from "@reduxjs/toolkit/query";
 
 interface IMainProps {
 
@@ -30,12 +31,22 @@ export const Fight: React.FC<IMainProps> = () => {
         ws.onmessage = (e: any) => {
             const message = JSON.parse(JSON.parse(e.data))
 
+            console.log(message)
+
             if(message.type === "new_room") {
                 setFightList(prev => [message.data, ...prev])
             } else if (message.type === "remove_room") {
                 setFightList(prev => prev.filter(prevItem => prevItem.id !== message.data.id))
             } else if (message.type === "change_room") {
-                setFightList([...fightList.slice(0, fightList.indexOf(message.data.id)), message.data, ...fightList.slice(fightList.indexOf(message.data.id) - 1)])
+                setFightList(prev => {
+
+                    let itemIndex = 0;
+                    prev.filter((item: any, index: number) => {
+                        if(item?.id === message?.data?.id) itemIndex = index;
+                    })
+
+                    return [...prev.slice(0, itemIndex), message.data, ...prev.slice(itemIndex + 1)];
+                })
             }
 
         }

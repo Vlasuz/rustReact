@@ -14,6 +14,7 @@ import {BattleMode4Way} from "../battleTypes/BattleMode4way";
 import {BattleMode2P} from "../battleTypes/BattleMode2p";
 import {BattleMode3P} from "../battleTypes/BattleMode3p";
 import {BattleMode4P} from "../battleTypes/BattleMode4p";
+import {prettyCoinValues} from "../../../../functions/prettyCoinValues";
 
 interface IBattleItemProps {
     itemData: IBattleGame
@@ -93,7 +94,7 @@ export const BattleItem: React.FC<IBattleItemProps> = ({itemData}) => {
                 <div className="button__cost">
                     <img src={coins} alt=""/>
                     <span>
-                        {+gameBank ?? 0}
+                        {prettyCoinValues(gameBank) ?? 0}
                     </span>
                 </div>
                 <div className="button__status">

@@ -24,7 +24,9 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
         return (
             <div className="winner">
                 <img src={coin} alt="Ico"/>
-                <span>{user.coins}</span>
+                <span>
+                    {prettyCoinValues(user.coins)}
+                </span>
             </div>
         )
     }
@@ -41,22 +43,56 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
     const isGameRunning = !isUserInGame && !(data.game_state === "waiting" || data.game_state === "attack" || data.game_state === "defense" || data.game_state === "duel") ? "process" : ""
 
     const handlePressButton = () => {
-        if (isUserInGame) {
-            dispatch(setFightItemData(data))
-            navigate("/fight/" + data.id)
-        } else if (data.winner === null && Object.keys(userData).length && !data.first_player.items.length) {
-            dispatch(setPopup("popup-entry-coins"))
-            dispatch(setFightItemData(data))
-        } else if (isGameRunning) {
-            dispatch(setNotice('fightItemAlreadyProcess'))
-        } else if (!Object.keys(userData).length) {
+
+        if (data.game_state === "waiting" && !userData?.id) {
             dispatch(setNotice('beforeYouNeedAuth'))
-        } else if (data.second_player?.user?.id) {
-            dispatch(setNotice('fightItemAlreadyProcess'))
-        } else if (data.winner === null && Object.keys(userData).length && data.first_player.items.length) {
-            dispatch(setPopup("popup-entry-clothes"))
-            dispatch(setFightItemData(data))
         }
+
+        if (data.game_state === "waiting") {
+
+            if (userData?.id && !data.second_player?.user?.id && data.game_state === "waiting" && !data.first_player.items.length) {
+                dispatch(setPopup("popup-entry-coins"))
+            } else if (userData?.id && !data.second_player?.user?.id && data.game_state === "waiting" && data.first_player.items.length) {
+                dispatch(setPopup("popup-entry-clothes"))
+            }
+
+            dispatch(setFightItemData(data))
+
+            return;
+        }
+
+        if (data.game_state === "end") return;
+
+        navigate("/fight/" + data.id)
+        dispatch(setFightItemData(data))
+
+        // if(isUserInGame) {
+        //     navigate("/fight/" + data.id)
+        // } else if (!data.second_player?.user?.id && data.game_state === "waiting" && !data.first_player.items.length) {
+        //     dispatch(setPopup("popup-entry-coins"))
+        // } else if (!data.second_player?.user?.id && data.game_state === "waiting" && data.first_player.items.length) {
+        //     dispatch(setPopup("popup-entry-clothes"))
+        // } else {
+        //
+        // }
+
+
+        // if (isUserInGame) {
+        //     dispatch(setFightItemData(data))
+        //     navigate("/fight/" + data.id)
+        // } else if (data.winner === null && Object.keys(userData).length && !data.first_player.items.length) {
+        //     dispatch(setPopup("popup-entry-coins"))
+        //     dispatch(setFightItemData(data))
+        // } else if (isGameRunning) {
+        //     dispatch(setNotice('fightItemAlreadyProcess'))
+        // } else if (!Object.keys(userData).length) {
+        //     dispatch(setNotice('beforeYouNeedAuth'))
+        // } else if (data.second_player?.user?.id) {
+        //     dispatch(setNotice('fightItemAlreadyProcess'))
+        // } else if (data.winner === null && Object.keys(userData).length && data.first_player.items.length) {
+        //     dispatch(setPopup("popup-entry-clothes"))
+        //     dispatch(setFightItemData(data))
+        // }
     }
 
     const buttonContent = () => {
@@ -79,7 +115,8 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
     }
 
     return (
-        <FightButtonStyled onClick={_ => data.winner === null && handlePressButton()} className={"item__button " + (data.winner !== null ? "finish" : isGameRunning)}>
+        <FightButtonStyled onClick={_ => data.winner === null && handlePressButton()}
+                           className={"item__button " + (data.winner !== null ? "finish" : isGameRunning)}>
 
             {buttonContent()}
 

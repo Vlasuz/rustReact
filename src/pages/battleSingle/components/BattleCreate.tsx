@@ -11,6 +11,7 @@ import axios from "axios";
 import {getApiLink} from "../../../functions/getApiLink";
 import {getBearer} from "../../../functions/getBearer";
 import {setUserBalance} from "../../../redux/toolkitSlice";
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface IBattleCreateProps {
     setGameType: any
@@ -133,7 +134,7 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
                 <span>Начать игру</span>
                 <img src={coin} alt=""/>
                 <p>
-                    {!!finalPriceForBattle ? finalPriceForBattle : 0}
+                    {!!finalPriceForBattle ? prettyCoinValues(finalPriceForBattle) : 0}
                 </p>
             </button>
         </div>

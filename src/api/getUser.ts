@@ -21,8 +21,7 @@ export const getUser = ({ dispatch }: IGetUserProps) => {
         dispatch(setMutedUsers(data.muted_users))
 
     }).catch(error => {
-        console.log('Error with get user: ', error)
-        error.response.status === 401 && RefreshToken({dispatch})
+        error.response.status === 401 && RefreshToken({dispatch, getUser})
     })
     
 };

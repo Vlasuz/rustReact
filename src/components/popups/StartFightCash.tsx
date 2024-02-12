@@ -10,6 +10,8 @@ import {PopupsContext} from "../../context/popupsContext";
 import {useNavigate} from "react-router";
 import {prettyCoinValues} from "../../functions/prettyCoinValues";
 import {getBearer} from "../../functions/getBearer";
+import getCookies from "../../functions/getCookie";
+import {RefreshToken} from "../../api/refreshToken";
 
 interface IStartFightCashProps {
 
@@ -23,6 +25,8 @@ export const StartFightCash: React.FC<IStartFightCashProps> = () => {
     const navigate = useNavigate()
 
     const handleStartGame = () => {
+
+        console.log(getCookies('access_token_rust'))
 
         getBearer({type: "post"})
         axios.post(getApiLink("api/fight/room/join?game_id="+fightItemData.id), {
@@ -42,7 +46,9 @@ export const StartFightCash: React.FC<IStartFightCashProps> = () => {
 
             navigate('/fight/'+fightItemData.id)
 
-        }).catch(er => console.log(er))
+        }).catch(er => {
+            er.response.status === 401 && RefreshToken({dispatch, handleStartGame})
+        })
 
     }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ProfileStyle } from './profile.styled'
+import { ProfileStyle } from './Profile.styled'
 import { User } from './components/User'
 import { Balance } from './components/Balance'
 import { Stats } from './components/Stats'

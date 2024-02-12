@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react'
-import { IUser, IUserGames, IUserHistoryAirdrop, IUserHistoryFight } from '../../../../model'
+import React from 'react'
+import { IUser, IUserGames, IUserHistoryFight } from '../../../../model'
+import botImage from './../../../../assets/images/bot.svg'
 import fail from './../../../../assets/images/fail.svg'
 import victory from './../../../../assets/images/victory.svg'
 import coin from './../../../../assets/images/header__coins.svg'
@@ -36,8 +37,10 @@ export const TableForFight: React.FC<ITableForFightProps> = ({ tableValue, table
                             const isWinnerIcon = item.winner?.user && item.winner.user?.id === user?.id ? victory : fail
                             const isWinnerText = item.winner?.user && item.winner.user?.id === user?.id ? 'Winner' : 'Looser'
                             const bank = item.first_player?.coins + item.second_player?.coins
-                            const opponentAvatar = item?.first_player?.user?.id !== user?.id ? item?.first_player?.user?.avatar : item.second_player.user?.avatar ?? no_photo
-                            const opponentProfile =`/user/${item?.first_player?.user?.id !== user?.id ? item?.first_player?.user?.id : item.second_player.user?.id}` ?? '/user-undefined/'
+                            const isFirstPlayerBot = item?.first_player?.is_bot;
+                            const isSecondPlayerBot = item?.second_player?.is_bot;
+                            const opponentAvatar = item?.first_player?.user?.id !== user?.id ? isFirstPlayerBot ? botImage : item?.first_player?.user?.avatar : isSecondPlayerBot ? botImage : item.second_player.user?.avatar ?? no_photo
+                            const opponentProfile = item?.first_player?.user?.id !== user?.id ? isFirstPlayerBot ? '' : item?.first_player?.user?.id : isSecondPlayerBot ? '' : item.second_player.user?.id
 
                             return (
                                 <div key={item.id + index} className="tr">
@@ -49,9 +52,13 @@ export const TableForFight: React.FC<ITableForFightProps> = ({ tableValue, table
                                         <div className="list-players">
                                             <ul>
                                                 <li>
-                                                    <NavLink to={opponentProfile} >
-                                                        <img src={opponentAvatar} alt="User" />
-                                                    </NavLink>
+                                                    {
+                                                        opponentProfile !== '' ? <NavLink to={opponentProfile}>
+                                                            <img src={opponentAvatar} alt="User" />
+                                                        </NavLink> : <a>
+                                                            <img src={opponentAvatar} alt="User" />
+                                                        </a>
+                                                    }
                                                 </li>
                                             </ul>
                                             <div className="num" />

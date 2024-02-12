@@ -23,8 +23,6 @@ interface IFightSingleLFTProps {
 
 export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, gameState, gameData}) => {
 
-    console.log(gameState)
-
     const [suit, setSuit] = useState([false, false, false])
     const [suitType] = useState(["Голова", "Торс", "Ноги"])
     const [isFullSuit, setIsFullSuit] = useState(false)
@@ -33,8 +31,8 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
     const settings = useSelector((state: any) => state.toolkit.siteSettings)
 
     const isYour = gameData.fight?.first_player.user.id === userData.id
-    const attackFirst = isYour ? gameData.fight?.first_player.attack : gameData.fight?.second_player.attack
-    const defenseSecond = !isYour ? gameData.fight?.first_player.defense : gameData.fight?.second_player.defense
+    const attackFirst = isYour ? gameData.fight?.first_player?.attack : gameData.fight?.second_player?.attack
+    const defenseSecond = !isYour ? gameData.fight?.first_player?.defense : gameData.fight?.second_player?.defense
 
     const ws: any = useContext(WSFight)
 
@@ -83,7 +81,8 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
         return attackFirst.includes(bodyPart) ? " attacked__bullet_active" : ""
     }
 
-    const isWinner = gameData.fight?.winner?.user?.id !== userData?.id
+    const isWinner = gameData.fight?.winner?.user?.id === opponentPlayer?.user?.id
+    const isGuest = gameData?.fight?.second_player?.user?.id !== userData?.id && gameData?.fight?.first_player?.user?.id !== userData?.id
 
     useEffect(() => {
         const canvas = document.querySelector('.canvas_winner');
@@ -106,7 +105,7 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
         <div className="section-fight__rht">
             <FightSingleTop player={opponentPlayer} gameData={gameData}/>
             <div className="section-fight__persone section-fight__persone-hit">
-                {gameState === "prepare" && <div className="persone__green">
+                {!isGuest && gameState === "prepare" && <div className="persone__green">
                     <img className={"head" + (isHoverButtonToSkin === 0 ? " img_hover" : suit[0] ? " img_clicked" : "")}
                          onClick={_ => setSuit(prev => [!isFullSuit && !suit[0] && !prev[0], prev[1], prev[2]])}
                          src={headSil} alt="Photo"
@@ -158,7 +157,7 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                 </div>}
 
             {gameState === "prepare" && <div className="section-fight__bottom">
-                {!isFullSuit && <div className="bottom__info">
+                {!isGuest && !isFullSuit && <div className="bottom__info">
                     <p>Выберите 2 области атаки</p>
                 </div>}
                 <ul className="section-fight__select-hit">
@@ -171,7 +170,7 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
 
                             return (
                                 <li>
-                                    <button
+                                    {!isGuest && <button
                                         onClick={_ => setSuit(prev => [
                                             isChange(prev, 0),
                                             isChange(prev, 1),
@@ -186,7 +185,7 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                                         </span>
 
                                         <img src={greenCheck} alt="Ico"/>
-                                    </button>
+                                    </button>}
                                 </li>
                             )
                         })

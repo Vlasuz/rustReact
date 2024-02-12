@@ -14,6 +14,7 @@ export interface IUser {
     ban_chat_date?: string
     muted_users?: IUser[]
     chosen_skin?: Object
+    is_bot: boolean,
 }
 
 export interface IAirdropBag {
@@ -76,6 +77,7 @@ export interface IUserHistoryFightPlayer {
     user: IUser
     coins: number
     items: IProduct[] | null
+    is_bot: boolean
 }
 
 export interface IUserHistoryFight {
@@ -115,6 +117,7 @@ export interface IFightItem {
         user: IUser
         coins: number
         items: IProduct[]
+        is_bot: boolean
     }
     second_player: {
         id: string
@@ -124,6 +127,7 @@ export interface IFightItem {
         user: IUser
         coins: number
         items: IProduct[]
+        is_bot: boolean
     } | null
     winner: {
         id: string
@@ -133,6 +137,7 @@ export interface IFightItem {
         user: IUser
         coins: number
         items: IProduct[]
+        is_bot: boolean
     } | null
 }
 

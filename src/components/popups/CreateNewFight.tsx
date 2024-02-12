@@ -14,6 +14,7 @@ import {PopupsContext} from "../../context/popupsContext";
 import {prettyCoinValues} from "../../functions/prettyCoinValues";
 import {getBearer} from "../../functions/getBearer";
 import {RefreshToken} from "../../api/refreshToken";
+import getCookies from "../../functions/getCookie";
 
 interface ICreateNewFightProps {
 
@@ -45,6 +46,8 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
     const handleCreateFight = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
+        console.log(getCookies('access_token_rust'))
+
         // getBearer({type: "post"})
         axios.post(getApiLink("api/fight/room/create"), {
             "coins": coinsValue,
@@ -64,7 +67,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
 
             navigate("/fight/"+data.id)
         }).catch(er => {
-            er.response.status === 401 && RefreshToken({dispatch})
+            er.response.status === 401 && RefreshToken({dispatch, handleCreateFight})
         })
     }
 

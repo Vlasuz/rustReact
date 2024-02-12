@@ -12,7 +12,7 @@ export const AirdropInfoBlock:React.FC<IAirdropInfoBlockProps> = () => {
 
     const airdropWsMessages: any = useContext(AirdropSocketContext)
 
-    const {seconds, milliseconds} = useAirdropTimer()
+    const {seconds, milliseconds} = useAirdropTimer(0)
 
     const textBlock: any = {
         "start": "Ожидание игроков",

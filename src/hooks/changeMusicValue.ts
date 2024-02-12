@@ -23,7 +23,7 @@ export function useMusicVolume() {
             setCookie("volume_music_rust", JSON.stringify(0))
         } else {
 
-            if(+JSON.parse(`${getCookies("volume_music_rust")}`) !== 0) {
+            if(getCookies("volume_music_rust") && +JSON.parse(`${getCookies("volume_music_rust")}`) !== 0) {
                 setValue(+JSON.parse(`${getCookies("volume_music_rust")}`))
             } else {
                 setValue(50)

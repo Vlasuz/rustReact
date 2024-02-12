@@ -6,6 +6,9 @@ import no_photo from "../../../../assets/images/non-photo.png";
 import {NavLink} from "react-router-dom";
 import coin from "../../../../assets/images/header__coins.svg";
 import { getApiLink } from '../../../../functions/getApiLink';
+import shield from "../../../../assets/images/shield.svg";
+import {setPopup, setPopupData} from "../../../../redux/toolkitSlice";
+import {useDispatch} from "react-redux";
 
 interface ITableForCrateProps {
     tableValue: string,
@@ -16,6 +19,13 @@ interface ITableForCrateProps {
 
 export const TableForCrate: React.FC<ITableForCrateProps> = ({ tableValue, tableData, gameData, user }) => {
 
+    const dispatch = useDispatch()
+
+    const handleOpenPF = (dataItem: any) => {
+        dispatch(setPopup('popup-fair-game'))
+        dispatch(setPopupData(dataItem))
+    }
+
     return (
         <div className={"tabs__item tabs__item-fight" + (tableValue.toLowerCase().includes(tableData?.slug?.toLowerCase()) ? " tabs__item_active" : "")}>
             <div className="table">
@@ -23,6 +33,7 @@ export const TableForCrate: React.FC<ITableForCrateProps> = ({ tableValue, table
                     <div className="tr">
                         <div className="td">Крейт</div>
                         <div className="td">Предмет</div>
+                        <div className="td">PF</div>
                         <div className="td">Стоимость</div>
                     </div>
                 </div>
@@ -41,8 +52,7 @@ export const TableForCrate: React.FC<ITableForCrateProps> = ({ tableValue, table
                             const crate = item?.crate
                             const crateItem = item?.item?.item?.image
                             const amount = item?.amount
-
-                            console.log(item)
+                            const smallHash = item.random_hash.slice(0, 5) + '...' + item.random_hash.slice(item.random_hash.length - 6)
 
                             return (
                                 <div key={item.id} className="tr">
@@ -59,6 +69,14 @@ export const TableForCrate: React.FC<ITableForCrateProps> = ({ tableValue, table
                                                 <img src={crateItem} alt=""/>
                                             </li>
                                         </ul>
+                                    </div>
+                                    <div className="td">
+                                        <div className="shield">
+                                            <img src={shield} alt="Shield" />
+                                            <a onClick={_ => handleOpenPF(item)}>
+                                                {smallHash}
+                                            </a>
+                                        </div>
                                     </div>
                                     <div className="td">
                                         <div className="td__coins">

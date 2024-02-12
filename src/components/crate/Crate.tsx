@@ -6,7 +6,7 @@ import {RightItemTradeBan} from "../right/components/rightSHOP/components/RightI
 import coin from "../../assets/images/header__coins.svg";
 import { getApiLink } from '../../functions/getApiLink';
 import { useDispatch, useSelector } from 'react-redux';
-import {addBattleCrate, setChosenCrates } from '../../redux/toolkitSlice';
+import {addBattleCrate, setChosenCrates, setSound} from '../../redux/toolkitSlice';
 import {useCrateRarity} from "../../hooks/crateRarity";
 import {useLocation} from "react-router-dom";
 
@@ -23,6 +23,8 @@ export const Crate:React.FC<ICrateProps> = ({data}) => {
     const location = useLocation()
 
     const handleChoose = () => {
+
+        dispatch(setSound('sound12'))
 
         if(location.pathname.includes('create-battle')) {
             dispatch(addBattleCrate({crate: data, count: 1}))

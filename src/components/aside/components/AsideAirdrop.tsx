@@ -13,7 +13,7 @@ export const AsideAirdrop:React.FC<IAsideAirdropProps> = ({handleChangePage}) =>
 
     const airdropWsMessages: any = useContext(AirdropSocketContext)
 
-    const {seconds, milliseconds} = useAirdropTimer()
+    const {seconds, milliseconds} = useAirdropTimer(0)
 
     const fixTimer: any = {
         "waiting": 30,

@@ -95,7 +95,7 @@ export const Burger: React.FC<IBurgerProps> = () => {
                         </svg>
                     </div>
                 </button>
-                <NavLink className="header__user" to={'/user/'+userInfo.id}>
+                <NavLink className="header__user" to={'/profile'}>
                     <img src={userInfo.avatar} alt="User" />
                     <span>
                         {userInfo.name}

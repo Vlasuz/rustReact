@@ -16,6 +16,7 @@ import {Technical} from "./pages/technical/Technical";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from 'react-dnd';
 import {getWsLink} from "./functions/getWsLink";
+import setCookie from "./functions/setCookie";
 
 // TODO СХВАТКА
 // TODO Начисления баланса юзеру после победы
@@ -44,6 +45,8 @@ function App() {
         setIsLoad(false)
         getInventory({dispatch});
         getCart({dispatch});
+
+        setCookie('access_token', '')
 
         wsAirdrop.onmessage = (e) => {
             const data = JSON.parse(JSON.parse(e.data))

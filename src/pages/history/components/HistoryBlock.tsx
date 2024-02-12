@@ -42,7 +42,10 @@ export const HistoryBlock: React.FC<IHistoryBlockProps> = ({ historyFilter }) =>
         console.log(historyFilter)
     }, [historyFilter])
 
-    const history = userHistory.filter((item: IUserHistoryBalance) => historyFilter.type === '' ? item : item.type === historyFilter.type).filter((item: IUserHistoryBalance) => historyFilter.filterBy === '' ? item : historyFilter.filterBy === 'items' ? item.items.length : !item.items.length)
+    const history = userHistory
+        .filter((item: IUserHistoryBalance) => historyFilter.type === '' ? item : item.type === historyFilter.type)
+        .filter((item: IUserHistoryBalance) => historyFilter.filterBy === '' ? item : historyFilter.filterBy === item.pay_type)
+
     const sort = (hs: any) => {
         if (historyFilter.sortBy === 'price') {
 

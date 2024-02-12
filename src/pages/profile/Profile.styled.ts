@@ -3,9 +3,70 @@ import { styled } from 'styled-components';
 import arrPF from './../../assets/images/arr-td.svg'
 
 export const ProfileStyle = styled.section`
-
-
+  
   margin: -14px;
+
+  .tabs__item-fight {
+    .td__coins {
+      width: 70px;
+    }
+  }
+  
+  .shield {
+    margin-left: -5px;
+    position: relative;
+
+    &:hover {
+      img {
+        opacity: 1;
+      }
+
+      a {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    img {
+      opacity: 0.5;
+      transition: all .3s ease;
+    }
+
+    a {
+      position: absolute;
+      background: rgba(162, 171, 197, 0.3);
+      backdrop-filter: blur(5px);
+      border-radius: 10px;
+      padding: 16px 14px;
+      position: absolute;
+      left: -65px;
+      width: 150px;
+      top: 50%;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 11px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all .3s ease;
+      cursor: pointer;
+
+      &:after {
+        content: '';
+        background: url(${arrPF}) no-repeat;
+        width: 5px;
+        height: 10px;
+        margin-left: auto;
+        background-size: 5px;
+        background-position: center;
+        display: block;
+        margin-top: -2px;
+      }
+    }
+  }
 
   .section-block {
     background: #202232;
@@ -622,61 +683,6 @@ export const ProfileStyle = styled.section`
       }
     }
 
-    .shield {
-      margin-left: -5px;
-
-      &:hover {
-        img {
-          opacity: 1;
-        }
-
-        a {
-          opacity: 1;
-          visibility: visible;
-        }
-      }
-
-      img {
-        opacity: 0.5;
-        transition: all .3s ease;
-      }
-
-      a {
-        position: absolute;
-        background: rgba(162, 171, 197, 0.3);
-        backdrop-filter: blur(5px);
-        border-radius: 10px;
-        padding: 16px 14px;
-        position: absolute;
-        left: -65px;
-        width: 150px;
-        top: 50%;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 11px;
-        text-transform: uppercase;
-        color: #FFFFFF;
-        display: flex;
-        align-items: center;
-        opacity: 0;
-        visibility: hidden;
-        transition: all .3s ease;
-        cursor: pointer;
-        
-        &:after {
-          content: '';
-          background: url(${arrPF}) no-repeat;
-          width: 5px;
-          height: 10px;
-          margin-left: auto;
-          background-size: 5px;
-          background-position: center;
-          display: block;
-          margin-top: -2px;
-        }
-      }
-    }
-
     .td {
       &:nth-child(1) {
         font-weight: 500;
@@ -708,6 +714,74 @@ export const ProfileStyle = styled.section`
           margin-left: auto;
         }
       }
+    }
+  }
+  
+  @media screen and (max-width: 1250px) {
+    margin: 0;
+    .section-block {
+      margin: 0;
+    }
+  }
+  @media screen and (max-width: 1024px) {
+    .section-block-information {
+      grid-template-columns: repeat(2, 1fr);  
+    }
+    .section-block-newcomer .top-gamer,
+    .top-gamer {
+      grid-column-end: 3
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .top-gamer {
+      flex-wrap: wrap;
+    }
+    .top-gamer__trade-link {
+      width: 100%;
+    }
+    .top-gamer__vertical,
+    .top-gamer__vertical span {
+      transform: rotate(0);
+      min-width: 0;
+      width: 100%;
+      height: auto;
+      margin: 0;
+    }
+    .top-gamer__vertical{
+      margin-left: -10px;
+      margin-right: -10px;
+      width: calc(100% + 20px);
+    }
+    .top-gamer {
+      padding: 10px;
+      padding-top: 0;
+    }
+    .top-gamer__info {
+      margin: 10px 0;
+    }
+    .top-gamer__vertical span {
+      padding: 10px 0;
+    }
+    .section-block_tables {
+      height: 70vh;
+    }
+    .tabs {
+      overflow: auto;
+    }
+    .tabs__block .table {
+      min-width: 900px;
+    }
+    .balance__top {
+      margin-bottom: 10px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .section-block-information {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .section-block-newcomer .top-gamer,
+    .top-gamer {
+      grid-column-end: 2
     }
   }
 

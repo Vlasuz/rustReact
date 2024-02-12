@@ -39,7 +39,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     // Play sound - tick for spin
     const [play] = useSound(
         spinTick,
-        { volume: (+JSON.parse(`${getCookies("volume_music_rust")}`) / 100) }
+        { volume: getCookies("volume_music_rust") ? (+JSON.parse(`${getCookies("volume_music_rust")}`) / 100) : 0 }
     );
 
     const {crateRarity}: any = useCrateRarity({crate: chosenCrate})

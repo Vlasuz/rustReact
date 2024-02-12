@@ -4,9 +4,17 @@ import {addAirdropBagsMap, setAirdropSaveZone1, setAirdropSaveZone2, setAirdropS
 import {AirdropSocketContext} from "../../../App";
 import {IUser} from "../../../model";
 import setCookie from "../../../functions/setCookie";
+import axios from "axios";
+import {getApiLink} from "../../../functions/getApiLink";
+import {getBearer} from "../../../functions/getBearer";
+
+interface bagPosition {
+    x: number
+    y: number
+}
 
 interface IAirdropSavesItemProps {
-    save?: any
+    save: bagPosition[]
     setSave?: any
     saveZone?: number
 }
@@ -22,6 +30,19 @@ export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, saveZo
     const airdropBagsMap = useSelector((state: any) => state.toolkit.airdropBagsMap)
 
 
+    const savePostitionApi = (slot: number, bags: bagPosition[]) => {
+        const dataReq = {
+            slot,
+            bags
+        }
+
+        // getBearer({type: 'post'})
+        // axios.post(getApiLink('api/airdrop/bags/templates/save/'), dataReq).then(({data}) => {
+        //     console.log(data)
+        // })
+    }
+
+
     useEffect(() => {
         timeToSave = setTimeout(() => {
 
@@ -29,36 +50,44 @@ export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, saveZo
                 if(save.length === 0) {
                     dispatch(setAirdropSaveZone1(""))
                     setCookie("airdrop_save_bags_1", JSON.stringify(airdropBagsMap))
+                    savePostitionApi(1, airdropBagsMap)
                 } else {
                     dispatch(setAirdropSaveZone1('clear'))
                     setCookie("airdrop_save_bags_1", "")
+                    savePostitionApi(1, [])
                 }
             }
             if(saveZone === 2) {
                 if(save.length === 0) {
                     dispatch(setAirdropSaveZone2(""))
                     setCookie("airdrop_save_bags_2", JSON.stringify(airdropBagsMap))
+                    savePostitionApi(2, airdropBagsMap)
                 } else {
                     dispatch(setAirdropSaveZone2('clear'))
                     setCookie("airdrop_save_bags_2", "")
+                    savePostitionApi(2, [])
                 }
             }
             if(saveZone === 3) {
                 if(save.length === 0) {
                     dispatch(setAirdropSaveZone3(""))
                     setCookie("airdrop_save_bags_3", JSON.stringify(airdropBagsMap))
+                    savePostitionApi(3, airdropBagsMap)
                 } else {
                     dispatch(setAirdropSaveZone3('clear'))
                     setCookie("airdrop_save_bags_3", "")
+                    savePostitionApi(3, [])
                 }
             }
             if(saveZone === 4) {
                 if(save.length === 0) {
                     dispatch(setAirdropSaveZone4(""))
                     setCookie("airdrop_save_bags_4", JSON.stringify(airdropBagsMap))
+                    savePostitionApi(4, airdropBagsMap)
                 } else {
                     dispatch(setAirdropSaveZone4('clear'))
                     setCookie("airdrop_save_bags_4", "")
+                    savePostitionApi(4, [])
                 }
             }
 

@@ -593,11 +593,10 @@ export const PopupStyled = styled.div`
     display: grid;
     grid-template-columns: repeat(4,1fr);
     grid-template-rows: repeat(4, 1fr);
-    margin-top: 20px;
+    //margin-top: 20px;
     grid-gap: 6px;
     max-height: 385px;
     overflow: auto;
-    /*padding-bottom: 130px;*/
     min-height: 385px;
   }
   .popup-add-coins-skins .clothes__cool {

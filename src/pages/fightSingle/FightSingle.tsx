@@ -34,20 +34,27 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
 
     useEffect(() => {
 
-        if (!Object.keys(userData).length) return;
+        // if (!Object.keys(userData).length) return;
 
         ws.current = new WebSocket(getApiLink("ws/api/fight/game/" + fightId + "/", true))
 
         ws.current.onopen = () => {
+            if (!getCookie('access_token_rust')) return;
             ws.current.send(`{"type":"auth", "token":"${getCookie('access_token_rust')}"}`)
         }
 
         ws.current.onmessage = (e: any) => {
             const data = JSON.parse(JSON.parse(e.data))
 
+            console.log(data)
+
+            if(data.fight?.first_player?.id !== userData?.id && data.fight.second_player !== userData?.id) {
+                setMainPlayer(data.fight.second_player)
+                setOpponentPlayer(data.fight.first_player)
+            }
+
             if (data.type === "defense" || data.type === "attack") return;
 
-                    console.log(data)
             setGameData(data)
             setGameState(data.fight?.game_state ?? "waiting")
 
@@ -59,7 +66,7 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
                         setIsActiveConfetti(false)
                     }, 500)
 
-                    if(data?.timer < 0) return;
+                    if (data?.timer < 0) return;
 
                     dispatch(setUserBalance({
                         sum: true,

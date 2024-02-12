@@ -71,7 +71,7 @@ export const Tables: React.FC<ITablesProps> = ({games, user, isLoadingGames}) =>
 
 
     return (
-        <div className="section-block">
+        <div className="section-block section-block_tables">
             <ul className="tabs">
 
                 {

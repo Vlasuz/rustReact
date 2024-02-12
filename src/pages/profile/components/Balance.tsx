@@ -6,6 +6,7 @@ import { useUserData } from '../../../hooks/userData'
 import { NavLink } from 'react-router-dom'
 import {useDispatch} from "react-redux";
 import { setPopup } from '../../../redux/toolkitSlice'
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface IBalanceProps {
 
@@ -24,7 +25,9 @@ export const Balance: React.FC<IBalanceProps> = () => {
                     <div className="balance__coins">
                         <img src={coin} alt="Ico" />
                         <span>
-                            {userData.balance}
+                            {
+                                prettyCoinValues(userData.balance)
+                            }
                         </span>
                     </div>
                 </div>

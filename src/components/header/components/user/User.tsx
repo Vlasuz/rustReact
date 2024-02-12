@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import user from './../../../../assets/images/user.jpeg'
 import coin from './../../../../assets/images/header__coins.svg'
 import { NavLink } from 'react-router-dom'
 import { Burger } from '../burger/Burger'
@@ -64,8 +63,7 @@ export const User: React.FC<IUserProps> = () => {
             <button className="header__coins" onClick={_ => dispatch(setPopup('popup-add-coins'))}>
                 <img src={coin} alt="Coins" />
                 <span>
-                    {/*{prettyCoinValues(userData.balance)}*/}
-                    {prettyCoinValues(isNewSum && +isNewSum?.toFixed(2))} 00
+                    {prettyCoinValues(isNewSum && +isNewSum?.toFixed(2))},00
                 </span>
                 <div className="ico">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
