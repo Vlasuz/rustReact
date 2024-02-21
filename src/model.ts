@@ -356,6 +356,7 @@ export interface IBattleGame {
         position: number
         user: IUser
         win: number
+        is_bot: boolean
     }[]
     status: string
     winners: {

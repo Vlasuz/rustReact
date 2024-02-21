@@ -6,6 +6,7 @@ import coin from './../../../../../assets/images/header__coins.svg'
 import check from './../../../../../assets/images/green-check.svg'
 import basket from './../../../../../assets/images/basket.svg'
 import {RightItemTradeBan} from "../../rightSHOP/components/RightItemTradeBan";
+import {prettyCoinValues} from "../../../../../functions/prettyCoinValues";
 
 interface IStorageItemProps {
     data: IProduct
@@ -32,7 +33,7 @@ export const StorageItem: React.FC<IStorageItemProps> = ({ data }) => {
             <div className="item__price">
                 <img src={coin} alt="Ico" />
                 <span>
-                    {data.price.value}
+                    {prettyCoinValues(data.price.value)}
                 </span>
             </div>
         </div>

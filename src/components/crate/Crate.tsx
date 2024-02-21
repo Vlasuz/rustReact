@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {addBattleCrate, setChosenCrates, setSound} from '../../redux/toolkitSlice';
 import {useCrateRarity} from "../../hooks/crateRarity";
 import {useLocation} from "react-router-dom";
+import {prettyCoinValues} from "../../functions/prettyCoinValues";
 
 interface ICrateProps {
     data: ICrate
@@ -53,7 +54,7 @@ export const Crate:React.FC<ICrateProps> = ({data}) => {
             <div className="item__price">
                 <img src={coin} alt="Ico" />
                 <span>
-                    {data.price}
+                    {prettyCoinValues(data.price)}
                 </span>
             </div>
         </div>

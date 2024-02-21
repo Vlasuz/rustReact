@@ -16,6 +16,8 @@ export const WithdrawBots: React.FC<IWithdrawBotsProps> = () => {
     const withdrawInfo = useSelector((state: any) => state.toolkit.withdrawInfo)
     const userData: IUser = useSelector((state: any) => state.toolkit.user)
 
+    const bots = withdrawInfo?.data?.bot ?? withdrawInfo?.data?.bots
+
     return (
         <>
             <h2>Статус ботов</h2>
@@ -23,7 +25,7 @@ export const WithdrawBots: React.FC<IWithdrawBotsProps> = () => {
             <div className="popup-pull__block">
 
                 {
-                    withdrawInfo.bots.map((bot: IWithdrawBot) =>
+                    bots?.length && bots?.map((bot: IWithdrawBot) =>
                         <div key={bot.id} className="popup-pull__item">
                             <div className="item__top">
                                 <div className="item__photo">

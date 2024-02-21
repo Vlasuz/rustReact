@@ -1,3 +1,5 @@
 export const prettyCoinValues = (num: number | undefined) => {
-    return num?.toLocaleString()
+    const newNum = num && num / 100;
+
+    return newNum?.toLocaleString()
 }

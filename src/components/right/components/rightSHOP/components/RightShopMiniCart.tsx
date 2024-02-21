@@ -3,6 +3,7 @@ import coin from './../../../../../assets/images/header__coins.svg'
 import { useSelector } from 'react-redux'
 import cartIcon from './../../../../../assets/images/cart.svg'
 import { IProduct } from '../../../../../model'
+import {prettyCoinValues} from "../../../../../functions/prettyCoinValues";
 
 interface IRightShopMiniCartProps {
     setIsCartOpen: any
@@ -33,7 +34,7 @@ export const RightShopMiniCart: React.FC<IRightShopMiniCartProps> = ({setIsCartO
                         <div className="sum">
                             <img src={coin} alt="Coins" />
                             <span>
-                                {price}
+                                {prettyCoinValues(price)}
                             </span>
                         </div>
                     </div>

@@ -17,7 +17,7 @@ export const getCart = ({dispatch}: IGetCartProps) => {
     axios.get(getApiLink('api/basket/')).then(({data}) => {
         dispatch(addItemToCart(data.items));
     }).catch(er => {
-        er.response.status === 401 && RefreshToken({dispatch, getCart})
+        er?.response?.status === 401 && RefreshToken({dispatch, getCart})
     })
 
 }

@@ -36,6 +36,8 @@ export const CaseRollingBlock:React.FC<ICaseRollingBlockProps> = ({winnerItem, i
     const [marginLeftSpin, setMarginLeftSpin] = useState(`calc(-1 * ((170.1px * 50) - 50vw) + ${randomFinishPosition}px)`)
     const [transitionDuration, setTransitionDuration] = useState(isActiveSpin ? (!isFastActive ? "10s" : ".5s") : "")
 
+    console.log(marginLeftSpin)
+
     useEffect(() => {
         setTransitionDuration(isActiveSpin ? (!isFastActive ? "10s" : ".5s") : "")
         setMarginLeftSpin("0px")

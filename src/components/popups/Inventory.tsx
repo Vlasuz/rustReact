@@ -17,7 +17,8 @@ import {LoadingStyled} from "../loading/loading.styled";
 import {prettyCoinValues} from "../../functions/prettyCoinValues";
 import getCookie from "../../functions/getCookie";
 import { useDispatch } from 'react-redux';
-import {setPopup} from "../../redux/toolkitSlice";
+import {setPopup, setWithdrawInfo} from "../../redux/toolkitSlice";
+import {RefreshToken} from "../../api/refreshToken";
 
 interface IInventoryProps {
 
@@ -70,12 +71,18 @@ export const Inventory: React.FC<IInventoryProps> = () => {
     }
 
     useEffect(() => {
+        getInventory()
+    }, [])
+
+    const getInventory = () => {
         getBearer({type: "get"})
         axios.get(getApiLink("api/trade/inventory/")).then(({data}) => {
             setInventory(data)
             setIsLoad(true)
-        }).catch(er => {console.log(er)})
-    }, [])
+        }).catch(er => {
+            er?.response?.status === 401 && RefreshToken({dispatch, getInventory})
+        })
+    }
 
     const handleUpdate = () => {
         setIsLoad(false)
@@ -83,6 +90,8 @@ export const Inventory: React.FC<IInventoryProps> = () => {
         axios.get(getApiLink('api/trade/inventory/refresh/')).then(({data}) => {
             setInventory(data)
             setIsLoad(true)
+        }).catch(er => {
+            er?.response?.status === 401 && RefreshToken({dispatch, handleUpdate})
         })
     }
 
@@ -120,7 +129,6 @@ export const Inventory: React.FC<IInventoryProps> = () => {
         axios.post(getApiLink('api/trade/create/pay/'), selectedItems.map(item => item.id)).then(({data}) => {
             console.log(data)
 
-
             const socket = new WebSocket(getApiLink(`ws/api/trade/pay/${data.id}/`, true))
 
             socket.onopen = () => {
@@ -129,7 +137,20 @@ export const Inventory: React.FC<IInventoryProps> = () => {
             socket.onmessage = (e) => {
                 const data = JSON.parse(JSON.parse(e.data))
 
-                dispatch(setPopup('popup-pull'))
+                dispatch(setWithdrawInfo({
+                    data,
+                    type: "pay"
+                }))
+
+                if(data.trade_id === "") {
+                    dispatch(setPopup('popup-pull-search'))
+                } else if(data.trade_id && data.status === "waiting") {
+                    dispatch(setPopup('popup-withdraw-bot'))
+                } else if (data.status === "error") {
+                    dispatch(setPopup('popup-pull-error'))
+                } else if (data.status === "success") {
+                    dispatch(setPopup('popup-pull-success'))
+                }
 
                 console.log(data)
             }
@@ -199,7 +220,7 @@ export const Inventory: React.FC<IInventoryProps> = () => {
                                     <div className="item__price">
                                         <img src={coin} alt="Photo" />
                                         <span>
-                                            {item.price.value}
+                                            {prettyCoinValues(item.price.value)}
                                         </span>
                                     </div>
                                 </div>

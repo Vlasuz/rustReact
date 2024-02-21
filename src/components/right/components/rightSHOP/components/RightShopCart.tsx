@@ -10,6 +10,7 @@ import { getApiLink } from '../../../../../functions/getApiLink'
 import { getBearer } from '../../../../../functions/getBearer'
 import { getShop } from '../../../../../api/getShopItems'
 import { LoadingStyled } from '../../../../loading/loading.styled'
+import {prettyCoinValues} from "../../../../../functions/prettyCoinValues";
 
 interface IRightShopCartProps {
     isCartOpen: any
@@ -64,7 +65,7 @@ export const RightShopCart: React.FC<IRightShopCartProps> = ({ isCartOpen, setIs
                                 <div className="item__price">
                                     <img src={coin} alt="Coins" />
                                     <span>
-                                        {item.price.value}
+                                        {prettyCoinValues(item.price.value)}
                                     </span>
                                 </div>
                             </div>

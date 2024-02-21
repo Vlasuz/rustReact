@@ -101,6 +101,9 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
         getBearer({type: "delete"})
         axios.delete(getApiLink(`api/battle/cancel/?game_id=${battleId !== "create-battle" ? battleId : gameId}`)).then(({data}) => {
             if(data.status === false) return;
+            
+            dispatch(setUserBalance({sum: true, money: webSocket?.battle?.bet}))
+
             navigate("/battle")
         }).catch(er => console.log(er))
     }

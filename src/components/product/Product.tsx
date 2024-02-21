@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 import {setItemDrag, setPererabZoneItems, setPopupZoneItems, setUserInventory} from '../../redux/toolkitSlice'
 import { useItemDrag } from '../../hooks/itemDrag'
 import {RightItemTradeBan} from "../right/components/rightSHOP/components/RightItemTradeBan";
+import {prettyCoinValues} from "../../functions/prettyCoinValues";
 
 interface IProductProps {
     product_data: IProduct
@@ -48,7 +49,7 @@ export const Product: React.FC<IProductProps> = ({ product_data, typeOfZone }) =
             <div className="item__price">
                 <img src={coin} alt="Ico" />
                 <span>
-                    {product_data.price.value}
+                    {prettyCoinValues(product_data.price.value)}
                 </span>
             </div>
 

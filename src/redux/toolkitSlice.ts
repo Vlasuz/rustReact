@@ -192,6 +192,9 @@ const toolkitSlice = createSlice({
         setAirdropSaveZone1(state, action) {
             if(action.payload === "clear") {
                 state.airdropSaveZone1 = []
+            } else if(action.payload !== "") {
+                const array = action.payload.replaceAll("x_pos", "x").replaceAll("y_pos", "y")
+                state.airdropSaveZone1 = JSON.parse(array)
             } else {
                 state.airdropSaveZone1 = state.airdropBagsMap
             }
@@ -200,17 +203,18 @@ const toolkitSlice = createSlice({
             if(action.payload === "clear") {
                 state.airdropSaveZone2 = []
             } else if(action.payload !== "") {
-                state.airdropSaveZone2 = JSON.parse(action.payload)
+                const array = action.payload.replaceAll("x_pos", "x").replaceAll("y_pos", "y")
+                state.airdropSaveZone2 = JSON.parse(array)
             } else {
                 state.airdropSaveZone2 = state.airdropBagsMap
             }
         },
         setAirdropSaveZone3(state, action) {
-            console.log(action.payload)
             if(action.payload === "clear") {
                 state.airdropSaveZone3 = []
             } else if(action.payload !== "") {
-                state.airdropSaveZone3 = JSON.parse(action.payload)
+                const array = action.payload.replaceAll("x_pos", "x").replaceAll("y_pos", "y")
+                state.airdropSaveZone3 = JSON.parse(array)
             } else {
                 state.airdropSaveZone3 = state.airdropBagsMap
             }
@@ -219,7 +223,8 @@ const toolkitSlice = createSlice({
             if(action.payload === "clear") {
                 state.airdropSaveZone4 = []
             } else if(action.payload !== "") {
-                state.airdropSaveZone4 = JSON.parse(action.payload)
+                const array = action.payload.replaceAll("x_pos", "x").replaceAll("y_pos", "y")
+                state.airdropSaveZone4 = JSON.parse(array)
             } else {
                 state.airdropSaveZone4 = state.airdropBagsMap
             }

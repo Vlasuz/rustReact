@@ -31,15 +31,18 @@ export const AirdropSavesItem: React.FC<IAirdropSavesItemProps> = ({save, saveZo
 
 
     const savePostitionApi = (slot: number, bags: bagPosition[]) => {
+        let newBagsArray: any = [];
+        bags.map(item => newBagsArray.push({x_pos: item.x, y_pos: item.y}))
+
         const dataReq = {
             slot,
-            bags
+            bags: newBagsArray
         }
 
-        // getBearer({type: 'post'})
-        // axios.post(getApiLink('api/airdrop/bags/templates/save/'), dataReq).then(({data}) => {
-        //     console.log(data)
-        // })
+        getBearer({type: 'post'})
+        axios.post(getApiLink('api/airdrop/bags/templates/save/'), dataReq).then(({data}) => {
+            console.log(data)
+        })
     }
 
 

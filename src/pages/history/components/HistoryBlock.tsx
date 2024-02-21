@@ -13,6 +13,7 @@ import getCookies from '../../../functions/getCookie'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserHistory } from '../../../redux/toolkitSlice'
 import { IUserHistoryBalance } from '../../../model'
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface IHistoryBlockProps {
     historyFilter: any
@@ -111,7 +112,7 @@ export const HistoryBlock: React.FC<IHistoryBlockProps> = ({ historyFilter }) =>
                         <div className="item__price">
                             <img src={coin} alt="Coins" />
                             <span>
-                                {historyItem.value}
+                                {prettyCoinValues(historyItem.value)}
                             </span>
                         </div>
                         <div className={"item__status " + (historyStatus(historyItem.status)?.class)}>

@@ -4,6 +4,9 @@ import {useDispatch, useSelector} from "react-redux";
 import getCookies from "../../../functions/getCookie";
 import {setAirdropSaveZone1, setAirdropSaveZone3, setAirdropSaveZone2, setAirdropSaveZone4} from "../../../redux/toolkitSlice";
 import {IUser} from "../../../model";
+import axios from "axios";
+import {getBearer} from "../../../functions/getBearer";
+import {getApiLink} from "../../../functions/getApiLink";
 
 interface IAirdropSavesProps {
 
@@ -27,7 +30,20 @@ export const AirdropSaves: React.FC<IAirdropSavesProps> = () => {
         getCookies("airdrop_save_bags_3") && dispatch(setAirdropSaveZone3(getCookies("airdrop_save_bags_3")))
         getCookies("airdrop_save_bags_4") && dispatch(setAirdropSaveZone4(getCookies("airdrop_save_bags_4")))
 
-    }, [])
+        getBearer({type: "get"})
+        axios.get(getApiLink(`api/airdrop/bags/templates/`)).then(({data}) => {
+            console.log(data)
+
+            data.map((item: any) => {
+                item.slot === 1 && dispatch(setAirdropSaveZone1(JSON.stringify(item.bags)))
+                item.slot === 2 && dispatch(setAirdropSaveZone2(JSON.stringify(item.bags)))
+                item.slot === 3 && dispatch(setAirdropSaveZone3(JSON.stringify(item.bags)))
+                item.slot === 4 && dispatch(setAirdropSaveZone4(JSON.stringify(item.bags)))
+            })
+
+        })
+
+    }, [userData])
 
     return (
         <div className="airdrop__saves">

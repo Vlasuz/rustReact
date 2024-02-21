@@ -50,7 +50,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
 
         // getBearer({type: "post"})
         axios.post(getApiLink("api/fight/room/create"), {
-            "coins": coinsValue,
+            "coins": coinsValue * 100,
             "items": popupZoneItems.map((item: IProduct) => item.id)
         }).then(({data}) => {
             dispatch(setFightItemData(data))
@@ -67,7 +67,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
 
             navigate("/fight/"+data.id)
         }).catch(er => {
-            er.response.status === 401 && RefreshToken({dispatch, handleCreateFight})
+            er?.response?.status === 401 && RefreshToken({dispatch, handleCreateFight})
         })
     }
 
@@ -77,7 +77,8 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
     }, [popupZoneItems])
 
     const changeCoinsValue = (e: any) => {
-        setCoinsValue(e.target.value.replace(/\D/g,'').substr(0,13))
+        // e.target.value.replace(/\D/g,'').substr(0,13)
+        setCoinsValue(e.target.value.substr(0,13))
     }
 
     return (
@@ -103,7 +104,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                                 <div className="input">
                                     <img src={coins} alt="Ico"/>
                                     <input onChange={e => changeCoinsValue(e)} type="text"
-                                           placeholder="0" value={coinsValue === 0 ? "" : prettyCoinValues(+coinsValue)}/>
+                                           placeholder="0" value={coinsValue === 0 ? "" : coinsValue}/>
                                     {/*<span>*/}
                                     {/*    {prettyCoinValues(+coinsValue)}*/}
                                     {/*</span>*/}
@@ -119,7 +120,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" disabled={userInfo?.balance ? (coinsValue <= 0 || !(userInfo?.balance >= coinsValue)) : true}>
+                        <button type="submit" disabled={userInfo?.balance ? (coinsValue * 100 <= 0 || !(userInfo?.balance >= coinsValue * 100)) : true}>
                             Создать игру
                         </button>
                     </form>

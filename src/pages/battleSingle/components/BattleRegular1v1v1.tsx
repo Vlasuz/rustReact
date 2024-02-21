@@ -26,7 +26,7 @@ export const BattleRegular1v1v1:React.FC<IBattleRegular1v1v1Props> = () => {
             <strong>
                 VS
             </strong>
-            <BattlePlayer color={"orange"} position={2} direction={"right"} player={position3} />
+            <BattlePlayer color={"orange"} position={3} direction={"right"} player={position3} />
         </div>
     )
 }

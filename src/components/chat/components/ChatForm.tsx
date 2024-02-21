@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import {addChatItem, setNotice} from '../../../redux/toolkitSlice'
+import { useDispatch } from 'react-redux'
+import {setNotice} from '../../../redux/toolkitSlice'
 
 import ArrToSend from './../../../assets/images/send-message.svg'
 import smile from './../../../assets/images/smile-1.png'
-import { useWsChat } from '../../../hooks/wsChat'
 import { ChatWsContext } from '../../../context/chatWsContext'
 import getCookies from "../../../functions/getCookie";
 
@@ -20,6 +19,7 @@ export const ChatForm: React.FC<IChatFormProps> = ({ setIsOpenSmiles }) => {
 
     const handleSendMessage = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+
         if (!messageValue.length) return;
 
         if(!getCookies('access_token_rust')) {

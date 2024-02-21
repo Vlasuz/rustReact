@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import cross from './../../../../assets/images/cross.svg'
 import coins from './../../../../assets/images/header__coins.svg'
 import {setPererabZoneItems, setPopupZoneItems, setUserInventory} from "../../../../redux/toolkitSlice";
+import {prettyCoinValues} from "../../../../functions/prettyCoinValues";
 
 interface IItemInZoneProps {
     product_data: IProduct
@@ -33,7 +34,7 @@ export const ItemInZone: React.FC<IItemInZoneProps> = ({product_data}) => {
             <div className="item__price">
                 <img src={coins} alt="Coin"/>
                 <span>
-                    {product_data.price?.value}
+                    {prettyCoinValues(product_data.price?.value)}
                 </span>
             </div>
         </li>

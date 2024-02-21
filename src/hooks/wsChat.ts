@@ -11,14 +11,18 @@ export const useWsChat = () => {
     const isSocketOpen = useSelector((state: any) => state.toolkit.isOpenWsChat)
 
     useEffect(() => {
+        console.log(isSocketOpen)
         if(isSocketOpen) return;
 
         ws.current = new WebSocket(getWsLink('ws/api/chat/'))
         ws.current.onopen = () => {
+            console.log(ws)
             ws.current.send(JSON.stringify({
                 "type": "auth",
                 "token": getCookies('access_token_rust')
             }))
+
+            console.log('123')
 
             dispatch(setOpenWsChat())
         }
@@ -26,7 +30,7 @@ export const useWsChat = () => {
             const response = JSON.parse(JSON.parse(e?.data))
             
             if(response.type === "change_online") {
-                dispatch(setUserOnline(JSON.parse(response?.data)?.online))
+                Object.keys(response?.data).length && dispatch(setUserOnline(JSON.parse(response?.data)?.online))
             } else if (response.type === "send_message") {
                 dispatch(addChatItem(response.data))
             } else if (response.type === "delete_message") {
@@ -36,6 +40,8 @@ export const useWsChat = () => {
         }
     }, [ws])
 
+
+    console.log(ws)
     return { ws }
 
 }

@@ -38,8 +38,8 @@ export const HistoryTop: React.FC<IHistoryTopProps> = ({setHistoryFilter}) => {
         }, 300)
     }
 
-    const payAmountHtml = `$ ${Math.floor(payAmount)}<span>,${payAmount.toFixed(2).slice(payAmount.toFixed(2).indexOf('.') + 1)}</span>`;
-    const withdrawAmountHtml = `$ ${Math.floor(withdrawAmount)}<span>,${withdrawAmount.toFixed(2).slice(withdrawAmount.toFixed(2).indexOf('.') + 1)}</span>`;
+    const payAmountHtml = `$ ${Math.floor(withdrawAmount)}<span>,${withdrawAmount.toFixed(2).slice(withdrawAmount.toFixed(2).indexOf('.') + 1)}</span>`;
+    const withdrawAmountHtml = `$ ${Math.floor(payAmount)}<span>,${payAmount.toFixed(2).slice(payAmount.toFixed(2).indexOf('.') + 1)}</span>`;
 
     return (
         <div className="section-history__top">

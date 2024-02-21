@@ -16,6 +16,7 @@ import {ConfettiFireworks} from "../../components/confetti/ConfettiFireworks";
 import useSound from "use-sound";
 import spinTick from "../../assets/audio/sound-spin-tick.webm";
 import getCookies from "../../functions/getCookie";
+import {prettyCoinValues} from "../../functions/prettyCoinValues";
 
 interface IOpenCasesProps {
 
@@ -269,7 +270,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                         <p>Купить</p>
                         <img src={coins} alt="coin"/>
                         <span>
-                            {chosenCrate?.price * countOfCases}
+                            {prettyCoinValues(chosenCrate?.price * countOfCases)}
                         </span>
                     </button>
                     <div className="center__count">

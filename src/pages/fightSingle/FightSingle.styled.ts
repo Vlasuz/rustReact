@@ -9,6 +9,16 @@ export const FightSingleStyled = styled.section`
   align-items: center;
   justify-content: center;
   
+  .section-fight__user_call-bot {
+    -webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease;
+  }
+  .section-fight__user_call-bot:hover {
+    transform: scale(1.1);
+  }
+  .section-fight__user_call-bot:active {
+    transform: scale(0.98);
+  }
+  
   .canvas_winner {
     position: absolute;
     bottom: 0;

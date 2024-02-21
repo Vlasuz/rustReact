@@ -2,7 +2,6 @@ import {ReactElement, useEffect, useState} from "react";
 import {PopupStyled} from "./popup.styled";
 import {ChangeUserSlogan} from "../../components/popups/ChangeUserSlogan";
 import {useDispatch, useSelector} from "react-redux";
-import {setPopup} from "../../redux/toolkitSlice";
 import {PopupsContext} from "../../context/popupsContext";
 import {AddCash} from "../../components/popups/AddCash";
 import {closePopup} from "../../functions/closePopup";
@@ -13,11 +12,13 @@ import {AddCashAmount} from "../../components/popups/AddCashAmount";
 import {Inventory} from "../../components/popups/Inventory";
 import {StartFightCash} from "../../components/popups/StartFightCash";
 import {StartFightClothes} from "../../components/popups/startFightClothes/StartFightClothes";
-import {HTML5Backend} from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
 import {Withdraw} from "../../components/popups/Withdraw";
 import {WithdrawBots} from "../../components/popups/WithdrawBots";
 import {PopupCheckTrustGame} from "../../components/popups/PopupCheckTrustGame";
+import {TradingStatusFalse} from "../../components/popups/TradingStatusFalse";
+import {TradingStatusSuccess} from "../../components/popups/TradingStatusSuccess";
+import {WithdrawBot} from "../../components/popups/WithdrawBot";
+import {setPopup} from "../../redux/toolkitSlice";
 
 export const usePopups = () => {
 
@@ -41,8 +42,18 @@ export const usePopups = () => {
         "popup-entry-clothes": <StartFightClothes/>,
         "popup-pull-search": <Withdraw/>,
         "popup-pull": <WithdrawBots/>,
+        "popup-pull-bots": <WithdrawBots/>,
+        "popup-pull-error": <TradingStatusFalse/>,
+        "popup-pull-success": <TradingStatusSuccess/>,
+        "popup-withdraw-bot": <WithdrawBot/>,
         "popup-fair-game": <PopupCheckTrustGame/>,
     }
+
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         dispatch(setPopup("popup-pull-error"))
+    //     }, 1000)
+    // }, [])
 
     useEffect(() => {
 

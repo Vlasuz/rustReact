@@ -3,6 +3,37 @@ import array from './../../assets/images/arr-td.svg'
 
 export const PopupStyled = styled.div`
   
+  .popup-pull-success {
+    img {
+      border-radius: 50%;
+      box-shadow: 0 0 10px 3px #92C14533;
+    }
+  }
+  .popup-pull-error {
+    img {
+      border-radius: 50%;
+      box-shadow: 0 0 10px 3px #DB475233;
+    }
+  }
+  .popup-pull-error,
+  .popup-pull-success,
+  .popup-withdraw-bot {
+    h2 {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    p {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 13px;
+      letter-spacing: 0em;
+      color: #A2ABC5;
+    }
+  }
+  
   .popup {
     opacity: 0;
     visibility: hidden;
@@ -16,6 +47,14 @@ export const PopupStyled = styled.div`
     justify-content: center;
     transition: all .3s ease;
     z-index: 2;
+  }
+  
+  .popup-pull-success,
+  .popup-pull-error {
+    h2 {
+      display: flex;
+      gap: 10px;
+    }
   }
 
   .select span{

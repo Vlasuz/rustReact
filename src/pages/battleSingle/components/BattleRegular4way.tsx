@@ -27,11 +27,11 @@ export const BattleRegular4way:React.FC<IBattleRegular4wayProps> = () => {
             <strong>
                 VS
             </strong>
-            <BattlePlayer color={"green"} position={1} direction={"left"} player={position3} />
+            <BattlePlayer color={"green"} position={3} direction={"left"} player={position3} />
             <strong>
                 VS
             </strong>
-            <BattlePlayer color={"orange"} position={2} direction={"right"} player={position4} />
+            <BattlePlayer color={"orange"} position={4} direction={"right"} player={position4} />
         </div>
     )
 }

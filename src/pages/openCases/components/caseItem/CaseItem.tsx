@@ -5,6 +5,7 @@ import {CaseItemStyled} from "./CaseItem.styled";
 import {ICrateItem} from "../../../../model";
 import axios from "axios";
 import {getApiLink} from "../../../../functions/getApiLink";
+import {prettyCoinValues} from "../../../../functions/prettyCoinValues";
 
 interface ICaseItemProps {
     data: ICrateItem
@@ -32,7 +33,7 @@ export const CaseItem:React.FC<ICaseItemProps> = ({data, itemRarities}) => {
             <div className="item__price">
                 <img src={coin} alt="Ico" />
                 <span>
-                    {data.price}
+                    {prettyCoinValues(data.price)}
                 </span>
             </div>
         </CaseItemStyled>

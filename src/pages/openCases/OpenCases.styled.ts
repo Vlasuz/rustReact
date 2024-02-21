@@ -89,7 +89,7 @@ export const OpenCasesStyled = styled.section`
         }
 
         &:first-child {
-          margin-left: calc(-1 * (1005px - 50vw));
+          margin-left: calc(-1 * (1453px - 50vw));
         }
 
         &.won_the_price {

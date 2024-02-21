@@ -16,7 +16,6 @@ export const BattleAreaTopBig: React.FC<IBattleAreaTopBigProps> = ({gameStep}) =
     const {seconds, milliseconds} = useFightTimer(timer, gameStep)
 
     const millisecondsWithTest = milliseconds < 0 ? 99 + milliseconds : milliseconds
-    console.log(milliseconds)
 
     return (
         <div className="crate crate__single">

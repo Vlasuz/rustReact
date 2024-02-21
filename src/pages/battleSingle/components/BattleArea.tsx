@@ -90,7 +90,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
         } else if (webSocket?.battle?.status === "end") {
 
-            if (webSocket?.timer !== 0) {
+            if (webSocket?.timer <= -1) {
                 setIsCanDrag(true)
                 setIsGoCalc(true)
                 setBlocksOpen(3)

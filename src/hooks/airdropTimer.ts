@@ -9,6 +9,7 @@ export const useAirdropTimer = (defaultTime: number) => {
     const [time, setTime] = useState(0)
     const [seconds, setSeconds] = useState(0)
     const [milliseconds, setMilliseconds] = useState(0)
+    const [isPageLoad, setIsPageLoad] = useState(false)
 
 
     useEffect(() => {
@@ -32,9 +33,9 @@ export const useAirdropTimer = (defaultTime: number) => {
     }, [airdropWsMessages])
 
     useEffect(() => {
+        if(airdropWsMessages.timer === 0) return;
+
         setMilliseconds(99);
-
-
         const intervalMillisec = setInterval(() => {
             setMilliseconds((num) => num - 1);
             if(seconds <= 0 ) {
@@ -61,8 +62,9 @@ export const useAirdropTimer = (defaultTime: number) => {
     }, [seconds, time, airdropWsMessages]);
 
     useEffect(() => {
-        setMilliseconds(isTimerStart ? 99 : 0)
+        if(airdropWsMessages.timer === 0) return;
 
+        setMilliseconds(isTimerStart ? 99 : 0)
 
         const intervaSecond = setInterval(() => {
             setSeconds((num) => num - 1);

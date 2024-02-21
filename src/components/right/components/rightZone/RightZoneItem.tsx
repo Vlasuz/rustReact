@@ -4,6 +4,7 @@ import { useItemDrag } from '../../../../hooks/itemDrag'
 import { useDispatch, useSelector } from 'react-redux'
 import {setPererabZoneItems, setPopupZoneItems, setUserInventory} from '../../../../redux/toolkitSlice'
 import { ItemTypes } from '../../../../constants/ItemTypes'
+import {prettyCoinValues} from "../../../../functions/prettyCoinValues";
 
 interface IRightZoneItemProps {
     product_data: IProduct
@@ -29,7 +30,7 @@ export const RightZoneItem: React.FC<IRightZoneItemProps> = ({ product_data }) =
             <div className="item__price">
                 <img src="../images/header__coins.svg" alt="Ico" />
                 <span>
-                    {product_data?.price.value}
+                    {prettyCoinValues(product_data?.price.value)}
                 </span>
             </div>
         </li>

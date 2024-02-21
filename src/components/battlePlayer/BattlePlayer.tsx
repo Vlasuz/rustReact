@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {LoadingStyled} from "../loading/loading.styled";
 import nonPhoto from "./../../assets/images/non-photo.png"
+import botPhoto from "./../../assets/images/bot.svg"
 import {IUser} from "../../model";
 import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
@@ -34,9 +35,11 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, pla
     const {battleId}: any = useParams()
 
     const handleJoin = () => {
-        if(player?.user?.avatar) {
+        if(player?.user?.avatar && !player.is_bot) {
             return navigate(`/user/${player?.user?.id}`)
         }
+
+        if(player.is_bot) return ;
 
         if (!Object.keys(user).length) {
             return dispatch(setNotice("beforeYouNeedAuth"))
@@ -63,7 +66,7 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({color, position, pla
              className={`person person_${color} person_${direction} ${!isHaveUser && "person_loading"}`}>
             <div className="user__photo">
                 {
-                    isHaveUser ? <img src={player.user.avatar ?? nonPhoto} alt="user"/>
+                    isHaveUser ? <img src={player.is_bot ? botPhoto : player.user.avatar ?? nonPhoto} alt="user"/>
                         :
                         <div className="non-player-loading">
                             {!isYourGame && <>

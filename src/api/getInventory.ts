@@ -17,6 +17,6 @@ export const getInventory = ({dispatch}: IGetInventoryProps) => {
     axios.get(getApiLink('api/items/inventory/')).then(({data}) => {
         dispatch(setUserInventory(data))
     }).catch(er => {
-        er.response.status === 401 && RefreshToken({dispatch, getInventory})
+        er?.response?.status === 401 && RefreshToken({dispatch, getInventory})
     })
 }

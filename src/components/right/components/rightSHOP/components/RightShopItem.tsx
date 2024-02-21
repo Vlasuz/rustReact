@@ -11,6 +11,7 @@ import { getApiLink } from '../../../../../functions/getApiLink'
 import { getBearer } from '../../../../../functions/getBearer'
 import getCookies from "../../../../../functions/getCookie";
 import {RightItemTradeBan} from "./RightItemTradeBan";
+import {prettyCoinValues} from "../../../../../functions/prettyCoinValues";
 
 interface IRightShopItemProps {
     data: IProduct
@@ -58,7 +59,7 @@ export const RightShopItem: React.FC<IRightShopItemProps> = ({ data, searchValue
             <div className="item__price">
                 <img src={coin} alt="Ico" />
                 <span>
-                    {data.price.value}
+                    {prettyCoinValues(data.price.value)}
                 </span>
             </div>
         </div>

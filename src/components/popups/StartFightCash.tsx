@@ -47,7 +47,7 @@ export const StartFightCash: React.FC<IStartFightCashProps> = () => {
             navigate('/fight/'+fightItemData.id)
 
         }).catch(er => {
-            er.response.status === 401 && RefreshToken({dispatch, handleStartGame})
+            er?.response?.status === 401 && RefreshToken({dispatch, handleStartGame})
         })
 
     }

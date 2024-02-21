@@ -10,6 +10,7 @@ import {IsJoinToGame} from "../../../App";
 import {NavLink} from "react-router-dom";
 import {setNotice, setUserBalance} from "../../../redux/toolkitSlice";
 import nonPhoto from "./../../../assets/images/non-photo.png"
+import botPhoto from "./../../../assets/images/bot.svg"
 
 interface IBattlePlayerProps {
     isWinner: boolean
@@ -80,8 +81,8 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({isWinner, numberOfPo
             className={`player ${color ?? (isGroup ? "player_blue" : numberColors[numberOfPosition])} ${!isWinner && "player_looser"}`}>
 
             {isHavePlayerOnThisPosition ?
-                <NavLink to={`/user/${player?.user?.id}`} className="player__photo">
-                    <img src={player?.user?.avatar} alt="Photo"/>
+                <NavLink to={player.is_bot ? '' : `/user/${player?.user?.id}`} className="player__photo">
+                    <img src={player.is_bot ? botPhoto : player.user.avatar ?? nonPhoto} alt="Photo"/>
                 </NavLink> :
                 <ButtonWithoutPlayer joinToGame={joinToGame}/>
             }

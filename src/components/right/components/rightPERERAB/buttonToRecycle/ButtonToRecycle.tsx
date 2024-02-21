@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import { setNotice, setPererabZoneItems, setSound, setUserBalance } from '../../../../../redux/toolkitSlice'
 import { LoadingStyled } from '../../../../loading/loading.styled'
 import {getBearer} from "../../../../../functions/getBearer";
+import {prettyCoinValues} from "../../../../../functions/prettyCoinValues";
 
 interface IButtonToRecycleProps {
     pererabZoneItems: IProduct[]
@@ -53,7 +54,7 @@ export const ButtonToRecycle: React.FC<IButtonToRecycleProps> = ({ pererabZoneIt
             <div className="rht">
                 <img src={coin} alt="Ico" />
                 <span>
-                    {mainSum.toFixed(2)}
+                    {prettyCoinValues(mainSum)}
                 </span>
             </div>
         </ButtonToRecycleStyle>

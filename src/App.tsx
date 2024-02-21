@@ -17,6 +17,8 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import {DndProvider} from 'react-dnd';
 import {getWsLink} from "./functions/getWsLink";
 import setCookie from "./functions/setCookie";
+import {useWsChat} from "./hooks/wsChat";
+import { ChatWsContext } from './context/chatWsContext';
 
 // TODO СХВАТКА
 // TODO Начисления баланса юзеру после победы
@@ -30,6 +32,8 @@ function App() {
 
     const [isLoad, setIsLoad] = useState(true)
     const [isJoinToGame, setIsJoinToGame] = useState(false)
+
+    const {ws} = useWsChat()
 
     const dispatch = useDispatch()
     const {popup} = usePopups()
@@ -62,23 +66,25 @@ function App() {
     if (isTechnicalTime) return <Technical/>;
 
     return (
-        <IsJoinToGame.Provider value={{isJoinToGame, setIsJoinToGame}}>
-            <AirdropSocketContext.Provider value={airdropWsMessage}>
-                <DndProvider backend={HTML5Backend}>
-                    <AppStyled className="App">
+        <ChatWsContext.Provider value={ws}>
+            <IsJoinToGame.Provider value={{isJoinToGame, setIsJoinToGame}}>
+                <AirdropSocketContext.Provider value={airdropWsMessage}>
+                    <DndProvider backend={HTML5Backend}>
+                        <AppStyled className="App">
 
-                        <Header/>
-                        <Container/>
-                        <Notice/>
+                            <Header/>
+                            <Container/>
+                            <Notice/>
 
-                        <Loader/>
+                            <Loader/>
 
-                        {popup}
+                            {popup}
 
-                    </AppStyled>
-                </DndProvider>
-            </AirdropSocketContext.Provider>
-        </IsJoinToGame.Provider>
+                        </AppStyled>
+                    </DndProvider>
+                </AirdropSocketContext.Provider>
+            </IsJoinToGame.Provider>
+        </ChatWsContext.Provider>
     );
 }
 
