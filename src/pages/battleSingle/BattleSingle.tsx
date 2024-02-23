@@ -122,7 +122,7 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
                         {isYouWin && <ConfettiFireworks/>}
 
                         <div className="battle-area">
-                            {webSocket?.battle.status === "waiting" && webSocket?.battle?.players?.some((item: any) => item.user.id === userData.id) &&
+                            {webSocket?.battle.status === "waiting" && webSocket?.battle?.players?.some((item: any) => item.position === 1 && item.user.id === userData.id) &&
                                 <button onClick={handleCancelGame} className="battle-area__back">
                                     <svg width="5" height="9" viewBox="0 0 5 9" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">

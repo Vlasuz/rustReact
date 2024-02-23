@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useEffect, useState} from 'react'
+import React, {createContext, useContext, useEffect, useRef, useState} from 'react'
 
 import lineToOpen from "../../../assets/images/lineToOpenCrate.png";
 import coin from "../../../assets/images/header__coins.svg";
@@ -6,23 +6,28 @@ import battleCaseLock from "../../../assets/images/battle-case-lock.svg";
 
 import {GameSocket, GameState} from "../BattleSingle";
 import {useDispatch, useSelector} from 'react-redux';
-import {ICrate, ICrateItem} from "../../../model";
-import {changeBattleCrate, removeBattleCrate} from '../../../redux/toolkitSlice';
+import {ICrate, ICrateItem, IUser} from "../../../model";
+import {changeBattleCrate, removeBattleCrate, setSound} from '../../../redux/toolkitSlice';
 import {getApiLink} from "../../../functions/getApiLink";
+import useSound from "use-sound";
+import spinTick from "../../../assets/audio/sound-spin-tick.webm";
+import getCookies from "../../../functions/getCookie";
 
 interface ICrateItemProps {
     data: ICrate
     isOpened: boolean
     openedItem?: any
+    position?: any
 }
 
-export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem}) => {
+export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem, position}) => {
 
     const [count, setCount] = useState(1)
 
     const gameStep = useContext(GameState)
     const webSocket: any = useContext(GameSocket)
 
+    const user: IUser = useSelector((state: any) => state.toolkit.user)
     const crates: ICrate[] = useSelector((state: any) => state.toolkit.crates)
 
     const [itemsToRoll, setItemsToRoll] = useState<any>([])
@@ -53,14 +58,68 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
         dispatch(removeBattleCrate(data))
     }, [count])
 
+    const itemsRef = useRef(null)
+    const itemRef = useRef(null)
+
     const isHaveItem = openedItem && Object.keys(openedItem).length
     const isEndGame = webSocket?.battle?.status === "end" && webSocket?.timer < 0
 
     const [isShowItem, setIsShowItem] = useState(isEndGame)
     const [isSpinItem, setIsSpinItem] = useState(false)
 
+    const [play] = useSound(
+        spinTick,
+        { volume: getCookies("volume_music_rust") ? (+JSON.parse(`${getCookies("volume_music_rust")}`) / 100) : 0 }
+    );
+
+    const [currentTimer, setCurrentTimer] = useState(20);
+    const [isStopTick, setIsStopTick] = useState(false)
+
+    useEffect(() => {
+        if(isStopTick) return;
+        if (!isHaveItem) return;
+
+        const timer = setInterval(() => {
+            !isStopTick && play();
+            setCurrentTimer(prevTimer => prevTimer + (prevTimer * 1.03));
+
+        }, currentTimer);
+
+
+        return () => clearInterval(timer);
+    }, [isHaveItem, currentTimer, isStopTick]);
+
+
+    const canvasRef = useRef(null)
+
     useEffect(() => {
         if(!isHaveItem) return;
+
+        console.log(crates, webSocket)
+
+        setTimeout(() => {
+            setIsStopTick(true)
+
+            if(data.price <= openedItem.amount) {
+                if(position?.user?.id !== user.id) return;
+
+                dispatch(setSound("sound13_1"))
+
+                if (!canvasRef.current) return;
+
+                // @ts-ignore
+                canvasRef.current.confetti = canvasRef.current.confetti || confetti.create(canvasRef.current, {resize: true});
+
+                // @ts-ignore
+                canvasRef.current.confetti({
+                    spread: 70,
+                    origin: {y: 1.2}
+                });
+
+            } else {
+                dispatch(setSound("sound17"))
+            }
+        }, 4000)
 
         setTimeout(() => {
             setIsSpinItem(true)
@@ -72,6 +131,9 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
 
     return (
         <div className="crate crate__start">
+
+            <canvas ref={canvasRef} className="canvas_winner"></canvas>
+
             {(gameStep === "process" || gameStep === "waiting" || gameStep === "prepare") && isOpened &&
                 <div className="crate__lock">
                     <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt="Lock"/>
@@ -106,10 +168,10 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
                         <img src={isHaveItem ? openedItem?.item?.item?.image : battleCaseLock} alt=""/>
                     </div>}
 
-                    {!isEndGame && isHaveItem && <div className={`items ${isSpinItem && "items_scroll"} ${isShowItem && "items_hidden"}`}>
+                    {!isEndGame && isHaveItem && <div ref={itemsRef} className={`items ${isSpinItem && "items_scroll"} ${isShowItem && "items_hidden"}`}>
                         {
                             itemsToRoll.map((item: any, index: number) =>
-                                <div key={index} className="item">
+                                <div ref={itemRef} key={index} className="item">
                                     <img src={item?.item?.image} alt=""/>
                                 </div>
                             )

@@ -13,7 +13,7 @@ import {BattleAreaBottom} from "./BattleAreaBottom";
 import {CrateItem} from "./CrateItem";
 import CrateBig from "../../../assets/images/CrateBig.svg";
 import {useDispatch, useSelector} from 'react-redux';
-import {setUserBalance} from "../../../redux/toolkitSlice";
+import {setSound, setUserBalance} from "../../../redux/toolkitSlice";
 import {useParams} from "react-router";
 
 interface IBattleAreaProps {
@@ -124,7 +124,9 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                         }, 500)
 
                         if (webSocket?.battle?.winners.length && (webSocket?.timer === 0 || webSocket?.timer === -1)) {
-                            if (!webSocket?.battle?.winners?.filter((item: any) => item.user.id === userData.id)[0]?.total_win) return;
+                            if (!webSocket?.battle?.winners?.filter((item: any) => item.user.id === userData.id)[0]?.total_win) return dispatch(setSound("sound17"));
+
+                            dispatch(setSound("sound13"))
 
                             dispatch(setUserBalance({
                                 sum: true,
@@ -217,6 +219,48 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
     }
 
     console.log(webSocket?.battle?.mode)
+
+
+    useEffect(() => {
+        const handleWheel = (event: any) => {
+            // Получаем delta, чтобы узнать направление прокрутки
+            const delta = Math.sign(event.deltaY);
+            const maxScrollHeight = blockCenter.current.clientHeight - blockArea.current.clientHeight
+
+            if (isCanDrag) {
+                api({
+                    x: 0,
+                    y: coodYnew,
+                })
+                return;
+            }
+
+            // Пример: выводим в консоль направление прокрутки
+            if (delta > 0) {
+                setCoodYnew(prev => {
+                    if(prev < -maxScrollHeight) return prev;
+                    return prev - delta * 8;
+                })
+            } else if (delta < 0) {
+                setCoodYnew(prev => {
+                    if(prev >= 0) return prev;
+                    return prev - delta * 8;
+                })
+            }
+        };
+
+        // Добавляем обработчик события колесика мыши
+        // @ts-ignore
+        blockCenter.current?.addEventListener('wheel', handleWheel);
+
+        // Убираем обработчик при размонтировании компонента
+        return () => {
+            // @ts-ignore
+            blockCenter.current?.removeEventListener('wheel', handleWheel);
+        };
+    }, []);
+
+    console.log(battleCrates)
 
     return (
         <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()}

@@ -7,7 +7,13 @@ import {AirdropMember} from "./components/AirdropMember";
 import {AirdropMoveBags} from "./components/AirdropMoveBags";
 import {AirdropInfoBlock} from "./components/AirdropInfoBlock";
 import {useDispatch, useSelector} from 'react-redux';
-import {clearAirdropBagsMap, setAirdropBags, setAirdropUserStatus, setSound} from '../../../../redux/toolkitSlice';
+import {
+    clearAirdropBagsMap,
+    setAirdropBags,
+    setAirdropUserStatus,
+    setSound,
+    setUserBalance
+} from '../../../../redux/toolkitSlice';
 import axios from "axios";
 import {getApiLink} from "../../../../functions/getApiLink";
 import {AirdropSocketContext} from "../../../../App";
@@ -36,10 +42,13 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
     const handleBuyBags = () => {
         setPointOfGame("dragging")
         dispatch(setAirdropBags(countOfBags))
+        dispatch(setSound('sound12'))
     }
     const handleJoinGame = () => {
         if (isPressJoin) return;
         setIsPressJoin(true)
+
+        dispatch(setSound("sound9"))
 
         const bagsListForRequest = airdropBagsMap.map((item: any) => {
             return {x_pos: item.x / 1500, y_pos: item.y / 1500}
@@ -48,12 +57,13 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
         axios.post(getApiLink("api/airdrop/bags/choose?game_id=" + airdropWsMessages?.airdrop?.id), {
             "bags": bagsListForRequest
         }).then(({data}) => {
+            console.log(data)
             if (data.status) {
                 dispatch((setAirdropUserStatus("member")))
                 dispatch(clearAirdropBagsMap())
                 setPointOfGame("member")
                 setIsPressJoin(false)
-                dispatch(setSound("sound9"))
+                dispatch(setUserBalance(data.message))
             }
         }).catch(er => console.log('airdrop', er))
 
@@ -82,7 +92,8 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
     }, [airdropBagsMap])
 
     useEffect(() => {
-        dispatch(setSound('sound10'))
+
+        if(airdropWsMessages.airdrop.game_state !== "start") dispatch(setSound('sound10'))
 
         if(airdropWsMessages?.airdrop?.game_state === "ended") {
             if(airdropWsMessages?.airdrop?.winner.user.id === userInfo.id) {

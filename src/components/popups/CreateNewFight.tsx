@@ -60,7 +60,7 @@ export const CreateNewFight: React.FC<ICreateNewFightProps> = () => {
                 dispatch(setPopup(''))
             }, 300)
 
-            dispatch(setUserBalance({
+            !popupZoneItems.length && dispatch(setUserBalance({
                 sum: true,
                 money: -data.first_player.coins
             }))

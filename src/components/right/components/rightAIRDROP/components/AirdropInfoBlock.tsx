@@ -3,6 +3,7 @@ import lineAirdrop from "../../../../../assets/images/line-for-right.svg";
 import coins from "../../../../../assets/images/header__coins.svg";
 import {AirdropSocketContext} from "../../../../../App";
 import {useAirdropTimer} from "../../../../../hooks/airdropTimer";
+import {prettyCoinValues} from "../../../../../functions/prettyCoinValues";
 
 interface IAirdropInfoBlockProps {
 
@@ -71,7 +72,9 @@ export const AirdropInfoBlock:React.FC<IAirdropInfoBlockProps> = () => {
                 <div className="coins">
                     <img src={coins} alt="Ico"/>
                     <span>
-                        {airdropWsMessages?.airdrop?.bank}
+                        {
+                            prettyCoinValues(airdropWsMessages?.airdrop?.bank)
+                        }
                     </span>
                 </div>
             </div>

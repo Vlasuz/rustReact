@@ -5,6 +5,7 @@ import axios from "axios";
 import {getApiLink} from "../../../../functions/getApiLink";
 import useSound from 'use-sound';
 import spinTick from "./../../../../assets/audio/sound-spin-tick.webm"
+import {prettyCoinValues} from "../../../../functions/prettyCoinValues";
 
 interface ICaseRollingBlockProps {
     isActiveSpin: boolean
@@ -80,7 +81,7 @@ export const CaseRollingBlock:React.FC<ICaseRollingBlockProps> = ({winnerItem, i
 
                             {isWonItemActive && <div className="price">
                                 <img src={coins} alt={item.item}/>
-                                <span>{isWinnerItem ? winnerItem.price : item.price}</span>
+                                <span>{prettyCoinValues(isWinnerItem ? winnerItem.price : item.price)}</span>
                             </div>}
                         </li>
                     )

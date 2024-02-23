@@ -6,6 +6,7 @@ import victory from './../../../../assets/images/victory.svg'
 import coin from './../../../../assets/images/header__coins.svg'
 import no_photo from './../../../../assets/images/non-photo.png'
 import { NavLink } from 'react-router-dom'
+import {prettyCoinValues} from "../../../../functions/prettyCoinValues";
 
 interface ITableForFightProps {
     tableValue: string,
@@ -68,7 +69,9 @@ export const TableForFight: React.FC<ITableForFightProps> = ({ tableValue, table
                                         <div className="td__coins">
                                             <img src={coin} alt="Ico" />
                                             <span>
-                                                {item.first_player?.coins}
+                                                {
+                                                    prettyCoinValues(item.first_player?.coins)
+                                                }
                                             </span>
                                         </div>
                                     </div>
@@ -76,7 +79,9 @@ export const TableForFight: React.FC<ITableForFightProps> = ({ tableValue, table
                                         <div className="td__coins">
                                             <img src={coin} alt="Ico" />
                                             <span>
-                                                {bank}
+                                                {
+                                                    prettyCoinValues(bank)
+                                                }
                                             </span>
                                         </div>
                                     </div>

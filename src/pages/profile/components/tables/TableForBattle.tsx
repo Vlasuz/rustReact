@@ -5,6 +5,7 @@ import fail from "../../../../assets/images/fail.svg";
 import no_photo from "../../../../assets/images/non-photo.png";
 import {NavLink} from "react-router-dom";
 import coin from "../../../../assets/images/header__coins.svg";
+import bot from "../../../../assets/images/bot.svg";
 import {getApiLink} from '../../../../functions/getApiLink';
 import swordsIcon from "../../../../assets/images/battleIconFight.svg";
 import peopleBlue from "../../../../assets/images/peopleBlue.svg";
@@ -84,7 +85,7 @@ export const TableForBattle: React.FC<ITableForBattleProps> = ({tableValue, tabl
                                                 players?.map((player: any) =>
                                                     <li key={player.user.id}>
                                                         <NavLink to={`/user/${player.user.id}`}>
-                                                            <img src={player.user.avatar} alt=""/>
+                                                            <img src={player.is_bot ? bot : player.user.avatar} alt=""/>
                                                         </NavLink>
                                                     </li>
                                                 )

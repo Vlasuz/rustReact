@@ -3,6 +3,12 @@ import styled from "styled-components";
 export const BattleSingleStyled = styled.section`
 
   max-width: calc(100% - 114px - 470px);
+  
+  .canvas_winner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 
   .battle-area {
     height: calc(100% - 104px);
@@ -410,7 +416,8 @@ export const BattleSingleStyled = styled.section`
         &_scroll {
           .item:first-child {
             margin-top: -745px;
-            transition: all 3s ease;
+            //transition: all 3s ease;
+            transition: all 3s cubic-bezier(0.22, 0.82, 0.22, 0.82);
           }
         }
         
@@ -837,6 +844,7 @@ export const BattleSingleStyled = styled.section`
       height: 100px;
       display: flex;
       align-items: center;
+      z-index: 2;
 
       strong {
         position: relative;

@@ -9,6 +9,7 @@ import { getApiLink } from '../../../../functions/getApiLink';
 import shield from "../../../../assets/images/shield.svg";
 import {setPopup, setPopupData} from "../../../../redux/toolkitSlice";
 import {useDispatch} from "react-redux";
+import {prettyCoinValues} from "../../../../functions/prettyCoinValues";
 
 interface ITableForCrateProps {
     tableValue: string,
@@ -82,7 +83,9 @@ export const TableForCrate: React.FC<ITableForCrateProps> = ({ tableValue, table
                                         <div className="td__coins">
                                             <img src={coin} alt="Ico" />
                                             <span>
-                                                {amount}
+                                                {
+                                                    prettyCoinValues(amount)
+                                                }
                                             </span>
                                         </div>
                                     </div>

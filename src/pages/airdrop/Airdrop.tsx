@@ -41,22 +41,6 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
 
     const bindDrag = useDrag(({offset}) => {
 
-        // const maxScrollHeight = (blockCenter.current.getBoundingClientRect().height / wheelValue) - blockArea.current.getBoundingClientRect().height
-        // const maxScrollWidth = (blockMap.current.getBoundingClientRect().width / wheelValue) - blockArea.current.getBoundingClientRect().width
-        //
-        // if (offset[0] < -maxScrollWidth) {
-        //     offset[0] = -maxScrollWidth
-        // } else if (offset[0] > -(maxScrollWidth - maxScrollWidth * wheelValue)) {
-        //     offset[0] = -(maxScrollWidth - maxScrollWidth * wheelValue)
-        // }
-        //
-        //
-        // if (offset[1] < -maxScrollHeight) {
-        //     offset[1] = -maxScrollHeight
-        // } else if (offset[1] > -(maxScrollHeight - maxScrollHeight * wheelValue)) {
-        //     offset[1] = -(maxScrollHeight - maxScrollHeight * wheelValue)
-        // }
-
         api({
             x: offset[0],
             y: offset[1],

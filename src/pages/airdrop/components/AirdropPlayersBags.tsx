@@ -3,6 +3,7 @@ import coinsIcon from "../../../assets/images/header__coins.svg";
 import {AirdropSocketContext} from "../../../App";
 import {useSelector} from 'react-redux';
 import {IUser} from "../../../model";
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface IAirdropPlayersBagsProps {
     player: any
@@ -52,7 +53,9 @@ export const AirdropPlayersBags: React.FC<IAirdropPlayersBagsProps> = ({player})
                                         <div className="right__bottom">
                                             <img src={coinsIcon} alt="Coins"/>
                                             <span>
-                                            {airdropWsMessages?.airdrop?.bank}
+                                            {
+                                                prettyCoinValues(airdropWsMessages?.airdrop?.bank)
+                                            }
                                         </span>
                                         </div>
                                     </div>

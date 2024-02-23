@@ -68,6 +68,7 @@ export const BattleAreaLine: React.FC<IBattleAreaLineProps> = ({blocksOpen, open
                 allGameCrates.map((item: any, index: number) => <CrateItem data={item}
                                                                            openedItem={position?.items[index]}
                                                                            isOpened={!(index < openedCount)}
+                                                                           position={position}
                                                                            key={item.id + index}/>)
             }
             {gameStep === "start" && <div className="crate crate__empty">

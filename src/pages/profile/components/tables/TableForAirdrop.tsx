@@ -11,6 +11,7 @@ import {setPopup, setPopupData} from "../../../../redux/toolkitSlice";
 import { useDispatch } from 'react-redux'
 import axios from "axios";
 import {getApiLink} from "../../../../functions/getApiLink";
+import { prettyCoinValues } from '../../../../functions/prettyCoinValues'
 
 interface ITableForAirdropProps {
     tableValue: string
@@ -81,7 +82,9 @@ export const TableForAirdrop: React.FC<ITableForAirdropProps> = ({ tableValue, t
                                         <div className="td__coins">
                                             <img src={coin} alt="Ico" />
                                             <span>
-                                                {bet}
+                                                {
+                                                    prettyCoinValues(bet)
+                                                }
                                             </span>
                                         </div>
                                     </div>
@@ -89,7 +92,9 @@ export const TableForAirdrop: React.FC<ITableForAirdropProps> = ({ tableValue, t
                                         <div className="td__coins">
                                             <img src={coin} alt="Ico" />
                                             <span>
-                                                {item.bank}
+                                                {
+                                                    prettyCoinValues(item.bank)
+                                                }
                                             </span>
                                         </div>
                                     </div>

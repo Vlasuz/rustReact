@@ -1,6 +1,7 @@
 import React, {useContext, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import {AirdropSocketContext} from "../../../../../App";
+import { prettyCoinValues } from '../../../../../functions/prettyCoinValues';
 import {IUser} from "../../../../../model";
 import coins from './../../../../../assets/images/header__coins.svg'
 
@@ -33,7 +34,9 @@ export const AirdropMembersList: React.FC<IAirdropMembersListProps> = () => {
                             <div className="item__coins">
                                 <img src={coins} alt="Coins"/>
                                 <p>
-                                    {(item.bags.length && settings?.airdrop_bag_price) && item?.bags?.length * settings?.airdrop_bag_price}
+                                    {
+                                        prettyCoinValues((item.bags.length && settings?.airdrop_bag_price) && item?.bags?.length * settings?.airdrop_bag_price)
+                                    }
                                 </p>
                             </div>
                         </div>

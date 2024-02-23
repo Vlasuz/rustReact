@@ -6,7 +6,7 @@ import {
     changeAirdropBagsMap,
     clearAirdropBagsMap,
     removeAirdropBags,
-    setAirdropUserStatus
+    setAirdropUserStatus, setSound
 } from '../../../../../redux/toolkitSlice';
 
 interface IAirdropMoveBagsProps {
@@ -26,6 +26,8 @@ export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({handleJoinGame
         document.querySelectorAll('.bags li').forEach(item => item.style.transition = "top .3s ease, left .3s ease");
         dispatch(changeAirdropBagsMap())
 
+        dispatch(setSound('sound12'))
+
 
     }
 
@@ -41,6 +43,7 @@ export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({handleJoinGame
         dispatch((setAirdropUserStatus("choose")))
         dispatch(clearAirdropBagsMap())
         setPointOfGame("choose")
+        dispatch(setSound('sound12'))
     }
 
     return (

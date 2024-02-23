@@ -12,6 +12,7 @@ import {getApiLink} from "../../../functions/getApiLink";
 import {getBearer} from "../../../functions/getBearer";
 import {setUserBalance} from "../../../redux/toolkitSlice";
 import {prettyCoinValues} from "../../../functions/prettyCoinValues";
+import {RefreshToken} from "../../../api/refreshToken";
 
 interface IBattleCreateProps {
     setGameType: any
@@ -40,7 +41,6 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
             sum += prPrice;
         });
 
-        console.log(sum);
         setFinalPriceForBattle(sum);
 
 
@@ -59,6 +59,12 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
     const handleCreateGame = () => {
         setIsClickedCreate(true)
 
+        handleCreateBattle()
+
+    }
+
+
+    const handleCreateBattle = () => {
         const requestData = {
             "mode": gameTypes[gameType],
             "crates": battleCrates.map((item: any) => {
@@ -81,6 +87,8 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
 
             const newURL = "/battle/"+data.id;
             window.history.replaceState(null, '', newURL);
+        }).catch(er => {
+            er?.response?.status === 401 && RefreshToken({dispatch, handleCreateBattle})
         })
     }
 

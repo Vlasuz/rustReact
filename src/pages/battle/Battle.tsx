@@ -24,6 +24,8 @@ export const Battle: React.FC<IBattleProps> = () => {
     LobbySocket.onmessage = e => {
         const data = JSON.parse(JSON.parse(e.data))
 
+        console.log(data)
+
         const handleChangeRoom = () => {
             const itemIndex = battleLobby.findIndex((item: any) => item.id === data.data.id);
 

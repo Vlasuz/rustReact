@@ -19,6 +19,9 @@ import {getWsLink} from "./functions/getWsLink";
 import setCookie from "./functions/setCookie";
 import {useWsChat} from "./hooks/wsChat";
 import { ChatWsContext } from './context/chatWsContext';
+import {setUserBalance} from "./redux/toolkitSlice";
+import {userInfo} from "os";
+import {IUser} from "./model";
 
 // TODO СХВАТКА
 // TODO Начисления баланса юзеру после победы
@@ -38,6 +41,7 @@ function App() {
     const dispatch = useDispatch()
     const {popup} = usePopups()
     const isTechnicalTime = useSelector((state: any) => state.toolkit.siteSettings)?.technical_break
+    const user: IUser = useSelector((state: any) => state.toolkit.user)
 
     const [airdropWsMessage, setAirdropWsMessage] = useState({})
 
@@ -56,6 +60,11 @@ function App() {
             const data = JSON.parse(JSON.parse(e.data))
             console.log(data)
             setAirdropWsMessage(data)
+
+            if(data.airdrop.game_state === "ended" && data.airdrop.winner.user.id === user.id) {
+                dispatch(setUserBalance(data.airdrop.winner.user.balance))
+            }
+
         }
     }, [])
 

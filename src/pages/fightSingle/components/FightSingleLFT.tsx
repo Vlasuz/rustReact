@@ -24,7 +24,7 @@ import {findTheSameElems} from "../../../functions/fingTheSameElems";
 import {WSFight} from "../FightSingle";
 import bullet from "../../../assets/images/bullet.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {setSound, setUserBalance} from "../../../redux/toolkitSlice";
+import {setSound, setUserBalance, setUserInventory} from "../../../redux/toolkitSlice";
 import {getBearer} from "../../../functions/getBearer";
 import {IUser} from "../../../model";
 
@@ -49,11 +49,16 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
 
             navigate("/")
 
-            dispatch(setUserBalance({
-                sum: true,
-                money: gameData.fight.first_player.coins
-                // money: gameData.data[0].coins
-            }))
+            if(gameData.fight.first_player.items.length) {
+                dispatch(setUserInventory(gameData.fight.first_player.items))
+            } else {
+                dispatch(setUserBalance({
+                    sum: true,
+                    money: gameData.fight.first_player.coins
+                }))
+            }
+
+
         }).catch(er => console.log(er))
     }
 
