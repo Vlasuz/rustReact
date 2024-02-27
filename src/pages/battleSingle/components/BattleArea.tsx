@@ -218,8 +218,6 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
         "four_p": 4,
     }
 
-    console.log(webSocket?.battle?.mode)
-
 
     useEffect(() => {
         const handleWheel = (event: any) => {
@@ -239,12 +237,12 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
             if (delta > 0) {
                 setCoodYnew(prev => {
                     if(prev < -maxScrollHeight) return prev;
-                    return prev - delta * 8;
+                    return prev - delta * 25;
                 })
             } else if (delta < 0) {
                 setCoodYnew(prev => {
                     if(prev >= 0) return prev;
-                    return prev - delta * 8;
+                    return prev - delta * 25;
                 })
             }
         };
@@ -259,8 +257,6 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
             blockCenter.current?.removeEventListener('wheel', handleWheel);
         };
     }, []);
-
-    console.log(battleCrates)
 
     return (
         <animated.div ref={blockCenter} style={{x, y}} {...bindDrag()}

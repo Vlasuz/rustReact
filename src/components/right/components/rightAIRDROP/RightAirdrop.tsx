@@ -93,7 +93,7 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
 
     useEffect(() => {
 
-        if(airdropWsMessages.airdrop.game_state !== "start") dispatch(setSound('sound10'))
+        if(airdropWsMessages?.airdrop?.game_state !== "start") dispatch(setSound('sound10'))
 
         if(airdropWsMessages?.airdrop?.game_state === "ended") {
             if(airdropWsMessages?.airdrop?.winner.user.id === userInfo.id) {

@@ -29,13 +29,12 @@ export const AirdropBags: React.FC<IAirdropBagsProps> = ({setBags, handleBuyBags
         dispatch(setSound('sound12'))
     }, [countOfBags])
 
-    const isCanBuy = userInfo.balance ? userInfo.balance >= (countOfBags * costOfBags) : false
+    const isCanBuy = userInfo.balance ? userInfo.balance >= costOfBags : false
 
     return (
         <div className="airdrop__sleepers">
             <h3>Кол-во спальников:</h3>
             <ul>
-
 
                 {
                     bagsArray.map((item, index) =>

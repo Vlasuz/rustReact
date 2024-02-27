@@ -3,8 +3,9 @@ import React, {useEffect, useState} from 'react'
 import coins from './../../assets/images/header__coins.svg'
 import arrayIcon from './../../assets/images/arr-td.svg'
 import {PopupCross} from "../../hooks/popup/components/PopupCross";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setPopup} from "../../redux/toolkitSlice";
+import {prettyCoinValues} from "../../functions/prettyCoinValues";
 
 interface IAddCashAmountProps {
     currency: string
@@ -14,19 +15,24 @@ export const AddCashAmount: React.FC<IAddCashAmountProps> = ({currency}) => {
 
     const [value, setValue] = useState(0)
 
+    const settings = useSelector((state: any) => state.toolkit.siteSettings)
+
     const dispatch = useDispatch()
     const typeOfCash: any = {
         uah: {
             currency: "₴",
-            amount: [250, 500, 1000, 1500, 3000, 5000]
+            amount: [250, 500, 1000, 1500, 3000, 5000],
+            type: 'uah_to_coins'
         },
         rub: {
             currency: "₽",
-            amount: [500, 1000, 2000, 5000, 10000, 20000]
+            amount: [500, 1000, 2000, 5000, 10000, 20000],
+            type: 'rub_to_coins'
         },
         kzt: {
             currency: "₸",
-            amount: [1000, 2000, 5000, 10000, 15000, 30000]
+            amount: [1000, 2000, 5000, 10000, 15000, 30000],
+            type: 'kzt_to_coins'
         },
     }
 
@@ -54,7 +60,12 @@ export const AddCashAmount: React.FC<IAddCashAmountProps> = ({currency}) => {
                 <input type="text" onChange={(e: any) => setValue(e.target.value)} pattern="[0-9]*" placeholder="0" value={value === 0 ? "" : value} />
                 <div className="sum">
                     <img src={coins} alt="Ico"/>
-                    <span>13500.00</span>
+                    <span>
+                        {
+                            // value / settings[typeOfCash[currency].type]
+                            prettyCoinValues(+value * (settings[typeOfCash[currency].type] ?? 1))
+                        }
+                    </span>
                 </div>
             </div>
             <button>Перейти к оплате</button>

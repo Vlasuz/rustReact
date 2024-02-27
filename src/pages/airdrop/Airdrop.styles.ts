@@ -10,6 +10,15 @@ export const AirdropStyled = styled.section`
   -moz-border-radius: 10px;
   border-radius: 10px;
   position: relative;
+  
+  .transform-scale .bags {
+    //li {
+    //  transition: all .3s ease;
+    //}
+    li:hover {
+      transform: scale(1.4);
+    }
+  }
 
   .section-map__top {
     align-items: center;

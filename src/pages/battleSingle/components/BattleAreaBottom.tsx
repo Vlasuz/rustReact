@@ -41,7 +41,7 @@ export const BattleAreaBottom: React.FC<IBattleAreaBottomProps> = ({blocksOpen, 
         },
         "two_v_two": {
             playersCount: 4,
-            winnerClass: webSocket?.battle?.winners.some((win: any) => win.position === 3) && webSocket?.battle?.winners.some((win: any) => win.position === 3) ? "general-block-end_all-side" : (webSocket?.battle?.winners.some((win: any) => win.position === 1) ? "general-block-end_left-side" : "general-block-end_right-side")
+            winnerClass: webSocket?.battle?.winners.some((win: any) => win.position === 3) && webSocket?.battle?.winners.some((win: any) => win.position === 1) ? "general-block-end_all-side" : (webSocket?.battle?.winners.some((win: any) => win.position === 1) ? "general-block-end_left-side" : "general-block-end_right-side")
         },
         "two_p": {
             playersCount: 2,

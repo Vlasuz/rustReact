@@ -153,11 +153,10 @@ const toolkitSlice = createSlice({
             }
         },
         removeAirdropBagMap(state, action) {
-            console.log(state.airdropBagsMap.map((item: any) => item))
-            console.log(state.airdropBagsMap.filter((item: any) => item.x !== action.payload.x && item.y !== action.payload.y))
             state.airdropBagsMap = state.airdropBagsMap.filter((item: any) => item.x !== action.payload.x && item.y !== action.payload.y)
         },
         changeAirdropBagsMap(state) {
+
             state.airdropBags = 0
             let newArray = [];
 

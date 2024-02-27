@@ -48,8 +48,6 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
 
     }, [webSocket?.battle?.status])
 
-    console.log(gameStep)
-
     const gameTypesReverse: any = {
         "two_way": "1v1",
         "three_way": "1v1v1",
@@ -70,12 +68,10 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
 
         ws.current.onopen = () => {
             isAuthor && getCookies("access_token_rust") && ws.current.send(`{"type":"auth", "token":"${getCookies("access_token_rust")}"}`)
-            console.log('open')
         }
         ws.current.onmessage = (e: any) => {
             const data = JSON.parse(JSON.parse(e.data))
 
-            console.log('MAIN MESS', data)
             setGameStep(data?.battle?.status)
             setGameType(gameTypesReverse[data.battle.mode])
             setWebSocket(data)
@@ -87,7 +83,6 @@ export const BattleSingle: React.FC<IBattleSingleProps> = () => {
     useEffect(() => {
         if (battleId === "create-battle") return;
 
-        console.log(isJoinToGame)
         battleId && connectToSocket(battleId, isJoinToGame)
     }, [battleId])
 

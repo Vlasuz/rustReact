@@ -9,6 +9,31 @@ export const FightSingleStyled = styled.section`
   align-items: center;
   justify-content: center;
   
+  
+  
+  .svgTimer rect:nth-child(1) {
+    opacity: .4;
+  }
+  .svgTimer rect:nth-child(2) {
+    opacity: .5;
+  }
+  .svgTimer rect:nth-child(3) {
+    opacity: .6;
+  }
+  .svgTimer rect:nth-child(4) {
+    opacity: .7;
+  }
+  .svgTimer rect:nth-child(5) {
+    opacity: .8;
+  }
+  .svgTimer rect:nth-child(6) {
+    opacity: .9;
+  }
+  .svgTimer rect:nth-child(7) {
+    opacity: 1;
+  }
+  
+  
   .section-fight__user_call-bot {
     -webkit-transition: all .3s ease;-moz-transition: all .3s ease;-ms-transition: all .3s ease;-o-transition: all .3s ease;transition: all .3s ease;
   }

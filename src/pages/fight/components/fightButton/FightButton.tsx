@@ -63,10 +63,12 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
             return;
         }
 
-        if (data.game_state === "end") return;
+        if (data.game_state === "ended") {
+            navigate("/fight/" + data.id)
+            dispatch(setFightItemData(data))
+            return;
+        }
 
-        navigate("/fight/" + data.id)
-        dispatch(setFightItemData(data))
 
         // if(isUserInGame) {
         //     navigate("/fight/" + data.id)
@@ -117,7 +119,7 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
     }
 
     return (
-        <FightButtonStyled onClick={_ => data.winner === null && handlePressButton()}
+        <FightButtonStyled onClick={_ => handlePressButton()}
                            className={"item__button " + (data.winner !== null ? "finish" : isGameRunning)}>
 
             {buttonContent()}

@@ -8,7 +8,7 @@ import {IUser} from "../../model";
 import {FightSingleCenter} from "./components/FightSingleCenter";
 import {FightSingleRHT} from "./components/FightSingleRHT";
 import {FightSingleLFT} from "./components/FightSingleLFT";
-import {setSound, setUserBalance} from "../../redux/toolkitSlice";
+import {setFightItemData, setSound, setUserBalance} from "../../redux/toolkitSlice";
 import {ConfettiFireworks} from "../../components/confetti/ConfettiFireworks";
 
 interface IFightSingleProps {
@@ -31,6 +31,13 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
 
     const userData: IUser = useSelector((state: any) => state.toolkit.user)
     const settings = useSelector((state: any) => state.toolkit.siteSettings)
+    const fightItemData = useSelector((state: any) => state.toolkit.fightItemData)
+
+    useEffect(() => {
+        setMainPlayer(fightItemData?.first_player)
+        setOpponentPlayer(fightItemData?.second_player)
+        setGameState(fightItemData.game_state)
+    }, [fightItemData])
 
     useEffect(() => {
 
@@ -47,6 +54,8 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
             const data = JSON.parse(JSON.parse(e.data))
 
             console.log(data)
+
+            dispatch(setFightItemData(data.fight))
 
             if(data.fight?.first_player?.id !== userData?.id && data.fight.second_player !== userData?.id) {
                 setMainPlayer(data.fight.second_player)

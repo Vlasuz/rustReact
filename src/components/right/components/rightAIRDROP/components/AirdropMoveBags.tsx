@@ -23,7 +23,7 @@ export const AirdropMoveBags: React.FC<IAirdropMoveBagsProps> = ({handleJoinGame
     const handleRandom = () => {
 
         // @ts-ignore
-        document.querySelectorAll('.bags li').forEach(item => item.style.transition = "top .3s ease, left .3s ease");
+        // document.querySelectorAll('.bags li').forEach(item => item.style.transition = "top .3s ease, left .3s ease");
         dispatch(changeAirdropBagsMap())
 
         dispatch(setSound('sound12'))

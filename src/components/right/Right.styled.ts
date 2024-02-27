@@ -99,7 +99,7 @@ export const RightStyled = styled.section`
   .postamat__block {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(10, 1fr);
     grid-gap: 6px;
     overflow: auto;
 

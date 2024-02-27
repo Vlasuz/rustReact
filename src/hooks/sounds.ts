@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { setSound } from "../redux/toolkitSlice"
 import getCookies from "../functions/getCookie";
@@ -13,8 +13,11 @@ export const useSounds = ({value, music}: useSoundsProps) => {
     const sound = music ?? toolkitSound;
     const audioBlock: any = useRef(null)
     const dispatch = useDispatch()
+    const [isLoad, setIsLoad] = useState(false)
 
     useEffect(() => {
+        if(!isLoad) return;
+
         setTimeout(() => {
             dispatch(setSound(''))
         }, 100)
@@ -24,7 +27,13 @@ export const useSounds = ({value, music}: useSoundsProps) => {
         audioBlock.current.currentTime = 0
         audioBlock.current.play()
 
-    }, [sound])
+    }, [sound, isLoad])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoad(true)
+        }, 1000)
+    }, [])
     
     return {audioBlock, sound}
 }

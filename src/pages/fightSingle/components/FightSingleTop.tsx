@@ -18,7 +18,6 @@ interface IFightSingleTopProps {
 export const FightSingleTop: React.FC<IFightSingleTopProps> = ({player, gameData}) => {
 
     const isHavePlayer = player && Object.keys(player).length
-    // const userData = useSelector((state: any) => state.toolkit.user)
 
     const {fightId} = useParams()
     const navigate = useNavigate()
@@ -47,7 +46,7 @@ export const FightSingleTop: React.FC<IFightSingleTopProps> = ({player, gameData
         if(gameData?.fight?.game_state !== "ended") return;
 
         setGameCoins(player?.user?.id === gameData?.fight?.winner?.user?.id ? gameData?.fight?.winner?.coins * 2 : 0)
-    }, [gameData])
+    }, [gameData, player])
 
 
 

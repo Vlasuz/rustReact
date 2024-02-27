@@ -4,6 +4,16 @@ import arrow from './../../assets/images/lobbyBattleCaseArrow.png'
 export const BattleStyled = styled.section`
 
   max-width: calc(100% - 114px - 470px);
+
+  a.button {
+    transition: all .3s ease;
+  }
+  a.button:hover {
+    transform: scale(1.1);
+  }
+  a.button:active {
+    transform: scale(0.98);
+  }
   
   .list > ul {
     height: calc(100vh - 220px);

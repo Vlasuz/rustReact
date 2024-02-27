@@ -67,6 +67,7 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
     const [isShowItem, setIsShowItem] = useState(isEndGame)
     const [isSpinItem, setIsSpinItem] = useState(false)
 
+    // Play sound - tick for spin
     const [play] = useSound(
         spinTick,
         { volume: getCookies("volume_music_rust") ? (+JSON.parse(`${getCookies("volume_music_rust")}`) / 100) : 0 }
@@ -79,14 +80,17 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
         if(isStopTick) return;
         if (!isHaveItem) return;
 
-        const timer = setInterval(() => {
-            !isStopTick && play();
-            setCurrentTimer(prevTimer => prevTimer + (prevTimer * 1.03));
 
-        }, currentTimer);
+        if(position.position === 1){
+            const timer = setInterval(() => {
+                !isStopTick && play();
+                setCurrentTimer(prevTimer => prevTimer + (prevTimer * 1.03));
 
+            }, currentTimer);
 
-        return () => clearInterval(timer);
+            return () => clearInterval(timer);
+        }
+
     }, [isHaveItem, currentTimer, isStopTick]);
 
 
@@ -103,7 +107,7 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
             if(data.price <= openedItem.amount) {
                 if(position?.user?.id !== user.id) return;
 
-                dispatch(setSound("sound13_1"))
+                // dispatch(setSound("sound13_1"))
 
                 if (!canvasRef.current) return;
 
@@ -117,7 +121,7 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
                 });
 
             } else {
-                dispatch(setSound("sound17"))
+                // dispatch(setSound("sound17"))
             }
         }, 4000)
 

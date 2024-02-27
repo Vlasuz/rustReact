@@ -29,10 +29,11 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
 
     const userData = useSelector((state: any) => state.toolkit.user)
     const settings = useSelector((state: any) => state.toolkit.siteSettings)
+    const fightItemData = useSelector((state: any) => state.toolkit.fightItemData)
 
     const isYour = gameData.fight?.first_player.user.id === userData.id
-    const attackFirst = isYour ? gameData.fight?.first_player?.attack : gameData.fight?.second_player?.attack
-    const defenseSecond = !isYour ? gameData.fight?.first_player?.defense : gameData.fight?.second_player?.defense
+    const attackFirst = isYour ? fightItemData.first_player?.attack : fightItemData.second_player?.attack
+    const defenseSecond = !isYour ? fightItemData.first_player?.defense : fightItemData.second_player?.defense
 
     const ws: any = useContext(WSFight)
 
@@ -81,7 +82,7 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
         return attackFirst.includes(bodyPart) ? " attacked__bullet_active" : ""
     }
 
-    const isWinner = gameData.fight?.winner?.user?.id === opponentPlayer?.user?.id
+    const isWinner = fightItemData?.winner?.user?.id === opponentPlayer?.user?.id ?? (gameData.fight?.winner?.user?.id === opponentPlayer?.user?.id)
     const isGuest = gameData?.fight?.second_player?.user?.id !== userData?.id && gameData?.fight?.first_player?.user?.id !== userData?.id
 
     useEffect(() => {
@@ -100,6 +101,9 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
         }, 1000)
 
     }, [gameState])
+
+    console.log(chosenSkin?.gallery)
+    console.log(chosenSkin?.gallery[suitHead + suitBody + suitLegs])
 
     return (
         <div className="section-fight__rht">
@@ -137,9 +141,13 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
                             <div className="line"></div>
                         </div>
                     </div>}
-                    <img
-                        src={gameState === "ended" || gameState === "duel" ? chosenSkin?.gallery ? getApiLink(chosenSkin?.gallery[suitHead + suitBody + suitLegs]) : getApiLink(settings.default_fight_skin.gallery[suitHead + suitBody + suitLegs]) : personSilhouette}
-                        className={"persone-img"} alt="Persone"/>
+
+
+                        <img
+                            src={gameState === "ended" || gameState === "duel" ? chosenSkin?.gallery.length ? getApiLink(chosenSkin?.gallery ? chosenSkin?.gallery[suitHead + suitBody + suitLegs] : "") : getApiLink(settings?.default_fight_skin?.gallery[suitHead + suitBody + suitLegs]) : personSilhouette}
+                            className={"persone-img"} alt="Persone"/>
+
+
                 </div>
             </div>
 
@@ -149,9 +157,10 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
 
             {(gameState === "duel" || gameState === "ended") &&
                 <div className="section-fight__bottom section-fight__bottom_finish">
-                    {gameData.fight?.winner?.user?.id && isWinner && <canvas className="canvas_winner"></canvas>}
+                    {(fightItemData.winner?.user?.id ?? gameData.fight?.winner?.user?.id) && isWinner &&
+                        <canvas className="canvas_winner"></canvas>}
                     <div
-                        className={"bottom__status" + (gameData.fight?.winner?.user?.id && isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
+                        className={"bottom__status" + ((fightItemData.winner?.user?.id ?? gameData.fight?.winner?.user?.id) && isWinner ? " bottom__status_winner" : " bottom__status_looser")}>
                         {gameState === "ended" && <img src={isWinner ? winnerIcon : looserIcon} alt={"winner"}/>}
                     </div>
                 </div>}

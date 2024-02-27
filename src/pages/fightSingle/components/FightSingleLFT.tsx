@@ -37,10 +37,12 @@ interface IFightSingleLFTProps {
 export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, gameState, gameData}) => {
 
     const navigate = useNavigate()
+    const {fightId} = useParams()
     const ws: any = useContext(WSFight)
+
     const userData: IUser = useSelector((state: any) => state.toolkit.user)
     const settings = useSelector((state: any) => state.toolkit.siteSettings)
-    const {fightId} = useParams()
+    const fightItemData = useSelector((state: any) => state.toolkit.fightItemData)
 
     const handleExit = () => {
         getBearer({type: "delete"})
@@ -67,10 +69,10 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
     const [isFullSuit, setIsFullSuit] = useState(false)
 
     const isYour = gameData.fight?.first_player.user.id === userData.id
-    const attackSecond = !isYour ? gameData.fight?.first_player?.attack : gameData.fight?.second_player?.attack
-    const defenseFirst = isYour ? gameData.fight?.first_player?.defense : gameData.fight?.second_player?.defense
+    const attackSecond = !isYour ? fightItemData.first_player?.attack : fightItemData.second_player?.attack
+    const defenseFirst = isYour ? fightItemData.first_player?.defense : fightItemData.second_player?.defense
 
-    const chosenSkin = isYour ? gameData.fight?.first_player?.user?.chosen_skin : gameData.fight?.second_player?.user?.chosen_skin ?? settings.default_fight_skin
+    const chosenSkin = (isYour ? fightItemData.first_player?.user?.chosen_skin : fightItemData.second_player?.user?.chosen_skin) ?? settings.default_fight_skin
 
     const suitHead = (defenseFirst?.includes('head') || suit[0]) ? "x" : "i"
     const suitBody = (defenseFirst?.includes('body') || suit[1]) ? "x" : "i"
@@ -115,7 +117,7 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
         return attackSecond.includes(bodyPart) ? " attacked__bullet_active" : ""
     }
 
-    const isWinner = gameData.fight?.winner?.user?.id === mainPlayer?.user?.id
+    const isWinner = fightItemData?.winner?.user?.id === mainPlayer?.user?.id ?? (gameData.fight?.winner?.user?.id === mainPlayer?.user?.id)
     const isGuest = gameData?.fight?.second_player?.user?.id !== userData?.id && gameData?.fight?.first_player?.user?.id !== userData?.id
 
     useEffect(() => {
