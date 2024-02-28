@@ -6,6 +6,7 @@ import {LoadingStyled} from "../../../components/loading/loading.styled";
 import {GameSocket, GameState} from "../BattleSingle";
 import {ICrate} from "../../../model";
 import {useParams} from "react-router";
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface IBattleAreaLineProps {
     blocksOpen: number
@@ -83,10 +84,8 @@ export const BattleAreaLine: React.FC<IBattleAreaLineProps> = ({blocksOpen, open
                         <div className="coins">
                             <img src={coins} alt=""/>
                             <span>
-                                        {
-                                            animationAmount.toFixed(0)
-                                        }
-                                    </span>
+                                {prettyCoinValues(animationAmount)}
+                            </span>
                         </div>
                     </> :
                     <div className="loading">

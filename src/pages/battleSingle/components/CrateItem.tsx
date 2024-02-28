@@ -12,6 +12,7 @@ import {getApiLink} from "../../../functions/getApiLink";
 import useSound from "use-sound";
 import spinTick from "../../../assets/audio/sound-spin-tick.webm";
 import getCookies from "../../../functions/getCookie";
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface ICrateItemProps {
     data: ICrate
@@ -103,6 +104,8 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
 
         setTimeout(() => {
             setIsStopTick(true)
+
+            dispatch(setSound('soundOpenedCase'))
 
             if(data.price <= openedItem.amount) {
                 if(position?.user?.id !== user.id) return;
@@ -198,7 +201,7 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
                 <img src={coin} alt=""/>
                 <span>
                     {
-                        isHaveItem ? openedItem?.item?.price : data?.price
+                        prettyCoinValues(isHaveItem ? openedItem?.item?.price : data?.price)
                     }
                 </span>
             </div>}

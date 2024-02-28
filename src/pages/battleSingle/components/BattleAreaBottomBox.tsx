@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import coins from "../../../assets/images/header__coins.svg";
 import {CSSTransition} from "react-transition-group";
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface IBattleAreaBottomBoxProps {
     blocksOpen: number
@@ -49,9 +50,7 @@ export const BattleAreaBottomBox: React.FC<IBattleAreaBottomBoxProps> = ({blocks
                         unmountOnExit
                     >
                                 <span>
-                                    {
-                                        currentSumWinner.toFixed(0)
-                                    }
+                                    {prettyCoinValues(currentSumWinner)}
                                 </span>
                     </CSSTransition>
                 </div>

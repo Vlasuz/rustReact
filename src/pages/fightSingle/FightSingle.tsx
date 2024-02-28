@@ -10,6 +10,7 @@ import {FightSingleRHT} from "./components/FightSingleRHT";
 import {FightSingleLFT} from "./components/FightSingleLFT";
 import {setFightItemData, setSound, setUserBalance} from "../../redux/toolkitSlice";
 import {ConfettiFireworks} from "../../components/confetti/ConfettiFireworks";
+import AOS from "aos";
 
 interface IFightSingleProps {
 

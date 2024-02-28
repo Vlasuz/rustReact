@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {BattleStyled} from "./Battle.styled";
 import {BattleTop} from "../../components/battleTop/BattleTop";
 import {BattleItem} from "./components/battleItem/BattleItem";
@@ -23,8 +23,6 @@ export const Battle: React.FC<IBattleProps> = () => {
     LobbySocket.onopen = () => console.log('asd')
     LobbySocket.onmessage = e => {
         const data = JSON.parse(JSON.parse(e.data))
-
-        console.log(data)
 
         const handleChangeRoom = () => {
             const itemIndex = battleLobby.findIndex((item: any) => item.id === data.data.id);
@@ -68,7 +66,7 @@ export const Battle: React.FC<IBattleProps> = () => {
         <BattleStyled>
             <div className="top">
                 <BattleTop/>
-                <div className="create-battle">
+                <div data-aos={"fade"} data-aos-delay={"4000"} className="create-battle">
                     <button onClick={navigateToCreateBattle}>
                         Создать игру
                     </button>
@@ -76,13 +74,11 @@ export const Battle: React.FC<IBattleProps> = () => {
             </div>
 
             <div className="list">
-                <ul>
+                <ul id={"elements"} data-aos-container="#elements">
 
-                    {
-                        battleLobby.map((item: any) =>
-                            <BattleItem itemData={item} key={item.id}/>
-                        )
-                    }
+                    {battleLobby.map((item: any, index: number) => (
+                        <BattleItem key={item.id} itemData={item} index={index}/>
+                    ))}
 
                 </ul>
             </div>

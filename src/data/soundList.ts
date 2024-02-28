@@ -19,6 +19,8 @@ import sound17 from './../assets/audio/sound-17.wav'
 import sound18 from './../assets/audio/sound-18.wav'
 import sound19 from './../assets/audio/sound-19.wav'
 import soundSpinTick from './../assets/audio/sound-spin-tick.webm'
+import soundOpenedCase from './../assets/audio/opened_case.webm'
+import soundShootOpponent from './../assets/audio/sound-shoot-opponent.wav'
 
 export const soundList: any = {
     "sound1": sound1,
@@ -42,4 +44,6 @@ export const soundList: any = {
     "sound18": sound18,
     "sound19": sound19,
     "soundSpinTick": soundSpinTick,
+    "soundOpenedCase": soundOpenedCase,
+    "soundShootOpponent": soundShootOpponent,
 }

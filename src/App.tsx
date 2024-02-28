@@ -20,11 +20,10 @@ import setCookie from "./functions/setCookie";
 import {useWsChat} from "./hooks/wsChat";
 import { ChatWsContext } from './context/chatWsContext';
 import {setUserBalance} from "./redux/toolkitSlice";
-import {userInfo} from "os";
 import {IUser} from "./model";
+import AOS from "aos";
+import 'aos/dist/aos.css';
 
-// TODO СХВАТКА
-// TODO Начисления баланса юзеру после победы
 
 const wsAirdrop = new WebSocket(getWsLink("ws/api/airdrop/"))
 
@@ -32,6 +31,15 @@ export const AirdropSocketContext: any = createContext(null)
 export const IsJoinToGame: any = createContext(null)
 
 function App() {
+
+    useEffect(() => {
+        AOS.init({
+            once: true
+        });
+        setTimeout(() => {
+            AOS.refreshHard();
+        }, 100);
+    }, []);
 
     const [isLoad, setIsLoad] = useState(true)
     const [isJoinToGame, setIsJoinToGame] = useState(false)

@@ -61,7 +61,7 @@ export const Fight: React.FC<IMainProps> = () => {
 
                 <Loading>
 
-                    {fightList.map((item: IFightItem, index: number) => <FightItem key={item.id} data={item} />)}
+                    {fightList.map((item: IFightItem, index: number) => <FightItem index={index} key={item.id} data={item} />)}
 
                 </Loading>
 

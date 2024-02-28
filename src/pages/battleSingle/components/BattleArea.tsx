@@ -15,6 +15,7 @@ import CrateBig from "../../../assets/images/CrateBig.svg";
 import {useDispatch, useSelector} from 'react-redux';
 import {setSound, setUserBalance} from "../../../redux/toolkitSlice";
 import {useParams} from "react-router";
+import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 
 interface IBattleAreaProps {
     blockArea: any
@@ -324,9 +325,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                                 unmountOnExit
                             >
                                 <span>
-                                    {
-                                        finalAmount.toFixed(0)
-                                    }
+                                    {prettyCoinValues(finalAmount)}
                                 </span>
                             </CSSTransition>
                         </div>
