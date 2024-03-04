@@ -105,7 +105,7 @@ export const HistoryBlock: React.FC<IHistoryBlockProps> = ({ historyFilter }) =>
                                 :
                                 <p className="pin">
                                     <span>
-                                        $ {historyItem.price.toFixed(2)}
+                                        $ {historyItem.price ? historyItem.price.toFixed(2) : prettyCoinValues(historyItem.value)}
                                     </span>
                                 </p>}
                         </div>

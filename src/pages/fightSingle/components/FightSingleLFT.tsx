@@ -69,8 +69,8 @@ export const FightSingleLFT: React.FC<IFightSingleLFTProps> = ({mainPlayer, game
     const [isFullSuit, setIsFullSuit] = useState(false)
 
     const isYour = gameData.fight?.first_player.user.id === userData.id
-    const attackSecond = !isYour ? fightItemData.first_player?.attack : fightItemData.second_player?.attack
-    const defenseFirst = isYour ? fightItemData.first_player?.defense : fightItemData.second_player?.defense
+    const attackSecond = (mainPlayer?.user?.id ? !mainPlayer?.user?.id : !isYour) ? fightItemData.first_player?.attack : fightItemData.second_player?.attack
+    const defenseFirst = (mainPlayer?.user?.id ? mainPlayer?.user?.id : isYour) ? fightItemData.first_player?.defense : fightItemData.second_player?.defense
 
     const chosenSkin = (isYour ? fightItemData.first_player?.user?.chosen_skin : fightItemData.second_player?.user?.chosen_skin) ?? settings.default_fight_skin
 

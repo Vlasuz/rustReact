@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 import {useDispatch} from "react-redux";
 import { setPopup } from '../../../redux/toolkitSlice'
 import {prettyCoinValues} from "../../../functions/prettyCoinValues";
+import {Translate} from "../../../components/translate/Translate";
 
 interface IBalanceProps {
 
@@ -21,7 +22,9 @@ export const Balance: React.FC<IBalanceProps> = () => {
         <div className="balance">
             <div className="balance__top">
                 <div className="balance__block">
-                    <h3>Баланс</h3>
+                    <h3>
+                        <Translate>text_balance</Translate>
+                    </h3>
                     <div className="balance__coins">
                         <img src={coin} alt="Ico" />
                         <span>
@@ -32,13 +35,17 @@ export const Balance: React.FC<IBalanceProps> = () => {
                     </div>
                 </div>
                 <button onClick={_ => dispatch(setPopup('popup-add-coins'))} className="balance__add">
-                    <span>Пополнить</span>
+                    <span>
+                        <Translate>text_add_cash</Translate>
+                    </span>
                     <img src={add} alt="Ico" />
                 </button>
             </div>
             <NavLink to={"/history"} className="balance__history">
                 <img src={clock} alt="Ico" />
-                <span>Итория баланса</span>
+                <span>
+                    <Translate>text_history_balance</Translate>
+                </span>
             </NavLink>
         </div>
     )

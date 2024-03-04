@@ -32,8 +32,8 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
     const fightItemData = useSelector((state: any) => state.toolkit.fightItemData)
 
     const isYour = gameData.fight?.first_player.user.id === userData.id
-    const attackFirst = isYour ? fightItemData.first_player?.attack : fightItemData.second_player?.attack
-    const defenseSecond = !isYour ? fightItemData.first_player?.defense : fightItemData.second_player?.defense
+    const attackFirst = (opponentPlayer?.user?.id ? opponentPlayer?.user?.id : isYour) ? fightItemData.first_player?.attack : fightItemData.second_player?.attack
+    const defenseSecond = (opponentPlayer?.user?.id ? !opponentPlayer?.user?.id : !isYour) ? fightItemData.first_player?.defense : fightItemData.second_player?.defense
 
     const ws: any = useContext(WSFight)
 
@@ -58,10 +58,14 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
     }, [suit])
 
     useEffect(() => {
-        if (suit[2]) dispatch(setSound("sound7"))
+        const randomNumber = Math.floor(Math.random() * 2) + 1;
+
+        if (suit[2]) dispatch(setSound(`fallDamage${randomNumber}`))
     }, [suit[2]])
     useEffect(() => {
-        if (suit[1]) dispatch(setSound("sound7"))
+        const randomNumber = Math.floor(Math.random() * 2) + 1;
+
+        if (suit[1]) dispatch(setSound(`fallDamage${randomNumber}`))
     }, [suit[1]])
     useEffect(() => {
         if (suit[0]) dispatch(setSound("sound8"))
@@ -101,9 +105,6 @@ export const FightSingleRHT: React.FC<IFightSingleLFTProps> = ({opponentPlayer, 
         }, 1000)
 
     }, [gameState])
-
-    console.log(chosenSkin?.gallery)
-    console.log(chosenSkin?.gallery[suitHead + suitBody + suitLegs])
 
     return (
         <div className="section-fight__rht">

@@ -21,6 +21,8 @@ import sound19 from './../assets/audio/sound-19.wav'
 import soundSpinTick from './../assets/audio/sound-spin-tick.webm'
 import soundOpenedCase from './../assets/audio/opened_case.webm'
 import soundShootOpponent from './../assets/audio/sound-shoot-opponent.wav'
+import fallDamage1 from './../assets/audio/fall-damage-1.wav'
+import fallDamage2 from './../assets/audio/fall-damage-2.wav'
 
 export const soundList: any = {
     "sound1": sound1,
@@ -46,4 +48,6 @@ export const soundList: any = {
     "soundSpinTick": soundSpinTick,
     "soundOpenedCase": soundOpenedCase,
     "soundShootOpponent": soundShootOpponent,
+    "fallDamage1": fallDamage1,
+    "fallDamage2": fallDamage2,
 }

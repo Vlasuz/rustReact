@@ -12,6 +12,7 @@ import { FaqBody } from './components/FaqBody'
 import { ISiteSettings } from '../../model'
 import { getProducts } from '../../api/getProducts'
 import { getFaq } from '../../api/getFaq'
+import {Translate} from "../../components/translate/Translate";
 
 interface IFaqProps {
 
@@ -33,17 +34,25 @@ export const Faq: React.FC<IFaqProps> = () => {
         <FaqStyle className="section-faq">
             <div className="section-faq__top">
                 <div className="top__lft">
-                    <h1>Трудный вопрос</h1>
-                    <p>Если не нашли решения свой проблемы</p>
+                    <h1>
+                        <Translate>hard_question</Translate>
+                    </h1>
+                    <p>
+                        <Translate>if_not_found_your_problem</Translate>
+                    </p>
                 </div>
                 <div className="top__rht">
                     <a className="vk" target='_blank' href={setting?.vkontakte}>
                         <img src={vk} alt="Vk" />
-                        <span>Чат</span>
+                        <span>
+                            <Translate>chat_title</Translate>
+                        </span>
                     </a>
                     <a className="dis" target='_blank' href={setting?.discord}>
                         <img src={discord} alt="discord" />
-                        <span>Канал</span>
+                        <span>
+                            <Translate>telegram_channel</Translate>
+                        </span>
                     </a>
                 </div>
             </div>

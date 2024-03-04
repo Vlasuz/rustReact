@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setSound, setUserBalance} from "../../../redux/toolkitSlice";
 import {useParams} from "react-router";
 import {prettyCoinValues} from "../../../functions/prettyCoinValues";
+import {Translate} from "../../../components/translate/Translate";
 
 interface IBattleAreaProps {
     blockArea: any
@@ -91,7 +92,7 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
 
         } else if (webSocket?.battle?.status === "end") {
 
-            if (webSocket?.timer <= -1) {
+            if (webSocket?.timer <= -4) {
                 setIsCanDrag(true)
                 setIsGoCalc(true)
                 setBlocksOpen(3)
@@ -336,7 +337,9 @@ export const BattleArea: React.FC<IBattleAreaProps> = ({blockArea, gameType, set
                             <div className="line"/>
                             <div className="line"/>
                         </LoadingStyled>
-                        <p>Ожидание</p>
+                        <p>
+                            <Translate>waiting</Translate>
+                        </p>
                     </div>
                 }
 

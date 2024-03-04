@@ -14,7 +14,9 @@ export const Docs: React.FC<IDocsProps> = () => {
 
     const [isOpen, setIsOpen] = useState(false)
     useToggleModal({setState: setIsOpen, block: ['.header__docs', '.select__body']})
+
     const pages: IPages[] = useSelector((state: any) => state.toolkit.pages)
+    const language: string = useSelector((state: any) => state.toolkit.language)
 
     return (
         <DocsStyle className={"header__docs" + (isOpen ? " header__docs_active" : "")}>
@@ -37,11 +39,19 @@ export const Docs: React.FC<IDocsProps> = () => {
             </div>
             <div className="select__body">
                 {
-                    pages.map(item => item.is_main &&
-                        <div key={item.ua_title} className="select__item">
-                            <NavLink to={'/docs/' + item.id}>{item.ua_title}</NavLink>
-                        </div>
-                    )
+                    pages.map(item => {
+                        const title: {[key: string]: any} = {
+                            'ru': item?.title,
+                            'ua': item?.ua_title ?? item?.title,
+                            'en': item?.en_title ?? item?.title,
+                        }
+
+                        return item.is_main && (<div key={item.ua_title} className="select__item">
+                            <NavLink to={'/docs/' + item.id}>
+                                {title[language]}
+                            </NavLink>
+                        </div>)
+                    })
                 }
             </div>
         </DocsStyle>

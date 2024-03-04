@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { HistoryStyle } from './history.styled'
+import { HistoryStyle } from './History.styled'
 import { HistoryTop } from './components/HistoryTop'
 import { HistoryCenter } from './components/HistoryCenter'
 import { HistoryBlock } from './components/HistoryBlock'

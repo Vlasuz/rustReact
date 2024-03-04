@@ -11,6 +11,8 @@ interface IFaqHeadProps {
 export const FaqHead: React.FC<IFaqHeadProps> = ({setNumberOfQuestion, faqBlock}) => {
 
     const faqCategory = useSelector((state: any) => state.toolkit.faqList)
+    const language: string = useSelector((state: any) => state.toolkit.language)
+
     const [numberOfCatalog, setNumberOfCatalog] = useState(0)
 
     const handleChange = (index: number) => {
@@ -27,14 +29,21 @@ export const FaqHead: React.FC<IFaqHeadProps> = ({setNumberOfQuestion, faqBlock}
         <div className="section-faq__catalog">
 
             {
-                faqCategory.map((item: IFaqList, index: number) =>
-                    <button onClick={_ => handleChange(index)} key={item.id} className={"catalog__item" + (numberOfCatalog === index ? " catalog__item_active" : "")}>
-                        <img src={getApiLink(item.image)} alt="Ico" />
+                faqCategory.map((item: IFaqList, index: number) => {
+                    const title: {[key: string]: any} = {
+                        'ru': item?.title,
+                        'ua': item?.ua_title ?? item?.title,
+                        'en': item?.en_title ?? item?.title,
+                    }
+
+                    return (<button onClick={_ => handleChange(index)} key={item.id}
+                            className={"catalog__item" + (numberOfCatalog === index ? " catalog__item_active" : "")}>
+                        <img src={getApiLink(item.image)} alt="Ico"/>
                         <h2>
-                            {item.title}
+                            {title[language]}
                         </h2>
-                    </button>
-                )
+                    </button>)
+                })
             }
 
         </div>

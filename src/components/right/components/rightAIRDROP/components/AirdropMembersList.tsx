@@ -4,6 +4,8 @@ import {AirdropSocketContext} from "../../../../../App";
 import { prettyCoinValues } from '../../../../../functions/prettyCoinValues';
 import {IUser} from "../../../../../model";
 import coins from './../../../../../assets/images/header__coins.svg'
+import {NavLink} from "react-router-dom";
+import {Translate} from "../../../../translate/Translate";
 
 interface IAirdropMembersListProps {
 
@@ -19,18 +21,20 @@ export const AirdropMembersList: React.FC<IAirdropMembersListProps> = () => {
 
     return (
         <div className={"section-right__players" + (!isHaveUsers ? " section-right__players_none" : "")}>
-            {!isHaveUsers && <big>Ставок нет</big>}
+            {!isHaveUsers && <big>
+                <Translate>not_a_bid</Translate>
+            </big>}
             <div className="players__list">
 
                 {
                     airdropWsMessages?.airdrop?.players?.map((item: any) =>
                         <div key={item.user.id} className="players__item">
-                            <a className="item__photo" href={"/user/" + (item.user.id)}>
+                            <NavLink className="item__photo" to={"/user/" + (item.user.id)}>
                                 <img src={item.user.avatar} alt="User"/>
-                            </a>
-                            <a className="item__name" href={"/user/" + (item.user.id)}>
+                            </NavLink>
+                            <NavLink className="item__name" to={"/user/" + (item.user.id)}>
                                 {item.user.name}
-                            </a>
+                            </NavLink>
                             <div className="item__coins">
                                 <img src={coins} alt="Coins"/>
                                 <p>

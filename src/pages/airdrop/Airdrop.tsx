@@ -179,6 +179,10 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
         airdropLine.current.style.width = result + "px"
         airdropLine.current.classList.add('line-to-winner_active')
 
+        setTimeout(() => {
+            airdropLine.current.style.width = "0px"
+        }, 15000)
+
         // @ts-ignore
         let radius = Math.asin(Math.abs(bagY) / result) * (180 / Math.PI).toFixed(2)
         dropX = +getComputedStyle(airdropDrop.current).left.replace('px', '') + 1
@@ -296,7 +300,7 @@ export const Airdrop: React.FC<IAirdropProps> = () => {
                             <img src={dropCircle} alt=""/>
 
                             <div className='line-to-winner line-to-winner_active'
-                                 style={{transform: `rotate(-${radiusLine}deg)`}} ref={airdropLine}/>
+                                 style={{transform: `rotate(-${radiusLine}deg)`, width: "0px"}} ref={airdropLine}/>
                         </div>
 
                         <ul className="bags" ref={drop}>

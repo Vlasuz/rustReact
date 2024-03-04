@@ -73,7 +73,7 @@ export const DocsStyle = styled.div`
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     border-radius: 10px;
-    min-width: 100px;
+    min-width: 150px;
     right: 0;
     padding: 10px;
     opacity: 0;
