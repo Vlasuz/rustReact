@@ -24,6 +24,7 @@ export const Aside: React.FC<IAsideProps> = () => {
     const dispatch = useDispatch()
 
     const handleChangePage = (sound: string, rightType?: any, isOpenChat?: boolean) => {
+        console.log('111')
         dispatch(setSound(sound))
 
         if(rightType) {

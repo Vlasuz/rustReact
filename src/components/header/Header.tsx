@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HeaderStyled } from './Header.styled'
 import { Languages } from './components/languages/Languages'
 import { Volume } from './components/volume/Volume'
@@ -21,6 +21,14 @@ interface IHeaderProps {
 export const Header: React.FC<IHeaderProps> = () => {
 
     const { userData } = useUserData()
+
+    const [isDesktopVersion, setIsDesktopVersion] = useState(false)
+
+    useEffect(() => {
+
+        if(window.innerWidth >= 576) setIsDesktopVersion(true)
+
+    }, [])
 
     const setting: ISiteSettings = useSelector((state: any) => state.toolkit.siteSettings)
     const socialsItems: ISocialsItem[] = [
@@ -48,7 +56,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                         </div><span><span>SMALL</span>STASH</span>
                     </NavLink>
                     <Languages />
-                    <Volume />
+                    {isDesktopVersion && <Volume/>}
                     <div className="header__lowright">
                         <Docs />
                         <NavLink to={"/faq"} className="header__support">

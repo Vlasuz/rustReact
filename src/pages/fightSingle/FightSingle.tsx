@@ -37,7 +37,7 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
     useEffect(() => {
         setMainPlayer(fightItemData?.first_player)
         setOpponentPlayer(fightItemData?.second_player)
-        setGameState(fightItemData.game_state)
+        setGameState(fightItemData?.game_state)
     }, [fightItemData])
 
     useEffect(() => {
@@ -56,17 +56,16 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
 
             console.log(data)
 
-            dispatch(setFightItemData(data.fight))
-
-            if(data.fight?.first_player?.id !== userData?.id && data.fight.second_player !== userData?.id) {
-                setMainPlayer(data.fight.second_player)
-                setOpponentPlayer(data.fight.first_player)
-            }
-
             if (data.type === "defense" || data.type === "attack") return;
+
+            if(data?.fight?.first_player?.id !== userData?.id && data?.fight?.second_player !== userData?.id) {
+                setMainPlayer(data?.fight?.second_player)
+                setOpponentPlayer(data?.fight?.first_player)
+            }
 
             setGameData(data)
             setGameState(data.fight?.game_state ?? "waiting")
+            dispatch(setFightItemData(data.fight))
 
             if (data.fight?.game_state === "ended") {
                 if (data?.fight?.winner?.user?.id === userData?.id) {
@@ -89,7 +88,7 @@ export const FightSingle: React.FC<IFightSingleProps> = () => {
 
                 ws.current.close()
                 setTimeout(() => {
-                    // navigate("/")
+                    navigate("/")
                 }, 5000)
             }
 

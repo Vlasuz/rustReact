@@ -1,6 +1,6 @@
-import { useRef, useEffect, useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { setSound } from "../redux/toolkitSlice"
+import {useRef, useEffect, useState} from "react"
+import {useSelector, useDispatch} from "react-redux"
+import {setSound} from "../redux/toolkitSlice"
 import getCookies from "../functions/getCookie";
 
 interface useSoundsProps {
@@ -10,30 +10,36 @@ interface useSoundsProps {
 
 export const useSounds = ({value, music}: useSoundsProps) => {
     const toolkitSound = useSelector((state: any) => state.toolkit.sound)
-    const sound = music ?? toolkitSound;
     const audioBlock: any = useRef(null)
     const dispatch = useDispatch()
     const [isLoad, setIsLoad] = useState(false)
+    const [currentSound, setCurrentSound] = useState<any>()
 
     useEffect(() => {
-        if(!isLoad) return;
+        setCurrentSound(toolkitSound ?? music)
+    }, [toolkitSound, music])
 
+    useEffect(() => {
         setTimeout(() => {
             dispatch(setSound(''))
-        }, 100)
-        if (!sound || (getCookies("volume_music_rust") ? +JSON.parse(`${getCookies("volume_music_rust")}`) : value) === 0) return;
+            setCurrentSound('')
+        }, 1)
+
+        if (!isLoad) return;
+
+        if (!currentSound || (getCookies("volume_music_rust") ? +JSON.parse(`${getCookies("volume_music_rust")}`) : value) === 0) return;
 
         audioBlock.current.volume = (getCookies("volume_music_rust") ? +JSON.parse(`${getCookies("volume_music_rust")}`) : value) / 100
         audioBlock.current.currentTime = 0
         audioBlock.current.play()
 
-    }, [sound, isLoad])
+    }, [currentSound])
 
     useEffect(() => {
         setTimeout(() => {
             setIsLoad(true)
         }, 1000)
     }, [])
-    
-    return {audioBlock, sound}
+
+    return {audioBlock, sound: currentSound}
 }

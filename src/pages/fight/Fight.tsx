@@ -10,6 +10,7 @@ import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
 import {getWsLink} from "../../functions/getWsLink";
 import {retry} from "@reduxjs/toolkit/query";
+import getCookie from "../../functions/getCookie";
 
 interface IMainProps {
 
@@ -28,6 +29,10 @@ export const Fight: React.FC<IMainProps> = () => {
     }, [])
 
     useEffect(() => {
+        ws.onopen = () => {
+            ws.send(`{"type":"auth", "token":"${getCookie('access_token_rust')}"}`)
+        }
+
         ws.onmessage = (e: any) => {
             const message = JSON.parse(JSON.parse(e.data))
 

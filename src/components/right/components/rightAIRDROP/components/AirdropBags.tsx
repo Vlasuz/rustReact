@@ -25,6 +25,8 @@ export const AirdropBags: React.FC<IAirdropBagsProps> = ({setBags, handleBuyBags
     const costOneBag = 50
 
     useEffect(() => {
+        if(countOfBags === 0) return
+
         setBags(countOfBags)
         dispatch(setSound('sound12'))
     }, [countOfBags])

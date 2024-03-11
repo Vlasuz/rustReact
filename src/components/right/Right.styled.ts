@@ -1343,7 +1343,9 @@ export const RightStyled = styled.section`
     
   }
   
-  
+  .crates .item__photo {
+    height: 100px;
+  }
   
   
   

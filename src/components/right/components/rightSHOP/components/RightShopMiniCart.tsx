@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import coin from './../../../../../assets/images/header__coins.svg'
 import { useSelector } from 'react-redux'
 import cartIcon from './../../../../../assets/images/cart.svg'
-import { IProduct } from '../../../../../model'
+import {IProduct, ISiteSettings} from '../../../../../model'
 import {prettyCoinValues} from "../../../../../functions/prettyCoinValues";
 
 interface IRightShopMiniCartProps {
@@ -12,11 +12,13 @@ interface IRightShopMiniCartProps {
 export const RightShopMiniCart: React.FC<IRightShopMiniCartProps> = ({setIsCartOpen}) => {
 
     const cart = useSelector((state: any) => state.toolkit.shopCart)
+    const siteSettings:  ISiteSettings = useSelector((state: any) => state.toolkit.siteSettings)
     const [price, setPrice] = useState(0)
     
     useEffect(() => {
         setPrice(0)
         cart.map((item: IProduct) => setPrice(prev => prev + item.price.value))
+        setPrice(prev => prev + ( prev * siteSettings.pay_skin_commission / 100))
     }, [cart])
 
     useEffect(() => {

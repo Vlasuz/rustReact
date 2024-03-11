@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import pererab_button from './../../../../../assets/images/pererab-button.svg'
 import coin from './../../../../../assets/images/header__coins.svg'
-import { IProduct } from '../../../../../model'
+import {IProduct, ISiteSettings} from '../../../../../model'
 import { ButtonToRecycleStyle } from './buttonToRecycle.styled'
 import axios from 'axios'
 import { getApiLink } from '../../../../../functions/getApiLink'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNotice, setPererabZoneItems, setSound, setUserBalance } from '../../../../../redux/toolkitSlice'
 import { LoadingStyled } from '../../../../loading/loading.styled'
 import {getBearer} from "../../../../../functions/getBearer";
@@ -20,10 +20,12 @@ export const ButtonToRecycle: React.FC<IButtonToRecycleProps> = ({ pererabZoneIt
     const [mainSum, setMainSum] = useState(0)
     const dispatch = useDispatch()
     const [isRecycling, setIsRecycling] = useState(false)
+    const siteSettings:  ISiteSettings = useSelector((state: any) => state.toolkit.siteSettings)
 
     useEffect(() => {
         setMainSum(0)
         pererabZoneItems.map(item => setMainSum(prev => prev + item.price.value))
+        setMainSum(prev => prev - (prev * siteSettings.sell_skin_commission / 100))
     }, [pererabZoneItems])
 
     const handleRecycle = () => {

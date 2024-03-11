@@ -15,7 +15,6 @@ interface IVolumeProps {
 export const Volume: React.FC<IVolumeProps> = () => {
 
     const [value, setValue] = useState(getCookies("volume_music_rust") ? +JSON.parse(`${getCookies("volume_music_rust")}`) : 0)
-    console.log(getCookies("volume_music_rust") ? +JSON.parse(`${getCookies("volume_music_rust")}`) : 0)
 
     useEffect(() => {
         // setValueCookie(getCookies("volume_music_rust") ? +JSON.parse(`${getCookies("volume_music_rust")}`) : 0)

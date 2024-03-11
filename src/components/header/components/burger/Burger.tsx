@@ -28,6 +28,15 @@ export const Burger: React.FC<IBurgerProps> = () => {
     const navigate = useNavigate()
     const block = useRef(null)
     const userInfo: IUser = useSelector((state: any) => state.toolkit.user)
+    const [isMobileVersion, setIsMobileVersion] = useState(false)
+
+    useEffect(() => {
+
+        if(window.innerWidth < 576) {
+            setIsMobileVersion(true)
+        }
+
+    }, [])
 
     useToggleModal({setState: setIsBurgerOpen, block: ['.burger__menu', '.header__burger']})
 
@@ -51,7 +60,7 @@ export const Burger: React.FC<IBurgerProps> = () => {
                     </li>
                 </ul>
 
-                <Volume />
+                {isMobileVersion && <Volume/>}
 
                 <NavLink to={"/faq"} style={{width: "fit-content"}} className="header__support">
                     <img src={support} alt="Ico" />

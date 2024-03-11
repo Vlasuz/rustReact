@@ -24,8 +24,12 @@ export const AsideAirdrop:React.FC<IAsideAirdropProps> = ({handleChangePage}) =>
         "start": 1,
     }
 
+    const handleGoToAirdrop = () => {
+        handleChangePage("sound12", {slug: "AIRDROP", title: "Аирдроп"})
+    }
+
     return (
-        <NavLink to={"/airdrop"} onClick={_ => handleChangePage("sound12", {slug: "AIRDROP", title: "Аирдроп"})} className={({isActive}) => "aside__plane" + (isActive ? " aside__plane_timeline" : "")}>
+        <NavLink to={"/airdrop"} onClick={handleGoToAirdrop} className={({isActive}) => "aside__plane" + (isActive ? " aside__plane_timeline" : "")}>
             <img src={plane} alt="Plane" />
             <div className="timer">
                 <div className="min">

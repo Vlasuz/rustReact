@@ -55,7 +55,7 @@ export const RightCases: React.FC<IRightShopProps> = ({ blockValue, isHideBlock 
     const { products }: any = useSortBy({ allProducts: cratesList, searchValue, rangeValue })
 
     return (
-        <RightShopStyle className={"section-right__item" + (blockValue.block === 'no_chat' ? ' section-right_active' : '') + isHideBlock}>
+        <RightShopStyle className={"section-right__item crates" + (blockValue.block === 'no_chat' ? ' section-right_active' : '') + isHideBlock}>
             <div className={"section-right__cart-bought" + (isBoughtSuccess ? " section-right__cart_active" : "")}>
                 <div className="text">
                     <h3>

@@ -124,6 +124,11 @@ export const Notice: React.FC<INoticeProps> = () => {
             text: "Игра уже идет!",
             icon: errorIcon,
         },
+        {
+            slug: 'cant_refresh_yet',
+            text: "cant_refresh_yet",
+            icon: errorIcon,
+        },
     ]
 
     useEffect(() => {

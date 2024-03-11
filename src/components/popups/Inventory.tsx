@@ -17,7 +17,7 @@ import {LoadingStyled} from "../loading/loading.styled";
 import {prettyCoinValues} from "../../functions/prettyCoinValues";
 import getCookie from "../../functions/getCookie";
 import { useDispatch } from 'react-redux';
-import {setPopup, setWithdrawInfo} from "../../redux/toolkitSlice";
+import {setNotice, setPopup, setWithdrawInfo} from "../../redux/toolkitSlice";
 import {RefreshToken} from "../../api/refreshToken";
 
 interface IInventoryProps {
@@ -88,6 +88,11 @@ export const Inventory: React.FC<IInventoryProps> = () => {
         setIsLoad(false)
         getBearer({type: "get"})
         axios.get(getApiLink('api/trade/inventory/refresh/')).then(({data}) => {
+            if(data.status === false) {
+                dispatch(setNotice(data.message))
+                return setIsLoad(true);
+            }
+
             setInventory(data)
             setIsLoad(true)
         }).catch(er => {
@@ -102,7 +107,7 @@ export const Inventory: React.FC<IInventoryProps> = () => {
     }
 
     const handleSelectItem = (inventoryItem: IInventoryItem) => {
-        if(selectedItems.some(item => item.id === inventoryItem.id)) {
+        if(selectedItems?.some(item => item?.id === inventoryItem?.id)) {
             setSelectedItems(selectedItems.filter(item => item.id !== inventoryItem.id))
         } else {
             setSelectedItems(prev => [...prev, inventoryItem])
@@ -206,9 +211,9 @@ export const Inventory: React.FC<IInventoryProps> = () => {
 
                         {
                             inventory
-                                .filter(item => gameTypeCode[filterByGame] ? item.game === gameTypeCode[filterByGame] : item)
-                                .filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-                                .map(item =>
+                                ?.filter(item => gameTypeCode[filterByGame] ? item.game === gameTypeCode[filterByGame] : item)
+                                ?.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+                                ?.map(item =>
                                 <div key={item.id} onClick={_ => handleSelectItem(item)} className={`skins__item ${selectedItems.some(sItem => sItem.id === item.id) && "skins__item_active"}`}>
                                     <div className="clothes__cool" style={{background: item.rarity.color}} />
                                     <div className="item__check">
