@@ -31,6 +31,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
     const [winnerItem, setWinnerItem]: any = useState({})
     const [isClicked, setIsClicked] = useState(false)
     const [isBlockButton, setIsBlockButton] = useState(false)
+    const [chosenCaseItems, setChosenCaseItems] = useState([])
 
     const dispatch = useDispatch()
 
@@ -117,6 +118,16 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
         }, isFastActive ? 1000 : 11000)
     }, [isActiveSpin])
 
+    useEffect(() => {
+        if(!chosenCrate?.id) return;
+
+        axios.get(getApiLink(`api/crate/items/?crate_id=${chosenCrate?.id}`)).then(({data}) => {
+            console.log(data)
+            setIsActiveSpin(false)
+            setChosenCaseItems(data)
+        })
+    }, [chosenCrate])
+
     const handlePlay = () => {
 
         if (!Object.keys(userData).length) {
@@ -125,8 +136,8 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
 
         setIsClicked(true)
 
-        const sortedItems = [...chosenCrate?.items]?.sort((a, b) => +b.price - +a.price);
-        const maxPriceItem = sortedItems[0].price;
+        const sortedItems: any = [...chosenCaseItems]?.sort((a: any, b: any) => +b.price - +a.price);
+        const maxPriceItem = sortedItems[0]?.price;
 
         getBearer({type: "post"})
         axios.post(getApiLink(`api/crate/open/?count=${countOfCases}&crate_id=${chosenCrate.id}`)).then(({data}) => {
@@ -237,7 +248,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     className={"center__spin" + (isActiveSpin ? " active" : "") + (isWonItemActive ? " center__spin-won_item" : "")}>
                     <div className="spin__bgd"/>
                     <img src={spinArrow} alt="^" className="spin__arrow"/>
-                    <CaseRollingBlock winnerItem={winnerItem[0]} isActiveSpin={isActiveSpin} isFastActive={isFastActive}
+                    <CaseRollingBlock chosenCaseItems={chosenCaseItems} winnerItem={winnerItem[0]} isActiveSpin={isActiveSpin} isFastActive={isFastActive}
                                       isWonItemActive={isWonItemActive}/>
                     <canvas className="canvas_winner"></canvas>
                 </div>}
@@ -248,19 +259,19 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     <img src={spinArrow} alt="<" className="spin__arrow_rht"/>
                     <div className="spins">
                         {countOfCases >= 2 &&
-                            <CaseRollingBlock winnerItem={winnerItem[0]} isMultiple={true} isActiveSpin={isActiveSpin}
+                            <CaseRollingBlock chosenCaseItems={chosenCaseItems} winnerItem={winnerItem[0]} isMultiple={true} isActiveSpin={isActiveSpin}
                                               isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
                         {countOfCases >= 2 &&
-                            <CaseRollingBlock winnerItem={winnerItem[1]} isMultiple={true} isActiveSpin={isActiveSpin}
+                            <CaseRollingBlock chosenCaseItems={chosenCaseItems} winnerItem={winnerItem[1]} isMultiple={true} isActiveSpin={isActiveSpin}
                                               isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
                         {countOfCases >= 3 &&
-                            <CaseRollingBlock winnerItem={winnerItem[2]} isMultiple={true} isActiveSpin={isActiveSpin}
+                            <CaseRollingBlock chosenCaseItems={chosenCaseItems} winnerItem={winnerItem[2]} isMultiple={true} isActiveSpin={isActiveSpin}
                                               isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
                         {countOfCases >= 4 &&
-                            <CaseRollingBlock winnerItem={winnerItem[3]} isMultiple={true} isActiveSpin={isActiveSpin}
+                            <CaseRollingBlock chosenCaseItems={chosenCaseItems} winnerItem={winnerItem[3]} isMultiple={true} isActiveSpin={isActiveSpin}
                                               isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
                         {countOfCases >= 5 &&
-                            <CaseRollingBlock winnerItem={winnerItem[4]} isMultiple={true} isActiveSpin={isActiveSpin}
+                            <CaseRollingBlock chosenCaseItems={chosenCaseItems} winnerItem={winnerItem[4]} isMultiple={true} isActiveSpin={isActiveSpin}
                                               isFastActive={isFastActive} isWonItemActive={isWonItemActive}/>}
                     </div>
                     <canvas className="canvas_winner"></canvas>
@@ -328,7 +339,7 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
                     </li>
 
                     {
-                        chosenCrate?.items?.map((item: ICrateItem) => <CaseItem key={item.id}
+                        chosenCaseItems?.map((item: ICrateItem) => <CaseItem key={item.id}
                                                                                 itemRarities={itemRarities}
                                                                                 data={item}/>)
                     }

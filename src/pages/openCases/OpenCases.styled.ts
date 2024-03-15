@@ -498,6 +498,9 @@ export const OpenCasesStyled = styled.section`
       }
     }
   }
+  .active-case .case img {
+    width: 120px;
+  }
   
   @media screen and (max-width: 1400px) {
     .center__buy {

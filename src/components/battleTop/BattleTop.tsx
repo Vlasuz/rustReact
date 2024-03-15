@@ -21,6 +21,7 @@ export const BattleTop: React.FC<IBattleTopProps> = ({isFastActive}) => {
 
         axios.get(getApiLink("api/crate/items/win_line/")).then((response: AxiosResponse) => {
             setWinLinesList(response.data);
+            console.log(response)
             setTimeout(() => {
                 setIsLoadComplete(true);
             }, 100)

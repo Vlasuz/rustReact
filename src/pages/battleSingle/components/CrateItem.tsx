@@ -13,6 +13,7 @@ import useSound from "use-sound";
 import spinTick from "../../../assets/audio/sound-spin-tick.webm";
 import getCookies from "../../../functions/getCookie";
 import {prettyCoinValues} from "../../../functions/prettyCoinValues";
+import axios from "axios";
 
 interface ICrateItemProps {
     data: ICrate
@@ -33,15 +34,20 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
 
     const [itemsToRoll, setItemsToRoll] = useState<any>([])
     useEffect(() => {
-        setItemsToRoll([])
-        if (!data || !Object.keys(data).length) return
 
-        for (let i = 0; i < 10; i++) {
-            const randomIndex = Math.floor(Math.random() * data.items.length);
-            const randomItem = data.items[randomIndex];
+        axios.get(getApiLink(`api/crate/items/?crate_id=${data?.id}`)).then((response) => {
 
-            setItemsToRoll((prev: any) => [...prev, randomItem])
-        }
+            setItemsToRoll([])
+            if (!data || !Object.keys(data).length) return
+
+            for (let i = 0; i < 10; i++) {
+                const randomIndex = Math.floor(Math.random() * response.data.length);
+                const randomItem = response.data[randomIndex];
+
+                setItemsToRoll((prev: any) => [...prev, randomItem])
+            }
+
+        })
 
     }, [data, crates])
 
@@ -63,7 +69,7 @@ export const CrateItem: React.FC<ICrateItemProps> = ({data, isOpened, openedItem
     const itemRef = useRef(null)
 
     const isHaveItem = openedItem && Object.keys(openedItem).length
-    const isEndGame = webSocket?.battle?.status === "end" && webSocket?.timer < 0
+    const isEndGame = webSocket?.battle?.status === "end" && webSocket?.timer < -1
 
     const [isShowItem, setIsShowItem] = useState(isEndGame)
     const [isSpinItem, setIsSpinItem] = useState(false)

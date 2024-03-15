@@ -48,11 +48,13 @@ export const RightCases: React.FC<IRightShopProps> = ({ blockValue, isHideBlock 
     }, [cratesList])
 
     const crates = useSelector((state: any) => state.toolkit.crates)
+
+    const { products }: any = useSortBy({ allProducts: cratesList, searchValue, rangeValue })
+
     useEffect(() => {
         dispatch(setChosenCrates(crates[0]))
     }, [crates])
 
-    const { products }: any = useSortBy({ allProducts: cratesList, searchValue, rangeValue })
 
     return (
         <RightShopStyle className={"section-right__item crates" + (blockValue.block === 'no_chat' ? ' section-right_active' : '') + isHideBlock}>

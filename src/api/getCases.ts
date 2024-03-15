@@ -1,4 +1,4 @@
-import {setCrates, setShopList, setSiteSettings, setUserInventory } from "../redux/toolkitSlice"
+import {setChosenCrates, setCrates, setShopList, setSiteSettings, setUserInventory} from "../redux/toolkitSlice"
 import axios from "axios"
 import { getApiLink } from "../functions/getApiLink"
 import { IProduct } from "../model"

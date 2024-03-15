@@ -13,35 +13,34 @@ interface ICaseRollingBlockProps {
     isWonItemActive: boolean
     winnerItem?: any
     isMultiple?: boolean
+    chosenCaseItems: any
 }
 
-export const CaseRollingBlock:React.FC<ICaseRollingBlockProps> = ({winnerItem, isActiveSpin, isFastActive, isWonItemActive, isMultiple}) => {
+export const CaseRollingBlock:React.FC<ICaseRollingBlockProps> = ({winnerItem, isActiveSpin, isFastActive, isWonItemActive, isMultiple, chosenCaseItems}) => {
 
     const chosenCrate = useSelector((state: any) => state.toolkit.chosenCrate)
     const crates = useSelector((state: any) => state.toolkit.crates)
 
     const [itemsToRoll, setItemsToRoll] = useState<any>([])
     useEffect(() => {
+        if(!chosenCaseItems.length) return;
         if(isActiveSpin) return;
 
         setItemsToRoll([])
         if (!chosenCrate || !Object.keys(chosenCrate).length) return
 
         for (let i = 0; i < 70; i++) {
-            const randomIndex = Math.floor(Math.random() * chosenCrate.items.length);
-            const randomItem = chosenCrate.items[randomIndex];
+            const randomIndex = Math.floor(Math.random() * chosenCaseItems?.length);
+            const randomItem = chosenCaseItems[randomIndex];
 
             setItemsToRoll((prev: any) => [...prev, randomItem])
         }
-    }, [chosenCrate, crates, isActiveSpin])
-
-    console.log(isActiveSpin)
+    }, [crates, isActiveSpin, chosenCaseItems])
 
     const [randomFinishPosition, setRandomFinishPosition] = useState((Math.random() - 0.5) * 100)
     const [marginLeftSpin, setMarginLeftSpin] = useState(`calc(-1 * ((170.1px * 50) - 50vw) + ${randomFinishPosition}px)`)
     const [transitionDuration, setTransitionDuration] = useState(isActiveSpin ? (!isFastActive ? "10s" : ".5s") : "")
 
-    console.log(marginLeftSpin)
 
     useEffect(() => {
         setTransitionDuration(isActiveSpin ? (!isFastActive ? "10s" : ".5s") : "")

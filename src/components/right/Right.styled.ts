@@ -1343,6 +1343,9 @@ export const RightStyled = styled.section`
     
   }
   
+  .crates .item__price {
+    margin-top: 5px;
+  }
   .crates .item__photo {
     height: 100px;
   }
