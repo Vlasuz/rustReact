@@ -82,7 +82,7 @@ export const BattlePlayer: React.FC<IBattlePlayerProps> = ({isWinner, numberOfPo
 
             {isHavePlayerOnThisPosition ?
                 <NavLink to={player.is_bot ? '' : `/user/${player?.user?.id}`} className="player__photo">
-                    <img src={player.is_bot ? botPhoto : player.user.avatar ?? nonPhoto} alt="Photo"/>
+                    <img src={player.user.avatar ?? nonPhoto} alt="Photo"/>
                 </NavLink> :
                 <ButtonWithoutPlayer joinToGame={joinToGame}/>
             }

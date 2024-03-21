@@ -97,6 +97,12 @@ const toolkitSlice = createSlice({
                 state.userInventory = [...state.userInventory, ...action.payload]
             }
         },
+        serUserTradeLink(state, action) {
+            state.user = {
+                ...state.user,
+                trade_link: action.payload
+            }
+        },
         clearUserInventory(state) {
             state.userInventory = []
         },
@@ -362,6 +368,7 @@ export const {
     setUserInventory,
     clearUserInventory,
     setUserHistory,
+    serUserTradeLink,
     setUserOnline,
 
     setWithdrawInfo,

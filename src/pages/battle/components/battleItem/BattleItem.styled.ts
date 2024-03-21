@@ -58,6 +58,20 @@ export const BattleItemStyled = styled.li`
     margin-right: 15px;
     display: flex;
     align-items: center;
+    justify-content: right;
+    max-width: 19vw;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    &:after {
+      content: "";
+      background: linear-gradient(to right, #26293B, transparent);
+      width: 100px;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
 
     .case__top {
       position: absolute;
@@ -86,8 +100,10 @@ export const BattleItemStyled = styled.li`
     li {
       border-radius: 8px;
       background: rgba(162, 171, 197, 0.06);
+      min-width: 60px;
       width: 60px;
       height: 60px;
+      overflow: hidden;
       position: relative;
       display: flex;
       align-items: center;

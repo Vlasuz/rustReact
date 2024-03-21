@@ -1343,6 +1343,9 @@ export const RightStyled = styled.section`
     
   }
   
+  .crates .postamat__block {
+    height: calc(100vh - 325px);
+  }
   .crates .item__price {
     margin-top: 5px;
   }

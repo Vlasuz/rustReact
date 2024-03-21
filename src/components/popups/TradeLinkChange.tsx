@@ -4,7 +4,7 @@ import axios from "axios";
 import {getApiLink} from "../../functions/getApiLink";
 import {PopupsContext} from "../../context/popupsContext";
 import {useDispatch} from "react-redux";
-import {setPopup} from "../../redux/toolkitSlice";
+import {serUserTradeLink, setPopup} from "../../redux/toolkitSlice";
 import {getBearer} from "../../functions/getBearer";
 
 interface ITradeLinkChangeProps {
@@ -27,6 +27,8 @@ export const TradeLinkChange: React.FC<ITradeLinkChangeProps> = () => {
 
             if(data.status) {
                 setIsOpen(false)
+
+                dispatch(serUserTradeLink(tradeLink))
 
                 setTimeout(() => {
                     dispatch(setPopup(''))

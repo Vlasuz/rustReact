@@ -141,6 +141,11 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
 
         getBearer({type: "post"})
         axios.post(getApiLink(`api/crate/open/?count=${countOfCases}&crate_id=${chosenCrate.id}`)).then(({data}) => {
+            if(data.message === "not_enough_balance") {
+                setIsClicked(false);
+                return dispatch(setNotice('dontHaveMoney'))
+            }
+
             if (data.status === false) return setIsClicked(false);
 
             setIsActiveSpin(false)
@@ -235,6 +240,13 @@ export const OpenCases: React.FC<IOpenCasesProps> = () => {
 
         animate();
     }, [isActiveSpin, isFastActive]);
+
+    useEffect(() => {
+        setIsWonItemActive(false)
+        setIsActiveSpin(false)
+        setWinnerItem({})
+        setIsClicked(false)
+    }, [countOfCases])
 
     return (
         <OpenCasesStyled>

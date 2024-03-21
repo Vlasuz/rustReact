@@ -49,7 +49,9 @@ export const User: React.FC<IUserProps> = ({userData}) => {
                     </div>
                     <div className="trade-link__check">
                         <img src={userData.trade_link ? tradeLinkActive : tradeLinkNonActive} alt="Photo"/>
-                        <span>АКТИВНО</span>
+                        <span>
+                            {userData.trade_link ? "АКТИВНО" : "НЕ АКТИВНО"}
+                        </span>
                     </div>
                 </div>
             }

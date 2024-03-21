@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {getApiLink} from "../../../functions/getApiLink";
 import {getBearer} from "../../../functions/getBearer";
-import {setUserBalance} from "../../../redux/toolkitSlice";
+import {setNotice, setUserBalance} from "../../../redux/toolkitSlice";
 import {prettyCoinValues} from "../../../functions/prettyCoinValues";
 import {RefreshToken} from "../../../api/refreshToken";
 
@@ -78,6 +78,12 @@ export const BattleCreate:React.FC<IBattleCreateProps> = ({setGameType, gameType
         getBearer({type: "post"})
         axios.post(getApiLink("api/battle/create/"), requestData).then(({data}) => {
             console.log(data)
+            if(data.message === "not_enough_balance") {
+                setIsClickedCreate(false);
+                return dispatch(setNotice('dontHaveMoney'))
+            }
+
+            if (data.status === false) return setIsClickedCreate(false);
 
             if(data?.id) {
                 dispatch(setUserBalance({sum: true, money: -data.bet}))

@@ -19,6 +19,7 @@ import {getApiLink} from "../../../../functions/getApiLink";
 import {AirdropSocketContext} from "../../../../App";
 import {AirdropMembersList} from "./components/AirdropMembersList";
 import {getBearer} from "../../../../functions/getBearer";
+import {ISiteSettings} from "../../../../model";
 
 interface IRightAirdropProps {
     blockValue: any,
@@ -34,6 +35,7 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
     const [countOfBags, setCountOfBags] = useState(0)
     const userInfo = useSelector((state: any) => state.toolkit.user)
     const airdropBagsMap = useSelector((state: any) => state.toolkit.airdropBagsMap)
+    const settings: ISiteSettings = useSelector((state: any) => state.toolkit.siteSettings)
 
     const [isPressJoin, setIsPressJoin] = useState(false)
 
@@ -97,6 +99,7 @@ export const RightAirdrop: React.FC<IRightAirdropProps> = ({blockValue, isHideBl
 
         if(airdropWsMessages?.airdrop?.game_state === "ended") {
             if(airdropWsMessages?.airdrop?.winner.user.id === userInfo.id) {
+                dispatch(setUserBalance({sum: true, money: +airdropWsMessages?.airdrop?.bank - (+airdropWsMessages?.airdrop?.bank * settings.airdrop_commission / 100)}))
                 dispatch(setSound('sound13'))
             } else {
                 dispatch(setSound('sound17'))

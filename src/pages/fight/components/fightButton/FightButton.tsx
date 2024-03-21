@@ -44,18 +44,20 @@ export const FightButton: React.FC<IFightButtonProps> = ({data}) => {
 
     const handlePressButton = () => {
 
+        if (isUserInGame) {
+            navigate("/fight/" + data.id)
+        }
+
         if (data.game_state === "waiting" && !userData?.id) {
             dispatch(setNotice('beforeYouNeedAuth'))
         }
 
         if (data.game_state === "waiting") {
 
-            if (userData?.id && !isUserInGame && !data.second_player?.user?.id && data.game_state === "waiting" && !data.first_player.items.length) {
+            if (userData?.id && !isUserInGame && !data.second_player?.user?.id && !data.first_player.items.length) {
                 dispatch(setPopup("popup-entry-coins"))
-            } else if (userData?.id && !isUserInGame && !data.second_player?.user?.id && data.game_state === "waiting" && data.first_player.items.length) {
+            } else if (userData?.id && !isUserInGame && !data.second_player?.user?.id && data.first_player.items.length) {
                 dispatch(setPopup("popup-entry-clothes"))
-            } else if (isUserInGame) {
-                navigate("/fight/" + data.id)
             }
 
             dispatch(setFightItemData(data))
