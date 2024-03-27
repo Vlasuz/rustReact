@@ -11,7 +11,6 @@ export const useWsChat = () => {
     const isSocketOpen = useSelector((state: any) => state.toolkit.isOpenWsChat)
 
     useEffect(() => {
-        console.log(isSocketOpen)
         if(isSocketOpen) return;
 
         ws.current = new WebSocket(getWsLink('ws/api/chat/'))
@@ -40,8 +39,5 @@ export const useWsChat = () => {
         }
     }, [ws])
 
-
-    console.log(ws)
     return { ws }
-
 }

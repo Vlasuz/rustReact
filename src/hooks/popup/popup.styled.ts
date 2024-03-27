@@ -46,7 +46,7 @@ export const PopupStyled = styled.div`
     align-items: center;
     justify-content: center;
     transition: all .3s ease;
-    z-index: 2;
+    z-index: 12;
   }
   
   .popup-pull-success,

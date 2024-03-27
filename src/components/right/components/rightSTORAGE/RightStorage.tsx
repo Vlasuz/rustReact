@@ -31,11 +31,13 @@ const EntryButton = () => {
 
     return (
         <EmptyInventoryStyle>
-            <SteamLoginStyle href={"http://steamcommunity.com/openid/login?" + new URLSearchParams(auth_params).toString()} className={"buttonToLogin"}>
+            <SteamLoginStyle
+                href={"http://steamcommunity.com/openid/login?" + new URLSearchParams(auth_params).toString()}
+                className={"buttonToLogin"}>
             <span>
                 <Translate>storage_empty_button_not_login</Translate>
             </span>
-                <img src={steam} alt="Login" />
+                <img src={steam} alt="Login"/>
             </SteamLoginStyle>
         </EmptyInventoryStyle>
 
@@ -62,18 +64,36 @@ export const RightStorage: React.FC<IRightStorageProps> = ({blockValue, isHideBl
         dispatch(setPopup("popup-pull-search"))
 
 
-
         getBearer({type: "post"})
         axios.post(getApiLink("api/trade/create/withdraw/"), inventoryWithdraw).then(({data}) => {
             console.log(data)
-            dispatch(setWithdrawInfo(data))
-            if(data.bots.length > 0) {
+
+            if (data?.bots?.length && data?.bots?.length > 0) {
+                dispatch(setWithdrawInfo(data))
                 dispatch(setPopup('popup-pull'))
+            } else {
+                if (data.message === 'not_enable_now') return dispatch(setNotice('not_enable_withdraw'));
+                else if (data.message === 'you_have_active_trades') {
+                    dispatch(setWithdrawInfo({
+                        data: {message: data.message}
+                    }))
+                    return dispatch(setPopup("popup-pull-error"));
+                }
+                else if(data.message === "item_has_trade_ban") {
+                    dispatch(setWithdrawInfo({
+                        data: {message: data.message}
+                    }))
+                    return dispatch(setPopup("popup-pull-error"));
+                } else {
+                    dispatch(setWithdrawInfo({
+                        data: {message: data.message}
+                    }))
+                    return dispatch(setPopup("popup-pull-error"));
+                }
             }
 
-            if(data.message === 'not_enable_now') return dispatch(setNotice('not_enable_withdraw'));
 
-            if(data.id) {
+            if (data.id) {
                 const socket = new WebSocket(getApiLink(`ws/api/trade/withdraw/${data.id}/`, true))
 
                 socket.onopen = () => {
@@ -84,12 +104,12 @@ export const RightStorage: React.FC<IRightStorageProps> = ({blockValue, isHideBl
 
                     console.log(data)
 
-                    if(data.status === "trade") {
+                    if (data.status === "trade") {
                         dispatch(setPopup("popup-withdraw-bot"))
 
-                        if(data.bot.status === "error") {
+                        if (data.bot.status === "error") {
                             dispatch(setPopup("popup-pull-error"))
-                        } else if (data.bot.status === "success"){
+                        } else if (data.bot.status === "success") {
                             dispatch(setPopup("popup-pull-success"))
                         }
 
@@ -108,11 +128,8 @@ export const RightStorage: React.FC<IRightStorageProps> = ({blockValue, isHideBl
 
                 // dispatch(setPopup("popup-pull", {type: "withdraw", socket, items: inventory.filter(item => item.isCheck).map(item => item)}))
             } else {
-                // dispatch(setPopup("popup-trade-error-cancel", {type: "withdraw", data: data}))
                 dispatch(setPopup("popup-trade-error-cancel"))
             }
-
-
 
 
         }).catch(er => {
