@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { NoticeStyle } from './notice.styled'
+import { NoticeStyle } from './Notice.styled'
 
 import errorIcon from './../../assets/images/status-error.svg'
 import errorRedIcon from './../../assets/images/error-red.svg'
@@ -7,6 +7,7 @@ import checkIcon from './../../assets/images/green-check.svg'
 import { INotice } from '../../model'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotice } from '../../redux/toolkitSlice'
+import {Translate} from "../translate/Translate";
 
 interface INoticeProps {
 
@@ -127,6 +128,16 @@ export const Notice: React.FC<INoticeProps> = () => {
         {
             slug: 'cant_refresh_yet',
             text: "cant_refresh_yet",
+            icon: errorIcon,
+        },
+        {
+            slug: "amount_smaller",
+            text: <Translate>amount_smaller</Translate>,
+            icon: errorIcon,
+        },
+        {
+            slug: "amount_larger",
+            text: <Translate>amount_larger</Translate>,
             icon: errorIcon,
         },
     ]

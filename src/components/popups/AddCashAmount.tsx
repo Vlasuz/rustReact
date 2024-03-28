@@ -4,8 +4,10 @@ import coins from './../../assets/images/header__coins.svg'
 import arrayIcon from './../../assets/images/arr-td.svg'
 import {PopupCross} from "../../hooks/popup/components/PopupCross";
 import {useDispatch, useSelector} from "react-redux";
-import {setPopup} from "../../redux/toolkitSlice";
+import {setNotice, setPopup} from "../../redux/toolkitSlice";
 import {prettyCoinValues} from "../../functions/prettyCoinValues";
+import {getApiLink} from "../../functions/getApiLink";
+import axios from 'axios';
 
 interface IAddCashAmountProps {
     currency: string
@@ -22,7 +24,7 @@ export const AddCashAmount: React.FC<IAddCashAmountProps> = ({currency}) => {
         uah: {
             currency: "₴",
             amount: [250, 500, 1000, 1500, 3000, 5000],
-            type: 'uah_to_coins'
+            type: 'uah_to_coins',
         },
         rub: {
             currency: "₽",
@@ -34,6 +36,22 @@ export const AddCashAmount: React.FC<IAddCashAmountProps> = ({currency}) => {
             amount: [1000, 2000, 5000, 10000, 15000, 30000],
             type: 'kzt_to_coins'
         },
+    }
+
+    const handlePay = () => {
+
+        axios.post(getApiLink(`api/payment/skycrypto/?amount=${value}&currency=${currency}`)).then(res => {
+            console.log(res.data)
+            if (res.data.status !== false) {
+                dispatch(setPopup('popup-add-coins-balance-linking'))
+                window.location.href = res.data.message
+            } else {
+                dispatch(setNotice(res.data.message))
+            }
+        }).catch(er => {
+            dispatch(setNotice('its_to_low_for_pay'))
+        })
+
     }
 
     return (
@@ -62,13 +80,12 @@ export const AddCashAmount: React.FC<IAddCashAmountProps> = ({currency}) => {
                     <img src={coins} alt="Ico"/>
                     <span>
                         {
-                            // value / settings[typeOfCash[currency].type]
-                            prettyCoinValues(+value * (settings[typeOfCash[currency].type] ?? 1))
+                            prettyCoinValues(+value * 100 / ((settings[typeOfCash[currency].type] / 100) ?? 1))
                         }
                     </span>
                 </div>
             </div>
-            <button>Перейти к оплате</button>
+            <button onClick={handlePay}>Перейти к оплате</button>
         </>
     )
 }

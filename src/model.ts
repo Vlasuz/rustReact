@@ -276,7 +276,7 @@ export interface ISiteSettings {
 
 export interface INotice {
     slug: string
-    text: string
+    text: any
     icon: string
 }
 

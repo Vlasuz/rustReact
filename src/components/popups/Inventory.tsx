@@ -130,9 +130,19 @@ export const Inventory: React.FC<IInventoryProps> = () => {
     }, [selectedItems])
 
     const handlePayBySkins = () => {
+
+        console.log("selectedItems", selectedItems)
+
         getBearer({type: "post"})
         axios.post(getApiLink('api/trade/create/pay/'), selectedItems.map(item => item.id)).then(({data}) => {
             console.log(data)
+
+            if (data.message === 'you_have_active_trades') {
+                dispatch(setWithdrawInfo({
+                    data: {message: data.message}
+                }))
+                return dispatch(setPopup("popup-pull-error"));
+            }
 
             const socket = new WebSocket(getApiLink(`ws/api/trade/pay/${data.id}/`, true))
 
@@ -159,9 +169,7 @@ export const Inventory: React.FC<IInventoryProps> = () => {
 
                 console.log(data)
             }
-            socket.onclose = () => {
-
-            }
+            socket.onclose = () => {}
 
 
         })
